@@ -1,0 +1,160 @@
+---
+title: "SYE Seminar on SCORE Modules"
+format:
+  gfm:
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    number-sections: false
+execute: 
+  echo: false
+  warning: false
+  message: false
+---
+
+This repository provides guidance and examples for **SCORE modules**. 
+
+
+## General Workflow
+[Back to top](#sye-seminar-on-score-modules)
+
+We are currently using the following workflow to create materials.
+
+1.  Idea formation
+
+    -   Choose either a sport or phenomenon of interest to investigate
+
+2.  Data acquisition
+
+    -   Find an existing data set (e.g., on Kaggle or from publiushed research articles) or webpages that can be scraped
+
+    -   Clean the data to structure it in a way such that it can address your phenomenon of interest
+
+3.  Data exploration
+
+    -   Play with the data with several statistical methods (graphics, models, etc.) to get a better feel for your data and what is feasible with it
+
+4.  Data Repository
+
+    -   Prepare a submission for the data repository. After you move to the next step, a faculty mentor will review the file(s) and submit it to the [SCORE Network Data Repo](https://data.scorenetwork.org/){target="_blank"} for you.
+
+5.  Worksheets
+
+    -   Create a series of related questions to serve as the main materials for your module. For topics that you have already learned, you should model these off of either previously completed modules based on similar statistical topics or from an example given to you by a faculty mentor. 
+    -   Create details solutions for these. (Tip: Do the solutions as you are writing the questions.)
+    
+
+6.  Module Quarto File
+
+    -   Create the accompanying index.qmd file that contains all the background information related to your module. Use preexisting examples to help with this.
+    
+7. Additional Background
+
+    - For at least one module, you will need to provide sufficient details on the statistical method used in the module. As an example (about a stat topic you likely already know) see: <https://modules.scorenetwork.org/golf/pga_masters_nor/> 
+
+8.  Ready for Student Review
+
+    -   Find a fellow student that is at similar stage and ask them to review your entire module. This includes working through the worksheet(s). Be sure to reciprocate by reviewing for someone else too.
+
+9.  Ready for Faculty Review
+
+    -  A faculty mentor will review your draft module and provide feedback as needed.
+
+10.  Submitted to SLU SCORE Preprint server
+
+11. Submitted to the [SCORE Network](https://scorenetwork.org/submissions.html){target="_blank"}
+
+## Picking a Topic
+[Back to top](#sye-seminar-on-score-modules)
+
+
+For many people, player/team performance statistics is an easy way to start. However, it isn't the only type of data that we can use. The Network would be very interested in modules that expand on the type of data that is used. For example,
+
+1. Athlete Health, Injury, and Load Management
+
+Core idea: Performance is constrained by health; sports decisions increasingly rely on medical and biomechanical data.
+
+2. Psychology, Decision-Making, and Mental Performance
+
+Core idea: Psychological factors influence outcomes even when physical skill is held constant.
+
+3. Fatigue, Recovery, and Scheduling Effects
+
+Core idea: When and how athletes play matters as much as how well they play.
+
+4. Officiating, Rules, and Fairness
+
+Core idea: Sports systems are shaped by human and institutional decisions.
+
+5. Equity, Access, and Structural Issues in Sports
+
+Core idea: Sports data can illuminate systemic inequalities.
+
+
+6. Revenue, Demand, and Fan Economics
+
+Core idea: Teams and leagues are businesses operating in competitive markets.
+
+## What if I don't really like sports?
+[Back to top](#sye-seminar-on-score-modules)
+
+There are a number of *sports-like* applications that you can do rather than strictly sports-focused. 
+
+### Example sports-adjacent module themes
+
+1. Games, esports, and competitive play
+
+Projects based on games are often the easiest conceptual translation for students.
+
+**Examples**
+- Online chess games (e.g., blitz vs rapid performance)
+- Speedrunning data (variance in completion times)
+- Casual competitive games (Tetris, Mario Kart, rhythm games)
+
+2. Board games and strategy games
+
+These projects emphasize strategy, randomness, and repeated trials.
+
+**Examples**
+- Settlers of Catan (starting position and win rate)
+- Card game tournaments (deck archetype success)
+- Tabletop combat simulations
+
+3. Reality TV and judged competitions
+
+Judged competitions provide rich structure and can be highly engaging for non-sports students.
+
+**Examples**
+- Baking competition shows
+- Talent or performance-based elimination shows
+- Survival-style competitions
+
+4. Fitness, movement, and wearables
+
+These modules focus on individual performance rather than competition, but still support meaningful comparative analysis.
+
+**Examples**
+- Step counts or activity minutes
+- Walking or cycling pace comparisons
+- Heart rate or sleep-stage summaries
+
+
+5. Academic and knowledge-based competitions
+
+These domains mirror team sports surprisingly well: repeated events, rankings, and depth vs “star” effects.
+
+**Examples**
+- Quiz Bowl or Science Olympiad
+- Math or coding competitions
+- Spelling Bee progression
+
+6. Arts, performance, and aesthetic competition
+
+These modules highlight subjectivity, scoring consistency, and evaluation design.
+
+**Examples**
+- Dance or music competition scoring
+- Marching band or ensemble evaluations
+- Artistic judging rubrics
+
+
