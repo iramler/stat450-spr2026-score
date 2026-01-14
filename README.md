@@ -1,14 +1,92 @@
 # SYE Seminar on SCORE Modules
 
 
-- [General Workflow](#general-workflow)
-- [Picking a Topic](#picking-a-topic)
-- [What if I don’t really like
-  sports?](#what-if-i-dont-really-like-sports)
+- [Course Syllabus](#course-syllabus)
+  - [Course Description](#course-description)
+  - [Course Expectations](#course-expectations)
+  - [Approximate Grade Expectations](#approximate-grade-expectations)
+  - [Participation Expectations](#participation-expectations)
+  - [Important Dates](#important-dates)
+- [Making Modules](#making-modules)
+  - [General Workflow for Creating
+    Modules](#general-workflow-for-creating-modules)
+  - [Picking a Topic](#picking-a-topic)
+  - [What if I don’t really like
+    sports?](#what-if-i-dont-really-like-sports)
 
-This repository provides guidance and examples for **SCORE modules**.
+# Course Syllabus
 
-## General Workflow
+## Course Description
+
+[Back to top](#sye-seminar-on-score-modules)
+
+In this SYE Seminar, you will use the learning-by-teaching approach by
+building educational materials (modules) for the SCORE Network. The
+modules use sports applications involving real-world problems and
+applications to further improve statistics and data science education.
+Module construction builds students’ statistical thinking,
+communication, and teaching & research skills.
+
+## Course Expectations
+
+[Back to top](#sye-seminar-on-score-modules)
+
+This seminar is structured as a collaborative learning environment.
+Students are expected to participate actively in discussions, workdays,
+and peer-review sessions, and to approach both their own work and their
+classmates’ work with intellectual curiosity and professionalism.
+Because SCORE modules are designed for broader audiences, all work
+should reflect professional standards: clear writing, accurate
+statistical reasoning, reproducible code, appropriate data citation, and
+respectful engagement with feedback. Meeting deadlines, communicating
+proactively about challenges, and contributing meaningfully to peer
+review are considered core responsibilities of the course. Failure to
+meet these baseline expectations may affect the final course grade,
+regardless of the number of modules completed.
+
+## Approximate Grade Expectations
+
+[Back to top](#sye-seminar-on-score-modules)
+
+| Grade Level | Description of Expected Work |
+|----|----|
+| **A (≈ 4.0)** | Completion of **three or more** high-quality SCORE modules, at least one of which is submission-ready for the public repository. Each module is reproducible, well-written, and pedagogically sound. At least one module must utilize a “new to you” statistical method. Consistent, insightful participation in peer review and discussions. Final reflection demonstrates depth, professionalism, and clear growth as a communicator. Presenting at the Festival of Science, Scholarship, and Creativity is also required. |
+| **B (≈ 3.0)** | Completion of **two** full modules that meet SCORE expectations for clarity, accuracy, and reproducibility. Regular participation in class activities and peer review. Final reflection shows solid engagement and awareness of areas for continued development. Presenting at the Festival of Science, Scholarship, and Creativity is also required. |
+| **C (≈ 2.0)** | Completion of **at least one** full module and an additional partial or exploratory project. Work demonstrates effort but may lack polish, depth, or consistent reproducibility. Participation and reflection are present but limited. |
+| **Below C (\< 2.0)** | Fewer than two modules produced, minimal participation, or failure to meet core expectations for professionalism, reproducibility, or integrity. |
+
+## Participation Expectations
+
+[Back to top](#sye-seminar-on-score-modules)
+
+Students are expected to be present both physically and mentally for
+class meeting times. We will typically use class periods to make
+progress on modules, provide feedback to classmates, and provide updates
+to the group on progress. If you need to miss class due to illness or
+other legitimate reasons, please email me in advance.
+
+You will also be expected to regularly meet with me one-on-one
+throughout the semester. In these meetings you will receive more
+specific feedback to your individual projects. It will also allow us to
+have discussions on what progress you should continue to make to achieve
+your goals for the seminar.
+
+## Important Dates
+
+[Back to top](#sye-seminar-on-score-modules)
+
+- **Thursday, April 9:** The deadline for submitting an abstract for the
+  Festival of Science, Scholarship, and Creativity.  
+- **Friday, April 17:** The deadline for submitting a poster to be
+  printed in time for the Festival.  
+- **Friday, April 24:** The day of the Festival.  
+- **Friday, May 1:** The last day to submit materials (i.e., modules and
+  their components) that you wish to be included in your SYE Seminar
+  grade.
+
+# Making Modules
+
+## General Workflow for Creating Modules
 
 [Back to top](#sye-seminar-on-score-modules)
 
@@ -127,7 +205,7 @@ than strictly sports-focused.
 
 ### Example sports-adjacent module themes
 
-1.  Games, esports, and competitive play
+#### 1. Games, esports, and competitive play
 
 Projects based on games are often the easiest conceptual translation for
 students.
@@ -136,14 +214,14 @@ students.
 Speedrunning data (variance in completion times) - Casual competitive
 games (Tetris, Mario Kart, rhythm games)
 
-2.  Board games and strategy games
+#### 2. Board games and strategy games
 
 These projects emphasize strategy, randomness, and repeated trials.
 
 **Examples** - Settlers of Catan (starting position and win rate) - Card
 game tournaments (deck archetype success) - Tabletop combat simulations
 
-3.  Reality TV and judged competitions
+#### 3. Reality TV and judged competitions
 
 Judged competitions provide rich structure and can be highly engaging
 for non-sports students.
@@ -151,7 +229,7 @@ for non-sports students.
 **Examples** - Baking competition shows - Talent or performance-based
 elimination shows - Survival-style competitions
 
-4.  Fitness, movement, and wearables
+#### 4. Fitness, movement, and wearables
 
 These modules focus on individual performance rather than competition,
 but still support meaningful comparative analysis.
@@ -159,7 +237,7 @@ but still support meaningful comparative analysis.
 **Examples** - Step counts or activity minutes - Walking or cycling pace
 comparisons - Heart rate or sleep-stage summaries
 
-5.  Academic and knowledge-based competitions
+#### 5. Academic and knowledge-based competitions
 
 These domains mirror team sports surprisingly well: repeated events,
 rankings, and depth vs “star” effects.
@@ -167,7 +245,7 @@ rankings, and depth vs “star” effects.
 **Examples** - Quiz Bowl or Science Olympiad - Math or coding
 competitions - Spelling Bee progression
 
-6.  Arts, performance, and aesthetic competition
+#### 6. Arts, performance, and aesthetic competition
 
 These modules highlight subjectivity, scoring consistency, and
 evaluation design.
