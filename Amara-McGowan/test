@@ -1,1 +1,10 @@
-This is the folder for Amara McGowan
+This is the folder for Amara McGowan.
+
+To send files to the repo (i.e., push)
+
+1. Click on the Git tab
+2. Stage the file(s) that you want to send by clicking on the empty box in 
+the Staged column
+3. Click on Commit
+4. Add a brief message describing what we're committing
+5. Then click Push
