@@ -1,0 +1,29 @@
+---
+title: "firstday"
+format: html
+---
+
+```{r}
+library(rvest)
+library(httr2)
+library(dplyr)
+```
+
+```{r}
+url <- "https://truetimeracing.com/event/doughnut-run-2015/"
+```
+
+```{r}
+webpage <- read_html(url)
+tables <- html_table(webpage)
+length(tables)
+
+
+```
+
+```{r}
+install.packages("gitcreds")
+library(gitcreds)
+gitcreds::gitcreds_set()
+```
+
