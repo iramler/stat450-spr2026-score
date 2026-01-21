@@ -1,0 +1,114 @@
+---
+title: "Women’s 100m Olympic Swimming: Comparing Strokes and Eras"
+author:
+  - name: "Brendan Karadenes"
+    affiliation:
+      - id: slu
+        name: St. Lawrence University
+  - name: "Ivan Ramler"
+    email: iramler@stlawu.edu
+    affiliation:
+      - ref: slu
+  - name: "Robin Lock"
+    affiliation:
+      - ref: slu
+
+date: September 25, 2025
+description: This module explores results from women’s 100m Olympic swimming events between 1964 and 2024, comparing different strokes and examining how times have changed over time.
+categories: 
+  - Boxplots
+  - Confidence Intervals
+  - Two-Sample Tests
+image: "Simone-Manuel-By-Jack-Spitser-CD8I3720-scaled.jpg"
+---
+
+## Welcome Video
+
+For those interested in how data analytics is used in swimming, please check out this video about how University of Virginia, Mathematics professor Dr. Ken Ono helps the UVA swim team.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/E_Q5I0AQSS0?si=3XCjte1_3eRz3H1c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+
+</iframe>
+
+## Introduction
+
+In Olympic swimming, athletes compete using different strokes, each with unique styles and challenges. [Freestyle](https://youtu.be/5HLW2AI1Ink?si=0bEoXJDhNXL8Kvwq){target="_blank"} is usually the fastest (alternating arm strokes and a flutter kick), [butterfly](https://youtu.be/UffZn_-lU54?si=kFFY_iPlkRbu1n1m){target="_blank"} is powerful but demanding (both arms moving symmetrically, accompanied by the dolphin kick), and [backstroke](https://youtu.be/89HxafulzyI?si=sHjHikfo4K1Z4e31){target="_blank"} is swum on the back (arms reach alternately above the head and enter the water directly in line with the shoulders).
+
+This module analyzes results from the women’s 100m events (finalists) from 1964-2024 (where complete results are available) as recorded by [Olympics.com](https://olympics.com/en/paris-2024/sports/swimming){target="_blank"}. Over time, performances reflect advances in training and technology, rule changes, and the growth of women’s participation. You will compare strokes and quantify changes across eras using boxplots and two-sample confidence intervals. Note that there is a fourth event, the 100m breaststroke, but it is excluded from this module because complete finalist times were not available on Olympics.com prior to 2020.
+
+::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+This activity would likely be suitable for an in-class example or quiz that lasts roughly 20 - 30 minutes.
+:::
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of the activity, you will be able to:
+
+1.  Analyze distributions using boxplots.
+2.  Compare and contrast distributions in the same or different groups.
+3.  Assess differences between two samples using confidence intervals.
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+For this activity, students will primarily use basic concepts of boxplots and two-sample t confidence intervals to analyze data. The activity can easily be adapted to use other inference methods such as ANOVA or Bootstrap intervals.
+:::
+
+::: {.callout-note collapse="true" title="Technology Requirements" appearance="minimal"}
+The provided *low-tech worksheet* requires StatKey or similar software to obtain t-scores, as well as access to a calculator.
+
+Since the data are provided, instructors are encouraged to adapt the worksheets so students can make calculations and build graphics using their preferred software. The *tech worksheet* is designed to facilitate this approach.
+:::
+
+## Data
+
+The data set contains 218 rows and 10 columns. Each row represents a female swimmer who competed in the 100m Olympic event during the period 1968 to 2024. The data includes top 8 finishers from woman racers however, due to lack of records, some of the data is missing.
+
+Download data: [olympic_swimming_women.csv](olympic_swimming_women.csv)
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description                                                                           |
+|----------|---------------------------------------------------------------------------------------|
+| Location | hosting city of the Olympics that the swimmer competed in                             |
+| Year     | year that the swimmer competed                                                        |
+| dist_m   | distance in meters of the race                                                        |
+| Stroke   | Backstroke, Butterfly, or Freestyle                                                   |
+| Gender   | gender of swimmer (Female only - see below)                                           |
+| Team     | 3 letter country code the swimmer is affiliated with                                  |
+| Athlete  | first and last name of the swimmer                                                    |
+| Time     | time, in seconds, that the swimmer completed the race                                 |
+| Rank     | place of the swimmer in the event out of four                                         |
+| Era      | time period that Olympian swam in, either "early" (1924-1996) or "recent" (2000-2024) |
+
+**Data Source**
+
+Adapted from
+
+-   [Kaggle Olympic Swimming 1912 to 2020](https://www.kaggle.com/datasets/datasciencedonut/olympic-swimming-1912-to-2020){target="_blank"}
+
+and
+
+-   [Olympics.com](https://www.olympics.com/en/olympic-games/paris-2024/results/swimming){target="_blank"}
+
+</details>
+
+::: {.callout-note collapse="true" title="Related Dataset" appearance="minimal"}
+A related version of this data, that includes Men's 100m events too, is available on the SCORE Data Repository: [olympic_swimming](https://data.scorenetwork.org/swimming/olympic_swimming.html){target="_blank"}
+
+That data set contains 606 rows and 10 columns during the period 1924 to 2020.
+:::
+
+## Materials
+
+We provide an editable Microsoft Word handout along with its solutions.
+
+-   This [Low tech class handout](olympic_swimming_ws-lowtech.docx) is based on provided summary statistics and graphics and should only require a calculator and the means to look up a t-score and can be modified to fit the instructors needs.
+
+-   The [Tech required class handout](olympic_swimming_ws-tech.docx) assumes students will be analyzing the data themselves to acquire the necessary output.
+
+-   [Sample solutions](olympic_swimming_ws_key.docx) are based on Mintab output.
+
+::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+This module gives students practice interpreting boxplots and constructing confidence intervals in a real-world setting. By analyzing Olympic swimming results, they can see how statistical methods reveal meaningful differences between strokes and across eras. The activity highlights how changes in training, technology, and participation result in improvements in swimming.
+:::
