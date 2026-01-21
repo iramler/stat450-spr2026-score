@@ -37,3 +37,5 @@ write.csv(hotdog_table_clean, "table.csv", row.names = FALSE) # this one worked
 clean_hotdog <- read.csv("hotdogs/hotdog_clean.csv") # relative path
 
 
+
+
