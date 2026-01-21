@@ -1,0 +1,24 @@
+Process for updating repo:
+
+1) **Pull** to get any updates
+
+2) **Staging** (adding the files to the queue to send to the repo)
+ - In the Git menu: click on the box by individual files to stage them
+ - in the terminal: (to do all files)
+ git add .
+ 
+3) **Commit** (sending the file to the repo to commit to an update)
+- in the Git menu: click commit and write a brief message
+- in the terminal:
+ git commit -m "a brief message indicating that you're sending"
+ 
+4) **Push** files to the repo
+- in the commit pop-up: click "push"
+- in the terminal:
+ git push
+
+************************************
+************************************
+If you get ahead on branches:
+ git reset HEAD~1
+(You can change the 1 to other vaules if you are ahead by more than one commit)
