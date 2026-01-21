@@ -1,6 +1,6 @@
 ---
 title: "SCORE Hotdog Module Brainstorming"
-author: "Amara, Elena, Keelin, Kevin "
+author: "Amara, Elena, Keelin, Kevin"
 format: html
 ---
 
@@ -24,5 +24,18 @@ Title:
 
 Content: 
 
--Amara working on a summary for the top of our handout-
-Nathan's Famous International Hot Dog Eating Contest is a competitive eating competition that started in Brooklyn, NYC in 1972. 
+Nathan's Famous International Hot Dog Eating Contest is a competitive eating competition that started in Brooklyn, NYC in 1972. In 2008 the contest established a 10 minute duration, although in earlier years the duration varied. In 2011 Men and Women officially started competing separately, despite a one off separated competition in 1975. 
+
+Data Summary:
+
+1. Why might it be difficult to compare earlier winners to most recent winners? 
+
+2. Create a standard variable to compare winners across time by dividing the hotdog variable by the time variable to get "Hotdogs_per_minute".
+
+3. Create a histogram of the Amount of Hotdogs consumed per minute by year.
+
+4. What do you notice about the amount of hotdogs consumed per minute in 2001? 
+
+5. Who was the winner in 2001?
+
+6. Spend a few minutes googling the winner. Write a couple sentences to explain why the amount of hotdogs consumed per minute changed in 2001. 
