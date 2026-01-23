@@ -1,0 +1,18 @@
+This is the folder for Ivan Ramler.
+
+To send files to the repo (i.e., push)
+
+1. Click on the Git tab
+
+1b. Click Pull
+
+2. Stage the file(s) that you want to send by clicking on 
+    the empty box in the Staged column
+
+3. Click on Commit
+
+4. Add a brief message describing what we're committing
+
+5. Clcik the Commit button
+
+6. Then click Push
