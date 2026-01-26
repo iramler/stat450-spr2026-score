@@ -1,0 +1,35 @@
+---
+title: Nathan's Hotdog Eating Contest
+format: closeread-html
+---
+```{r warning=FALSE, message=FALSE}
+library(tidyverse) 
+```
+
+Hello World! Please read my Closeread story below.
+
+:::{.cr-section}
+
+Closeread enables scrollytelling.
+
+Draw your readers attention with focus effects. @cr-features
+
+:::{#cr-features}
+```{r echo=FALSE, message=FALSE}
+
+hotdog_clean <- read_csv("~/Desktop/github repos/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
+hotdog_men <- hotdog_clean |> filter(Sex == 1)
+hotdog_women <- hotdog_clean |> filter(Sex == 0)
+
+hotdog_men_min <- hotdog_men |> mutate("Hotdogs_per_minute" = Dogs/Time)
+
+hotdog_women_min <-hotdog_women |> mutate("Hotdogs_per_minute" = Dogs/Time)
+
+ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  theme_minimal()
+```
+
+:::
+
+:::
