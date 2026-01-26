@@ -1,0 +1,168 @@
+---
+title: "doughnut"
+format: html
+---
+
+```{r}
+library(readr)
+X5KRun1 <- read_csv("Tim_Kashkarov/5KRun1.csv")
+X5KRunUnadj1 <- read_csv("Tim_Kashkarov/5KRunUnadj1.csv")
+X5KRunUnadj1 <- X5KRunUnadj1[, colSums(is.na(X5KRunUnadj1)) < nrow(X5KRunUnadj1)]
+```
+
+
+# adjusted dataset
+```{r}
+X5KRun1$Time <- as.character(X5KRun1$Time)
+fix_time <- function(x) {
+  x <- as.character(x)
+
+  parts <- strsplit(x, ":", fixed = TRUE)
+
+  out <- vapply(parts, function(p) {
+    if (length(p) == 3 && p[3] == "00") {
+      # mm:ss:00  ->  00:mm:ss
+      sprintf("00:%02d:%02d", as.integer(p[1]), as.integer(p[2]))
+    } else if (length(p) == 3) {
+      # already hh:mm:ss, just pad
+      sprintf("%02d:%02d:%02d", as.integer(p[1]), as.integer(p[2]), as.integer(p[3]))
+    } else {
+      NA_character_
+    }
+  }, character(1))
+
+  out
+}
+
+X5KRun1$Time <- fix_time(X5KRun1$Time)
+```
+
+# time_sec culumn
+```{r}
+X5KRun1$time_sec <- with(
+  as.data.frame(do.call(rbind, strsplit(X5KRun1$Time, ":"))),
+  as.integer(V1) * 3600 + as.integer(V2) * 60 + as.integer(V3)
+)
+```
+
+
+# unadjusted dataset
+```{r}
+X5KRunUnadj1$Time <- as.character(X5KRunUnadj1$Time)
+fix_time <- function(x) {
+  x <- as.character(x)
+
+  parts <- strsplit(x, ":", fixed = TRUE)
+
+  out <- vapply(parts, function(p) {
+    if (length(p) == 3 && p[3] == "00") {
+      # mm:ss:00  ->  00:mm:ss
+      sprintf("00:%02d:%02d", as.integer(p[1]), as.integer(p[2]))
+    } else if (length(p) == 3) {
+      # already hh:mm:ss, just pad
+      sprintf("%02d:%02d:%02d", as.integer(p[1]), as.integer(p[2]), as.integer(p[3]))
+    } else {
+      NA_character_
+    }
+  }, character(1))
+
+  out
+}
+
+X5KRunUnadj1$Time <- fix_time(X5KRunUnadj1$Time)
+```
+
+# time_sec culumn
+```{r}
+X5KRunUnadj1$time_sec <- with(
+  as.data.frame(do.call(rbind, strsplit(X5KRunUnadj1$Time, ":"))),
+  as.integer(V1) * 3600 + as.integer(V2) * 60 + as.integer(V3)
+)
+```
+
+# time diff
+```{r}
+library(dplyr)
+
+df_diff <- X5KRun1 %>%
+  inner_join(X5KRunUnadj1 %>% select('Race Number', time_sec),
+             by = "Race Number",
+             suffix = c("_1", "_2")) %>%
+  mutate(time_diff_sec = time_sec_2 - time_sec_1)
+
+df_diff <- df_diff %>%
+  rename(
+    time_sec_adjusted   = time_sec_1,
+    time_sec_unadjusted = time_sec_2
+  )
+
+```
+
+
+# doughnut table
+```{r}
+bonus_tbl <- data.frame(
+  donuts = 1:40,
+  bonus = c(
+    "00:00:15","00:00:45","00:01:30","00:02:30","00:03:30","00:04:30",
+    "00:05:30","00:06:30","00:07:30","00:10:30","00:11:30","00:12:30",
+    "00:13:30","00:14:30","00:17:30","00:18:30","00:19:30","00:20:30",
+    "00:21:30","00:24:30","00:25:30","00:26:30","00:27:30","00:28:30",
+    "00:31:30","00:32:30","00:33:30","00:34:30","00:35:30","00:38:30",
+    "00:39:30","00:40:30","00:41:30","00:42:30","00:45:30","00:46:30",
+    "00:47:30","00:48:30","00:49:30","00:52:30"
+  )
+)
+
+library(lubridate)
+bonus_tbl$bonus_sec <- as.numeric(hms(bonus_tbl$bonus))
+
+```
+
+
+# number of doughnuts
+```{r}
+df_diff$donuts <- sapply(df_diff$time_diff_sec, function(x) {
+  sum(x >= bonus_tbl$bonus_sec)
+})
+```
+
+
+# results
+```{r}
+library(ggplot2)
+
+ggplot(df_diff, aes(x = donuts)) +
+  geom_bar(fill = "#d95f02") +
+  labs(
+    title = "Distribution of Donuts Eaten",
+    x = "Number of Donuts",
+    y = "Number of Runners"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(df_diff, aes(x = time_sec_unadjusted, y = time_sec_adjusted)) +
+  geom_point(alpha = 0.7) +
+  labs(
+    title = "Original vs Adjusted Time",
+    x = "Original Time (sec)",
+    y = "Adjusted Time (sec)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+df_diff$rank_group <- cut(df_diff$Position, breaks = c(0,10,50,100,Inf))
+
+ggplot(df_diff, aes(x = rank_group, y = donuts)) +
+  geom_boxplot() +
+  labs(
+    title = "Donuts by Finish Group",
+    x = "Finish Group",
+    y = "Donuts"
+  ) +
+  theme_minimal()
+```
+
