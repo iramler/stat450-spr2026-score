@@ -1,0 +1,27 @@
+---
+title: "LoL Gender Bias"
+format: html
+---
+
+Prepping Data
+
+Load json file
+
+```{r}
+library(jsonlite)
+
+url <- "https://gist.githubusercontent.com/Kerrders/0067d88dfd982c272e20dcb496f4dbc7/raw/723fd605b15a4d84bafd82cbb5d352e523349308/champions.json"
+
+# Read JSON directly from URL into an R object
+champ_raw <- fromJSON(url)
+
+# If it's already a data frame, great; otherwise coerce if needed
+champ_df <- as.data.frame(champ_raw)
+
+# Quick check
+str(champ_df)
+head(champ_df)
+
+
+```
+

@@ -1,0 +1,325 @@
+---
+title: "Comparing Two Categorical Variables (Tutorial Module)"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Overview
+
+This module is a stats-first tutorial for comparing **two categorical variables** using exploratory graphics and the **Chi-square test of association**, with follow-on analyses that leverage information returned by the chi-square procedure.
+
+### Learning targets (statistics)
+
+By the end, students should be able to:
+
+- Construct and interpret **contingency tables** (counts and conditional proportions).
+- Use exploratory graphics to assess **association vs. independence**.
+- Conduct, interpret, and diagnose the **Chi-square test of association**.
+- Quantify association with an **effect size** (Cramér's V; $φ$ for 2×2).
+- Use **residuals** / cell contributions to identify *where* association occurs.
+- Recognize when assumptions fail and apply **Fisher's exact test** or simulation.
+
+---
+
+## 1. Setup
+
+### Data requirements (generic)
+
+You need two categorical variables:
+
+- `A` with $r$ levels
+- `B` with $c$ levels
+
+Optional later: a third categorical variable for stratified extensions.
+
+### Packages
+
+```{r}
+# Core
+library(tidyverse)
+
+# Optional (useful for association statistics and nicer tables)
+# install.packages(c("janitor", "vcd", "rcompanion", "effectsize"))
+library(janitor)
+library(vcd)
+library(effectsize)
+```
+
+### Load / create a working dataset
+
+Replace this section with your application dataset later. For now, we’ll use a built-in example.
+
+```{r}
+# Example dataset: HairEyeColor is a 3-way table; we'll collapse to 2D for a demo
+dat <- as.data.frame(HairEyeColor) |>
+  filter(Sex == "Male") |>
+  select(Hair, Eye, Freq) |>
+  uncount(weights = Freq)
+
+# Ensure factors
+dat <- dat |>
+  mutate(
+    Hair = factor(Hair),
+    Eye  = factor(Eye)
+  )
+
+glimpse(dat)
+```
+
+---
+
+## 2. Descriptive summaries
+
+### 2.1 Contingency table (counts)
+
+```{r}
+tab <- table(dat$Hair, dat$Eye)
+tab
+```
+
+Optional: a cleaner print using `janitor`:
+
+```{r}
+tab_df <- tabyl(dat, Hair, Eye)
+tab_df
+```
+
+### 2.2 Conditional proportions
+
+Be explicit about the conditioning direction ("percent of what?").
+
+```{r}
+# Row proportions: P(Eye | Hair)
+prop_row <- prop.table(tab, margin = 1)
+round(prop_row, 3)
+
+# Column proportions: P(Hair | Eye)
+prop_col <- prop.table(tab, margin = 2)
+round(prop_col, 3)
+```
+
+---
+
+## 3. Exploratory graphics
+
+### 3.1 Side-by-side bar chart (counts)
+
+```{r}
+dat |>
+  ggplot(aes(x = Hair, fill = Eye)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Side-by-side bar chart (counts)", y = "Count")
+```
+
+### 3.2 100% stacked bar chart (conditional proportions)
+
+This is often the most interpretable comparison because each bar sums to 100%.
+
+```{r}
+dat |>
+  ggplot(aes(x = Hair, fill = Eye)) +
+  geom_bar(position = "fill") +
+  labs(title = "100% stacked bar chart (conditional proportions)", y = "Proportion")
+```
+
+### 3.3 Mosaic plot
+
+A mosaic plot shows cell *areas* proportional to counts. Deviations from independence appear as structure/imbalance.
+
+```{r}
+mosaic(tab, shade = TRUE, legend = TRUE, main = "Mosaic plot (shade indicates residuals)")
+```
+
+---
+
+## 4. Chi-square test of association
+
+### 4.1 Hypotheses
+
+- $H_0$: `Hair` and `Eye` are **independent**.
+- $H_A$: `Hair` and `Eye` are **associated**.
+
+### 4.2 Expected counts under independence
+
+For cell $(i,j)$,
+
+$$
+E_{ij} = \frac{(\text{row}_i\ \text{total})(\text{col}_j\ \text{total})}{n}.
+$$
+
+In R:
+
+```{r}
+chi <- chisq.test(tab)
+chi
+```
+
+Extract expected counts:
+
+```{r}
+chi$expected
+```
+
+### 4.3 Test statistic and degrees of freedom
+
+The chi-square test statistic is
+
+$$
+X^2 = \sum_{i=1}^r \sum_{j=1}^c \frac{(O_{ij}-E_{ij})^2}{E_{ij}},
+$$
+
+with degrees of freedom $(r-1)(c-1)$.
+
+In the output:
+
+- `X-squared` is the test statistic
+- `df` is degrees of freedom
+- `p-value` is the p-value
+
+---
+
+## 5. Diagnostics and assumption checks
+
+A key practical check is whether expected cell counts are sufficiently large.
+
+```{r}
+min_expected <- min(chi$expected)
+min_expected
+```
+
+A common rule-of-thumb: expected counts should generally be at least ~5 in most cells (context-dependent). If expected counts are too small, consider Fisher’s exact test (especially for 2×2) or a simulated p-value.
+
+### 5.1 Fisher’s exact test / simulated p-value
+
+```{r}
+# Fisher's exact test (works well for 2x2; can be slow for larger tables)
+fisher.test(tab)
+
+# For larger tables, consider simulation:
+chisq.test(tab, simulate.p.value = TRUE, B = 5000)
+```
+
+---
+
+## 6. Effect size (beyond p-values)
+
+### 6.1 Cramér’s V
+
+For an $r \times c$ table, Cramér’s V is:
+
+$$
+V = \sqrt{\frac{X^2}{n\,\min(r-1, c-1)}}.
+$$
+
+In R (via `effectsize`):
+
+```{r}
+cramers_v(tab)
+```
+
+If the table is 2×2, the $φ$ coefficient is closely related; Cramér’s V reduces to $φ$.
+
+---
+
+## 7. Post-hoc: where is the association coming from?
+
+The chi-square test tells you *whether* there is evidence of association. Residual analyses help identify *which cells* contribute most.
+
+### 7.1 Pearson residuals (standardized)
+
+Pearson residuals:
+
+$$
+r_{ij} = \frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}}.
+$$
+
+In R:
+
+```{r}
+resid_pearson <- chi$residuals
+resid_pearson
+```
+
+Cells with larger magnitude residuals contribute more to the overall $X^2$. The sign indicates over- vs under-representation:
+
+- Positive: observed > expected
+- Negative: observed < expected
+
+### 7.2 Cell contributions to $X^2$
+
+Each cell contributes:
+
+$$
+\frac{(O_{ij}-E_{ij})^2}{E_{ij}}.
+$$
+
+```{r}
+obs <- tab
+exp <- chi$expected
+contrib <- (obs - exp)^2 / exp
+contrib
+```
+
+### 7.3 Visualization: heatmap of residuals
+
+```{r}
+resid_df <- as.data.frame(as.table(resid_pearson)) |>
+  rename(Row = Var1, Col = Var2, Residual = Freq)
+
+resid_df |>
+  ggplot(aes(x = Col, y = Row, fill = Residual)) +
+  geom_tile() +
+  labs(title = "Heatmap of Pearson residuals", x = "B", y = "A") +
+  coord_equal()
+```
+
+> Note: If you pursue formal cellwise inference, you should address multiple comparisons (e.g., Holm/Bonferroni). In many instructional settings, residuals are used primarily as a *diagnostic* explanation tool.
+
+---
+
+## 8. 2×2 special topics (optional branch)
+
+If your table is 2×2, you can expand interpretation with:
+
+- Risk difference
+- Relative risk
+- Odds ratio
+- Confidence intervals
+
+(These connect naturally to chi-square inference and two-proportion comparisons.)
+
+---
+
+## 9. Wrap-up
+
+Students should now be able to:
+
+- Choose and compute appropriate summaries (counts vs conditional proportions).
+- Produce multiple exploratory plots and explain their implication for association.
+- Run `chisq.test()`, interpret the p-value correctly, and check expected counts.
+- Report effect size (Cramér’s V) alongside significance.
+- Use residuals / contributions to identify which cells drive the association.
+- Switch to Fisher’s exact test or simulation when conditions warrant it.
+
+---
+
+## Appendix: Template for your application
+
+Replace `Hair` and `Eye` with your variables:
+
+```{r}
+# dat <- readr::read_csv("your_data.csv")
+
+# tab <- table(dat$A, dat$B)
+# chisq.test(tab)
+
+# prop.table(tab, margin = 1)  # row proportions
+# prop.table(tab, margin = 2)  # column proportions
+```
