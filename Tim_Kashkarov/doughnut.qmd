@@ -154,7 +154,7 @@ ggplot(df_diff, aes(x = time_sec_unadjusted, y = time_sec_adjusted)) +
 ```
 
 ```{r}
-df_diff$rank_group <- cut(df_diff$Position, breaks = c(0,10,50,100,Inf))
+df_diff$rank_group <- cut(df_diff$Position, breaks = c(0,10,50,100,260))
 
 ggplot(df_diff, aes(x = rank_group, y = donuts)) +
   geom_boxplot() +
@@ -164,5 +164,43 @@ ggplot(df_diff, aes(x = rank_group, y = donuts)) +
     y = "Donuts"
   ) +
   theme_minimal()
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(df_diff, aes(x = donuts, y = time_sec_adjusted)) +
+  geom_point(fill = "#d95f02") +
+  geom_smooth() +
+  labs(
+    title = "Distribution of Donuts Eaten",
+    x = "Number of Donuts",
+    y = "Time Adj"
+  ) +
+  theme_minimal()
+```
+
+
+```{r}
+df_diff2 <- df_diff |> filter(donuts > 0)
+ggplot(df_diff2, aes(x = donuts, y = time_sec_adjusted)) +
+  geom_point(fill = "#d95f02") +
+  geom_smooth() +
+  labs(
+    title = "Distribution of Donuts Eaten without triathletes",
+    x = "Number of Donuts",
+    y = "Time Adj"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+quad_model <- lm(time_sec_adjusted ~ donuts + I(donuts^2), data = df_diff2)
+summary(quad_model)
+
+b <- coef(quad_model)
+opt_donuts <- -b["donuts"] / (2 * b["I(donuts^2)"])
+opt_donuts
+
 ```
 
