@@ -1,0 +1,128 @@
+---
+title: "Closeread on Hotdog Data"
+format: closeread-html
+
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+```{r}
+#| message: false
+#| warning: false
+hotdog_clean <- read.csv("C:/Users/elena/Downloads/academics/SYE Seminar/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
+```
+
+:::{@cr-sticky}
+
+## The story of Nathan's Hotdog Eating competition
+The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Here's a story of its iconic winners.
+
+:::
+
+:::{.cr-section}
+
+Closeread enables scrollytelling.
+
+Draw your readers attention with focus effects. @cr-features
+
+:::
+
+:::{.cr-features .aside-right #myMap}
+```{r}
+#| message: false
+#| warning: false
+ggplot(hotdog_clean) +
+  aes(
+    x = Year,
+    y = Dogs) +
+  geom_point(
+    aes(
+      colour = Sex)) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    legend.position.inside = c(0.9, 0.15)) +
+  labs(
+    x = "Year",
+    y = "Dogs eaten")
+```
+:::
+
+
+
+
+:::{#myid .myclass myattribute="something"}
+The curve exhibits some cubic behavior thanks to the introduction of Takeru Kobayashi's new technique based on eating small portions of cabbage and fasting before the competition.
+:::
+
+
+
+::: {cr-{sticky-D4escription of the need to stadardize}}
+The first section of the plot showcases the initial stages of the competition.
+Since the number of hot dogs eaten is not standardized for the time, considering that different years had different competition lengths, we need to evaluate a way to standardize all competition times across the years.
+
+Let's compute the ratio of dogs per minute for each year
+
+
+:::
+
+:::{.cr-section}
+```{r}
+# Calculating dogs/minute
+hotdog_clean_2 <- hotdog_clean |> mutate(standard = Dogs/Time)
+```
+
+
+```{r}
+# Updating the plot to reflect the new standardized variable
+ggplot(hotdog_clean_2) +
+  aes(
+    x = Year,
+    y = standard) +
+  geom_point(
+    aes(
+      colour = Sex)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    x = "Year",
+    y = "Dogs eaten")
+
+```
+
+The cubic characteristic of the plot is even more emphasized. Why could that possibly be?
+
+### TO-DO highlight The group of female winners that started in 2011. That group of points did not become affected by the standardication...
+
+
+:::
+
+
+:::{.cr-section #zoom}
+
+### Focus on 2011–2025
+
+```{r}
+ggplot(hotdog_clean_2) +
+  aes(
+    x = Year,
+    y = standard) +
+  geom_point(
+    aes(
+      colour = Sex)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    x = "Year",
+    y = "Dogs eaten")
+```
+
+Now we zoom into the recent period where the dark blue points cluster.
+
+:::
