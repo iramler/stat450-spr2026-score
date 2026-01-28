@@ -1,0 +1,92 @@
+---
+title: "Hotdog-Story"
+format: closeread-html
+execute: 
+  echo: false
+  warning: false
+  message: false
+---
+
+
+```{r}
+library(tidyverse)
+library(readr)
+
+# Load cleaned dataset (your confirmed correct path)
+hotdog_clean <- read_csv("../../hotdogs/hotdog_clean.csv")
+
+# Split Genders
+hotdog_men <- hotdog_clean %>% filter(Sex == 1)
+hotdog_women <- hotdog_clean %>% filter(Sex == 0)
+
+# Standardize: hot dogs per minute
+hotdog_men <- hotdog_men %>% mutate(Hotdogs_per_minute = Dogs / Time)
+hotdog_women <- hotdog_women %>% mutate(Hotdogs_per_minute = Dogs / Time)
+```
+
+
+:::{.cr-section}
+## The Nathan’s Hot Dog Eating Contest
+
+The Nathan’s Famous Hot Dog Eating Contest began in 1972 in Brooklyn, New York.
+Over time, rules, competitors, and performance levels have changed dramatically.
+:::
+
+:::{.cr-section}
+
+:::{focus-on="cr-rate-hist"}
+
+A fair comparison: hot dogs per minute
+
+To compare winners across time, we standardize performance by using:
+
+Hot dogs per minute = Dogs ÷ Time
+
+Scroll to reveal a histogram of winners’ eating rates (men).
+:::
+
+:::{#cr-rate-hist}
+```{r}
+hist(
+  hotdog_men$Hotdogs_per_minute,
+  main = "Men’s Winners: Hot Dogs Per Minute",
+  xlab = "Hot Dogs per Minute",
+  breaks = 12)
+
+```
+
+:::
+
+:::
+
+:::{.cr-section}
+
+:::{focus-on="cr-rate-by-year"}
+
+How has the eating rate changed over time?
+
+Plot hot dogs per minute vs. year
+
+This makes it easier to spot years where performance jumps or trends upward.
+:::
+
+:::{#cr-rate-by-year}
+
+```{r}
+ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title = "Men’s Winners: Hot Dogs Per Minute by Year",
+    x = "Year",
+    y = "Hot Dogs per Minute"
+  )
+```
+
+:::
+
+:::
+
+:::{.cr-section}
+
+
