@@ -1,0 +1,43 @@
+---
+title: Closeread-hotdog-practice
+image: limerick.png
+subtitle: "Highlight lines or spans of code or line blocks."
+format:
+  closeread-html:
+    code-tools: true
+    cr-style:
+      narrative-background-color-overlay: transparent
+      narrative-background-color-sidebar: transparent
+      section-background-color: transparent
+      narrative-text-color-overlay: black
+---
+
+To highlight lines of code, you can either use a series of line numbers separated by commas or a range separate by a hyphen. Some examples:
+
+- `highlight="1,5"`: highlight lines 1 and 5
+- `highlight="1-5"`: highlight lines 1 through 5
+
+The following section demonstrates that functionality. Note that all stickies use `.scale-to-fill`
+
+:::{.cr-section}
+Some text here. [@cr-dplyr]
+
+In the first two lines we load the `readr` package and the `tidyverse` package, which will help us read in the data and interact with it. [@cr-dplyr]{highlight="1,2"}
+
+Some text here. [@cr-dplyr]
+
+This block of code shows us reading our data in, first as a dataset of all winners, but then separating winners by gender. `|>`. [@cr-dplyr]{highlight="4-6"}
+
+:::{#cr-dplyr .scale-to-fill}
+```{r}
+#| echo: true
+#| message: false
+
+library(readr)
+library(tidyverse)
+
+hotdog_clean <- read_csv("C:/Users/14255/OneDrive/Desktop/GitHub Repos/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
+hotdog_men <- hotdog_clean |> filter(Sex == 1)
+hotdog_women <- hotdog_clean |> filter(Sex == 0)
+```
+:::
