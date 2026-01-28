@@ -8,6 +8,10 @@ Prepping Data
 Load json file
 
 ```{r}
+library(tidyverse)
+library(janitor)
+library(vcd)
+library(effectsize)
 library(jsonlite)
 
 url <- "https://gist.githubusercontent.com/Kerrders/0067d88dfd982c272e20dcb496f4dbc7/raw/723fd605b15a4d84bafd82cbb5d352e523349308/champions.json"
@@ -23,5 +27,43 @@ str(champ_df)
 head(champ_df)
 
 
+```
+
+
+```{r}
+tab_df <- tabyl(champ_df|> filter(gender != "divers"), gender, lane)
+tab_df
+```
+
+Find those with multiple lanes.
+
+```{r}
+champ_df|> filter(gender != "divers") |> 
+  filter(str_detect(lane, ",") | is.na(lane) ) |> 
+  select(name, lane) |> write_csv(file = "lol_multilane_champs.csv")
+```
+
+For now jus use the clean one
+
+```{r}
+clean_df <- champ_df|> filter(gender != "divers") |> 
+  filter(str_detect(lane, ",", negate = TRUE) & !is.na(lane) )
+
+```
+
+
+```{r}
+tab_df <- with(clean_df, table(gender, lane))
+tab_df
+```
+
+
+```{r}
+mosaic(t(tab_df), shade = TRUE, legend = TRUE, main = "Mosaic plot")
+```
+
+
+```{r}
+chisq.test(tab_df, simulate.p.value = TRUE, B = 5000)
 ```
 
