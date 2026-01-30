@@ -182,6 +182,73 @@ In this module, we investigate the following research question:
 
 ### Prepping Workspace
 
+To begin, we will need to load the packages we will be using. For this analysis, you'll need to load the `dplyr`, `tidyr`, and `vcd` packages.
+
+<details>
+<summary><b>Click to reveal code</b></summary>
+
+```{r}
+# If you need to install any of these uncomment the line below
+# install.packages(c("dplyr,"tidyr", "vcd"))
+
+library(dplyr)
+library(tidyr)
+library(vcd)
+```
+</details>
+
+
+Now we should read in the data. Save the csv file to your computer and read it in. For convenience, we will all store it as an object named `lol_genders`.
+
+
+<details>
+<summary><b>Click to reveal code</b></summary>
+
+```{r}
+# You might need to change the file path to match your setup.
+lol_genders <- readr::read_csv("lol_gender_lanes_patch16.2.csv")
+```
+</details>
+
+## Exploratory Analysis
+
+Before attempting to conduct a formal statistical inference on these data, we will start with some numerical and graphical summaries to better understand the data.
+
+
+### Univariate Analyses
+
+We'll first investigate each of the main variables of interest (`gender` and `lane`) to familiarize ourselves with them.
+
+
+- Start by make a table that displays the number of champions associated with each gender.
+
+> Question: How many champions are included in this table? How many rows are there in the `lol_genders` dataset?
+
+> Question: What might be happening?
+
+Before continuing, lets remove these two champions that don't have an assigned gender. 
+
+If you are curious which champions they are, run the following code.
+
+```{r}
+lol_genders |>
+  filter(is.na(gender))
+```
+
+
+To remove them we can use the `drop_na` function from the `tidyr` package.
+
+```{r}
+lol_MFonly <- lol_genders |> drop_na(gender)
+```
+
+Now, we'll investigate the the `lane` variable. Be sure to use the trimmed dataset that excluded the champions that didn't have genders assigned to them.
+
+```{r}
+table(lol_MFonly$lane)
+```
+
+
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
 Reserved for the conclusion
