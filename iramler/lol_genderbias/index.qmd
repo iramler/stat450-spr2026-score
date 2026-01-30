@@ -139,7 +139,7 @@ the relationship between **champion gender** and **typical lane/role**
 and potential extensions, but the primary variables for this module are
 `gender` and `lane`.
 
-Download Data: 
+Download Data:
 [lol_gender_lanes_patch16.2.csv](lol_gender_lanes_patch16.2.csv)
 
 <details>
@@ -161,13 +161,11 @@ Download Data:
 
 </details>
 
-
 #### Data Sources
 
-- [https://github.com/Kerrders/LoLdleData](https://github.com/Kerrders/LoLdleData){target="_blank"}
+-   [https://github.com/Kerrders/LoLdleData](https://github.com/Kerrders/LoLdleData){target="_blank"}
 
-- [https://mobalytics.gg/lol](https://mobalytics.gg/lol){target="_blank"}
-
+-   [https://mobalytics.gg/lol](https://mobalytics.gg/lol){target="_blank"}
 
 ## Analyzing Associations between Categorical Variables
 
@@ -175,47 +173,31 @@ Download Data:
 
 In this module, we investigate the following research question:
 
-> **Is champion gender associated with typical lane/role in League of Legends?**  
-> In other words, **does the distribution of champion genders differ across the five Summoner’s Rift roles** (Top, Jungle, Mid, Bottom/AD Carry, Support)?
+> **Is champion gender associated with typical lane/role in League of
+> Legends?**
 
+> In other words, **does the distribution of champion genders differ
+> across the five Summoner's Rift roles** (Top, Jungle, Mid, Bottom/AD
+> Carry, Support)?
+
+### Prepping Workspace
 
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
-Through this module, you explored how physical attributes, specifically
-wingspan and wingspan advantage might relate to on-court performance in
-the NBA. By cleaning the combining data from multiple sources, you've
-created a comprehensive dataset that allowed for deeper exploration of
-relationships between physical characteristics and basketball
-statistics.
-
-With your final combined dataset, you were able to generate
-visualizations to investigate potential connections, such as whether
-players with longer wingspan advantages tend to have a larger defensive
-impact. These kinds of relationships can provide use insights for
-analysts, scouts and even fans trying to understand the value of certain
-physical traits.
-
-This activity underscores the value of data wrangling, merging and
-visualization and sets the stage for more advanced analysis in the
-future. Whether that's building predictive models, exploring important
-relationships, or applying machine learning techniques to sports data.
+Reserved for the conclusion
 :::
 
-### Additional Reading
+::: {.callout-note collapse="true" title="Additional Reading"}
 
--   
+If you are interested in learning more about how gender impacts game play and design in League of Legends, check out these articles.
 
-    -   Kaazempur-Mofrad, A. R. (2022, December). [*Basketball players’
-        long wingspan enhances defensive upside but hinders shooting
-        capabilities: A statistical inquiry of the effect of NBA player
-        wingspans on shooting accuracy and defensive
-        impact*](https://sportrxiv.org/index.php/server/preprint/view/238)
-        (Preprint). *SportRxiv*. https://doi.org/10.51224/SRXIV.238
+-   [A Survey of League of Legends Champions from a Gendered
+    Perspective](https://womeningamestudies.com/a-survey-of-league-of-legends-champions-from-a-gendered-perspective/){target="_blank"} by Sarah Beck
 
--   [The Freakish Advantage of NBA All-Stars - The Wall Street
-    Journal](https://www.wsj.com/articles/the-freakish-advantage-of-nba-all-stars-1455224954){target="_blank"}
-    (Subscription required)
+-   [an analysis of gender and roles of league of legends
+    champions](https://cjleo.com/blog/an-analysis-of-gender-and-roles-of-league-of-legends-champions/#:~:text=Cho'Gath%2C%20Kindred%2C%20Nocturne,champions%20in%20League%20of%20Legends.){target="_blank"} by Cheryl-Jean Leo
 
--   [17 Current NBA Players With The Largest Wingspans, Ranked By
-    Length -
-    TheSportster](https://www.thesportster.com/current-nba-players-with-largest-longest-widest-wingspans/){target="_blank"}
+-   [Investigating Match Performance Differences between Genders of League of Legends Champions](https://dl.acm.org/doi/fullHtml/10.1145/3472538.3472549) by Ivan Ramler, Choong-Soo Lee, and Sarah Strong 
+
+
+:::
