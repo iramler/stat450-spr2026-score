@@ -1,0 +1,221 @@
+---
+title: "Comparing the gender and roles of champions in League of Legends"
+author:
+  - name: Ivan Ramler
+    email: iramler@stlawu.edu
+    affiliation:
+      - id: slu
+        name: St. Lawrence University
+date: "January 29, 2026"
+description: "A tutorial on the Chi-square test for association using gender and roles of champions in League of Legends."
+editor: 
+  canonical: true
+  markdown: 
+    wrap: 72
+image: sr_map.png
+categories:
+  - Data Visualization
+  - Chisquare Test for Association
+  - Categorical Variables
+---
+
+Please note that these material have not yet completed the required
+pedagogical and industry peer-reviews to become a published module on
+the SCORE Network. However, instructors are still welcome to use these
+materials if they are so inclined.
+
+### Welcome Video
+
+For a humourous 3-minute introduction to League of Legends, please watch
+this video by Kola, a League of Legends coach on
+[Coachify](https://coachify.gg/@phoenixkola){target="_blank"}.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/saqFrVV-YsU?si=DGPaJg6JqSNcmw3g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+
+</iframe>
+
+### Introduction
+
+League of Legends (LoL) is a 5 v. 5 multiplayer online battle arena
+(MOBA) game developed by Riot Games. In this game, players assume the
+role of a "champion" with unique abilities and engage in intense battles
+against a team of other players or computer-controlled champions.
+
+In standard play on Summoner's Rift, champions are typically assigned to
+roles that correspond to different lanes/positions on the map—most
+commonly Top, Jungle, Mid, Bottom (AD Carry), and Support (see
+@fig-srmap). Champions assigned to each position have distinct strategic
+responsibilities (for example, the Jungler moves between lanes to secure
+objectives, while the Support focuses on protecting and enabling
+teammates). Champions also have narrative identities that include
+attributes such as gender, and players often choose champions based on a
+mix of gameplay fit (role/position) and character preference.
+
+![Lanes in Summoner's Rift](sr_map.png){#fig-srmap}
+
+In this module, we will investigate whether the distribution of genders
+differs across roles.
+
+The majority of the champion metadata for this module comes from
+[LoLdleData](https://github.com/Kerrders/LoLdleData){target="_blank"},
+an open GitHub project that programmatically compiles "extra" champion
+attributes that aren't conveniently available from the official Riot API
+endpoints (e.g., gender, game lore region, and release year).
+
+The LoLdleData is supplemented with laning information taken from the
+fan-site [Mobalytics](https://mobalytics.gg/lol){target="_blank"} (based
+on patch 16.2).
+
+Because these are community-maintained, derived datasets, the gender and
+lane labels should be treated as typical classifications rather than
+official ground truth. In particular, lane/role assignments reflect a
+snapshot based on patch 16.2, and many champions can be played
+effectively in multiple lanes depending on strategy, player skill, and
+balance changes.
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this tutorial, students will be able to:
+
+1.  Organize two categorical variables into a contingency table and
+    compute row/column proportions.
+
+2.  Create and interpret exploratory visualizations for two categorical
+    variables (e.g., side-by-side bars, stacked proportion bars, mosaic
+    plots).
+
+3.  State hypotheses for the Chi-square test of association and explain
+    what "independence" means in this context.
+
+4.  Compute and interpret the Chi-square test statistic, degrees of
+    freedom, and p-value using R.
+
+5.  Check chi-square conditions by examining expected cell counts.
+
+6.  Report and interpret an effect size for association.
+
+7.  Use residuals / cell contributions to identify which category
+    combinations drive the association.
+:::
+
+::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+This could be suitable of an out of class activity or one that spans one
+or more class periods.
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+**Technology Requirement:**
+
+This activity is designed to be completed primarily in `R` using a
+Quarto document workflow. Students should be comfortable importing data
+and performing basic data wrangling with packages from the tidyverse
+(especially `readr`, `dplyr`, and `tidyr`).
+
+Statistical inference will be carried out using base R functions such as
+`chisq.test()`.
+
+We will also use the `vcd` package (Visualizing Categorical Data) to
+create mosaic and association plots, including optional residual-based
+shading that helps identify which category combinations contribute most
+to the chi-square result.
+
+<details>
+
+<summary><b>Instructor’s Note (Optional: Point-and-Click
+Software)</b></summary>
+
+A short optional section provides guidance for completing the chi-square
+test in a point-and-click environment (e.g., Minitab) for instructors
+that do not use `R`.
+
+</details>
+:::
+
+### Data
+
+The `lol_gender_lanes_patch16.2.csv` dataset contains 172 rows, one per
+League of Legends champion, and includes basic metadata used to study
+the relationship between **champion gender** and **typical lane/role**
+(based on patch 16.2). Several metadata fields are included for context
+and potential extensions, but the primary variables for this module are
+`gender` and `lane`.
+
+Download Data: 
+[lol_gender_lanes_patch16.2.csv](lol_gender_lanes_patch16.2.csv)
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description |
+|------------------------------------|------------------------------------|
+| name | Champion name |
+| title | Champion title/epithet (e.g., "the Sinister Blade") |
+| resource | Champion's primary in-lore "resource" or energy system used for abilities (most are "Mana") |
+| genre | Broad gameplay archetype label for the champion (Fighter, Assassin, etc.) |
+| skinCount | Number of available skins for the champion at the time the dataset was compiled |
+| gender | Champion gender label used for this analysis (male, female, NA) |
+| attackType | Champion’s typical attack style (close vs. range) |
+| releaseDate | Champion release date (year) |
+| region | Champion’s primary lore region/faction (e.g., piltover, noxus, etc.) |
+| lane | Champion’s typical lane/role assignment for Summoner’s Rift (adc, jungle, mid, support, top) |
+
+</details>
+
+
+#### Data Sources
+
+- [https://github.com/Kerrders/LoLdleData](https://github.com/Kerrders/LoLdleData){target="_blank"}
+
+- [https://mobalytics.gg/lol](https://mobalytics.gg/lol){target="_blank"}
+
+
+## Analyzing Associations between Categorical Variables
+
+### Motivating question
+
+In this module, we investigate the following research question:
+
+> **Is champion gender associated with typical lane/role in League of Legends?**  
+> In other words, **does the distribution of champion genders differ across the five Summoner’s Rift roles** (Top, Jungle, Mid, Bottom/AD Carry, Support)?
+
+
+
+::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+Through this module, you explored how physical attributes, specifically
+wingspan and wingspan advantage might relate to on-court performance in
+the NBA. By cleaning the combining data from multiple sources, you've
+created a comprehensive dataset that allowed for deeper exploration of
+relationships between physical characteristics and basketball
+statistics.
+
+With your final combined dataset, you were able to generate
+visualizations to investigate potential connections, such as whether
+players with longer wingspan advantages tend to have a larger defensive
+impact. These kinds of relationships can provide use insights for
+analysts, scouts and even fans trying to understand the value of certain
+physical traits.
+
+This activity underscores the value of data wrangling, merging and
+visualization and sets the stage for more advanced analysis in the
+future. Whether that's building predictive models, exploring important
+relationships, or applying machine learning techniques to sports data.
+:::
+
+### Additional Reading
+
+-   
+
+    -   Kaazempur-Mofrad, A. R. (2022, December). [*Basketball players’
+        long wingspan enhances defensive upside but hinders shooting
+        capabilities: A statistical inquiry of the effect of NBA player
+        wingspans on shooting accuracy and defensive
+        impact*](https://sportrxiv.org/index.php/server/preprint/view/238)
+        (Preprint). *SportRxiv*. https://doi.org/10.51224/SRXIV.238
+
+-   [The Freakish Advantage of NBA All-Stars - The Wall Street
+    Journal](https://www.wsj.com/articles/the-freakish-advantage-of-nba-all-stars-1455224954){target="_blank"}
+    (Subscription required)
+
+-   [17 Current NBA Players With The Largest Wingspans, Ranked By
+    Length -
+    TheSportster](https://www.thesportster.com/current-nba-players-with-largest-longest-widest-wingspans/){target="_blank"}

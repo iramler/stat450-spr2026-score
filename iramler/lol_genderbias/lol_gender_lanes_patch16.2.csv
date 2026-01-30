@@ -1,0 +1,173 @@
+name,title,resource,genre,skinCount,gender,attackType,releaseDate,region,lane
+Aatrox,the Darkin Blade,Blood Well,Fighter,13,male,close,2013,runeterra,top
+Ahri,the Nine-Tailed Fox,Mana,"Mage,Assassin",22,female,range,2011,ionia,mid
+Akali,the Rogue Assassin,Energy,Assassin,22,female,close,2010,ionia,mid
+Akshan,the Rogue Sentinel,Mana,"Marksman,Assassin",4,male,range,2021,shurima,mid
+Alistar,the Minotaur,Mana,"Tank,Support",16,male,close,2009,runeterra,support
+Ambessa,Matriarch of War,Energy,"Fighter,Assassin",2,female,close,2024,noxus,mid
+Amumu,the Sad Mummy,Mana,"Tank,Support",15,male,close,2009,shurima,jungle
+Anivia,the Cryophoenix,Mana,Mage,13,female,range,2009,freljord,mid
+Annie,the Dark Child,Mana,"Mage,Support",18,female,range,2009,runeterra,mid
+Aphelios,the Weapon of the Faithful,Mana,Marksman,7,male,range,2019,mount-targon,bottom
+Ashe,the Frost Archer,Mana,"Marksman,Support",20,female,range,2009,freljord,bottom
+Aurelion Sol,The Star Forger,Mana,Mage,6,male,range,2016,mount-targon,mid
+Aurora,the Witch Between Worlds,Mana,"Mage,Assassin",3,female,range,2024,freljord,mid
+Azir,the Emperor of the Sands,Mana,"Mage,Marksman",8,male,range,2014,shurima,mid
+Bard,the Wandering Caretaker,Mana,"Support,Mage",9,male,range,2015,runeterra,support
+Bel'Veth,the Empress of the Void,,Fighter,4,female,close,2022,void,jungle
+Blitzcrank,the Great Steam Golem,Mana,"Tank,Support",16,male,close,2009,zaun,support
+Brand,the Burning Vengeance,Mana,"Mage,Support",13,male,range,2011,runeterra,support
+Braum,the Heart of the Freljord,Mana,"Tank,Support",9,male,close,2014,freljord,support
+Briar,the Restrained Hunger,Fury,"Fighter,Assassin",4,female,close,2023,noxus,jungle
+Caitlyn,the Sheriff of Piltover,Mana,Marksman,20,female,range,2011,piltover,bottom
+Camille,the Steel Shadow,Mana,"Fighter,Assassin",8,female,close,2016,piltover,top
+Cassiopeia,the Serpent's Embrace,Mana,Mage,10,female,range,2010,noxus,mid
+Cho'Gath,the Terror of the Void,Mana,"Tank,Mage",12,,close,2009,void,top
+Corki,the Daring Bombardier,Mana,"Marksman,Mage",12,male,range,2009,bandle-city,mid
+Darius,the Hand of Noxus,Mana,"Fighter,Tank",16,male,close,2012,noxus,top
+Diana,Scorn of the Moon,Mana,"Fighter,Assassin",15,female,close,2012,mount-targon,jungle
+Draven,the Glorious Executioner,Mana,Marksman,15,male,range,2012,noxus,bottom
+Dr. Mundo,the Madman of Zaun,None,"Tank,Fighter",12,male,close,2009,zaun,top
+Ekko,the Boy Who Shattered Time,Mana,"Assassin,Mage",13,male,close,2015,zaun,jungle
+Elise,the Spider Queen,Mana,"Assassin,Mage",10,female,range,2012,shadow-isles,jungle
+Evelynn,Agony's Embrace,Mana,"Assassin,Mage",17,female,close,2009,runeterra,jungle
+Ezreal,the Prodigal Explorer,Mana,"Marksman,Mage",22,male,range,2010,piltover,bottom
+Fiddlesticks,the Ancient Fear,Mana,"Mage,Support",13,male,close,2009,runeterra,jungle
+Fiora,the Grand Duelist,Mana,"Fighter,Assassin",17,female,close,2012,demacia,top
+Fizz,the Tidal Trickster,Mana,"Assassin,Fighter",14,male,close,2011,bilgewater,mid
+Galio,the Colossus,Mana,"Tank,Mage",11,male,close,2010,demacia,mid
+Gangplank,the Saltwater Scourge,Mana,Fighter,13,male,close,2009,bilgewater,top
+Garen,The Might of Demacia,None,"Fighter,Tank",17,male,close,2010,demacia,top
+Gnar,the Missing Link,Rage,"Fighter,Tank",11,male,close,2014,freljord,top
+Gragas,the Rabble Rouser,Mana,"Fighter,Mage",15,male,close,2010,freljord,jungle
+Graves,the Outlaw,Mana,Marksman,14,male,close,2011,bilgewater,jungle
+Gwen,The Hallowed Seamstress,Mana,Fighter,6,female,close,2021,shadow-isles,top
+Hecarim,the Shadow of War,Mana,"Fighter,Tank",13,male,close,2012,shadow-isles,jungle
+Heimerdinger,the Revered Inventor,Mana,"Mage,Support",10,male,range,2009,piltover,support
+Hwei,the Visionary,Mana,"Mage,Support",3,male,range,2023,ionia,mid
+Illaoi,the Kraken Priestess,Mana,"Fighter,Tank",6,female,close,2015,bilgewater,top
+Irelia,the Blade Dancer,Mana,"Fighter,Assassin",16,female,close,2010,ionia,top
+Ivern,the Green Father,Mana,"Support,Mage",6,male,close,2016,ionia,jungle
+Janna,the Storm's Fury,Mana,"Support,Mage",17,female,range,2009,zaun,support
+Jarvan IV,the Exemplar of Demacia,Mana,"Fighter,Tank",16,male,close,2011,demacia,jungle
+Jax,Grandmaster at Arms,Mana,Fighter,17,male,close,2009,runeterra,top
+Jayce,the Defender of Tomorrow,Mana,"Fighter,Marksman",12,male,close,2012,piltover,top
+Jhin,the Virtuoso,Mana,"Marksman,Mage",13,male,range,2016,ionia,bottom
+Jinx,the Loose Cannon,Mana,Marksman,15,female,range,2013,zaun,bottom
+Kai'Sa,Daughter of the Void,Mana,"Marksman,Mage",16,female,range,2018,void,bottom
+Kalista,the Spear of Vengeance,Mana,Marksman,7,female,range,2014,shadow-isles,bottom
+Karma,the Enlightened One,Mana,"Mage,Support",16,female,range,2011,ionia,support
+Karthus,the Deathsinger,Mana,Mage,11,male,close,2009,shadow-isles,jungle
+Kassadin,the Void Walker,Mana,"Assassin,Mage",10,male,close,2009,void,mid
+Katarina,the Sinister Blade,None,"Assassin,Mage",19,female,close,2009,noxus,mid
+Kayle,the Righteous,Mana,"Mage,Marksman",18,female,close,2009,demacia,top
+Kayn,the Shadow Reaper,Mana,"Fighter,Assassin",8,male,close,2017,ionia,jungle
+Kennen,the Heart of the Tempest,Energy,Mage,11,male,range,2010,ionia,top
+Kha'Zix,the Voidreaver,Mana,Assassin,9,male,close,2012,void,jungle
+Kindred,The Eternal Hunters,Mana,Marksman,9,male,range,2015,runeterra,jungle
+Kled,the Cantankerous Cavalier,Courage,Fighter,5,male,close,2016,noxus,top
+Kog'Maw,the Mouth of the Abyss,Mana,"Marksman,Mage",16,male,range,2010,void,bottom
+K'Sante,the Pride of Nazumah,Mana,"Tank,Fighter",4,male,close,2022,shurima,top
+LeBlanc,the Deceiver,Mana,"Assassin,Mage",14,female,range,2010,noxus,mid
+Lee Sin,the Blind Monk,Energy,"Fighter,Assassin",20,male,close,2011,ionia,jungle
+Leona,the Radiant Dawn,Mana,"Tank,Support",18,female,close,2011,mount-targon,support
+Lillia,the Bashful Bloom,Mana,"Fighter,Mage",6,female,close,2020,ionia,jungle
+Lissandra,the Ice Witch,Mana,Mage,10,female,range,2013,freljord,mid
+Lucian,the Purifier,Mana,"Marksman,Assassin",15,male,range,2013,demacia,bottom
+Lulu,the Fae Sorceress,Mana,"Support,Mage",14,female,range,2012,bandle-city,support
+Lux,the Lady of Luminosity,Mana,"Mage,Support",23,female,range,2010,demacia,support
+Malphite,Shard of the Monolith,Mana,"Tank,Mage",15,male,close,2009,ixtal,top
+Malzahar,the Prophet of the Void,Mana,Mage,14,male,range,2010,void,mid
+Maokai,the Twisted Treant,Mana,"Tank,Support",11,male,close,2011,shadow-isles,support
+Master Yi,the Wuju Bladesman,Mana,"Fighter,Assassin",18,male,close,2009,ionia,jungle
+Mel,the Soul's Reflection,Mana,"Mage,Support",3,female,range,2025,noxus,mid
+Milio,The Gentle Flame,Mana,"Support,Mage",4,male,range,2023,ixtal,support
+Miss Fortune,the Bounty Hunter,Mana,"Marksman,Mage",23,female,range,2010,bilgewater,bottom
+Wukong,the Monkey King,Mana,"Fighter,Tank",10,male,close,2011,ionia,jungle
+Mordekaiser,the Iron Revenant,Shield,"Fighter,Mage",13,male,close,2010,noxus,top
+Morgana,the Fallen,Mana,"Support,Mage",18,female,close,2009,demacia,support
+Naafiri,the Hound of a Hundred Bites,Mana,"Assassin,Fighter",4,female,close,2023,shurima,mid
+Nami,the Tidecaller,Mana,"Support,Mage",15,female,range,2012,runeterra,support
+Nasus,the Curator of the Sands,Mana,"Fighter,Tank",14,male,close,2009,shurima,top
+Nautilus,the Titan of the Depths,Mana,"Tank,Support",12,male,close,2012,bilgewater,support
+Neeko,the Curious Chameleon,Mana,"Mage,Support",10,female,range,2018,ixtal,support
+Nidalee,the Bestial Huntress,Mana,"Assassin,Mage",17,female,range,2009,ixtal,jungle
+Nilah,the Joy Unbound,Mana,"Fighter,Assassin",4,female,close,2022,runeterra,bottom
+Nocturne,the Eternal Nightmare,Mana,"Fighter,Assassin",11,,close,2011,runeterra,jungle
+Nunu & Willump,the Boy and His Yeti,Mana,"Tank,Mage",13,male,close,2009,freljord,jungle
+Olaf,the Berserker,Mana,"Fighter,Tank",12,male,close,2010,freljord,top
+Orianna,the Lady of Clockwork,Mana,"Mage,Support",13,female,range,2011,piltover,mid
+Ornn,The Fire below the Mountain,Mana,Tank,6,male,close,2017,freljord,top
+Pantheon,the Unbreakable Spear,Mana,"Fighter,Assassin",14,male,close,2010,mount-targon,support
+Poppy,Keeper of the Hammer,Mana,"Tank,Fighter",13,female,close,2010,demacia,top
+Pyke,the Bloodharbor Ripper,Mana,"Support,Assassin",13,male,close,2018,bilgewater,support
+Qiyana,Empress of the Elements,Mana,Assassin,10,female,close,2019,ixtal,mid
+Quinn,Demacia's Wings,Mana,"Marksman,Assassin",7,female,range,2013,demacia,top
+Rakan,The Charmer,Mana,Support,13,male,close,2017,ionia,support
+Rammus,the Armordillo,Mana,Tank,12,male,close,2009,shurima,jungle
+Rek'Sai,the Void Burrower,Rage,"Fighter,Tank",6,female,close,2014,void,jungle
+Rell,the Iron Maiden,Mana,"Tank,Support",5,female,close,2020,noxus,support
+Renata Glasc,the Chem-Baroness,Mana,"Support,Mage",6,female,range,2022,zaun,support
+Renekton,the Butcher of the Sands,Fury,"Fighter,Tank",16,male,close,2011,shurima,top
+Rengar,the Pridestalker,Ferocity,"Assassin,Fighter",9,male,close,2012,ixtal,jungle
+Riven,the Exile,None,"Fighter,Assassin",18,female,close,2011,noxus,top
+Rumble,the Mechanized Menace,Heat,"Fighter,Mage",7,male,close,2011,bandle-city,top
+Ryze,the Rune Mage,Mana,Mage,15,male,range,2009,runeterra,mid
+Samira,the Desert Rose,Mana,"Marksman,Assassin",7,female,range,2020,noxus,bottom
+Sejuani,Fury of the North,Mana,Tank,13,female,close,2012,freljord,jungle
+Senna,the Redeemer,Mana,"Support,Marksman",11,female,range,2019,runeterra,support
+Seraphine,the Starry-Eyed Songstress,Mana,"Support,Mage",11,female,range,2020,piltover,support
+Sett,the Boss,Grit,"Fighter,Tank",11,male,close,2020,ionia,top
+Shaco,the Demon Jester,Mana,Assassin,16,male,close,2009,runeterra,jungle
+Shen,the Eye of Twilight,Energy,Tank,13,male,close,2010,ionia,top
+Shyvana,the Half-Dragon,Fury,"Fighter,Mage",9,female,close,2011,demacia,jungle
+Singed,the Mad Chemist,Mana,"Tank,Mage",13,male,close,2009,zaun,top
+Sion,The Undead Juggernaut,Mana,"Tank,Fighter",11,male,close,2009,noxus,top
+Sivir,the Battle Mistress,Mana,Marksman,19,female,range,2009,shurima,bottom
+Skarner,the Primordial Sovereign,Mana,"Tank,Fighter",7,male,close,2011,ixtal,jungle
+Smolder,the Fiery Fledgling,Mana,"Marksman,Mage",3,male,range,2024,runeterra,bottom
+Sona,Maven of the Strings,Mana,"Support,Mage",16,female,range,2010,demacia,support
+Soraka,the Starchild,Mana,"Support,Mage",18,female,range,2009,mount-targon,support
+Swain,the Noxian Grand General,Mana,"Mage,Support",10,male,range,2010,noxus,support
+Sylas,the Unshackled,Mana,"Mage,Assassin",10,male,close,2019,demacia,mid
+Syndra,the Dark Sovereign,Mana,Mage,14,female,range,2012,ionia,mid
+Tahm Kench,The River King,Mana,"Tank,Support",7,male,close,2015,bilgewater,top
+Taliyah,the Stoneweaver,Mana,"Mage,Support",7,female,range,2016,shurima,jungle
+Talon,the Blade's Shadow,Mana,Assassin,13,male,close,2011,noxus,mid
+Taric,the Shield of Valoran,Mana,"Support,Tank",8,male,close,2009,mount-targon,support
+Teemo,the Swift Scout,Mana,"Marksman,Mage",16,male,range,2009,bandle-city,top
+Thresh,the Chain Warden,Mana,"Support,Tank",17,male,close,2013,shadow-isles,support
+Tristana,the Yordle Gunner,Mana,"Marksman,Assassin",17,female,range,2009,bandle-city,bottom
+Trundle,the Troll King,Mana,"Fighter,Tank",9,male,close,2010,freljord,top
+Tryndamere,the Barbarian King,Fury,"Fighter,Assassin",14,male,close,2009,freljord,top
+Twisted Fate,the Card Master,Mana,"Mage,Marksman",17,male,range,2009,bilgewater,mid
+Twitch,the Plague Rat,Mana,"Marksman,Assassin",15,male,range,2009,zaun,bottom
+Udyr,the Spirit Walker,Mana,"Fighter,Tank",7,male,close,2009,freljord,jungle
+Urgot,the Dreadnought,Mana,"Fighter,Tank",8,male,close,2010,zaun,top
+Varus,the Arrow of Retribution,Mana,"Marksman,Mage",16,male,range,2012,ionia,bottom
+Vayne,the Night Hunter,Mana,"Marksman,Assassin",19,female,range,2011,demacia,bottom
+Veigar,the Tiny Master of Evil,Mana,Mage,16,male,range,2009,bandle-city,mid
+Vel'Koz,the Eye of the Void,Mana,"Mage,Support",7,male,range,2014,void,support
+Vex,the Gloomist,Mana,Mage,4,female,range,2021,shadow-isles,mid
+Vi,the Piltover Enforcer,Mana,"Fighter,Assassin",14,female,close,2012,piltover,jungle
+Viego,The Ruined King,None,"Fighter,Assassin",8,male,close,2021,shadow-isles,jungle
+Viktor,the Herald of the Arcane,Mana,Mage,9,male,range,2011,zaun,mid
+Vladimir,the Crimson Reaper,Crimson Rush,"Mage,Fighter",14,male,close,2010,noxus,mid
+Volibear,the Relentless Storm,Mana,"Fighter,Tank",11,male,close,2011,freljord,top
+Warwick,the Uncaged Wrath of Zaun,Mana,"Fighter,Tank",16,male,close,2009,zaun,jungle
+Xayah,the Rebel,Mana,Marksman,13,female,range,2017,ionia,bottom
+Xerath,the Magus Ascendant,Mana,"Mage,Support",9,male,range,2011,shurima,support
+Xin Zhao,the Seneschal of Demacia,Mana,"Fighter,Tank",12,male,close,2010,demacia,jungle
+Yasuo,the Unforgiven,Flow,"Fighter,Assassin",18,male,close,2013,ionia,mid
+Yone,the Unforgotten,Flow,"Fighter,Assassin",12,male,close,2020,ionia,mid
+Yorick,Shepherd of Souls,Mana,"Fighter,Tank",10,male,close,2011,shadow-isles,top
+Yunara,the Unbroken Faith,Mana,Marksman,2,male,range,2025,ionia,bottom
+Yuumi,the Magical Cat,Mana,"Support,Mage",10,female,close,2019,bandle-city,support
+Zaahen,The Unsundered,Mana,"Fighter,Assassin",2,male,close,2025,runeterra,top
+Zac,the Secret Weapon,None,"Tank,Fighter",7,male,close,2013,zaun,jungle
+Zed,the Master of Shadows,Energy,Assassin,15,male,close,2012,ionia,mid
+Zeri,The Spark of Zaun,Mana,Marksman,7,female,range,2022,zaun,bottom
+Ziggs,the Hexplosives Expert,Mana,Mage,12,male,range,2012,zaun,bottom
+Zilean,the Chronokeeper,Mana,"Support,Mage",9,male,range,2009,runeterra,support
+Zoe,the Aspect of Twilight,Mana,Mage,10,female,range,2017,mount-targon,mid
+Zyra,Rise of the Thorns,Mana,"Mage,Support",13,female,range,2012,ixtal,support
