@@ -19,67 +19,16 @@ hotdog_clean <- read.csv("C:/Users/elena/Downloads/academics/SYE Seminar/stat450
 hotdog_clean_2 <- hotdog_clean |> mutate(standard = Dogs/Time)
 ```
 
-:::{@cr-sticky}
 
-## The story of Nathan's Hotdog Eating competition
-The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Here's a story of its iconic winners.
+:::: cr-section
+The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human capacity in ways no one originally imagined.
 
-:::
-
-:::{.cr-section}
-
-Closeread enables scrollytelling.
-
-Draw your readers attention with focus effects. @cr-features
-
-:::
-
-:::{.cr-features .aside-right #myMap}
-```{r}
-#| message: false
-#| warning: false
-ggplot(hotdog_clean) +
-  aes(
-    x = Year,
-    y = Dogs) +
-  geom_point(
-    aes(
-      colour = Sex)) +
-  theme_minimal() +
-  theme(
-    legend.position = "none",
-    legend.position.inside = c(0.9, 0.15)) +
-  labs(
-    x = "Year",
-    y = "Dogs eaten")
-```
-:::
-::::: {#special .sidebar}
+The Story of Nathan's Hotdog Eating Competition. @cr-time
 
 
-The curve exhibits some cubic behavior thanks to the introduction of Takeru Kobayashi's new technique based on eating small portions of cabbage and fasting before the competition.
-:::
-
-
-
-::: {cr-{sticky-D4escription of the need to stadardize}}
-The first section of the plot showcases the initial stages of the competition.
-Since the number of hot dogs eaten is not standardized for the time, considering that different years had different competition lengths, we need to evaluate a way to standardize all competition times across the years.
-
-Let's compute the ratio of dogs per minute for each year
-
-
-:::
-
-:::{.cr-section}
-```{r}
-# Calculating dogs/minute
-hotdog_clean_2 <- hotdog_clean |> mutate(standard = Dogs/Time)
-```
-
+:::{#cr-time}
 
 ```{r}
-# Updating the plot to reflect the new standardized variable
 ggplot(hotdog_clean_2) +
   aes(
     x = Year,
@@ -91,36 +40,41 @@ ggplot(hotdog_clean_2) +
   theme(legend.position = "none") +
   labs(
     x = "Year",
-    y = "Dogs eaten")
-
+    y = "Dogs eaten") 
+#  ggsave("filename.png", plot = get_last_plot())
 ```
-
-The cubic characteristic of the plot is even more emphasized. Why could that possibly be?
-
-### TO-DO highlight The group of female winners that started in 2011. That group of points did not become affected by the standardication...
-
-
 :::
 
+:::{#cr-time2}
 
-:::{.cr-section #zoom}
-
-### Focus on 2011–2025
-
-
-Now we zoom into the recent period where the dark blue points cluster.
-
-:::
+```{r}
+#| message: false
+#| warning: false
 
 
-
--------------------------------
-The Story of Nathan's Hotdog Eating Competition
-
-:::{.cr-layout sidebar-left}
-
-:::{.cr-section}
-The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human capacity in ways no one originally imagined.
+ggplot(hotdog_clean_2) +
+  aes(
+    x = Year,
+    y = standard) +
+  geom_point(
+    aes(
+      colour = Sex)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    x = "Year",
+    y = "Dogs per minute") +
+    geom_vline(xintercept = 2011, linetype = 1) +
+      annotate(
+            "label",
+            x = 2019,
+            y = 2.5,
+            size = 2.4,
+            label = "Female winners") + 
+  annotate("rect", xmin = 2010, xmax = 2026, ymin = 2.5, ymax = 5.2,
+  alpha = .2, fill = "blue4")
+      
+```
 :::
 
 :::{.cr-section}
@@ -144,22 +98,4 @@ Beginning in 2011, a new cluster appears: female champions. These competitors sh
 Focus on 2011–2025
 
 In the most recent years, the darker blue points cluster tightly. This reflects a more stable competitive field and highlights how the women’s division has developed its own trajectory.
-:::
-
-:::{.cr-sticky}
-
-```{r}
-ggplot(hotdog_clean_2) +
-  aes(
-    x = Year,
-    y = standard) +
-  geom_point(
-    aes(
-      colour = Sex)) +
-  theme_minimal() +
-  theme(legend.position = "none") +
-  labs(
-    x = "Year",
-    y = "Dogs eaten")
-```
 :::
