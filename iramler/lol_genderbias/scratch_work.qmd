@@ -29,6 +29,33 @@ head(champ_df)
 
 ```
 
+Save json and clean up lanes
+
+```{r}
+#champ_df |> 
+#  select(name, title, resource, genre, skinCount, 
+#gender, attackType, releaseDate, region, lane) |>
+#  write_csv(file = "lol_gender_lanes_patch16.2.csv")
+```
+
+Read in cleaned up data
+```{r}
+lol_genders <- read_csv("iramler/lol_genderbias/lol_gender_lanes_patch16.2.csv")
+```
+
+Investigate the data to familiarize yourself with it. 
+
+Univariate Tables
+
+```{r}
+count(lol_genders,gender)
+```
+
+
+
+
+
+
 
 ```{r}
 tab_df <- tabyl(champ_df|> filter(gender != "divers"), gender, lane)
