@@ -16,6 +16,7 @@ library(here)
 #| message: false
 #| warning: false
 hotdog_clean <- read.csv("C:/Users/elena/Downloads/academics/SYE Seminar/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
+hotdog_clean_2 <- hotdog_clean |> mutate(standard = Dogs/Time)
 ```
 
 :::{@cr-sticky}
@@ -53,11 +54,9 @@ ggplot(hotdog_clean) +
     y = "Dogs eaten")
 ```
 :::
+::::: {#special .sidebar}
 
 
-
-
-:::{#myid .myclass myattribute="something"}
 The curve exhibits some cubic behavior thanks to the introduction of Takeru Kobayashi's new technique based on eating small portions of cabbage and fasting before the competition.
 :::
 
@@ -108,6 +107,47 @@ The cubic characteristic of the plot is even more emphasized. Why could that pos
 
 ### Focus on 2011–2025
 
+
+Now we zoom into the recent period where the dark blue points cluster.
+
+:::
+
+
+
+-------------------------------
+The Story of Nathan's Hotdog Eating Competition
+
+:::{.cr-layout sidebar-left}
+
+:::{.cr-section}
+The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human capacity in ways no one originally imagined.
+:::
+
+:::{.cr-section}
+Early competitions varied in length, which makes raw totals hard to compare across years. To make performances comparable, we standardize results by calculating hot dogs eaten per minute.
+:::
+
+:::{.cr-section}
+This adjustment reveals a much clearer performance trend. Notice how the trajectory of winning totals changes once time is accounted for.
+:::
+
+:::{.cr-section}
+Around the early 2000s, the curve bends sharply upward. This coincides with the arrival of Takeru Kobayashi, whose training methods and eating technique revolutionized the competition.
+:::
+
+:::{.cr-section}
+Beginning in 2011, a new cluster appears: female champions. These competitors show a distinct performance pattern that does not follow the same explosive growth seen in the men’s division.
+:::
+
+:::{.cr-section}
+
+Focus on 2011–2025
+
+In the most recent years, the darker blue points cluster tightly. This reflects a more stable competitive field and highlights how the women’s division has developed its own trajectory.
+:::
+
+:::{.cr-sticky}
+
 ```{r}
 ggplot(hotdog_clean_2) +
   aes(
@@ -122,7 +162,4 @@ ggplot(hotdog_clean_2) +
     x = "Year",
     y = "Dogs eaten")
 ```
-
-Now we zoom into the recent period where the dark blue points cluster.
-
 :::
