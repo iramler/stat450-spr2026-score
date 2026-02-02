@@ -27,7 +27,7 @@ materials if they are so inclined.
 ### Welcome Video
 
 For a humourous 3-minute introduction to League of Legends, please watch
-this video by Kola, a League of Legends coach on
+this video by Kola, a League of Legends coach with
 [Coachify](https://coachify.gg/@phoenixkola){target="_blank"}.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/saqFrVV-YsU?si=DGPaJg6JqSNcmw3g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
