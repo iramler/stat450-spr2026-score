@@ -188,6 +188,9 @@ To begin, we will need to load the packages we will be using. For this analysis,
 <summary><b>Click to reveal code</b></summary>
 
 ```{r}
+#| echo: true
+#| eval: false
+
 # If you need to install any of these uncomment the line below
 # install.packages(c("dplyr,"tidyr", "vcd"))
 
@@ -205,6 +208,10 @@ Now we should read in the data. Save the csv file to your computer and read it i
 <summary><b>Click to reveal code</b></summary>
 
 ```{r}
+#| echo: true
+#| eval: false
+
+
 # You might need to change the file path to match your setup.
 lol_genders <- readr::read_csv("lol_gender_lanes_patch16.2.csv")
 ```
@@ -231,6 +238,10 @@ Before continuing, lets remove these two champions that don't have an assigned g
 If you are curious which champions they are, run the following code.
 
 ```{r}
+#| echo: true
+#| eval: false
+
+
 lol_genders |>
   filter(is.na(gender))
 ```
@@ -239,12 +250,20 @@ lol_genders |>
 To remove them we can use the `drop_na` function from the `tidyr` package.
 
 ```{r}
+#| echo: true
+#| eval: false
+
+
 lol_MFonly <- lol_genders |> drop_na(gender)
 ```
 
 Now, we'll investigate the the `lane` variable. Be sure to use the trimmed dataset that excluded the champions that didn't have genders assigned to them.
 
 ```{r}
+#| echo: true
+#| eval: false
+
+
 table(lol_MFonly$lane)
 ```
 

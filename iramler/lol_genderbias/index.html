@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ivan Ramler">
+<meta name="dcterms.date" content="2026-01-29">
+<meta name="description" content="A tutorial on the Chi-square test for association using gender and roles of champions in League of Legends.">
+
+<title>Comparing the gender and roles of champions in League of Legends</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Comparing the gender and roles of champions in League of Legends</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Data Visualization</div>
+    <div class="quarto-category">Chisquare Test for Association</div>
+    <div class="quarto-category">Categorical Variables</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A tutorial on the Chi-square test for association using gender and roles of champions in League of Legends.
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Ivan Ramler <a href="mailto:iramler@stlawu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            St.&nbsp;Lawrence University
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 29, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
+<section id="welcome-video" class="level3">
+<h3 class="anchored" data-anchor-id="welcome-video">Welcome Video</h3>
+<p>For a humourous 3-minute introduction to League of Legends, please watch this video by Kola, a League of Legends coach on <a href="https://coachify.gg/@phoenixkola" target="_blank">Coachify</a>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/saqFrVV-YsU?si=DGPaJg6JqSNcmw3g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</section>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>League of Legends (LoL) is a 5 v. 5 multiplayer online battle arena (MOBA) game developed by Riot Games. In this game, players assume the role of a “champion” with unique abilities and engage in intense battles against a team of other players or computer-controlled champions.</p>
+<p>In standard play on Summoner’s Rift, champions are typically assigned to roles that correspond to different lanes/positions on the map—most commonly Top, Jungle, Mid, Bottom (AD Carry), and Support (see <a href="#fig-srmap" class="quarto-xref">Figure&nbsp;1</a>). Champions assigned to each position have distinct strategic responsibilities (for example, the Jungler moves between lanes to secure objectives, while the Support focuses on protecting and enabling teammates). Champions also have narrative identities that include attributes such as gender, and players often choose champions based on a mix of gameplay fit (role/position) and character preference.</p>
+<div id="fig-srmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-srmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="sr_map.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-srmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Lanes in Summoner’s Rift
+</figcaption>
+</figure>
+</div>
+<p>In this module, we will investigate whether the distribution of genders differs across roles.</p>
+<p>The majority of the champion metadata for this module comes from <a href="https://github.com/Kerrders/LoLdleData" target="_blank">LoLdleData</a>, an open GitHub project that programmatically compiles “extra” champion attributes that aren’t conveniently available from the official Riot API endpoints (e.g., gender, game lore region, and release year).</p>
+<p>The LoLdleData is supplemented with laning information taken from the fan-site <a href="https://mobalytics.gg/lol" target="_blank">Mobalytics</a> (based on patch 16.2).</p>
+<p>Because these are community-maintained, derived datasets, the gender and lane labels should be treated as typical classifications rather than official ground truth. In particular, lane/role assignments reflect a snapshot based on patch 16.2, and many champions can be played effectively in multiple lanes depending on strategy, player skill, and balance changes.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>By the end of this tutorial, students will be able to:</p>
+<ol type="1">
+<li><p>Organize two categorical variables into a contingency table and compute row/column proportions.</p></li>
+<li><p>Create and interpret exploratory visualizations for two categorical variables (e.g., side-by-side bars, stacked proportion bars, mosaic plots).</p></li>
+<li><p>State hypotheses for the Chi-square test of association and explain what “independence” means in this context.</p></li>
+<li><p>Compute and interpret the Chi-square test statistic, degrees of freedom, and p-value using R.</p></li>
+<li><p>Check chi-square conditions by examining expected cell counts.</p></li>
+<li><p>Report and interpret an effect size for association.</p></li>
+<li><p>Use residuals / cell contributions to identify which category combinations drive the association.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Activity Length">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity Length
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This could be suitable of an out of class activity or one that spans one or more class periods.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Methods">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Methods
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Technology Requirement:</strong></p>
+<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow. Students should be comfortable importing data and performing basic data wrangling with packages from the tidyverse (especially <code>readr</code>, <code>dplyr</code>, and <code>tidyr</code>).</p>
+<p>Statistical inference will be carried out using base R functions such as <code>chisq.test()</code>.</p>
+<p>We will also use the <code>vcd</code> package (Visualizing Categorical Data) to create mosaic and association plots, including optional residual-based shading that helps identify which category combinations contribute most to the chi-square result.</p>
+<details>
+<summary>
+<b>Instructor’s Note (Optional: Point-and-Click Software)</b>
+</summary>
+<p>A short optional section provides guidance for completing the chi-square test in a point-and-click environment (e.g., Minitab) for instructors that do not use <code>R</code>.</p>
+</details>
+</div>
+</div>
+</div>
+</section>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>The <code>lol_gender_lanes_patch16.2.csv</code> dataset contains 172 rows, one per League of Legends champion, and includes basic metadata used to study the relationship between <strong>champion gender</strong> and <strong>typical lane/role</strong> (based on patch 16.2). Several metadata fields are included for context and potential extensions, but the primary variables for this module are <code>gender</code> and <code>lane</code>.</p>
+<p>Download Data: <a href="lol_gender_lanes_patch16.2.csv">lol_gender_lanes_patch16.2.csv</a></p>
+<details>
+<summary>
+<b>Variable Descriptions</b>
+</summary>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>name</td>
+<td>Champion name</td>
+</tr>
+<tr class="even">
+<td>title</td>
+<td>Champion title/epithet (e.g., “the Sinister Blade”)</td>
+</tr>
+<tr class="odd">
+<td>resource</td>
+<td>Champion’s primary in-lore “resource” or energy system used for abilities (most are “Mana”)</td>
+</tr>
+<tr class="even">
+<td>genre</td>
+<td>Broad gameplay archetype label for the champion (Fighter, Assassin, etc.)</td>
+</tr>
+<tr class="odd">
+<td>skinCount</td>
+<td>Number of available skins for the champion at the time the dataset was compiled</td>
+</tr>
+<tr class="even">
+<td>gender</td>
+<td>Champion gender label used for this analysis (male, female, NA)</td>
+</tr>
+<tr class="odd">
+<td>attackType</td>
+<td>Champion’s typical attack style (close vs.&nbsp;range)</td>
+</tr>
+<tr class="even">
+<td>releaseDate</td>
+<td>Champion release date (year)</td>
+</tr>
+<tr class="odd">
+<td>region</td>
+<td>Champion’s primary lore region/faction (e.g., piltover, noxus, etc.)</td>
+</tr>
+<tr class="even">
+<td>lane</td>
+<td>Champion’s typical lane/role assignment for Summoner’s Rift (adc, jungle, mid, support, top)</td>
+</tr>
+</tbody>
+</table>
+</details>
+<section id="data-sources" class="level4">
+<h4 class="anchored" data-anchor-id="data-sources">Data Sources</h4>
+<ul>
+<li><p><a href="https://github.com/Kerrders/LoLdleData" target="_blank">https://github.com/Kerrders/LoLdleData</a></p></li>
+<li><p><a href="https://mobalytics.gg/lol" target="_blank">https://mobalytics.gg/lol</a></p></li>
+</ul>
+</section>
+</section>
+<section id="analyzing-associations-between-categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="analyzing-associations-between-categorical-variables">Analyzing Associations between Categorical Variables</h2>
+<section id="motivating-question" class="level3">
+<h3 class="anchored" data-anchor-id="motivating-question">Motivating question</h3>
+<p>In this module, we investigate the following research question:</p>
+<blockquote class="blockquote">
+<p><strong>Is champion gender associated with typical lane/role in League of Legends?</strong></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>In other words, <strong>does the distribution of champion genders differ across the five Summoner’s Rift roles</strong> (Top, Jungle, Mid, Bottom/AD Carry, Support)?</p>
+</blockquote>
+</section>
+<section id="prepping-workspace" class="level3">
+<h3 class="anchored" data-anchor-id="prepping-workspace">Prepping Workspace</h3>
+<p>To begin, we will need to load the packages we will be using. For this analysis, you’ll need to load the <code>dplyr</code>, <code>tidyr</code>, and <code>vcd</code> packages.</p>
+<details>
+<summary>
+<b>Click to reveal code</b>
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you need to install any of these uncomment the line below</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("dplyr,"tidyr", "vcd"))</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+<p>Now we should read in the data. Save the csv file to your computer and read it in. For convenience, we will all store it as an object named <code>lol_genders</code>.</p>
+<details>
+<summary>
+<b>Click to reveal code</b>
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You might need to change the file path to match your setup.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"lol_gender_lanes_patch16.2.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+</section>
+</section>
+<section id="exploratory-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-analysis">Exploratory Analysis</h2>
+<p>Before attempting to conduct a formal statistical inference on these data, we will start with some numerical and graphical summaries to better understand the data.</p>
+<section id="univariate-analyses" class="level3">
+<h3 class="anchored" data-anchor-id="univariate-analyses">Univariate Analyses</h3>
+<p>We’ll first investigate each of the main variables of interest (<code>gender</code> and <code>lane</code>) to familiarize ourselves with them.</p>
+<ul>
+<li>Start by make a table that displays the number of champions associated with each gender.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Question: How many champions are included in this table? How many rows are there in the <code>lol_genders</code> dataset?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Question: What might be happening?</p>
+</blockquote>
+<p>Before continuing, lets remove these two champions that don’t have an assigned gender.</p>
+<p>If you are curious which champions they are, run the following code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(gender))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To remove them we can use the <code>drop_na</code> function from the <code>tidyr</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lol_MFonly <span class="ot">&lt;-</span> lol_genders <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we’ll investigate the the <code>lane</code> variable. Be sure to use the trimmed dataset that excluded the champions that didn’t have genders assigned to them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lol_MFonly<span class="sc">$</span>lane)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="bivariate-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="bivariate-analysis">Bivariate Analysis</h3>
+<ul>
+<li><p>Two-ways tables</p></li>
+<li><p>Bar charts</p></li>
+<li><p>Mosaic Plots</p></li>
+</ul>
+</section>
+</section>
+<section id="inferential-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="inferential-statistics">Inferential Statistics</h2>
+<section id="overview-of-chi-square-test" class="level3">
+<h3 class="anchored" data-anchor-id="overview-of-chi-square-test">Overview of Chi-Square Test</h3>
+<p>Give big picture of chi-square test. Maybe outline the steps and then give the details?</p>
+</section>
+<section id="hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="hypotheses">Hypotheses</h3>
+</section>
+<section id="computing-the-chi-square-test-statistic-and-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="computing-the-chi-square-test-statistic-and-p-value">Computing the Chi-square test statistic and p-value</h3>
+</section>
+<section id="interpreting-results" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-results">Interpreting Results</h3>
+<ul>
+<li><p>Report and interpret an effect size for association (e.g., Cramér’s V).</p></li>
+<li><p>Use residuals / cell contributions to identify which category combinations drive the association.</p></li>
+</ul>
+</section>
+<section id="extensions" class="level3">
+<h3 class="anchored" data-anchor-id="extensions">Extensions?</h3>
+<ul>
+<li>Simulated p-value</li>
+<li>Other ways to interpret results</li>
+<li>Other variables? (maybe the genre?)</li>
+<li>Other games?</li>
+</ul>
+</section>
+</section>
+<section id="optional-instructor-materials-for-introductory-statistics-courses" class="level2">
+<h2 class="anchored" data-anchor-id="optional-instructor-materials-for-introductory-statistics-courses">Optional: Instructor Materials for Introductory Statistics Courses</h2>
+<p>Need to provide a trimmed down version for intro stat classes. Maybe more</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Conclusion">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conclusion
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Reserved for the conclusion</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Additional Reading">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Additional Reading
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you are interested in learning more about how gender impacts game play and design in League of Legends, check out these articles.</p>
+<ul>
+<li><p><a href="https://womeningamestudies.com/a-survey-of-league-of-legends-champions-from-a-gendered-perspective/" target="_blank">A Survey of League of Legends Champions from a Gendered Perspective</a> by Sarah Beck</p></li>
+<li><p><a href="https://cjleo.com/blog/an-analysis-of-gender-and-roles-of-league-of-legends-champions/#:~:text=Cho'Gath%2C%20Kindred%2C%20Nocturne,champions%20in%20League%20of%20Legends." target="_blank">an analysis of gender and roles of league of legends champions</a> by Cheryl-Jean Leo</p></li>
+<li><p><a href="https://dl.acm.org/doi/fullHtml/10.1145/3472538.3472549">Investigating Match Performance Differences between Genders of League of Legends Champions</a> by Ivan Ramler, Choong-Soo Lee, and Sarah Strong</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
