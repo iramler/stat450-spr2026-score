@@ -248,7 +248,42 @@ Now, we'll investigate the the `lane` variable. Be sure to use the trimmed datas
 table(lol_MFonly$lane)
 ```
 
+### Bivariate Analysis
 
+- Two-ways tables
+
+- Bar charts
+
+- Mosaic Plots
+
+## Inferential Statistics
+
+### Overview of Chi-Square Test
+
+Give big picture of chi-square test. Maybe outline the steps and then give the details?
+
+### Hypotheses
+
+### Computing the Chi-square test statistic and p-value
+
+### Interpreting Results
+
+- Report and interpret an effect size for association (e.g., Cramér's V).
+
+- Use residuals / cell contributions to identify which category combinations drive the association.
+
+### Extensions?
+
+- Simulated p-value
+- Other ways to interpret results
+- Other variables? (maybe the genre?)
+- Other games?
+
+
+
+## Optional: Instructor Materials for Introductory Statistics Courses
+
+Need to provide a trimmed down version for intro stat classes. Maybe more
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
 Reserved for the conclusion
