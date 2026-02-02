@@ -1,0 +1,101 @@
+---
+title: "Closeread on Hotdog Data"
+format: closeread-html
+
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+```{r}
+#| message: false
+#| warning: false
+hotdog_clean <- read.csv("C:/Users/elena/Downloads/academics/SYE Seminar/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
+hotdog_clean_2 <- hotdog_clean |> mutate(standard = Dogs/Time)
+```
+
+
+:::: cr-section
+The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human capacity in ways no one originally imagined.
+
+The Story of Nathan's Hotdog Eating Competition. @cr-time
+
+
+:::{#cr-time}
+
+```{r}
+ggplot(hotdog_clean_2) +
+  aes(
+    x = Year,
+    y = standard) +
+  geom_point(
+    aes(
+      colour = Sex)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    x = "Year",
+    y = "Dogs eaten") 
+#  ggsave("filename.png", plot = get_last_plot())
+```
+:::
+
+:::{#cr-time2}
+
+```{r}
+#| message: false
+#| warning: false
+
+
+ggplot(hotdog_clean_2) +
+  aes(
+    x = Year,
+    y = standard) +
+  geom_point(
+    aes(
+      colour = Sex)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    x = "Year",
+    y = "Dogs per minute") +
+    geom_vline(xintercept = 2011, linetype = 1) +
+      annotate(
+            "label",
+            x = 2019,
+            y = 2.5,
+            size = 2.4,
+            label = "Female winners") + 
+  annotate("rect", xmin = 2010, xmax = 2026, ymin = 2.5, ymax = 5.2,
+  alpha = .2, fill = "blue4")
+      
+```
+:::
+
+:::{.cr-section}
+Early competitions varied in length, which makes raw totals hard to compare across years. To make performances comparable, we standardize results by calculating hot dogs eaten per minute.
+:::
+
+:::{.cr-section}
+This adjustment reveals a much clearer performance trend. Notice how the trajectory of winning totals changes once time is accounted for.
+:::
+
+:::{.cr-section}
+Around the early 2000s, the curve bends sharply upward. This coincides with the arrival of Takeru Kobayashi, whose training methods and eating technique revolutionized the competition.
+:::
+
+:::{.cr-section}
+Beginning in 2011, a new cluster appears: female champions. These competitors show a distinct performance pattern that does not follow the same explosive growth seen in the men’s division.
+:::
+
+:::{.cr-section}
+
+Focus on 2011–2025
+
+In the most recent years, the darker blue points cluster tightly. This reflects a more stable competitive field and highlights how the women’s division has developed its own trajectory.
+:::
