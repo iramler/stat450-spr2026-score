@@ -1,0 +1,83 @@
+---
+title: "Looking into Nathan's Famous Hot Dog Eating Contest with Closeread"
+author: Amara McGowan
+format:
+  closeread-html:
+    cr-style:
+      narrative-background-color-sidebar: darkgreen
+      section-background-color: transparent
+      narrative-text-color-overlay: black
+      narrative-text-color-sidebar: white
+---
+
+```{r}
+#| include: false
+library(readr)
+library(tidyverse)
+```
+
+```{r}
+#| include: false
+hotdog_clean <- read_csv("hotdog_clean.csv")
+
+hotdog_men <- hotdog_clean |> filter(Sex == 1)
+hotdog_women <- hotdog_clean |> filter(Sex == 0)
+
+hotdog_men_min <- hotdog_men |> mutate(Hotdogs_per_minute = Dogs/Time)
+hotdog_women_min <-hotdog_women |> mutate(Hotdogs_per_minute = Dogs/Time)
+```
+
+:::{#cr-intro}
+
+Nathan's Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.
+
+If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this tutorial, students will be able to:
+
+1. Create a "scrollytelling" document with Closeread.
+
+2. Create scatterplots to look at patterns in data.
+
+3. Form questions about the data based on visualizations. 
+
+4. Investigate questions about the data.
+:::
+
+::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+This could be suitable of an out of class activity or one that spans one
+or more class periods.
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+**Technology Requirement:**
+
+This activity is designed to be completed primarily in `R` using a
+Quarto document workflow. Students should be comfortable importing data
+and making basic plots with packages from the tidyverse
+(especially `readr` and `ggplot2`).
+:::
+::: @cr-intro
+
+::::: {.cr-section}
+
+
+:::{#cr-plot1 .cr-sticky}
+```{r}
+#| echo: false
+ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = "Hotdogs Per Minute", title = "Amount of Hotdogs Consumed Per Minute by Winners")
+```
+
+:::
+
+This is a plot of the amount of hotdogs consumed per minute by winners. @cr-plot1
+
+Is there anything you find interesting about this plot? @cr-plot1
+
+:::::
