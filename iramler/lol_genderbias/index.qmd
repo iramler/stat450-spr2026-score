@@ -213,7 +213,7 @@ Now we should read in the data. Save the csv file to your computer and read it i
 
 
 # You might need to change the file path to match your setup.
-lol_genders <- readr::read_csv("lol_gender_lanes_patch16.2.csv")
+lol_genders <- readr::read_csv("iramler/lol_genderbias/lol_gender_lanes_patch16.2.csv")
 ```
 </details>
 
@@ -225,7 +225,6 @@ Before attempting to conduct a formal statistical inference on these data, we wi
 ### Univariate Analyses
 
 We'll first investigate each of the main variables of interest (`gender` and `lane`) to familiarize ourselves with them.
-
 
 - Start by make a table that displays the number of champions associated with each gender.
 
@@ -267,9 +266,56 @@ Now, we'll investigate the the `lane` variable. Be sure to use the trimmed datas
 table(lol_MFonly$lane)
 ```
 
+
+
+
 ### Bivariate Analysis
 
-- Two-ways tables
+Next, we move on to exploring the relationship between the `gender` and typical `lane` for the champions. There are a few ways we can do so.
+
+#### **Two-way tables:** 
+
+Also known as a *contingency table*, this is a grid of counts showing how many champions fall into each `gender × lane` combination.
+
+The following code can make these tables for us.
+
+```{r}
+lol_2way_table <- table(lol_MFonly$gender, lol_MFonly$lane)
+```
+
+> Question: How many female champions are in the jungle role?
+
+> Question: What percent of male champions are supports? What percent of support champions are male?
+
+These last two questions are common ways to think about interpreting the results. So much so that we might wish toalso compute **row** and **column** proportions. 
+
+```{r}
+signif(prop.table(x = lol_2way_table, margin = 2), 2)
+```
+
+
+<!-- 
+Stopped here, need to continue updating rewording to fit my style.
+-->
+
+For example, we can ask:
+  - *Within each lane, what proportion of champions are male vs. female (and other/unknown)?*  
+  - *Within each gender, what proportion of champions are assigned to each lane?*  
+  These conditional distributions are often the most interpretable way to compare categories.
+
+- **Bar charts:** A side-by-side (grouped) bar chart displays the counts by lane with separate bars for gender. A 100% stacked bar chart displays proportions, which makes it easier to compare the **gender mix** across lanes.
+
+- **Mosaic plot:** A mosaic plot visualizes the contingency table directly. Each rectangle’s **area** is proportional to the count in that cell, and the overall pattern provides a compact view of whether the variables look independent (similar gender proportions across lanes) or associated (noticeably different proportions across lanes).
+
+In the next section, we will create each of these summaries in R to look for evidence of association before running a formal hypothesis test.
+
+
+
+### Bivariate Analysis
+
+Next, we move on to exploring the relationship between the `gender` and typical `lane` for the champions. There are a few ways we can do so.
+
+- Two-ways tables: Also known as a *contingency table*...
 
 - Bar charts
 
