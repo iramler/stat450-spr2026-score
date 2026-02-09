@@ -18,6 +18,7 @@ library(tidyverse)
 
 ```{r}
 #| include: false
+#hotdog_clean <- read_csv("Amara-McGowan/hotdog-data-storytelling-module/hotdog_clean.csv")
 hotdog_clean <- read_csv("hotdog_clean.csv")
 
 hotdog_men <- hotdog_clean |> filter(Sex == 1)
@@ -25,6 +26,11 @@ hotdog_women <- hotdog_clean |> filter(Sex == 0)
 
 hotdog_men_min <- hotdog_men |> mutate(Hotdogs_per_minute = Dogs/Time)
 hotdog_women_min <-hotdog_women |> mutate(Hotdogs_per_minute = Dogs/Time)
+
+ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = "Hotdogs Per Minute", title = "Amount of Hotdogs Consumed Per Minute by Winners")
 ```
 
 :::{#cr-intro}
@@ -62,22 +68,19 @@ and making basic plots with packages from the tidyverse
 :::
 ::: @cr-intro
 
+:::{.column-margin}
+
 ::::: {.cr-section}
 
-
-:::{#cr-plot1 .cr-sticky}
+:::{#cr-tibble1 .cr-sticky}
 ```{r}
-#| echo: false
-ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
-  geom_point() +
-  theme_minimal() +
-  labs(y = "Hotdogs Per Minute", title = "Amount of Hotdogs Consumed Per Minute by Winners")
+#| warning: false
+head(hotdog_clean)
 ```
-
 :::
 
-This is a plot of the amount of hotdogs consumed per minute by winners. @cr-plot1
+This module will help you learn how to use the quarto extension `closeread` to tell stories with your data. To the right is a plot of the amount of hotdogs consumed per minute by winners. When you scroll, you'll see the plot stays to the right and new text emerges. @cr-tibble1
 
-Is there anything you find interesting about this plot? @cr-plot1
-
+This scrolling feature helps you tell stories about your data, some people call it "scrollytelling." @cr-tibble1 {highlight = "2-3"}
+:::
 :::::

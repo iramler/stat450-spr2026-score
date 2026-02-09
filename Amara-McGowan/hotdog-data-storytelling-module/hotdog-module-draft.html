@@ -49,14 +49,15 @@ ul.task-list li input[type="checkbox"] {
 <body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-
-<main class="content column-page" id="quarto-document-content">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content page-columns page-full column-page-left" id="quarto-document-content">
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
           --cr-section-background-color: transparent;
---cr-narrative-background-color-sidebar: darkgreen;
 --cr-narrative-text-color-sidebar: white;
+--cr-narrative-background-color-sidebar: darkgreen;
 --cr-narrative-text-color-overlay: black;
         }
       </style>
@@ -69,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -87,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="cr-intro">
+<div id="cr-intro" class="page-columns page-full">
 <p>Nathan’s Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.</p>
 <p>If you’re interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan’s Famous Hot Dog Eating Contest and the science behind it.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
@@ -147,37 +148,43 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div class="@cr-intro">
+<div class="@cr-intro page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
 <div class="cr-section cr-column-screen sidebar-left">
 <div class="narrative-col">
-<div class="trigger new-trigger" data-focus-on="cr-plot1">
+<div class="trigger new-trigger" data-focus-on="cr-tibble1">
 <div class="narrative">
-<p>This is a plot of the amount of hotdogs consumed per minute by winners.</p>
+<p>This module will help you learn how to use the quarto extension <code>closeread</code> to tell stories with your data. To the right is a plot of the amount of hotdogs consumed per minute by winners. When you scroll, you’ll see the plot stays to the right and new text emerges.</p>
 </div>
 </div>
-<div class="trigger new-trigger" data-focus-on="cr-plot1">
+<div class="trigger new-trigger" data-focus-on="cr-tibble1">
 <div class="narrative">
-<p>Is there anything you find interesting about this plot?</p>
+<p>This scrolling feature helps you tell stories about your data, some people call it “scrollytelling.”{highlight = “2-3”}</p>
 </div>
 </div>
 </div>
 <div class="sticky-col">
 <div class="sticky-col-stack">
-<div id="cr-plot1" class="cr-sticky sticky">
+<div id="cr-tibble1" class="cr-sticky sticky">
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="hotdog-module-draft_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+   Year   Sex  Dogs Winner              Time
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;
+1  2025     1  70   Joey Chestnut         10
+2  2025     0  33   Miki Sudo             10
+3  2024     1  58   Patrick Bertoletti    10
+4  2024     0  51   Miki Sudo             10
+5  2023     1  62   Joey Chestnut         10
+6  2023     0  39.5 Miki Sudo             10</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
+</div></div></div>
 </div>
 
 </main>
