@@ -284,7 +284,11 @@ The following code can make these tables for us.
 ```{r}
 lol_2way_table_raw <- table(lol_MFonly$gender,
                             lol_MFonly$lane)
-lol_2way_table <- addmargins(lol_2way_table)
+```
+
+We can also use the `addmargins` function to place the totals on the table too.
+```{r}
+lol_2way_table <- addmargins(lol_2way_table_raw)
 lol_2way_table
 ```
 
@@ -292,12 +296,18 @@ lol_2way_table
 
 > Question: What percent of male champions are supports? What percent of support champions are male?
 
+
+<!--
+
+Cut this piece
+
 These last two questions are common ways to think about interpreting the results. So much so that we might wish toalso compute **row** and **column** proportions. 
 
 ```{r}
-signif(prop.table(x = lol_2way_table, margin = 2), 2)
+signif(prop.table(x = lol_2way_table_raw, margin = 2), 2)
 ```
 
+-->
 
 #### Bar charts
 
@@ -440,10 +450,14 @@ For lane:
 table(lol_MFonly$lane)
 ```
 
-> Question: What proportion of champions are female?
+> Question: What proportion of the gendered champions are female? (Recall that there are 170 champions in our analysis.)
 
-> Question: If gender and lane had no relationship, what percent of female champions should we expect to supports? Moreso, how many of the 34 supports would then be female?
+> Question: If gender and lane had no relationship, what percent of female champions should we expect to supports? 
 
+
+> Question: How many of the 34 supports would then be female?
+
+> Question: If gender and lane had no relationship, what percent of the 103 male champions would be junglers? How many total would we expect?
 
 
 
