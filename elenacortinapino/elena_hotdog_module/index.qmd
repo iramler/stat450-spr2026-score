@@ -1,7 +1,7 @@
 ---
 title: "Nathan's Famous Hot Dog Competition - Data visualization"
 author:
-  - name: Elrena Cortina
+  - name: Elena Cortina
     affiliation:
       - id: slu
         name: St. Lawrence University
@@ -22,29 +22,29 @@ categories:
 
 ## Module
 
-Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.
+Please note that these materials have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.
 
 ### Introduction
 
-The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human capacity in ways no one originally imagined.
+The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human eating hability in ways no one might have imagined.
 
-This module explains the process of creating effective data visualization plots using `tidyverse` and the `closeread` HTML extension.
+This module explains the process of creating effective data visualization plots using `tidyverse` and the `closeread` HTML Quarto extension.
 
 ### Background
 
-**[Closeread]**(https://closeread.dev) is a custom format for Quarto that enables *scrollytelling* features for HTML documents.
+**[Closeread](https://closeread.dev)** is a custom format for Quarto that enables *scrollytelling* features for HTML documents.
 
-### How to create a section
-- Section: Elements within a section will appear as a Closeread story while elements outside of a section will appear as a normal Quarto HTML document.\
+#### How to create a section
+- Section: Elements within a section will appear as a closeread story while elements outside of a section will appear as a normal Quarto HTML document.\
 
-Creating sections follows the syntax $\text{::::{.cr-section_name}}$ where $section_name$ is the name that will identify the section whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section as $::::$ on its own line of code to act as delimitation for the space of the section.
+Creating sections follows the syntax `::::{.cr-section_name}` where `section_name` is the name that will identify the section whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section as `::::` on its own line of code to act as delimitation for the space of the section.
 
-### How to create a sticky
-- Sticky: An element of your document that you wish to do a close read of is called a “sticky”: as the user scrolls, it will remained pinned in the middle of the main column like a sticky note.\
+#### How to create a sticky
+- Sticky: An element of your document that you wish to do a close read of is called a “sticky”; as the user scrolls, it will remained pinned in the middle of the main column like a sticky note.\
 
-Creating stickies (on a very general sense) involves de syntax $:::{\text{#cr-sticky_name}}$ where $sticky_name$ is the name that will identify the sticky whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section to act as delimitation for the space of the sticky.
+Creating stickies (on a very general sense) involves de syntax `:::{#cr-sticky_name}` where `sticky_name` is the name that will identify the sticky whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section as `:::` on their own line of code to act as delimitation for the space of the sticky.
 
-### Section on referencing and other details of the closeread code style.
+#### Section on referencing and other details of the closeread code style.
 
 Referencing is done within the Quarto code to trigger a sticky to appear as soon as the line of the reference reaches the middle of the screen. Use the syntax  $@cr-sticky_name$ to trigger a sticky to show on the closeread section.
 
@@ -69,7 +69,7 @@ By the end of this activity, you will be able to:
 ::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
 Technology requirement: The activity handout provides a guidance Quarto document and a *solved* HTML, for reference on solutions and code references.
 
-1.  Plots: Familiarity with `tidyverse`, mainly `ggplot2`, `dplyr` and `tidyr` as a techniques for statistical analysis and data representation is crucial. You should understand how to use RMarkdown code to perform changes on the data set.
+1.  Plots: Familiarity with `tidyverse`, mainly `ggplot2`, `dplyr` and `tidyr` as a techniques for statistical analysis and data representation is crucial. You should understand how to use R code to perform changes on the data set.
 
 2.  Basic understanding of the closeread syntax to create sections, stickies and reference files within the code to appear as desired in the final HTML document.
 :::
@@ -86,10 +86,10 @@ Download data: [hotdog_clean.csv](hotdog_clean.csv)
 
 | Variable | Description                                               |
 |----------|-----------------------------------------------------------|
-| Year     | year the competition took place                           |
-| Winner   | Name of the winner for their sex category                 |
+| Year     | Year the competition took place                           |
 | Sex      | Sex of the winner for the year the competition took place |
 | Dogs     | Dogs eaten per minute                                     |
+| Winner   | Name of the winner for their sex category                 |
 | Time     | Time in minutes the competition elapsed                   |
 
 </details>
@@ -100,8 +100,7 @@ Nathan's Famous Hot Dog Eating Contest winners. <https://en.wikipedia.org/wiki/N
 
 ### Materials
 
-No physical handout is designed for this particular module. Please refer to the html file for the walk-through document on this section.
-
+No physical handout is designed for this particular module. Please refer to the attached walk-through documents at the end of this section.
 
 #### Exercise 
 
