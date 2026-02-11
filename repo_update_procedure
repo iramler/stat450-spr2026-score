@@ -22,3 +22,9 @@ Process for updating repo:
 If you get ahead on branches:
  git reset HEAD~1
 (You can change the 1 to other vaules if you are ahead by more than one commit)
+
+
+
+
+
+
