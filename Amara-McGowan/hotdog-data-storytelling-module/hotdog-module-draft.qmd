@@ -67,6 +67,16 @@ and making basic plots with packages from the tidyverse
 (especially `readr` and `ggplot2`).
 :::
 
+::: {.callout-caution collapse="true" title="Research Questions" appearance="minimal"}
+
+During this lab, you'll investigate the following research questions:
+
++ Question one
++ Question two
+
+:::
+
+
 ### Data
 
 The `hotdog_clean.csv` dataset contains 69 rows, one per
@@ -90,6 +100,10 @@ Download Data:
 | Time | Duration of the competition in minutes |
 
 </details>
+
+#### Data Sources
+
+-   [Wikipedia.org](Wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)){target="_blank"}
 
 ::: @cr-intro
 
