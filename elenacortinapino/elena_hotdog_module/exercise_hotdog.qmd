@@ -35,39 +35,78 @@ hotdog_clean_2 <- hotdog_clean |> mutate(standard = Dogs/Time)
 
 ```
 
-Recognize the `sticky` to be included into the closeread document. Rename the sticky to appropriately (though briefly) describe what it is about.
+We are first creating a `sticky` to be included into the closeread document. 
+
+0. Rename the sticky  in the R code chunk below to appropriately (though briefly) describe what it is about.
 
 This sticky will appear in within the larger Hot Dog Closeread *scrollytelling* document and it will be referenced within a body of text that describes the plot and its annotations.
 
-Redact a chunk of text that describes the plot you will be creating. This can be edited later to better represent the annotations you produce on the plot.
+1. Redact a brief description for the plot you will be creating. This can be edited later to better represent the annotations you produce on the plot.
+| 
+| 
+| 
+| 
+| 
+| 
 
+2. Edit the R code chunk below to highlight the data points that correspond to Joey Chestnut's wins. Hint: You might find it easier to filter on the data frame itself before editing the plot's aesthetics.
+- You can do this by highlighting the data points and changing the shape and color of the points.
+
+
+
+3. Add a text label to the plot that describes briefly what the highlighted points represent.
+- You could do a `label` or a `text` type annotation.
 
 :::{#cr-}
 ```{r}
 #| label: basicplot
+#| echo: false
 #| message: false
 #| warning: false
 
+
+joey_chestnut <- hotdog_clean_2 |> 
+  
+  
 ggplot(hotdog_clean_2) +
   aes(
     x = Year,
     y = standard) +
-  geom_point(
-    aes(
-      colour = Sex, size = 1), alpha = 0) +
-  annotate("text", x = Inf, y = -Inf,
-    label = "Years →",
-    hjust = 1, vjust = -0.5) +
-  annotate("text", x = -Inf, y = Inf,
-    label = "↑\nDogs per\nminute",  #python string notation
-    hjust = 0, vjust = 1) +
-  guides(colour = "none", shape = "none") +
-  theme_minimal() +
-  theme(legend.position = "none") +
+  geom_point(aes(colour = factor(Sex))) +
+  scale_colour_manual(values = c("#95F527", "#01401C"))+
+  annotate("label", x = 1976, y = 6.8,
+    label = "Women", fill = "#95F527") +
+  annotate("label", x = 1976, y = 7.2,
+    label = "Men", fill = "#01401C", color = "#FFFFFF" ) +
   labs(
     x = "Year",
-    y = "Dogs eaten per minute")
+    y = "Dogs eaten per minute") +
+      annotate( ) +
+  geom_point(data =  , shape =  , color =  , size =  ) +
+  theme_minimal() +
+  guides(colour = "none", shape = "none") +
+  gghighlight::gghighlight(Winner ==  )
 ```
 :::
 
 
+-------------------
+
+### Alternative setup of the activity (No code provided)
+
+1. Create a plot that highlight the data points that correspond to Joey Chestnut's wins. Hint: You might find it easier to filter on the data frame itself before editing the plot's aesthetics.
+- Highlight the data points and change the shape and color of the points.
+
+
+2. Add a text label to the plot that describes briefly what the highlighted points represent.
+- You could do a `label` or a `text` type annotation.
+
+
+
+
+3. Redact a brief description for the plot you created. Mention which specific features of the data are being brought out by the plot and which special R functions were used in the code.
+
+
+
+
+4. Add the reference label for the closeread sticky in the text you redacted to describe the plot. The plot will appear as soon as the reference appears within the mid-line of the screen.s
