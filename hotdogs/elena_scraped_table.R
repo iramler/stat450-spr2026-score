@@ -6,6 +6,8 @@ install.packages("dplyr")
 library(dplyr)
 library(here)
 
+library(ggplot2)
+
 url <- "https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest"
 
 page <- read_html(url)
@@ -35,6 +37,13 @@ hotdog_table_clean <- hotdog_table %>%
 write.csv(hotdog_table_clean, "table.csv", row.names = FALSE) # this one worked
 
 clean_hotdog <- read.csv("hotdogs/hotdog_clean.csv") # relative path
+
+ggplot(hotdog_clean, aes(x = Year, y = Dogs)) +
+  geom_point(aes(color = Sex)) +
+  ggtitle("Histogram of dogs eaten") +
+  theme(legend.position = "none")
+
+
 
 
 

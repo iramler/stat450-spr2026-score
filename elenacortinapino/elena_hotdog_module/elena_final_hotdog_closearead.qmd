@@ -16,6 +16,10 @@ knitr:
       bg: transparent
 ---
 
+
+### Notes: use tennis sample size module template to fit this module in
+
+
 ### In this demo, we'll create a plot with data from the Wikipedia page for The Story of Nathan's Hot Dog Eating Competition.
 Data was accessed from Wikipedia, "Nathan's Hot Dog Eating Contest", and cleaned with the R `tidyverse` library.
 (https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest).

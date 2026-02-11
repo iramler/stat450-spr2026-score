@@ -1,9 +1,19 @@
 ---
 title: "Nathan's Famous Hot Dog Competition - Data visualization"
-date: February 11, 2024
-description: Data visualization of historical Nathan's Famous Hot Dog Competition winners with `tidyverse` and the `closeread` HTML extension.
+author:
+  - name: Elrena Cortina
+    affiliation:
+      - id: slu
+        name: St. Lawrence University
+  - name: Ivan Ramler
+    email: iramler@stlawu.edu
+    affiliation:
+      - ref: slu
+date: "February 11, 2026"
+description: "Data visualization of historical Nathan's Famous Hot Dog Competition winners with `tidyverse` and the `closeread` HTML extension."
 editor: 
   canonical: true
+image: Nathan's.png
 categories:
   - tidyverse
   - closeread
@@ -16,21 +26,42 @@ Please note that these material have not yet completed the required pedagogical 
 
 ### Introduction
 
-
 The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human capacity in ways no one originally imagined.
 
 This module explains the process of creating effective data visualization plots using `tidyverse` and the `closeread` HTML extension.
 
-*Closeread* is a custom format for Quarto that enables *scrollytelling* features for HTML documents.
+### Background
+
+**[Closeread]**(https://closeread.dev) is a custom format for Quarto that enables *scrollytelling* features for HTML documents.
+
+### How to create a section
+- Section: Elements within a section will appear as a Closeread story while elements outside of a section will appear as a normal Quarto HTML document.\
+
+Creating sections follows the syntax $\text{::::{.cr-section_name}}$ where $section_name$ is the name that will identify the section whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section as $::::$ on its own line of code to act as delimitation for the space of the section.
+
+### How to create a sticky
+- Sticky: An element of your document that you wish to do a close read of is called a “sticky”: as the user scrolls, it will remained pinned in the middle of the main column like a sticky note.\
+
+Creating stickies (on a very general sense) involves de syntax $:::{\text{#cr-sticky_name}}$ where $sticky_name$ is the name that will identify the sticky whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section to act as delimitation for the space of the sticky.
+
+### Section on referencing and other details of the closeread code style.
+
+Referencing is done within the Quarto code to trigger a sticky to appear as soon as the line of the reference reaches the middle of the screen. Use the syntax  $@cr-sticky_name$ to trigger a sticky to show on the closeread section.
+
+Other details:\
+- Pane types:\
+- Zooming in and Highlighting:\
+- Panes colors and style:\
+
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 By the end of this activity, you will be able to:
 
-1.  Create effective data visualization plots from the data through contextual analysis. 
+1.  Create effective data visualization plots from the data through contextual analysis.
 
 2.  Analyze and describe the trends and significant features of the data set with appropriate annotations.
 
-3.  Use the closeread HTML extension for Quarto documents to create a *scrollytelling* file. 
+3.  Use the closeread HTML extension for Quarto documents to create a *scrollytelling* file.
 
 4.  Interpret general trend information of a specific data set from the visualization plots and annotations.
 :::
@@ -41,7 +72,6 @@ Technology requirement: The activity handout provides a guidance Quarto document
 1.  Plots: Familiarity with `tidyverse`, mainly `ggplot2`, `dplyr` and `tidyr` as a techniques for statistical analysis and data representation is crucial. You should understand how to use RMarkdown code to perform changes on the data set.
 
 2.  Basic understanding of the closeread syntax to create sections, stickies and reference files within the code to appear as desired in the final HTML document.
-
 :::
 
 ### Data
@@ -50,20 +80,17 @@ A data frame for 69 champions of the Nathan's Famous Hot Dog eating competition 
 
 Download data: [hotdog_clean.csv](hotdog_clean.csv)
 
-
 <details>
 
 <summary><b>Variable Descriptions</b></summary>
 
-| Variable | Description                                                  |
-|-------------------|-----------------------------------------------------|
-| Year     | year the competition took place                              |
-| Winner   | Name of the winner for their sex category                    |
-| Sex      | Sex of the winner for the year the competition took place    |
-| Dogs     | Dogs eaten per minute                                        |
-| Time     | Time in minutes the competition elapsed                      |
-
-
+| Variable | Description                                               |
+|----------|-----------------------------------------------------------|
+| Year     | year the competition took place                           |
+| Winner   | Name of the winner for their sex category                 |
+| Sex      | Sex of the winner for the year the competition took place |
+| Dogs     | Dogs eaten per minute                                     |
+| Time     | Time in minutes the competition elapsed                   |
 
 </details>
 
@@ -71,18 +98,21 @@ Download data: [hotdog_clean.csv](hotdog_clean.csv)
 
 Nathan's Famous Hot Dog Eating Contest winners. <https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest>
 
-
 ### Materials
 
 No physical handout is designed for this particular module. Please refer to the html file for the walk-through document on this section.
+
+
+#### Exercise 
+
+To create your own plot within the closeread page, please download the [Hot Dog](hotdog_clean.csv) data set and the [exercise Quarto](exercise_hotdog.qmd) document to create a plot annotating the data showing Joey Chestnut's wins on Nathan's Famous Hot Dog Eating Competition.
 
 [HTML walk-through file](elena_final_hotdog_closearead.html)
 
 [Solution Quarto RMD file](elena_final_hotdog_closearead.qmd)
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
-In conclusion, the analysis of winners of this hot dog eating competition can be useful to extrapolate the knowledge on data visuali2zation, effective plot annotation and applying novel techniques to create sophisticate and engaging UIs for the viewers to understand our work and results.
-
+In conclusion, the analysis of winners of this hot dog eating competition can be useful to extrapolate the knowledge on data visualization, effective plot annotation and applying novel techniques to create sophisticate and engaging UIs for the viewers to understand our work and results.
 :::
 
 ### Authors

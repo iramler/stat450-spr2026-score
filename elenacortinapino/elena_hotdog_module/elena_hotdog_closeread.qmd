@@ -20,13 +20,15 @@ hotdog_clean_2 <- hotdog_clean |> mutate(standard = Dogs/Time)
 ```
 
 
-:::: cr-section
+:::{.cr-section}
+The plot looks like this: @cr-plot
+
 The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human capacity in ways no one originally imagined.
 
 The Story of Nathan's Hotdog Eating Competition. @cr-time
 
 
-:::{#cr-time}
+:::{#cr-plot}
 
 ```{r}
 ggplot(hotdog_clean_2) +
@@ -35,12 +37,19 @@ ggplot(hotdog_clean_2) +
     y = standard) +
   geom_point(
     aes(
-      colour = Sex)) +
+      colour = Sex), alpha = 0) +
+  annotate("text", x = Inf, y = -Inf,
+    label = "Years →",
+    hjust = 1, vjust = -0.5) +
+  annotate("text", x = -Inf, y = Inf,
+    label = "↑\nHeavy\npenguins",  #python string notation
+    hjust = 0, vjust = 1) +
+  guides(colour = "none", shape = "none") +
   theme_minimal() +
   theme(legend.position = "none") +
   labs(
     x = "Year",
-    y = "Dogs eaten") 
+    y = "Dogs eaten per minute") 
 #  ggsave("filename.png", plot = get_last_plot())
 ```
 :::
@@ -77,25 +86,23 @@ ggplot(hotdog_clean_2) +
 ```
 :::
 
-:::{.cr-section}
+
 Early competitions varied in length, which makes raw totals hard to compare across years. To make performances comparable, we standardize results by calculating hot dogs eaten per minute.
-:::
 
-:::{.cr-section}
+
+
 This adjustment reveals a much clearer performance trend. Notice how the trajectory of winning totals changes once time is accounted for.
-:::
 
-:::{.cr-section}
+
+
 Around the early 2000s, the curve bends sharply upward. This coincides with the arrival of Takeru Kobayashi, whose training methods and eating technique revolutionized the competition.
-:::
 
-:::{.cr-section}
+
+
 Beginning in 2011, a new cluster appears: female champions. These competitors show a distinct performance pattern that does not follow the same explosive growth seen in the men’s division.
-:::
 
-:::{.cr-section}
 
 Focus on 2011–2025
 
 In the most recent years, the darker blue points cluster tightly. This reflects a more stable competitive field and highlights how the women’s division has developed its own trajectory.
-:::
+

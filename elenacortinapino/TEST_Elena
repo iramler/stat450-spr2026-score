@@ -5,4 +5,5 @@ To send files ("push") to the repository:
 2. Stage (check `Stage` box) for each file you want to send to repository.
 3. Click `Commit` to push.
 4. Add brief message to describe the file(s) being committed.
-4. Click `Push`.
+5. Click `Commit`.
+6. Click `Push`.
