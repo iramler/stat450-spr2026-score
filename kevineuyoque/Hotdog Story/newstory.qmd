@@ -1,0 +1,180 @@
+---
+title: "Nathan's Hotdog Eating Contest Storytelling through Closeread"
+author: Kevin Euyoque
+format:
+  closeread-html:
+    code-fold: true
+    cr-style:
+      narrative-background-color-sidebar: "#09753C"
+      narrative-text-color-sidebar: white
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(readr)
+
+# Load cleaned dataset (confirmed correct path)
+hotdog_clean <- read_csv("../../hotdogs/hotdog_clean.csv")
+
+# Split genders (based on your coding: Sex == 1 men, Sex == 0 women)
+hotdog_men <- hotdog_clean |> filter(Sex == 1)
+hotdog_women <- hotdog_clean |> filter(Sex == 0)
+
+# Standardize: hot dogs per minute
+hotdog_men <- hotdog_men |> mutate(Hotdogs_per_minute = Dogs / Time)
+hotdog_women <- hotdog_women |> mutate(Hotdogs_per_minute = Dogs / Time)
+
+# Helper: decade (for boxplots)
+hotdog_men <- hotdog_men |> mutate(Decade = paste0(floor(Year/10)*10, "s"))
+hotdog_women <- hotdog_women |> mutate(Decade = paste0(floor(Year/10)*10, "s"))
+
+# Combined dataset for comparison plots
+hotdog_all <- bind_rows(
+  hotdog_men |> mutate(Gender = "Men"),
+  hotdog_women |> mutate(Gender = "Women"))
+
+# Outlier year (max rate year in men) for a highlight plot
+men_max_year <- hotdog_men |> slice_max(Hotdogs_per_minute, n = 1) |> pull(Year)
+```
+
+:::{#cr-intro}
+
+![](hotdog-pic.webp){width=100% fig-align="center"}
+
+The Nathan’s Famous Hot Dog Eating Contest began in 1972 in Brooklyn, New York.
+Over time, rules, competitors, and performance levels have changed.
+
+
+This module uses closeread to tell a data story through scrolling.
+How closeread works:
+
+- Give each plot a target ID like {#cr-plotname}
+
+- Reference the plot in narrative text using @cr-plotname
+
+- As the reader scrolls to the reference, that plot becomes the focus
+
+- A strong closeread story typically follows a pattern:
+(1) establish a baseline → 2. notice a pattern → 3. test an explanation with a better metric.
+
+:::
+
+::::{.cr-section layout="sidebar-left"}
+
+
+Step 1 — Total hot dogs over time (men) @cr-total-dogs-by-year
+
+Let’s begin with the simplest view, the total number of hot dogs eaten by the men’s winner each year.
+
+Prompt: Why might totals be misleading for comparing across years?
+
+:::{#cr-total-dogs-by-year}
+
+```{r}
+ggplot(hotdog_men, aes(x = Year, y = Dogs)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Men: Total Hot Dogs Eaten by Year",
+    x = "Year",
+    y = "Total Hot Dogs (Winner)") +
+  theme_minimal()
+```
+
+:::
+
+Viewing the plot there is a massive spike that can be seen between the years 2000 and 2001. Why does this happen?
+
+This jump is worth investigating. Next, we need to check whether this is a real performance shift or a measurement issue.Look into what occured during the 2001 contest
+
+
+
+Step 2 — Standardize performance: hot dogs per minute @cr-rate-hist-men
+
+To compare winners across time, we standardize performance by using:
+Hot dogs per minute = Dogs ÷ Time
+
+A histogram shows the overall distribution of men’s winners’ rates. @cr-rate-hist-men
+
+:::{#cr-rate-hist-men}
+
+```{r}
+ggplot(hotdog_men, aes(x = Hotdogs_per_minute)) +
+  geom_histogram(bins = 12) +
+  labs(title = "Men’s Winners: Hot Dogs Per Minute",
+    x = "Hot Dogs per Minute",
+    y = "Count of Years") +
+  theme_minimal()
+
+```
+:::
+
+Step 3 — Eating rate over time (men) @cr-rate-by-year-men
+
+Now track hot dogs per minute across years to see long-run changes. @cr-rate-by-year-men
+
+:::{#cr-rate-by-year-men}
+
+
+```{r}
+ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Men: Hot Dogs Per Minute by Year",
+    x = "Year",
+    y = "Hot Dogs per Minute") +
+  theme_minimal()
+```
+:::
+
+Step 4 — Smoothed trend (men) @cr-rate-smooth-men
+
+A smoother can make the overall pattern easier to see. @cr-rate-smooth-men
+
+:::{#cr-rate-smooth-men}
+
+```{r}
+ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  geom_smooth() +
+  labs(title = "Men: Smoothed Trend in Hot Dogs per Minute",
+    x = "Year",
+    y = "Hot Dogs per Minute") +
+  theme_minimal()
+```
+:::
+
+Step 5 — Joey Chestnut’s era (men) @cr-joey
+
+To end the story, we highlight one competitor to show how an individual can define an era. @cr-joey
+
+:::{#cr-joey}
+
+```{r}
+joey_wins <- hotdog_men |> filter(Winner == "Joey Chestnut")
+
+ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point(alpha = 0.6, color = "grey") +
+  geom_point(data = joey_wins, size = 2) +
+  labs(title = "Joey Chestnut’s Era Highlighted") +
+  theme_minimal()
+```
+:::
+
+The highlighted points represent Joey Chestnut’s winning years.
+Notice how they cluster at the higher end of the graph
+
+This shows that the modern era is not defined by a single spike, but by sustained high performance.
+
+By isolating one competitor within the same anchor plot, the narrative shifts from a general trend to a clearly defined era.
+
+:::
+
+# Now after going over the men's why dont you look into the women's following a similar structure
+

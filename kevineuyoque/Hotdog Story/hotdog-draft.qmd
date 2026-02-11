@@ -1,0 +1,85 @@
+---
+title: "Nathan’s Hot Dog Eating Contest: Storytelling through Closeread"
+author: "Kevin Euyoque"
+format:
+  closeread-html:
+    code-fold: true
+    cr-style:
+      narrative-background-color-sidebar: "#09753C"
+      narrative-text-color-sidebar: white
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(readr)
+
+hotdog_clean <- read_csv("../../hotdogs/hotdog_clean.csv")
+
+hotdog_men <- hotdog_clean |> filter(Sex == 1)
+hotdog_women <- hotdog_clean |> filter(Sex == 0)
+
+hotdog_men <- hotdog_men |> mutate(Hotdogs_per_minute = Dogs / Time)
+hotdog_women <- hotdog_women |> mutate(Hotdogs_per_minute = Dogs / Time)
+
+men_max_year <- hotdog_men |> slice_max(Hotdogs_per_minute, n = 1) |> pull(Year)
+```
+
+:::{#cr-intro}
+
+![](hotdog-pic.webp){width=100% fig-align="center"}
+
+#### Closeread essentials
+
+Closeread adds one key idea to a normal Quarto document:
+
+- A plot becomes a target when it has an ID like {#cr-plotname}
+
+- Your narrative becomes a trigger when it references the target using @cr-plotname
+
+- When the reader scrolls to that trigger, the plot becomes the focus
+
+- You will see the same dataset multiple times. This is intentional, scrollytelling uses one anchor visualization and changes it slightly as the story advances.
+
+:::
+
+::::{.cr-section layout="sidebar-left"}
+
+Step 1 — Establish an anchor plot @cr-anchor
+
+Create one plot that the reader can return to throughout the story.
+This “anchor plot” should be simple and readable. It does not need heavy styling.
+
+Here, the anchor shows men’s winner performance over time, measured as hot dogs per minute. @cr-anchor
+
+:::{#cr-anchor}
+
+```{r}
+#| label: anchor
+ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  labs(title = "Men: Winners’ Eating Rates Over Time",
+    x = "Year",
+    y = "Hot Dogs per Minute") +
+  theme_minimal()
+```
+
+:::
+
+Locate years that look unusually high compared to nearby years.
+
+
+Step 2 — Teach a storytelling transition: totals vs rates @cr-totals
+
+Instructional goal: Show how to justify a metric choice.
+A common storytelling move is: start with the obvious metric (totals) and then explain why you switch to a fairer metric (rates).
+
+This plot shows total hot dogs eaten by the men’s winner each year. @cr-totals
+
+:::{#cr-totals}
