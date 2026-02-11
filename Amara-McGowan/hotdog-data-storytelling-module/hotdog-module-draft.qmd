@@ -66,9 +66,32 @@ Quarto document workflow. Students should be comfortable importing data
 and making basic plots with packages from the tidyverse
 (especially `readr` and `ggplot2`).
 :::
-::: @cr-intro
 
-:::{.column-margin}
+### Data
+
+The `hotdog_clean.csv` dataset contains 69 rows, one per
+Nathan's Famous Hot Dog Eating Contest Winner, with returning winners
+showing up in the data multiple times. The primary variables in the 
+data are `Dogs` and `Time`.
+
+Download Data:
+<!--TODO: [add later](add later) -->
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description |
+|------------------------------------|------------------------------------|
+| Year | Year the Competition took place |
+| Sex | Sex of the Winner (0 = Woman, 1 = Man) |
+| Dogs | How many hotdogs the winner consumed |
+| Winner | First and Last Name of the Winner |
+| Time | Duration of the competition in minutes |
+
+</details>
+
+::: @cr-intro
 
 ::::: {.cr-section}
 
@@ -81,6 +104,16 @@ head(hotdog_clean)
 
 This module will help you learn how to use the quarto extension `closeread` to tell stories with your data. To the right is a plot of the amount of hotdogs consumed per minute by winners. When you scroll, you'll see the plot stays to the right and new text emerges. @cr-tibble1
 
-This scrolling feature helps you tell stories about your data, some people call it "scrollytelling." @cr-tibble1 {highlight = "2-3"}
+This scrolling feature helps you tell stories about your data, some people call it "scrollytelling." @cr-tibble1
 :::
-:::::
+
+::::: {#cr-main}
+
+```{r, warning = FALSE}
+library(readr)
+library(tidyverse)
+```
+
+Here. @cr-main 
+
+::::: @cr-main
