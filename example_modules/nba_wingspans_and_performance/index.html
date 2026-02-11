@@ -6,11 +6,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Cooper Olney">
 <meta name="author" content="Ivan Ramler">
-<meta name="dcterms.date" content="2026-01-29">
-<meta name="description" content="A tutorial on the Chi-square test for association using gender and roles of champions in League of Legends.">
+<meta name="dcterms.date" content="2025-07-10">
+<meta name="description" content="Exploring wingspan and performance in the NBA by cleaning, merging and analyzing datasets.">
 
-<title>Comparing the gender and roles of champions in League of Legends</title>
+<title>NBA Wingspan &amp; Performance</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -85,24 +51,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Comparing the gender and roles of champions in League of Legends</h1>
+<h1 class="title">NBA Wingspan &amp; Performance</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">Webscraping</div>
     <div class="quarto-category">Data Visualization</div>
-    <div class="quarto-category">Chisquare Test for Association</div>
-    <div class="quarto-category">Categorical Variables</div>
+    <div class="quarto-category">Data Wrangling</div>
+    <div class="quarto-category">Joining / Merging</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    A tutorial on the Chi-square test for association using gender and roles of champions in League of Legends.
+    Exploring wingspan and performance in the NBA by cleaning, merging and analyzing datasets.
   </div>
 </div>
 
 <div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Authors</div>
   <div class="quarto-title-meta-heading">Affiliation</div>
   
+    <div class="quarto-title-meta-contents">
+    <p class="author">Cooper Olney </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            St.&nbsp;Lawrence University
+          </p>
+      </div>
     <div class="quarto-title-meta-contents">
     <p class="author">Ivan Ramler <a href="mailto:iramler@stlawu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
   </div>
@@ -119,7 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 29, 2026</p>
+      <p class="date">July 10, 2025</p>
     </div>
   </div>
   
@@ -131,58 +106,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="module" class="level2">
+<h2 class="anchored" data-anchor-id="module">Module</h2>
 <p>Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
-<section id="welcome-video" class="level3">
-<h3 class="anchored" data-anchor-id="welcome-video">Welcome Video</h3>
-<p>For a humourous 3-minute introduction to League of Legends, please watch this video by Kola, a League of Legends coach with <a href="https://coachify.gg/@phoenixkola" target="_blank">Coachify</a>.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/saqFrVV-YsU?si=DGPaJg6JqSNcmw3g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
-</iframe>
-</section>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>League of Legends (LoL) is a 5 v. 5 multiplayer online battle arena (MOBA) game developed by Riot Games. In this game, players assume the role of a “champion” with unique abilities and engage in intense battles against a team of other players or computer-controlled champions.</p>
-<p>In standard play on Summoner’s Rift, champions are typically assigned to roles that correspond to different lanes/positions on the map—most commonly Top, Jungle, Mid, Bottom (AD Carry), and Support (see <a href="#fig-srmap" class="quarto-xref">Figure&nbsp;1</a>). Champions assigned to each position have distinct strategic responsibilities (for example, the Jungler moves between lanes to secure objectives, while the Support focuses on protecting and enabling teammates). Champions also have narrative identities that include attributes such as gender, and players often choose champions based on a mix of gameplay fit (role/position) and character preference.</p>
-<div id="fig-srmap" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-srmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="sr_map.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-srmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Lanes in Summoner’s Rift
-</figcaption>
-</figure>
-</div>
-<p>In this module, we will investigate whether the distribution of genders differs across roles.</p>
-<p>The majority of the champion metadata for this module comes from <a href="https://github.com/Kerrders/LoLdleData" target="_blank">LoLdleData</a>, an open GitHub project that programmatically compiles “extra” champion attributes that aren’t conveniently available from the official Riot API endpoints (e.g., gender, game lore region, and release year).</p>
-<p>The LoLdleData is supplemented with laning information taken from the fan-site <a href="https://mobalytics.gg/lol" target="_blank">Mobalytics</a> (based on patch 16.2).</p>
-<p>Because these are community-maintained, derived datasets, the gender and lane labels should be treated as typical classifications rather than official ground truth. In particular, lane/role assignments reflect a snapshot based on patch 16.2, and many champions can be played effectively in multiple lanes depending on strategy, player skill, and balance changes.</p>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Learning Objectives
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>By the end of this tutorial, students will be able to:</p>
-<ol type="1">
-<li><p>Organize two categorical variables into a contingency table and compute row/column proportions.</p></li>
-<li><p>Create and interpret exploratory visualizations for two categorical variables (e.g., side-by-side bars, stacked proportion bars, mosaic plots).</p></li>
-<li><p>State hypotheses for the Chi-square test of association and explain what “independence” means in this context.</p></li>
-<li><p>Compute and interpret the Chi-square test statistic, degrees of freedom, and p-value using R.</p></li>
-<li><p>Check chi-square conditions by examining expected cell counts.</p></li>
-<li><p>Report and interpret an effect size for association.</p></li>
-<li><p>Use residuals / cell contributions to identify which category combinations drive the association.</p></li>
-</ol>
-</div>
-</div>
-</div>
+<p>The National Basketball Association (NBA) is a professional basketball league featuring the best players from around the world. In the modern NBA, player evaluation has gone far beyond just points. Physical attributes like height, <a href="https://www.nba.com/knicks/videos/how-to-measure-your-wingspan" target="_blank">wingspan</a> and reach are increasingly used by teams to gain a competitive edge. These measurements not only influence how players are scouted and drafted, but also how they’re expected to perform on the court.</p>
+<p>One particularly interesting metric is wingspan advantage which is the difference between a player’s wingspan and their height (wingspan - height). A larger wingspan relative to height is often considered beneficial for defense, rebounding, and shot-blocking. However, longer arms can also affect shooting mechanics, sometimes offering an edge by helping players shoot over defenders, but also potentially making it harder to develop a consistent shooting form, but does this actually show up in the data?</p>
+<p>In this worksheet, you’ll explore how physical traits like wingspan advantage relate to on-court performance. You’ll work with real NBA data to practice essential skills such as cleaning and joining datasets, as well as visualizing relationships. By the end, you’ll use your cleaned and combined datasets to look for meaningful patterns between a player’s wingspan advantage and their statistical output.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Activity Length">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -191,9 +124,31 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This could bew suitable of an out of class activity or one that spans more than one class period.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This could be suitable of an out of class activity or one that spans one or more class periods.</p>
+<p>By the end of this activity, you will be able to:</p>
+<ol type="1">
+<li><p>Clean and transform raw and messy data into a structured and analysis ready format.</p></li>
+<li><p>Combine multiple datasets, including resolving issues like inconsistent naming.</p></li>
+<li><p>Explore relationships between variables and communicate findings using visualizations.</p></li>
+<li><p>(Optional) Use web scraping tools to gather additional data from an online source.</p></li>
+</ol>
 </div>
 </div>
 </div>
@@ -210,31 +165,23 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Technology Requirement:</strong></p>
-<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow. Students should be comfortable importing data and performing basic data wrangling with packages from the tidyverse (especially <code>readr</code>, <code>dplyr</code>, and <code>tidyr</code>).</p>
-<p>Statistical inference will be carried out using base R functions such as <code>chisq.test()</code>.</p>
-<p>We will also use the <code>vcd</code> package (Visualizing Categorical Data) to create mosaic and association plots, including optional residual-based shading that helps identify which category combinations contribute most to the chi-square result.</p>
-<details>
-<summary>
-<b>Instructor’s Note (Optional: Point-and-Click Software)</b>
-</summary>
-<p>A short optional section provides guidance for completing the chi-square test in a point-and-click environment (e.g., Minitab) for instructors that do not use <code>R</code>.</p>
-</details>
+<p>This activity requires the use of <code>R</code> with familiarity in <code>Quarto</code> documents and several <code>tidyverse</code> packages including <code>dplyr</code>, <code>tidyr</code>, <code>readr</code> and <code>stringr</code>. Students will also work with the <code>janitor</code> and <code>rvest</code> packages to perform webs scraping and clean raw datasets due to data inconsistencies.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<p>The <code>lol_gender_lanes_patch16.2.csv</code> dataset contains 172 rows, one per League of Legends champion, and includes basic metadata used to study the relationship between <strong>champion gender</strong> and <strong>typical lane/role</strong> (based on patch 16.2). Several metadata fields are included for context and potential extensions, but the primary variables for this module are <code>gender</code> and <code>lane</code>.</p>
-<p>Download Data: <a href="lol_gender_lanes_patch16.2.csv">lol_gender_lanes_patch16.2.csv</a></p>
+<p>The <code>nba_wingspan_2025.csv</code> dataset contains 499 rows and 4 columns. Each row represents a NBA player from the 2024-25 season. <strong>Note</strong> this dataset is partially cleaned from the data found at craftednba.com.</p>
+<p>Download Data: <a href="nba_wingspan_2025.csv" target="_blank">nba_wingspan_2025.csv</a></p>
 <details>
 <summary>
 <b>Variable Descriptions</b>
 </summary>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 22%">
+<col style="width: 77%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -245,166 +192,206 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 <tbody>
 <tr class="odd">
 <td>name</td>
-<td>Champion name</td>
+<td>Full name of NBA player, with team abbreviation and primary position</td>
 </tr>
 <tr class="even">
-<td>title</td>
-<td>Champion title/epithet (e.g., “the Sinister Blade”)</td>
+<td>height</td>
+<td>Player’s height in feet &amp; inches format</td>
 </tr>
 <tr class="odd">
-<td>resource</td>
-<td>Champion’s primary in-lore “resource” or energy system used for abilities (most are “Mana”)</td>
+<td>wingspan</td>
+<td>Player’s wingspan in feet &amp; inches format</td>
 </tr>
 <tr class="even">
-<td>genre</td>
-<td>Broad gameplay archetype label for the champion (Fighter, Assassin, etc.)</td>
-</tr>
-<tr class="odd">
-<td>skinCount</td>
-<td>Number of available skins for the champion at the time the dataset was compiled</td>
-</tr>
-<tr class="even">
-<td>gender</td>
-<td>Champion gender label used for this analysis (male, female, NA)</td>
-</tr>
-<tr class="odd">
-<td>attackType</td>
-<td>Champion’s typical attack style (close vs.&nbsp;range)</td>
-</tr>
-<tr class="even">
-<td>releaseDate</td>
-<td>Champion release date (year)</td>
-</tr>
-<tr class="odd">
-<td>region</td>
-<td>Champion’s primary lore region/faction (e.g., piltover, noxus, etc.)</td>
-</tr>
-<tr class="even">
-<td>lane</td>
-<td>Champion’s typical lane/role assignment for Summoner’s Rift (adc, jungle, mid, support, top)</td>
+<td>wingspan_advantage</td>
+<td>Difference between wingspan and height in inches (wingspan - height)</td>
 </tr>
 </tbody>
 </table>
 </details>
+<p>The <code>nba_team_abbreviations.csv</code> dataset contains the abbreviations and full names of the 30 NBA (National Basketball Association) teams.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>team_name</td>
+<td>Full name of the NBA team</td>
+</tr>
+<tr class="even">
+<td>team</td>
+<td>Standard 3-letter abbreviation for the NBA team</td>
+</tr>
+</tbody>
+</table>
+<section id="additional-data-for-version-without-web-scraping" class="level4">
+<h4 class="anchored" data-anchor-id="additional-data-for-version-without-web-scraping">Additional Data For Version Without Web Scraping</h4>
+<p>The <code>nba_per100possessions_2025.csv</code> dataset contains 736 rows and 14 columns. Each row represents a NBA player from the 2024-25 season. <strong>Note</strong> this dataset contains duplicates because of players switching teams midseason. For example, Luka Dončić will have 3 total rows for his stats with DAL, LAL and his total 2024-25 season stats.</p>
+<p>Download Data: <a href="nba_per100possessions_2025.csv" target="_blank">nba_per100possessions_2025.csv</a></p>
+<details>
+<summary>
+<b>Variable Descriptions</b>
+</summary>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 89%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>player</td>
+<td>Full name of NBA player</td>
+</tr>
+<tr class="even">
+<td>g</td>
+<td>Games played during the 2024-25 season</td>
+</tr>
+<tr class="odd">
+<td>mp</td>
+<td>Minutes played during the 2024-25 season</td>
+</tr>
+<tr class="even">
+<td>pts</td>
+<td>Points scored per 100 possessions</td>
+</tr>
+<tr class="odd">
+<td>orb</td>
+<td>Offensive rebounds per 100 possessions</td>
+</tr>
+<tr class="even">
+<td>drb</td>
+<td>Defensive rebounds per 100 possessions</td>
+</tr>
+<tr class="odd">
+<td>trb</td>
+<td>Total rebounds per 100 possessions</td>
+</tr>
+<tr class="even">
+<td>ast</td>
+<td>Assists per 100 possessions</td>
+</tr>
+<tr class="odd">
+<td>stl</td>
+<td>Steals per 100 possessions</td>
+</tr>
+<tr class="even">
+<td>blk</td>
+<td>Blocks per 100 possessions</td>
+</tr>
+<tr class="odd">
+<td>o_rtg</td>
+<td>Offensive Rating: An estimate of points produced per 100 possessions</td>
+</tr>
+<tr class="even">
+<td>d_rtg</td>
+<td>Defensive Rating: An estimate of points allowed per 100 possessions</td>
+</tr>
+<tr class="odd">
+<td>e_fg_percent</td>
+<td>Effective field goal percentage: Adjusts percentage for the fact that a 3pt field goal is worth more than a 2pt field goal</td>
+</tr>
+<tr class="even">
+<td>ft_percent</td>
+<td>Free throw percentage</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p>The <code>nba_shooting_2025</code> data contains 737 rows and 9 columns. Each row represents a NBA player from the 2024-25 season. <strong>Note</strong> this dataset contains duplicates because of players switching teams midseason. For example, Luka Dončić will have 3 total rows for his stats with DAL, LAL and his total 2024-25 season stats.</p>
+<p>Download Data: <a href="nba_shooting_2025.csv" target="_blank">nba_shooting_2025.csv</a></p>
+<details>
+<summary>
+<b>Variable Descriptions</b>
+</summary>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>player</td>
+<td>Full name of NBA player</td>
+</tr>
+<tr class="even">
+<td>g</td>
+<td>Games played during the 2024-25 season</td>
+</tr>
+<tr class="odd">
+<td>fg_percent</td>
+<td>Field goal percentage</td>
+</tr>
+<tr class="even">
+<td>avg_dist_of_fg</td>
+<td>Average distance (in feet) of field goal attempts</td>
+</tr>
+<tr class="odd">
+<td>2pt_rate</td>
+<td>Proportion of field goal attempts that are 2 point attempts</td>
+</tr>
+<tr class="even">
+<td>3pt_rate</td>
+<td>Proportion of field goal attempts that are 3 point attempts</td>
+</tr>
+<tr class="odd">
+<td>2pt_percent</td>
+<td>Make proportion on 2 point attempts</td>
+</tr>
+<tr class="even">
+<td>3pt_percent</td>
+<td>Make proportion on 3 point attempts</td>
+</tr>
+<tr class="odd">
+<td>dunk_rate</td>
+<td>Proportion of field goal attempts that are dunks</td>
+</tr>
+</tbody>
+</table>
+</details>
+</section>
 <section id="data-sources" class="level4">
 <h4 class="anchored" data-anchor-id="data-sources">Data Sources</h4>
+<p><a href="https://craftednba.com/player-traits/length" target="_blank">https://craftednba.com/player-traits/length</a></p>
+<p><a href="https://www.basketball-reference.com/leagues/NBA_2025_per_poss.html" target="_blank">https://www.basketball-reference.com/leagues/NBA_2025_per_poss.html</a></p>
+<p><a href="https://www.basketball-reference.com/leagues/NBA_2025_shooting.html" target="_blank">https://www.basketball-reference.com/leagues/NBA_2025_shooting.html</a></p>
+</section>
+</section>
+<section id="materials" class="level3">
+<h3 class="anchored" data-anchor-id="materials">Materials</h3>
+<p><strong>Version With Web Scraping</strong></p>
 <ul>
-<li><p><a href="https://github.com/Kerrders/LoLdleData" target="_blank">https://github.com/Kerrders/LoLdleData</a></p></li>
-<li><p><a href="https://mobalytics.gg/lol" target="_blank">https://mobalytics.gg/lol</a></p></li>
-</ul>
-</section>
-</section>
-<section id="analyzing-associations-between-categorical-variables" class="level2">
-<h2 class="anchored" data-anchor-id="analyzing-associations-between-categorical-variables">Analyzing Associations between Categorical Variables</h2>
-<section id="motivating-question" class="level3">
-<h3 class="anchored" data-anchor-id="motivating-question">Motivating question</h3>
-<p>In this module, we investigate the following research question:</p>
-<blockquote class="blockquote">
-<p><strong>Is champion gender associated with typical lane/role in League of Legends?</strong></p>
-</blockquote>
-<blockquote class="blockquote">
-<p>In other words, <strong>does the distribution of champion genders differ across the five Summoner’s Rift roles</strong> (Top, Jungle, Mid, Bottom/AD Carry, Support)?</p>
-</blockquote>
-</section>
-<section id="prepping-workspace" class="level3">
-<h3 class="anchored" data-anchor-id="prepping-workspace">Prepping Workspace</h3>
-<p>To begin, we will need to load the packages we will be using. For this analysis, you’ll need to load the <code>dplyr</code>, <code>tidyr</code>, and <code>vcd</code> packages.</p>
-<details>
-<summary>
-<b>Click to reveal code</b>
-</summary>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you need to install any of these uncomment the line below</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("dplyr,"tidyr", "vcd"))</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</details>
-<p>Now we should read in the data. Save the csv file to your computer and read it in. For convenience, we will all store it as an object named <code>lol_genders</code>.</p>
-<details>
-<summary>
-<b>Click to reveal code</b>
-</summary>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You might need to change the file path to match your setup.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"lol_gender_lanes_patch16.2.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</details>
-</section>
-</section>
-<section id="exploratory-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="exploratory-analysis">Exploratory Analysis</h2>
-<p>Before attempting to conduct a formal statistical inference on these data, we will start with some numerical and graphical summaries to better understand the data.</p>
-<section id="univariate-analyses" class="level3">
-<h3 class="anchored" data-anchor-id="univariate-analyses">Univariate Analyses</h3>
-<p>We’ll first investigate each of the main variables of interest (<code>gender</code> and <code>lane</code>) to familiarize ourselves with them.</p>
+<li><p><a href="nba_wingspans_worksheet.qmd">Class handout</a></p></li>
+<li><p>Solutions:</p>
 <ul>
-<li>Start by make a table that displays the number of champions associated with each gender.</li>
+<li><a href="nba_wingspans_solutions.qmd">Quarto with visible R code</a></li>
+<li><a href="nba_wingspans_solutions.html">HTML with hideable R code</a></li>
+</ul></li>
 </ul>
-<blockquote class="blockquote">
-<p>Question: How many champions are included in this table? How many rows are there in the <code>lol_genders</code> dataset?</p>
-</blockquote>
-<blockquote class="blockquote">
-<p>Question: What might be happening?</p>
-</blockquote>
-<p>Before continuing, lets remove these two champions that don’t have an assigned gender.</p>
-<p>If you are curious which champions they are, run the following code.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>To remove them we can use the <code>drop_na</code> function from the <code>tidyr</code> package.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lol_MFonly <span class="ot">&lt;-</span> lol_genders <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Now, we’ll investigate the the <code>lane</code> variable. Be sure to use the trimmed dataset that excluded the champions that didn’t have genders assigned to them.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lol_MFonly<span class="sc">$</span>lane)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="bivariate-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="bivariate-analysis">Bivariate Analysis</h3>
+<p><strong>Version Without Web Scraping</strong></p>
 <ul>
-<li><p>Two-ways tables</p></li>
-<li><p>Bar charts</p></li>
-<li><p>Mosaic Plots</p></li>
-</ul>
-</section>
-</section>
-<section id="inferential-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="inferential-statistics">Inferential Statistics</h2>
-<section id="overview-of-chi-square-test" class="level3">
-<h3 class="anchored" data-anchor-id="overview-of-chi-square-test">Overview of Chi-Square Test</h3>
-<p>Give big picture of chi-square test. Maybe outline the steps and then give the details?</p>
-</section>
-<section id="hypotheses" class="level3">
-<h3 class="anchored" data-anchor-id="hypotheses">Hypotheses</h3>
-</section>
-<section id="computing-the-chi-square-test-statistic-and-p-value" class="level3">
-<h3 class="anchored" data-anchor-id="computing-the-chi-square-test-statistic-and-p-value">Computing the Chi-square test statistic and p-value</h3>
-</section>
-<section id="interpreting-results" class="level3">
-<h3 class="anchored" data-anchor-id="interpreting-results">Interpreting Results</h3>
+<li><p><a href="nba_wingspans_solutions_no_webscraping.qmd">Class handout</a></p></li>
+<li><p>Solutions:</p>
 <ul>
-<li><p>Report and interpret an effect size for association (e.g., Cramér’s V).</p></li>
-<li><p>Use residuals / cell contributions to identify which category combinations drive the association.</p></li>
+<li><a href="nba_wingspans_solutions_no_webscraping.qmd">Quarto with visible R code</a></li>
+<li><a href="nba_wingspans_solutions_no_webscraping.html">HTML with hideable R code</a></li>
+</ul></li>
 </ul>
-</section>
-<section id="extensions" class="level3">
-<h3 class="anchored" data-anchor-id="extensions">Extensions?</h3>
-<ul>
-<li>Simulated p-value</li>
-<li>Other ways to interpret results</li>
-<li>Other variables? (maybe the genre?)</li>
-<li>Other games?</li>
-</ul>
-</section>
-</section>
-<section id="optional-instructor-materials-for-introductory-statistics-courses" class="level2">
-<h2 class="anchored" data-anchor-id="optional-instructor-materials-for-introductory-statistics-courses">Optional: Instructor Materials for Introductory Statistics Courses</h2>
-<p>Need to provide a trimmed down version for intro stat classes. Maybe more</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Conclusion">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -417,31 +404,23 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Reserved for the conclusion</p>
+<p>Through this module, you explored how physical attributes, specifically wingspan and wingspan advantage might relate to on-court performance in the NBA. By cleaning the combining data from multiple sources, you’ve created a comprehensive dataset that allowed for deeper exploration of relationships between physical characteristics and basketball statistics.</p>
+<p>With your final combined dataset, you were able to generate visualizations to investigate potential connections, such as whether players with longer wingspan advantages tend to have a larger defensive impact. These kinds of relationships can provide use insights for analysts, scouts and even fans trying to understand the value of certain physical traits.</p>
+<p>This activity underscores the value of data wrangling, merging and visualization and sets the stage for more advanced analysis in the future. Whether that’s building predictive models, exploring important relationships, or applying machine learning techniques to sports data.</p>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Additional Reading">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Additional Reading
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>If you are interested in learning more about how gender impacts game play and design in League of Legends, check out these articles.</p>
+</section>
+<section id="additional-reading" class="level3">
+<h3 class="anchored" data-anchor-id="additional-reading">Additional Reading</h3>
 <ul>
-<li><p><a href="https://womeningamestudies.com/a-survey-of-league-of-legends-champions-from-a-gendered-perspective/" target="_blank">A Survey of League of Legends Champions from a Gendered Perspective</a> by Sarah Beck</p></li>
-<li><p><a href="https://cjleo.com/blog/an-analysis-of-gender-and-roles-of-league-of-legends-champions/#:~:text=Cho'Gath%2C%20Kindred%2C%20Nocturne,champions%20in%20League%20of%20Legends." target="_blank">an analysis of gender and roles of league of legends champions</a> by Cheryl-Jean Leo</p></li>
-<li><p><a href="https://dl.acm.org/doi/fullHtml/10.1145/3472538.3472549">Investigating Match Performance Differences between Genders of League of Legends Champions</a> by Ivan Ramler, Choong-Soo Lee, and Sarah Strong</p></li>
+<li><ul>
+<li>Kaazempur-Mofrad, A. R. (2022, December). <a href="https://sportrxiv.org/index.php/server/preprint/view/238"><em>Basketball players’ long wingspan enhances defensive upside but hinders shooting capabilities: A statistical inquiry of the effect of NBA player wingspans on shooting accuracy and defensive impact</em></a> (Preprint). <em>SportRxiv</em>. https://doi.org/10.51224/SRXIV.238</li>
+</ul></li>
+<li><p><a href="https://www.wsj.com/articles/the-freakish-advantage-of-nba-all-stars-1455224954" target="_blank">The Freakish Advantage of NBA All-Stars - The Wall Street Journal</a> (Subscription required)</p></li>
+<li><p><a href="https://www.thesportster.com/current-nba-players-with-largest-longest-widest-wingspans/" target="_blank">17 Current NBA Players With The Largest Wingspans, Ranked By Length - TheSportster</a></p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
 </section>
 
 </main>

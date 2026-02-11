@@ -1,0 +1,268 @@
+---
+title: "Analyzing Winners of Nathan's Famous Hotdog Eating Competition through Data Storytelling"
+author:
+  - name: Keelin Joyce
+    email: kjoyc22@stlawu.edu
+    affiliation:
+      - id: slu
+        name: St. Lawrence University
+date: "February 9, 2026"
+description: "A tutorial on the Closeread Quarto extension for storytelling using Nathan's Hotdog Eating Contest Winners"
+editor: 
+  canonical: true
+  markdown: 
+    wrap: 72
+image: sr_map.png
+categories:
+  - Data Visualization
+  - Closeread Extention
+  - Data Storytelling
+---
+
+Please note that these material have not yet completed the required
+pedagogical and industry peer-reviews to become a published module on
+the SCORE Network. However, instructors are still welcome to use these
+materials if they are so inclined.
+
+### Introduction
+
+Nathan's Famous Hotdog Eating Contest is a contest held every year on the 4th of July in which competitive eaters compete to eat the most amount of hotdogs in a specified amount of time. Recent competitions have been run for a total of either 10 or 12 minutes, but earlier competitions were much shorter. 
+
+This dataset looks at the winner of the competition each year, the gender (only some years have data on female winners), the year the competition took place, the total runtime of the competition that year, how many hotdogs were eaten by the winner, and variable of how many hotdogs per minute the winner ate to account for different competition runtimes.
+
+![2025 Winners- Joey Shestnut and Miki Sudo ](https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-famous-july-4th-international-hot-dog-eating-contest-2024/intro-1719859047.jpg){#fig-intro}
+
+In this module, we will look at how to use the Closeread Quarto extension to tell a story using data.
+
+The champion data for this module comes from
+[Wikipedia](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"},
+and has been cleaned into a .csv file for convenience. 
+
+Take a look at the Wikipedia Page to see the original data and familiarize yourself with the story. There are many factors that contribute to changes in the data that you will want to have an idea of to complete your storytelling.
+
+The cleaned data set can be downloaded and imported here. 
+Download Data:
+[HotdogData.csv](HotdogData.csv)
+```{r message=FALSE}
+library(readr)
+hotdog_data <- read_csv("~/Downloads/HotdogData.csv")
+```
+
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this tutorial, students will be able to:
+
+1.  Use data to create appropriate visualizations.
+
+2.  Analyze these visualizations to tell a story.
+
+3.  Use the Closeread Quarto extention to assemble data, visualizations, 
+and analyses into a cohesive and visually appealing project.
+
+:::
+
+::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+This could be suitable of an out of class activity or one that spans one
+or more class periods.
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+**Technology Requirement:**
+
+This activity is designed to be completed primarily in `R` using a
+Quarto document workflow with a Closeread format. Students should be 
+comfortable importing data and performing basic data visualizations with 
+packages from the tidyverse (especially `readr`, `dplyr`, and `tidyr`).
+
+We will use the Closeread extension to assemble data storytelling. No previous
+experience using Closeread is required.
+
+</details>
+:::
+
+### Data
+
+The `cleaned hotdog` dataset contains 69 rows, one per competition champion, 
+and includes variables of the year they won, gender, how many hotdogs were 
+eaten by the winner, the run time of the competition that year, and a 
+proportion variable of how many hotdogs were eaten per minute.
+
+Download Data:
+[HotdogData.csv](HotdogData.csv)
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description |
+|------------------------------------|------------------------------------|
+| Year | The year the competition took place |
+| Sex | Indicator variable of sex (1 for male, 0 for female) |
+| Dogs | How many total hotdogs were eaten by the winner |
+| Winner | Name of the competition winner |
+| Time | Time (in minutes) of the competition (not consistant year to year) |
+| Hotdogs_per_minute | Proportion of how many hotdogs per minute were eaten (to account for time difference) |
+
+
+</details>
+
+#### Data Source
+
+-   [wikipedia.org](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
+
+
+## Creating Data Visualizations
+
+### Motivating question
+
+In this module, we investigate the following research question:
+
+> **What are some factors that contribute to how many hotdogs the winner of 
+> Nathan's Famous Hotdog Eating Contest eats and how can we tell that story
+> using data?**
+
+> In other words, how can we use Closeread for effective data
+> storytelling?
+
+### Prepping Workspace
+
+To begin, we will need to load the packages we will be using. For this analysis, you'll need to load the `dplyr`, `tidyr`, and `vcd` packages.
+
+<details>
+<summary><b>Click to reveal code</b></summary>
+
+```{r}
+#| echo: true
+#| eval: false
+
+# If you need to install any of these uncomment the line below
+# install.packages(c("dplyr","tidyr", "vcd"))
+
+library(dplyr)
+library(tidyr)
+library(vcd)
+```
+</details>
+
+
+Now we should read in the data. Save the csv file to your computer and read it in. For convenience, we will all store it as an object named `lol_genders`.
+
+
+<details>
+<summary><b>Click to reveal code</b></summary>
+
+```{r}
+#| echo: true
+#| eval: false
+
+
+# You might need to change the file path to match your setup.
+lol_genders <- readr::read_csv("lol_gender_lanes_patch16.2.csv")
+```
+</details>
+
+## Exploratory Analysis
+
+Before attempting to conduct a formal statistical inference on these data, we will start with some numerical and graphical summaries to better understand the data.
+
+
+### Univariate Analyses
+
+We'll first investigate each of the main variables of interest (`gender` and `lane`) to familiarize ourselves with them.
+
+
+- Start by make a table that displays the number of champions associated with each gender.
+
+> Question: How many champions are included in this table? How many rows are there in the `lol_genders` dataset?
+
+> Question: What might be happening?
+
+Before continuing, lets remove these two champions that don't have an assigned gender. 
+
+If you are curious which champions they are, run the following code.
+
+```{r}
+#| echo: true
+#| eval: false
+
+
+lol_genders |>
+  filter(is.na(gender))
+```
+
+
+To remove them we can use the `drop_na` function from the `tidyr` package.
+
+```{r}
+#| echo: true
+#| eval: false
+
+
+lol_MFonly <- lol_genders |> drop_na(gender)
+```
+
+Now, we'll investigate the the `lane` variable. Be sure to use the trimmed dataset that excluded the champions that didn't have genders assigned to them.
+
+```{r}
+#| echo: true
+#| eval: false
+
+
+table(lol_MFonly$lane)
+```
+
+### Bivariate Analysis
+
+- Two-ways tables
+
+- Bar charts
+
+- Mosaic Plots
+
+## Inferential Statistics
+
+### Overview of Chi-Square Test
+
+Give big picture of chi-square test. Maybe outline the steps and then give the details?
+
+### Hypotheses
+
+### Computing the Chi-square test statistic and p-value
+
+### Interpreting Results
+
+- Report and interpret an effect size for association (e.g., Cramér's V).
+
+- Use residuals / cell contributions to identify which category combinations drive the association.
+
+### Extensions?
+
+- Simulated p-value
+- Other ways to interpret results
+- Other variables? (maybe the genre?)
+- Other games?
+
+
+
+## Optional: Instructor Materials for Introductory Statistics Courses
+
+Need to provide a trimmed down version for intro stat classes. Maybe more
+
+::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+Reserved for the conclusion
+:::
+
+::: {.callout-note collapse="true" title="Additional Reading"}
+
+If you are interested in learning more about how gender impacts game play and design in League of Legends, check out these articles.
+
+-   [A Survey of League of Legends Champions from a Gendered
+    Perspective](https://womeningamestudies.com/a-survey-of-league-of-legends-champions-from-a-gendered-perspective/){target="_blank"} by Sarah Beck
+
+-   [an analysis of gender and roles of league of legends
+    champions](https://cjleo.com/blog/an-analysis-of-gender-and-roles-of-league-of-legends-champions/#:~:text=Cho'Gath%2C%20Kindred%2C%20Nocturne,champions%20in%20League%20of%20Legends.){target="_blank"} by Cheryl-Jean Leo
+
+-   [Investigating Match Performance Differences between Genders of League of Legends Champions](https://dl.acm.org/doi/fullHtml/10.1145/3472538.3472549) by Ivan Ramler, Choong-Soo Lee, and Sarah Strong 
+
+
+:::

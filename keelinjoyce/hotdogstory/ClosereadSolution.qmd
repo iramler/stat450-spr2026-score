@@ -4,7 +4,9 @@ author: Keelin Joyce
 format:
   closeread-html:
     cr-style:
-      section-background-color: "white"
+      narrative-background-color-sidebar: "#182"
+      narrative-text-color-sidebar: "#fff"
+      section-background-color: "#f7f6f5"
 ---
 :::{#cr-intro}
 ![](https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-famous-july-4th-international-hot-dog-eating-contest-2024/intro-1719859047.jpg)
@@ -24,9 +26,8 @@ How many hotdogs per minute does the winner of each year's champion of the Natha
 ::: {#cr-biggraph}
 ```{r echo=FALSE, message=FALSE}
 
-hotdog_clean <- read_csv("~/Desktop/github repos/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
+hotdog_clean <- read_csv("~/Downloads/HotdogData.csv")
 hotdog_men <- hotdog_clean |> filter(Sex == 1)
-
 hotdog_men_min <- hotdog_men |> mutate("Hotdogs_per_minute" = Dogs/Time)
 
 ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
@@ -37,7 +38,7 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 ```
 :::
 
-There are a few interesting trends that stand out here @cr-biggraph
+There are a few interesting trends that stand out here. @cr-biggraph
 
 Why do we think that there is a continual decrease in the first \~10 years?
 
@@ -45,14 +46,8 @@ Taking a look at the raw data in the early years, the original run time of the c
 
 ::: {#cr-runtime}
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-hotdog_time <- hotdog_men |> slice(43:51)
 
-hotdog_clean <- read_csv("~/Desktop/github repos/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
-hotdog_men <- hotdog_clean |> filter(Sex == 1)
-hotdog_men_min <- hotdog_men |> mutate("Hotdogs_per_minute" = Dogs/Time)
-
-hotdog_time <- hotdog_men_min |> slice(44:51) |>
-  summarise(Year, Time, Hotdogs_per_minute)
+hotdog_time <- hotdog_men_min |> slice(44:51) 
 
 ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
   geom_point() +
@@ -72,12 +67,6 @@ There is also quite a large jump in number of hotdogs consumed per minute betwee
 
 ::: {#cr-label2001}
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-hotdog_time <- hotdog_men |> slice(43:51)
-
-hotdog_clean <- read_csv("~/Desktop/github repos/stat450-spr2026-score/hotdogs/hotdog_clean.csv")
-hotdog_men <- hotdog_clean |> filter(Sex == 1)
-hotdog_men_min <- hotdog_men |> mutate("Hotdogs_per_minute" = Dogs/Time)
-
 hotdog_2001 <- hotdog_men_min |> slice(25) |>
   summarise(Year, Winner, Hotdogs_per_minute)
 
@@ -101,16 +90,16 @@ Following the end to Kobayashi's reign, Joey Chestnut, the current name in Natha
 
 ::: {#cr-winnerswitch}
 ```{r}
-hotdog_kobayashi <- hotdog_men_min |> filter(Winner == "Takeru Kobayashi")
-hotdog_joey <- hotdog_men_min |> filter(Winner == "Joey Chestnut")
-hotdog_kkobyashi_label <- hotdog_kobayashi |> slice(4)
+hotdog_kobayashi <- hotdog_men_min |> filter(Winner == "Takeru Kobayashi")
+hotdog_joey <- hotdog_men_min |> filter(Winner == "Joey Chestnut")
+hotdog_kobayashi_label <- hotdog_kobayashi |> slice(4)
 hotdog_joey_label <- hotdog_joey |> slice(15)
 
 ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
   geom_point() +
   ylim(0, 8) +
   labs(y = "Hotdogs Per Minute", title = "Hotdogs Eaten by Competition Winner By Year") +
-  geom_text_repel(data = hotdog_kkobyashi_label, aes(label = Winner), nudge_y = -0.5, colour = "red") +
+  geom_text_repel(data = hotdog_kobayashi_label, aes(label = Winner), nudge_y = -0.5, colour = "red") +
   geom_point(data = hotdog_kobayashi, size = 2, colour = "red") +
   geom_text_repel(data = hotdog_joey_label, aes(label = Winner),
                   nudge_y = 0.5, colour = "dodgerblue") +
@@ -121,12 +110,8 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 :::
 Joey Chestnut had a winning streak for years, excluding 2015 (when he lost with 60 hotdogs compared to Matt Stonie's 62) and 2024 (when he was barred from the competition due to sponsership conflicts) @cr-joey
 
-
 ::: {#cr-joey}
 ```{r}
-hotdog_joey <- hotdog_men_min |> filter(Winner == "Joey Chestnut")
-hotdog_joey_label <- hotdog_joey |> slice(15)
-
 ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
   geom_point() +
   ylim(0, 8) +
@@ -138,55 +123,18 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 ```
 :::
 
-::: {#cr-women}
+Joey Chestnut is currently the reigning champion, winning with 70 hotdogs in 10 minutes in 2025. @cr-joeyreign
+
+::: {#cr-joeyreign}
 ```{r}
-hotdog_women <- hotdog_clean |> filter(Sex == 0)
-
-hotdog_women_min <-hotdog_women |> mutate("Hotdogs_per_minute" = Dogs/Time)
-
-
-ggplot(data = hotdog_women_min, aes(x = Year, y = Hotdogs_per_minute)) +
-  geom_point() +
-  ylim(0, 8) +
-  labs(y = "Hotdogs Per Minute", title = "Hotdogs Eaten by Competition Winner By Year") +
-  theme_minimal()
-```
-:::::
-
-This scatterplot only includes the male winners each year. Women have not competed every year, but what would their data look like? @cr-biggraph
-
-This is all of the data on female winners. @cr-women
-
-::: {#cr-gender}
-```{r}
+hotdog_joey_label2 <- hotdog_joey |> slice(1)
 ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
   geom_point() +
-  geom_point(data = hotdog_women_min, colour = "green") +
   ylim(0, 8) +
   labs(y = "Hotdogs Per Minute", title = "Hotdogs Eaten by Competition Winner By Year") +
+  geom_text_repel(data = hotdog_joey_label2, aes(label = Winner),
+                  nudge_x = 0.5, nudge_y = -0.4, colour = "dodgerblue") +
+  geom_point(data = hotdog_joey_label2, size = 2, colour = "dodgerblue") +
   theme_minimal()
 ```
-:::
-
-Looking at both male and female winners, the female winners do no seem to follow the same trend that the male winners have followed. @cr-gender
-
-
-::: {#cr-miki}
-```{r}
-hotdog_miki <- hotdog_women_min |> filter(Winner == "Miki Sudo")
-hotdog_miki_label <- hotdog_miki |> slice(4)
-
-ggplot(data = hotdog_women_min, aes(x = Year, y = Hotdogs_per_minute)) +
-  geom_point() +
-  ylim(0, 8) +
-  labs(y = "Hotdogs Per Minute", title = "Hotdogs Eaten by Competition Winner By Year") +
-  geom_text_repel(data = hotdog_miki_label, aes(label = Winner),
-                  nudge_y = 0.5, colour = "dodgerblue") +
-  geom_point(data = hotdog_miki, size = 2, colour = "dodgerblue") +
-  theme_minimal()
-```
-:::
-
-Miki Sudo has been the champion for women in the competition (barring 2021 when she did not compete during her pregnancy) @cr-miki
-:::
 

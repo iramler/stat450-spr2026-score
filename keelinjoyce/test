@@ -1,0 +1,11 @@
+This is the folder for Keelin Joyce
+
+To send files to the repo (i.e., push)
+
+1. Click on the Git tab
+2. Stage the file(s) that you want to send by clicking 
+  on the empty box in the staged column
+3. Click on Commit
+4. Add a brief message describing what we're committing
+5. Click the commit button
+6. Then click Push

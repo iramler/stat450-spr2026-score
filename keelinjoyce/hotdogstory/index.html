@@ -6,11 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Ivan Ramler">
-<meta name="dcterms.date" content="2026-01-29">
-<meta name="description" content="A tutorial on the Chi-square test for association using gender and roles of champions in League of Legends.">
+<meta name="author" content="Keelin Joyce">
+<meta name="dcterms.date" content="2026-02-09">
+<meta name="description" content="A tutorial on the Closeread Quarto extension for storytelling using Nathan’s Hotdog Eating Contest Winners">
 
-<title>Comparing the gender and roles of champions in League of Legends</title>
+<title>Analyzing Winners of Nathan’s Famous Hotdog Eating Competition through Data Storytelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,17 +85,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Comparing the gender and roles of champions in League of Legends</h1>
+<h1 class="title">Analyzing Winners of Nathan’s Famous Hotdog Eating Competition through Data Storytelling</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Data Visualization</div>
-    <div class="quarto-category">Chisquare Test for Association</div>
-    <div class="quarto-category">Categorical Variables</div>
+    <div class="quarto-category">Closeread Extention</div>
+    <div class="quarto-category">Data Storytelling</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    A tutorial on the Chi-square test for association using gender and roles of champions in League of Legends.
+    A tutorial on the Closeread Quarto extension for storytelling using Nathan’s Hotdog Eating Contest Winners
   </div>
 </div>
 
@@ -104,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-title-meta-heading">Affiliation</div>
   
     <div class="quarto-title-meta-contents">
-    <p class="author">Ivan Ramler <a href="mailto:iramler@stlawu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+    <p class="author">Keelin Joyce <a href="mailto:kjoyc22@stlawu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 29, 2026</p>
+      <p class="date">February 9, 2026</p>
     </div>
   </div>
   
@@ -132,30 +132,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
-<section id="welcome-video" class="level3">
-<h3 class="anchored" data-anchor-id="welcome-video">Welcome Video</h3>
-<p>For a humourous 3-minute introduction to League of Legends, please watch this video by Kola, a League of Legends coach with <a href="https://coachify.gg/@phoenixkola" target="_blank">Coachify</a>.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/saqFrVV-YsU?si=DGPaJg6JqSNcmw3g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
-</iframe>
-</section>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>League of Legends (LoL) is a 5 v. 5 multiplayer online battle arena (MOBA) game developed by Riot Games. In this game, players assume the role of a “champion” with unique abilities and engage in intense battles against a team of other players or computer-controlled champions.</p>
-<p>In standard play on Summoner’s Rift, champions are typically assigned to roles that correspond to different lanes/positions on the map—most commonly Top, Jungle, Mid, Bottom (AD Carry), and Support (see <a href="#fig-srmap" class="quarto-xref">Figure&nbsp;1</a>). Champions assigned to each position have distinct strategic responsibilities (for example, the Jungler moves between lanes to secure objectives, while the Support focuses on protecting and enabling teammates). Champions also have narrative identities that include attributes such as gender, and players often choose champions based on a mix of gameplay fit (role/position) and character preference.</p>
-<div id="fig-srmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>Nathan’s Famous Hotdog Eating Contest is a contest held every year on the 4th of July in which competitive eaters compete to eat the most amount of hotdogs in a specified amount of time. Recent competitions have been run for a total of either 10 or 12 minutes, but earlier competitions were much shorter.</p>
+<p>This dataset looks at the winner of the competition each year, the gender (only some years have data on female winners), the year the competition took place, the total runtime of the competition that year, how many hotdogs were eaten by the winner, and variable of how many hotdogs per minute the winner ate to account for different competition runtimes.</p>
+<div id="fig-intro" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-srmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="sr_map.png" class="img-fluid figure-img">
+<div aria-describedby="fig-intro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-famous-july-4th-international-hot-dog-eating-contest-2024/intro-1719859047.jpg" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-srmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Lanes in Summoner’s Rift
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: 2025 Winners- Joey Shestnut and Miki Sudo
 </figcaption>
 </figure>
 </div>
-<p>In this module, we will investigate whether the distribution of genders differs across roles.</p>
-<p>The majority of the champion metadata for this module comes from <a href="https://github.com/Kerrders/LoLdleData" target="_blank">LoLdleData</a>, an open GitHub project that programmatically compiles “extra” champion attributes that aren’t conveniently available from the official Riot API endpoints (e.g., gender, game lore region, and release year).</p>
-<p>The LoLdleData is supplemented with laning information taken from the fan-site <a href="https://mobalytics.gg/lol" target="_blank">Mobalytics</a> (based on patch 16.2).</p>
-<p>Because these are community-maintained, derived datasets, the gender and lane labels should be treated as typical classifications rather than official ground truth. In particular, lane/role assignments reflect a snapshot based on patch 16.2, and many champions can be played effectively in multiple lanes depending on strategy, player skill, and balance changes.</p>
+<p>In this module, we will look at how to use the Closeread Quarto extension to tell a story using data.</p>
+<p>The champion data for this module comes from <a href="https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest" target="_blank">Wikipedia</a>, and has been cleaned into a .csv file for convenience.</p>
+<p>Take a look at the Wikipedia Page to see the original data and familiarize yourself with the story. There are many factors that contribute to changes in the data that you will want to have an idea of to complete your storytelling.</p>
+<p>The cleaned data set can be downloaded and imported here. Download Data: <a href="HotdogData.csv">HotdogData.csv</a></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>hotdog_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Downloads/HotdogData.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -170,13 +168,9 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 <div class="callout-body-container callout-body">
 <p>By the end of this tutorial, students will be able to:</p>
 <ol type="1">
-<li><p>Organize two categorical variables into a contingency table and compute row/column proportions.</p></li>
-<li><p>Create and interpret exploratory visualizations for two categorical variables (e.g., side-by-side bars, stacked proportion bars, mosaic plots).</p></li>
-<li><p>State hypotheses for the Chi-square test of association and explain what “independence” means in this context.</p></li>
-<li><p>Compute and interpret the Chi-square test statistic, degrees of freedom, and p-value using R.</p></li>
-<li><p>Check chi-square conditions by examining expected cell counts.</p></li>
-<li><p>Report and interpret an effect size for association.</p></li>
-<li><p>Use residuals / cell contributions to identify which category combinations drive the association.</p></li>
+<li><p>Use data to create appropriate visualizations.</p></li>
+<li><p>Analyze these visualizations to tell a story.</p></li>
+<li><p>Use the Closeread Quarto extention to assemble data, visualizations, and analyses into a cohesive and visually appealing project.</p></li>
 </ol>
 </div>
 </div>
@@ -210,23 +204,17 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Technology Requirement:</strong></p>
-<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow. Students should be comfortable importing data and performing basic data wrangling with packages from the tidyverse (especially <code>readr</code>, <code>dplyr</code>, and <code>tidyr</code>).</p>
-<p>Statistical inference will be carried out using base R functions such as <code>chisq.test()</code>.</p>
-<p>We will also use the <code>vcd</code> package (Visualizing Categorical Data) to create mosaic and association plots, including optional residual-based shading that helps identify which category combinations contribute most to the chi-square result.</p>
-<details>
-<summary>
-<b>Instructor’s Note (Optional: Point-and-Click Software)</b>
-</summary>
-<p>A short optional section provides guidance for completing the chi-square test in a point-and-click environment (e.g., Minitab) for instructors that do not use <code>R</code>.</p>
-</details>
+<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow with a Closeread format. Students should be comfortable importing data and performing basic data visualizations with packages from the tidyverse (especially <code>readr</code>, <code>dplyr</code>, and <code>tidyr</code>).</p>
+<p>We will use the Closeread extension to assemble data storytelling. No previous experience using Closeread is required.</p>
+
 </div>
 </div>
 </div>
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<p>The <code>lol_gender_lanes_patch16.2.csv</code> dataset contains 172 rows, one per League of Legends champion, and includes basic metadata used to study the relationship between <strong>champion gender</strong> and <strong>typical lane/role</strong> (based on patch 16.2). Several metadata fields are included for context and potential extensions, but the primary variables for this module are <code>gender</code> and <code>lane</code>.</p>
-<p>Download Data: <a href="lol_gender_lanes_patch16.2.csv">lol_gender_lanes_patch16.2.csv</a></p>
+<p>The <code>cleaned hotdog</code> dataset contains 69 rows, one per competition champion, and includes variables of the year they won, gender, how many hotdogs were eaten by the winner, the run time of the competition that year, and a proportion variable of how many hotdogs were eaten per minute.</p>
+<p>Download Data: <a href="HotdogData.csv">HotdogData.csv</a></p>
 <details>
 <summary>
 <b>Variable Descriptions</b>
@@ -244,66 +232,49 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 </thead>
 <tbody>
 <tr class="odd">
-<td>name</td>
-<td>Champion name</td>
+<td>Year</td>
+<td>The year the competition took place</td>
 </tr>
 <tr class="even">
-<td>title</td>
-<td>Champion title/epithet (e.g., “the Sinister Blade”)</td>
+<td>Sex</td>
+<td>Indicator variable of sex (1 for male, 0 for female)</td>
 </tr>
 <tr class="odd">
-<td>resource</td>
-<td>Champion’s primary in-lore “resource” or energy system used for abilities (most are “Mana”)</td>
+<td>Dogs</td>
+<td>How many total hotdogs were eaten by the winner</td>
 </tr>
 <tr class="even">
-<td>genre</td>
-<td>Broad gameplay archetype label for the champion (Fighter, Assassin, etc.)</td>
+<td>Winner</td>
+<td>Name of the competition winner</td>
 </tr>
 <tr class="odd">
-<td>skinCount</td>
-<td>Number of available skins for the champion at the time the dataset was compiled</td>
+<td>Time</td>
+<td>Time (in minutes) of the competition (not consistant year to year)</td>
 </tr>
 <tr class="even">
-<td>gender</td>
-<td>Champion gender label used for this analysis (male, female, NA)</td>
-</tr>
-<tr class="odd">
-<td>attackType</td>
-<td>Champion’s typical attack style (close vs.&nbsp;range)</td>
-</tr>
-<tr class="even">
-<td>releaseDate</td>
-<td>Champion release date (year)</td>
-</tr>
-<tr class="odd">
-<td>region</td>
-<td>Champion’s primary lore region/faction (e.g., piltover, noxus, etc.)</td>
-</tr>
-<tr class="even">
-<td>lane</td>
-<td>Champion’s typical lane/role assignment for Summoner’s Rift (adc, jungle, mid, support, top)</td>
+<td>Hotdogs_per_minute</td>
+<td>Proportion of how many hotdogs per minute were eaten (to account for time difference)</td>
 </tr>
 </tbody>
 </table>
 </details>
-<section id="data-sources" class="level4">
-<h4 class="anchored" data-anchor-id="data-sources">Data Sources</h4>
+<section id="data-source" class="level4">
+<h4 class="anchored" data-anchor-id="data-source">Data Source</h4>
 <ul>
-<li><p><a href="https://github.com/Kerrders/LoLdleData" target="_blank">https://github.com/Kerrders/LoLdleData</a></p></li>
-<li><p><a href="https://mobalytics.gg/lol" target="_blank">https://mobalytics.gg/lol</a></p></li>
+<li><a href="https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest" target="_blank">wikipedia.org</a></li>
 </ul>
 </section>
 </section>
-<section id="analyzing-associations-between-categorical-variables" class="level2">
-<h2 class="anchored" data-anchor-id="analyzing-associations-between-categorical-variables">Analyzing Associations between Categorical Variables</h2>
+<section id="creating-data-visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="creating-data-visualizations">Creating Data Visualizations</h2>
 <section id="motivating-question" class="level3">
 <h3 class="anchored" data-anchor-id="motivating-question">Motivating question</h3>
 <p>In this module, we investigate the following research question:</p>
 <blockquote class="blockquote">
-<p><strong>Is champion gender associated with typical lane/role in League of Legends?</strong></p>
+<p><strong>What are some factors that contribute to how many hotdogs the winner of Nathan’s Famous Hotdog Eating Contest eats and how can we tell that story using data?</strong></p>
 </blockquote>
 <blockquote class="blockquote">
-<p>In other words, <strong>does the distribution of champion genders differ across the five Summoner’s Rift roles</strong> (Top, Jungle, Mid, Bottom/AD Carry, Support)?</p>
+<p>In other words, how can we use Closeread for effective data storytelling?</p>
 </blockquote>
 </section>
 <section id="prepping-workspace" class="level3">
@@ -314,12 +285,12 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 <b>Click to reveal code</b>
 </summary>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you need to install any of these uncomment the line below</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("dplyr,"tidyr", "vcd"))</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you need to install any of these uncomment the line below</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("dplyr","tidyr", "vcd"))</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 <p>Now we should read in the data. Save the csv file to your computer and read it in. For convenience, we will all store it as an object named <code>lol_genders</code>.</p>
@@ -328,8 +299,8 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 <b>Click to reveal code</b>
 </summary>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You might need to change the file path to match your setup.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"lol_gender_lanes_patch16.2.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You might need to change the file path to match your setup.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"lol_gender_lanes_patch16.2.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 </section>
@@ -352,16 +323,16 @@ Figure&nbsp;1: Lanes in Summoner’s Rift
 <p>Before continuing, lets remove these two champions that don’t have an assigned gender.</p>
 <p>If you are curious which champions they are, run the following code.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lol_genders <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To remove them we can use the <code>drop_na</code> function from the <code>tidyr</code> package.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lol_MFonly <span class="ot">&lt;-</span> lol_genders <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lol_MFonly <span class="ot">&lt;-</span> lol_genders <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, we’ll investigate the the <code>lane</code> variable. Be sure to use the trimmed dataset that excluded the champions that didn’t have genders assigned to them.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lol_MFonly<span class="sc">$</span>lane)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lol_MFonly<span class="sc">$</span>lane)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="bivariate-analysis" class="level3">
