@@ -1,0 +1,21 @@
+---
+title: "Closeread Scrollytelling Handout (R + Quarto)"
+subtitle: "Nathan’s Hot Dog Eating Contest Module"
+author: "Kevin Euyoque"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## What you will need 
+
+### Software
+- R
+- RStudio
+- Closereaed
+
+### Required Packages
+- tidyverse
+-readr
