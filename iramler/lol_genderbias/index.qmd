@@ -182,7 +182,7 @@ In this module, we investigate the following research question:
 
 ### Prepping Workspace
 
-To begin, we will need to load the packages we will be using. For this analysis, you'll need to load the `dplyr`, `tidyr`, and `vcd` packages.
+To begin, we will need to load the packages we will be using. For this analysis, you'll need to load the `dplyr`, `tidyr`, `vcd`, and `viridis` packages.
 
 <details>
 <summary><b>Click to reveal code</b></summary>
@@ -192,12 +192,13 @@ To begin, we will need to load the packages we will be using. For this analysis,
 #| eval: false
 
 # If you need to install any of these uncomment the line below
-# install.packages(c("dplyr,"tidyr", "vcd", "ggplot2"))
+# install.packages(c("dplyr,"tidyr", "vcd", "ggplot2", "viridis"))
 
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(vcd)
+library(viridis)
 
 ```
 </details>
@@ -477,7 +478,10 @@ While the `chisq.test()` function we will use in the next part will compute thes
 
 
 ```{r}
-( outer( table(lol_MFonly$gender), table(lol_MFonly$lane), FUN = "*")/nrow(lol_MFonly) ) |> round(1)
+lol_expected_counts <- ( outer( table(lol_MFonly$gender), table(lol_MFonly$lane), FUN = "*")/nrow(lol_MFonly) )
+
+round(lol_expected_counts, 1)
+
 ```
 
 
@@ -487,6 +491,34 @@ While the `chisq.test()` function we will use in the next part will compute thes
 
 ### Computing the Chi-square test statistic and p-value
 
+The **chi-square test statistic** measures the amount that our expected counts differ from our observed counts. More specifically, it is calculated by using:
+
+$$
+\chi^2 = \sum_{cell}\frac{(O-E)^2}{E}
+$$
+where 
+
+- $O$ is the observed count in the cell
+- $E$ is the expected count in the cell
+- $\sum$ means to add the result from each cell
+
+Intuitively, this statistic works well as the ($O-E$) portion provides the difference between what we observe and what we expect under the null hypothesis. We square this difference to ensure we always get a positive value. We divide by the expected count to control for the size of the cell. In terms of our application, we can think of it as accounting for the fact that we have fewer female champions than male regardless of which lane they are in.
+
+Each piece of the summation is called the **contribution** to the test statistic. Thus, the chi-square statistic is simply the sum of each individual cell's contribution.
+
+> Question: By hand, calculate the contribution to the test statistic associated with a female champion being a support.
+
+We can use R to calculate each of these pieces for us. (Again noting that we will use the `chisq.test()` function to ultimately calculate all of this for us.)
+
+```{r}
+numerator <- (lol_2way_table_raw - lol_expected_counts)^2
+
+test_stat <- sum( numerator/lol_expected_counts )
+test_stat
+```
+```{r}
+chisq.test(lol_2way_table_raw, simulate.p.value = TRUE, B = 5000)
+```
 
 
 <!-- 
