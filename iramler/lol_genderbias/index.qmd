@@ -433,9 +433,9 @@ Side note: These hypotheses are equivalent to; $H_0:$ The distribution of gender
 
 ### Computing Expected Cell Counts
 
-An expected cell count is the number of observations we would predict for a particular cell in a two-way table under the assumption that the two categorical variables are independent. In other words, it answers:
+An expected cell count is the number of observations we would predict for a particular cell in a two-way table assuming the two categorical variables are independent. In other words, it answers:
 
-"If these two variables had no relationship, how many observations should we expect to see in this category combination, given the overall totals in the table?"
+> If these two variables had no relationship, how many observations should we expect to see in this category combination, given the overall totals in the table?
 
 Recall the counts for each variable from our exploratory analysis:
 
@@ -452,12 +452,40 @@ table(lol_MFonly$lane)
 
 > Question: What proportion of the gendered champions are female? (Recall that there are 170 champions in our analysis.)
 
-> Question: If gender and lane had no relationship, what percent of female champions should we expect to supports? 
+> Question: If gender and lane had no relationship, what percent of female champions should we expect to be supports? 
 
 
-> Question: How many of the 34 supports would then be female?
+> Question: How many of the 34 champions labeled as supports would then be female? (If gender and lane had no realtionship.)
 
-> Question: If gender and lane had no relationship, what percent of the 103 male champions would be junglers? How many total would we expect?
+> Question: If gender and lane had no relationship, what percent of the 103 male champions would we expect to be junglers? How many male junglers would we expect?
+
+
+These values (the totals, not the percents), are called *expected counts* in a Chi-square test. In general, they can be calculated using any of the three equivalent forms below.
+
+$$
+\text{Expected count for a cell} = \text{Column Total} \times \text{Row Proportion}
+$$
+$$
+\text{Expected count for a cell} = \text{Row Total} \times \text{Column Proportion}
+$$
+
+$$
+\text{Expected count for a cell} = \frac{\text{Row Total} \times \text{Column Total}}{\text{Grand Total}}
+$$
+
+While the `chisq.test()` function we will use in the next part will compute these for us, along with the rest of the output we need, we can manually calculate them by using the `outer()` function.
+
+
+```{r}
+( outer( table(lol_MFonly$gender), table(lol_MFonly$lane), FUN = "*")/nrow(lol_MFonly) ) |> round(1)
+```
+
+
+
+
+
+
+### Computing the Chi-square test statistic and p-value
 
 
 
@@ -465,9 +493,6 @@ table(lol_MFonly$lane)
 Stopped here, need to continue updating rewording to fit my style.
 -->
 
-
-
-### Computing the Chi-square test statistic and p-value
 
 ### Interpreting Results
 
