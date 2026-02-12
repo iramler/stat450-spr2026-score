@@ -22,3 +22,31 @@ execute:
 
 ### Introduction
 
+---
+
+## Introduction
+
+The Nathan’s Famous Hot Dog Eating Contest has been held annually since 1972. Over time, changes in contest duration, training methods, and competitive intensity have shaped modern performance levels.
+
+In this module, students explore contest data through a **closeread scrollytelling format** in Quarto. The goal is not only to analyze performance trends, but to understand how data visualization can be structured into a guided narrative.
+
+Rather than simply presenting graphs, this activity emphasizes:
+
+- Establishing a baseline
+- Identifying structural shifts
+- Testing explanations with better metrics
+
+---
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+
+By the end of this activity, you will be able to:
+
+1. Interpret time series visualizations of competitive performance.
+2. Distinguish between total counts and standardized rates (ex, hot dogs per minute).
+3. Identify structural shifts in long term trends.
+4. Use closeread in Quarto to create scrollytelling visualizations.
+
+:::
+
+---
