@@ -20,8 +20,6 @@ execute:
 - tidyverse
 -readr
 
-### Introduction
-
 ---
 
 ## Introduction
