@@ -182,7 +182,7 @@ In this module, we investigate the following research question:
 
 ### Prepping Workspace
 
-To begin, we will need to load the packages we will be using. For this analysis, you'll need to load the `dplyr`, `tidyr`, `vcd`, and `viridis` packages.
+To begin, we will need to load the packages we will be using. For this analysis, you'll need to load the `dplyr`, `tidyr`, `vcd`, `viridis`, and `visualize` packages.
 
 <details>
 <summary><b>Click to reveal code</b></summary>
@@ -192,13 +192,14 @@ To begin, we will need to load the packages we will be using. For this analysis,
 #| eval: false
 
 # If you need to install any of these uncomment the line below
-# install.packages(c("dplyr,"tidyr", "vcd", "ggplot2", "viridis"))
+# install.packages(c("dplyr,"tidyr", "vcd", "ggplot2", "viridis", "visualize"))
 
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(vcd)
 library(viridis)
+library(visualize)
 
 ```
 </details>
@@ -461,7 +462,7 @@ table(lol_MFonly$lane)
 > Question: If gender and lane had no relationship, what percent of the 103 male champions would we expect to be junglers? How many male junglers would we expect?
 
 
-These values (the totals, not the percents), are called *expected counts* in a Chi-square test. In general, they can be calculated using any of the three equivalent forms below.
+These values (the totals, not the percentages), are called *expected counts* in a chi-square test. In general, they can be calculated using any of the three equivalent forms below.
 
 $$
 \text{Expected count for a cell} = \text{Column Total} \times \text{Row Proportion}
@@ -489,33 +490,94 @@ round(lol_expected_counts, 1)
 
 
 
-### Computing the Chi-square test statistic and p-value
+### Computing the Chi-square Test Statistic
 
-The **chi-square test statistic** measures the amount that our expected counts differ from our observed counts. More specifically, it is calculated by using:
+The **chi-square test statistic** measures how much the observed counts differ from the expected counts. More specifically, it is calculated by using:
 
 $$
-\chi^2 = \sum_{cell}\frac{(O-E)^2}{E}
+\chi^2 = \sum_{\text{cells}}\frac{(O-E)^2}{E}
 $$
 where 
 
-- $O$ is the observed count in the cell
-- $E$ is the expected count in the cell
-- $\sum$ means to add the result from each cell
+- $O$ is the observed count in the cell,
+- $E$ is the expected count in the cell,
+- $\sum$ means to add the contributions across all cells.
 
-Intuitively, this statistic works well as the ($O-E$) portion provides the difference between what we observe and what we expect under the null hypothesis. We square this difference to ensure we always get a positive value. We divide by the expected count to control for the size of the cell. In terms of our application, we can think of it as accounting for the fact that we have fewer female champions than male regardless of which lane they are in.
+Intuitively, this statistic works well as the $O-E$ portion provides the difference between what we observe and what we expect under the null hypothesis. We square this difference to ensure we always get a positive value. We standardize the squared difference by the expected count (so a difference of 5 matters more when $E=10$ than when $E=100$). In terms of our application, we can think of it as accounting for the fact that we have fewer female champions than male regardless of which lane they are in.
 
 Each piece of the summation is called the **contribution** to the test statistic. Thus, the chi-square statistic is simply the sum of each individual cell's contribution.
 
-> Question: By hand, calculate the contribution to the test statistic associated with a female champion being a support.
+> Question: By hand, calculate the contribution to the test statistic associated with associated with the (female, support) cell.
 
 We can use R to calculate each of these pieces for us. (Again noting that we will use the `chisq.test()` function to ultimately calculate all of this for us.)
 
 ```{r}
-numerator <- (lol_2way_table_raw - lol_expected_counts)^2
-
-test_stat <- sum( numerator/lol_expected_counts )
+test_stat <- sum( ((lol_2way_table_raw - lol_expected_counts)^2)  /lol_expected_counts )
 test_stat
 ```
+
+### Find the $p$-value
+
+Once we have the chi-square test statistic, the next step is to convert it into a **p-value**. Under the null hypothesis ($H_0$) of independence, the chi-square test statistic follows (approximately) a **chi-square distribution** with a certain number of **degrees of freedom**.
+
+#### Degrees of freedom
+
+For an $r \times c$ sized two-way table, the degrees of freedom are:
+
+$$
+df = (r-1)(c-1).
+$$
+
+Intuitively, once the row totals and column totals are fixed, only $(r-1)(c-1)$ cells can vary freely; the remaining cells are determined by the margins.
+
+For our `gender × lane` table, we have $r=2$ gender categories (female, male) and $c=5$ lane categories, so:
+
+$$
+df = (2-1)(5-1) = 4.
+$$
+
+
+#### Compute the p-value in R
+
+We can compute the exact right-tail probability using the chi-square distribtion. 
+
+::: {.callout-tip title="Why this is a right-tail test" appearance="minimal"}
+
+The chi-square statistic is a sum of squared (standardized) differences, so it is always **nonnegative**. Larger values mean the observed counts are **farther** from what we would expect under independence. Therefore, evidence against $H_0$ corresponds to **large** chi-square values, and the p-value is the **right-tail probability**.
+:::
+
+In R, we can calculate the degrees of freedom with:
+
+```{r}
+dof <- (nrow(lol_2way_table_raw) - 1) * (ncol(lol_2way_table_raw) - 1)
+```
+
+
+and the $p$-value using the `pchisq()` function:
+
+```{r}
+p_value <- pchisq(test_stat, df = dof, lower.tail = FALSE)
+p_value
+```
+
+
+We can also visualize this $p$-value using the `visualize.chisq()` function from the `visualize` package:
+
+```{r}
+vdist_chisquare_prob(perc = 13,
+  df = 11,
+  type = c("lower", "upper"),
+  print_plot = TRUE)
+
+
+visualize.chisq(stat = test_stat, df = dof, 
+                type = "upper")
+
+```
+
+
+
+
 ```{r}
 chisq.test(lol_2way_table_raw, simulate.p.value = TRUE, B = 5000)
 ```
