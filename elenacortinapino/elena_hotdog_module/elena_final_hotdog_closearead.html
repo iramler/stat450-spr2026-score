@@ -35,7 +35,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="elena_final_hotdog_closearead_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="elena_final_hotdog_closearead_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="elena_final_hotdog_closearead_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="elena_final_hotdog_closearead_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="elena_final_hotdog_closearead_files/libs/bootstrap/bootstrap-2ab32754ec7a4ddad3d30384f066f146.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="elena_final_hotdog_closearead_files/libs/quarto-contrib/intersection-observer-polyfill-1.0.0/intersection-observer.js"></script>
 <script src="elena_final_hotdog_closearead_files/libs/quarto-contrib/scrollama-3.2.0/scrollama.min.js"></script>
 <script src="elena_final_hotdog_closearead_files/libs/quarto-contrib/closeread-0.1.0/closeread.js"></script>
@@ -83,8 +83,10 @@ window.Quarto = {
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
-          --cr-narrative-background-color-sidebar: #09753C;
+          --cr-narrative-sidebar-width: minmax(500px, 1fr);
+--cr-narrative-background-color-sidebar: #09753C;
 --cr-narrative-text-color-sidebar: white;
+--cr-poem-font-family: Gotham;
         }
       </style>
     
@@ -125,7 +127,7 @@ window.Quarto = {
 </section>
 <section id="in-this-demo-well-create-a-plot-with-data-from-the-wikipedia-page-for-the-story-of-nathans-hot-dog-eating-competition." class="level3">
 <h3 class="anchored">In this demo, we’ll create a plot with data from the Wikipedia page for The Story of Nathan’s Hot Dog Eating Competition.</h3>
-<p>Data was accessed from Wikipedia, “Nathan’s Hot Dog Eating Contest”, and cleaned with the R <code>tidyverse</code> library. (https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest).</p>
+<p>Data was accessed from Wikipedia, “Nathan’s Hot Dog Eating Contest”, and cleaned with the R <code>tidyverse</code> library. <a href="https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest">Nathan’s Hot Dog Eating Competition on Wikipedia</a>.</p>
 <div class="cr-section cr-column-screen sidebar-left">
 <div class="narrative-col">
 <div class="trigger new-trigger" data-focus-on="cr-final">
@@ -219,7 +221,7 @@ In the women’s category, Miki Sudo, native to Florida, is the overall champion
 <div class="narrative">
 <p>This is the solution plot for the exercise in this module. Many solutions possible. A correct plot includes:<br>
 - Labeled axes for <code>x = year</code> and <code>y = dogs eaten per minute</code><br>
-- Dot plot for all the observations in the data set.<br>
+- Scatterplot for all the observations in the data set.<br>
 - Highlight for Joey Chestnut’s observations.<br>
 - Different color and/or shape for Joey Chestnut’s observations.<br>
 - Annotation that explains shortly which points correspond to Joey Chestnut’s wins.<br>
@@ -274,8 +276,8 @@ In the women’s category, Miki Sudo, native to Florida, is the overall champion
 </div>
 </div>
 <div id="cr-code" class="sticky">
-<div class="line-block"><span id="lb1-1">ggplot(hotdog_clean_2) +</span><br>
-<span id="lb1-2">&nbsp;&nbsp;aes(x = Year, y = standard) +</span><br>
+<div class="line-block"><span id="lb1-1">ggplot(hotdog) +</span><br>
+<span id="lb1-2">&nbsp;&nbsp;aes(x = Year, y = DPM) +</span><br>
 <span id="lb1-3">&nbsp;&nbsp;geom_point(aes(colour = factor(Sex))) +</span><br>
 <span id="lb1-4">&nbsp;&nbsp;scale_colour_manual(values = c(“#95F527”, “#01401C”)) +</span><br>
 <span id="lb1-5">&nbsp;&nbsp;annotate(“label”, x = 1976, y = 6.8, label = “Women”, fill = “#95F527”) +</span><br>

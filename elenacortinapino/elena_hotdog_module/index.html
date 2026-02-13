@@ -138,39 +138,59 @@ window.Quarto = {
 <p>Please note that these materials have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human eating hability in ways no one might have imagined.</p>
+<p>The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 100+ year tradition. Over time, competitors have pushed the limits of human eating ability in ways no one might have imagined.</p>
 <p>This module explains the process of creating effective data visualization plots using <code>tidyverse</code> and the <code>closeread</code> HTML Quarto extension.</p>
 </section>
 <section id="background" class="level3">
 <h3 class="anchored" data-anchor-id="background">Background</h3>
-<p><strong><a href="https://closeread.dev">Closeread</a></strong> is a custom format for Quarto that enables <em>scrollytelling</em> features for HTML documents.</p>
-</section>
-<section id="how-to-create-a-section" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-create-a-section">How to create a section</h3>
+<p><a href="https://closeread.dev"><strong>Closeread</strong></a> is a custom format for Quarto that enables <em>scrollytelling</em> features for HTML documents.</p>
+<div class="line-block">Please, refer to the link above to download and install the extension before continuing along with the module.<br>
+For additional, detailed guidance on the use of Closeread, please watch <a href="https://www.youtube.com/watch?v=KqLxy66B3lQ">this talk</a><br>
+“Andrew Bray - Closeread: bringing Scrollytelling to Quarto” at the Posit Conference 2024.</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Scrollytelling">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Scrollytelling
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Scrollytelling is a style of web design that transitions graphics and text as a user scrolls, allowing stories to progress naturally. Despite its power, <em>scrollytelling</em> typically requires specialist web dev skills beyond the reach of many data scientists.<br>
+<br>
+Closeread is a Quarto extension that makes a wide range of <em>scrollytelling</em> techniques available to authors without traditional web dev experience, with support for cross-fading plots, graphics and other chunk output alongside narrative content. You can zoom in on poems, prose and images, as well as highlighting important phrases of text.</p>
+</div>
+</div>
+</div>
+<section id="how-to-create-a-section" class="level4">
+<h4 class="anchored" data-anchor-id="how-to-create-a-section">How to create a section</h4>
 <ul>
-<li>Section: Elements within a section will appear as a closeread story while elements outside of a section will appear as a normal Quarto HTML document.<br>
+<li>Section: Elements within a section will appear as a <code>closeread</code> story while elements outside of a section will appear as a normal Quarto HTML document.<br>
 </li>
 </ul>
 <p>Creating sections follows the syntax <code>::::{.cr-section_name}</code> where <code>section_name</code> is the name that will identify the section whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section as <code>::::</code> on its own line of code to act as delimitation for the space of the section.</p>
 </section>
-<section id="how-to-create-a-sticky" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-create-a-sticky">How to create a sticky</h3>
+<section id="how-to-create-a-sticky" class="level4">
+<h4 class="anchored" data-anchor-id="how-to-create-a-sticky">How to create a sticky</h4>
 <ul>
 <li>Sticky: An element of your document that you wish to do a close read of is called a “sticky”; as the user scrolls, it will remained pinned in the middle of the main column like a sticky note.<br>
 </li>
 </ul>
 <p>Creating stickies (on a very general sense) involves de syntax <code>:::{#cr-sticky_name}</code> where <code>sticky_name</code> is the name that will identify the sticky whenever it needs to be referenced. The three consecutive colons go in front of the section notation and at the end of the section as <code>:::</code> on their own line of code to act as delimitation for the space of the sticky.</p>
 </section>
-<section id="section-on-referencing-and-other-details-of-the-closeread-code-style." class="level3">
-<h3 class="anchored" data-anchor-id="section-on-referencing-and-other-details-of-the-closeread-code-style.">Section on referencing and other details of the closeread code style.</h3>
-<p>Referencing is done within the Quarto code to trigger a sticky to appear as soon as the line of the reference reaches the middle of the screen. Use the syntax <span class="math inline">\(@cr-sticky_name\)</span> to trigger a sticky to show on the closeread section.</p>
+<section id="section-on-referencing-and-other-details-of-the-closeread-code-style." class="level4">
+<h4 class="anchored" data-anchor-id="section-on-referencing-and-other-details-of-the-closeread-code-style.">Section on referencing and other details of the closeread code style.</h4>
+<p>Referencing is done within the Quarto code to trigger a sticky to appear as soon as the line of the reference reaches the middle of the screen. Use the syntax <span class="math inline">\(@cr-sticky_name\)</span> to trigger a sticky to show on the <code>closeread</code> section.</p>
 <p>Other details:<br>
 - Pane types:<br>
 - Zooming in and Highlighting:<br>
 - Panes colors and style:<br>
 </p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -179,20 +199,20 @@ Learning Objectives
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>By the end of this activity, you will be able to:</p>
 <ol type="1">
 <li><p>Create effective data visualization plots from the data through contextual analysis.</p></li>
 <li><p>Analyze and describe the trends and significant features of the data set with appropriate annotations.</p></li>
-<li><p>Use the closeread HTML extension for Quarto documents to create a <em>scrollytelling</em> file.</p></li>
+<li><p>Use the <code>closeread</code> HTML extension for Quarto documents to create a <em>scrollytelling</em> file.</p></li>
 <li><p>Interpret general trend information of a specific data set from the visualization plots and annotations.</p></li>
 </ol>
 </div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Methods">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -201,16 +221,17 @@ Methods
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Technology requirement: The activity handout provides a guidance Quarto document and a <em>solved</em> HTML, for reference on solutions and code references.</p>
 <ol type="1">
 <li><p>Plots: Familiarity with <code>tidyverse</code>, mainly <code>ggplot2</code>, <code>dplyr</code> and <code>tidyr</code> as a techniques for statistical analysis and data representation is crucial. You should understand how to use R code to perform changes on the data set.</p></li>
-<li><p>Basic understanding of the closeread syntax to create sections, stickies and reference files within the code to appear as desired in the final HTML document.</p></li>
+<li><p>Basic understanding of the <code>closeread</code> syntax to create sections, stickies and reference files within the code to appear as desired in the final HTML document.</p></li>
 </ol>
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
@@ -261,11 +282,11 @@ Methods
 <p>No physical handout is designed for this particular module. Please refer to the attached walk-through documents at the end of this section.</p>
 <section id="exercise" class="level4">
 <h4 class="anchored" data-anchor-id="exercise">Exercise</h4>
-<p>To create your own plot within the closeread page, please download the <a href="hotdog_clean.csv">Hot Dog</a> data set and the <a href="exercise_hotdog.qmd">exercise Quarto</a> document to create a plot annotating the data showing Joey Chestnut’s wins on Nathan’s Famous Hot Dog Eating Competition.</p>
+<p>To create your own plot within the <code>closeread</code> page, please download the <a href="hotdog_clean.csv">Hot Dog</a> data set and the <a href="exercise_hotdog.qmd">exercise Quarto</a> document to create a plot annotating the data showing Joey Chestnut’s wins on Nathan’s Famous Hot Dog Eating Competition.</p>
 <p><a href="elena_final_hotdog_closearead.html">HTML walk-through file</a></p>
 <p><a href="elena_final_hotdog_closearead.qmd">Solution Quarto RMD file</a></p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Conclusion">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -274,7 +295,7 @@ Conclusion
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In conclusion, the analysis of winners of this hot dog eating competition can be useful to extrapolate the knowledge on data visualization, effective plot annotation and applying novel techniques to create sophisticate and engaging UIs for the viewers to understand our work and results.</p>
 </div>
