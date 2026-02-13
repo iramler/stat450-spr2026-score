@@ -3,3 +3,12 @@ title: "kungfu"
 format: html
 ---
 
+```{r}
+import kagglehub
+
+# Download latest version
+path = kagglehub.dataset_download("predact/world-wushu-championships-2017")
+
+print("Path to dataset files:", path)
+```
+
