@@ -320,7 +320,7 @@ There seems to be a sinusoidal trend in the hot dog wins.\
 
 @cr-exercise 
 
-This is the solution plot for the exercise in this module. Many solutions possible. A correct plot includes:\
+This is the solution plot for the exercise in this module. Many solutions are possible. A correct plot includes:\
 - Labeled axes for `x = year` and `y = dogs eaten per minute`\
 - Scatterplot for all the observations in the data set.\
 - Highlight for Joey Chestnut's observations.\
