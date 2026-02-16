@@ -37,7 +37,7 @@ Loading the data from the file `hotdog.csv`
 
 ### Exercise
 
-1. Create a scatterplot that highlight the data points that correspond to Joey Chestnut's wins. Hint: You might find it easier to filter on the data frame itself before editing the plot's aesthetics.
+1. Create a scatter plot that highlight the data points that correspond to Joey Chestnut's wins. Hint: You might find it easier to filter on the data frame itself before editing the plot's aesthetics.
 - Highlight the data points and change the shape and color of the points. Hint use the `gghighlight` function of the `gghighlight` library.
 
 

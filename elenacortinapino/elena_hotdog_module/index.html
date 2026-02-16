@@ -114,10 +114,9 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="background" class="level3">
 <h3 class="anchored" data-anchor-id="background">Background</h3>
-<p><a href="https://closeread.dev"><strong>Closeread</strong></a> is a custom format for Quarto that enables <em>scrollytelling</em> features for HTML documents.</p>
-<div class="line-block">Please, refer to the link above to download and install the extension before continuing along with the module.<br>
-For additional, detailed guidance on the use of Closeread, please watch <a href="https://www.youtube.com/watch?v=KqLxy66B3lQ">this talk</a><br>
-“Andrew Bray - Closeread: bringing Scrollytelling to Quarto” at the Posit Conference 2024.</div>
+<p><a href="https://closeread.dev"><strong>Closeread</strong></a> is a custom format for Quarto that enables <em>scrollytelling</em> features for HTML documents.<br>
+</p>
+<p>Please, refer to the link above to download and install the extension before continuing along with the module. For additional, detailed guidance on the use of Closeread, please watch <a href="https://www.youtube.com/watch?v=KqLxy66B3lQ">this talk</a> “Andrew Bray - Closeread: bringing Scrollytelling to Quarto” at the Posit Conference 2024.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Scrollytelling">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -173,6 +172,18 @@ Additional Helpful Resources on Closeread
 <p>For more details and guidance on Closeread’s formatting settings and capabilities, please refer to <a href="https://www.gastonsanchez.com/learn-closeread/modules/09-style-formatting.html">this helpful online source</a> by Gaston Sanchez.</p>
 </div>
 </div>
+<details>
+<summary>
+<b>The <code>gghighlight</code> library and function</b>
+</summary>
+<p><a href="https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html">gghighlight()</a> highlights (almost) any geoms according to the given predicates.<br>
+<br>
+This function decreases the opacity of elements that are specified outside of the function’s predicate. This is the unhighlighted layer. An unhighlighted layer is the colorless version of the above points with the same data.<br>
+<br>
+The highlighted data layer, maintains the graph choices within the function predicate.<br>
+<br>
+More details on gghighlight() are available <a href="https://yutani.rbind.io/post/2018-06-03-anatomy-of-gghighlight/">here</a>.</p>
+</details>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -220,7 +231,7 @@ Methods
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>A data frame for 69 champions of the Nathan’s Famous Hot Dog eating competition from 1972 until 2025. The data has been scraped from the web source Wikipedia, “Nathan’s Famous Hot Dog Eating Contest”, and cleaned with the R <code>tidyverse</code> library. The variable for the dogs eaten is the result of calculating the ratio of the hot dogs each winner ate in non-extra time periods by the time of the competition in minutes. This was done because the competition times are not the same for all the years in the data set.</p>
-<p>Download data: <a href="hotdog_clean.csv">hotdog_clean.csv</a></p>
+<p>Download data: <a href="hotdog.csv">hotdog.csv</a></p>
 <details>
 <summary>
 <b>Variable Descriptions</b>
@@ -270,7 +281,7 @@ Methods
 <p>No physical handout is designed for this particular module. Please refer to the attached walk-through documents at the end of this section.</p>
 <section id="exercise" class="level4">
 <h4 class="anchored" data-anchor-id="exercise">Exercise</h4>
-<p>To create your own plot within the <code>closeread</code> page, please download the <a href="hotdog_clean.csv">Hot Dog</a> data set and the <a href="exercise_hotdog.qmd">exercise Quarto</a> document to create a plot annotating the data showing Joey Chestnut’s wins on Nathan’s Famous Hot Dog Eating Competition.</p>
+<p>To create your own plot within the <code>closeread</code> page, please download the <a href="hotdog.csv">Hot Dog</a> data set and the <a href="exercise_hotdog.qmd">exercise Quarto</a> document to create a plot annotating the data showing Joey Chestnut’s wins on Nathan’s Famous Hot Dog Eating Competition.</p>
 <p><a href="elena_final_hotdog_closearead.html">HTML walk-through file</a></p>
 <p><a href="elena_final_hotdog_closearead.qmd">Solution Quarto RMD file</a></p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Conclusion">

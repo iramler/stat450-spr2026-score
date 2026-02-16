@@ -72,6 +72,19 @@ For more details and guidance on Closeread's formatting settings and capabilitie
 :::
 
 
+#### The `gghighlight` library and function
+
+[gghighlight()](https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html) highlights (almost) any geoms according to the given predicates.\
+\
+This function decreases the opacity of elements that are specified outside of the function's predicate. This is the unhighlighted layer. An unhighlighted layer is the colorless version of the above points with the same data. \
+\
+The highlighted data layer, maintains the graph choices within the function predicate.\
+\
+More details on `gghighlight()` are available [here](https://yutani.rbind.io/post/2018-06-03-anatomy-of-gghighlight/).
+
+
+
+
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 By the end of this activity, you will be able to:
@@ -97,7 +110,7 @@ Technology requirement: The activity handout provides a guidance Quarto document
 
 A data frame for 69 champions of the Nathan's Famous Hot Dog eating competition from 1972 until 2025. The data has been scraped from the web source Wikipedia, "Nathan's Famous Hot Dog Eating Contest", and cleaned with the R `tidyverse` library. The variable for the dogs eaten is the result of calculating the ratio of the hot dogs each winner ate in non-extra time periods by the time of the competition in minutes. This was done because the competition times are not the same for all the years in the data set.
 
-Download data: [hotdog_clean.csv](hotdog_clean.csv)
+Download data: [hotdog.csv](hotdog.csv)
 
 <details>
 
@@ -124,7 +137,7 @@ No physical handout is designed for this particular module. Please refer to the 
 
 #### Exercise
 
-To create your own plot within the `closeread` page, please download the [Hot Dog](hotdog_clean.csv) data set and the [exercise Quarto](exercise_hotdog.qmd) document to create a plot annotating the data showing Joey Chestnut's wins on Nathan's Famous Hot Dog Eating Competition.
+To create your own plot within the `closeread` page, please download the [Hot Dog](hotdog.csv) data set and the [exercise Quarto](exercise_hotdog.qmd) document to create a plot annotating the data showing Joey Chestnut's wins on Nathan's Famous Hot Dog Eating Competition.
 
 [HTML walk-through file](elena_final_hotdog_closearead.html)
 
