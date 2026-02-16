@@ -83,6 +83,17 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="closeread-data-story" class="level1">
+<h1>Closeread Data Story</h1>
+<p>This section demonstrates how to build a scrollytelling page with <strong>closeread</strong>.</p>
+<section id="closeread-pieces-you-will-see-below" class="level2">
+<h2 class="anchored" data-anchor-id="closeread-pieces-you-will-see-below">Closeread pieces you will see below</h2>
+<ul>
+<li><strong>Section:</strong> Everything inside <code>::::{.cr-section ...}</code> becomes part of the scrolling story.</li>
+<li><strong>Sticky (target):</strong> A plot is made “sticky” by wrapping it with an ID like <code>:::{#cr-total-dogs-by-year}</code>.</li>
+<li><strong>Trigger (reference):</strong> In the narrative text, writing <code>@cr-total-dogs-by-year</code> triggers that sticky plot to focus as you scroll.</li>
+</ul>
+<hr>
 <div id="cr-intro">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -107,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="narrative-col">
 <div class="trigger new-trigger" data-focus-on="cr-total-dogs-by-year">
 <div class="narrative">
-<p>Step 1 — Total hot dogs over time (men)</p>
+<p>Step 1 — Baseline totals (men)</p>
 </div>
 </div>
 <div class="trigger">
@@ -117,7 +128,17 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="trigger">
 <div class="narrative">
-<p>Prompt: Why might totals be misleading for comparing across years?</p>
+<p>Why: A baseline plot helps you identify “story moments” (spikes in the data, plateaus, eras) Prompt: Why might totals be misleading for comparing across years?</p>
+</div>
+</div>
+<div class="trigger">
+<div class="narrative">
+<p>In closeread, the plot becomes a sticky when it is wrapped in a target block like {#cr-total-dogs-by-year}.</p>
+</div>
+</div>
+<div class="trigger new-trigger" data-focus-on="cr-total-dogs-by-year">
+<div class="narrative">
+
 </div>
 </div>
 <div class="trigger">
@@ -251,6 +272,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+</section>
+</section>
 <section id="now-after-going-over-the-mens-why-dont-you-look-into-the-womens-following-a-similar-structure" class="level1">
 <h1>Now after going over the men’s why dont you look into the women’s following a similar structure</h1>
 </section>
