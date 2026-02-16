@@ -33,10 +33,9 @@ This module explains the process of creating effective data visualization plots 
 ### Background
 
 [**Closeread**](https://closeread.dev) is a custom format for Quarto that enables *scrollytelling* features for HTML documents.
+\
 
-| Please, refer to the link above to download and install the extension before continuing along with the module.
-| For additional, detailed guidance on the use of Closeread, please watch [this talk](https://www.youtube.com/watch?v=KqLxy66B3lQ)
-| "Andrew Bray - Closeread: bringing Scrollytelling to Quarto" at the Posit Conference 2024.
+Please, refer to the link above to download and install the extension before continuing along with the module. For additional, detailed guidance on the use of Closeread, please watch [this talk](https://www.youtube.com/watch?v=KqLxy66B3lQ) "Andrew Bray - Closeread: bringing Scrollytelling to Quarto" at the Posit Conference 2024.
 
 
 ::: {.callout-note collapse="true" title="Scrollytelling" appearance="minimal"}
