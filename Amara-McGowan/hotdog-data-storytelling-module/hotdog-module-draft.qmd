@@ -35,11 +35,17 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 
 :::{#cr-intro}
 
-Nathan's Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.
+![](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png)
+
+# Welcome video
 
 If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
+
+# Introduction
+
+Nathan's Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 By the end of this tutorial, students will be able to:
@@ -116,18 +122,55 @@ head(hotdog_clean)
 ```
 :::
 
-This module will help you learn how to use the quarto extension `closeread` to tell stories with your data. To the right is a plot of the amount of hotdogs consumed per minute by winners. When you scroll, you'll see the plot stays to the right and new text emerges. @cr-tibble1
+This module will help you learn how to use the quarto extension `closeread` to tell stories with your data. To the right is a tibble of the data we will be using. When you scroll, you'll see the tibble stays to the right and new text emerges. @cr-tibble1
 
-This scrolling feature helps you tell stories about your data, some people call it "scrollytelling." @cr-tibble1
+This scrolling feature helps you tell stories about your data, which people have named "scrollytelling." @cr-tibble1
 :::
 
 ::::: {#cr-main}
 
-```{r, warning = FALSE}
+# Let's get started
+
+To begin, you will need to set up Closeread. Start a new qmd file with this YAML:
+
+title: My First Closeread
+
+author: Your Name
+
+format: closeread-html
+
+
+Next, you will need to install the Closeread extension. At the bottom of your screen, you should have a "console" open where the output of your code appears as you run it in RStudio. Next to console, you'll see something called the "Terminal", open that up and paste in the following code:
+
+```{r}
+#| echo: true
+#| eval: false
+quarto add qmd-lab/closeread
+```
+
+
+Now, You will need to get the `readr` and `tidyverse` packages. If you have never used them before, you may have to run install.packages("readr"), etc.
+```{r}
+#| echo: true
 library(readr)
 library(tidyverse)
 ```
 
-Here. @cr-main 
+Next, you will need to import our hotdog data and separate it into male winners and female winners.
+```{r}
+#| echo: true
+#| message: false
+hotdog_clean <- read_csv("hotdog_clean.csv")
+```
+
+Now, separate the data into `hotdog_men` a dataset of only the male winners, and `hotdog_women` a dataset of only the women who have won. 
+
+::: {.callout-caution collapse = "true" title = "Reveal the Code" appearance = "minimal"}
+```{r}
+#| echo: true
+hotdog_men <- hotdog_clean |> filter(Sex == 1)
+hotdog_women <- hotdog_clean |> filter(Sex == 0)
+```
+:::
 
 ::::: @cr-main

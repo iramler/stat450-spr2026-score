@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -54,10 +89,10 @@ ul.task-list li input[type="checkbox"] {
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
-          --cr-narrative-text-color-sidebar: white;
---cr-narrative-background-color-sidebar: darkgreen;
---cr-narrative-text-color-overlay: black;
+          --cr-narrative-background-color-sidebar: darkgreen;
 --cr-section-background-color: transparent;
+--cr-narrative-text-color-overlay: black;
+--cr-narrative-text-color-sidebar: white;
         }
       </style>
     
@@ -88,10 +123,16 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div id="cr-intro">
-<p>Nathan’s Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.</p>
+<p><img src="https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png" class="img-fluid"></p>
+<section id="welcome-video" class="level1">
+<h1>Welcome video</h1>
 <p>If you’re interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan’s Famous Hot Dog Eating Contest and the science behind it.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
 </iframe>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Nathan’s Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -220,12 +261,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="narrative-col">
 <div class="trigger new-trigger" data-focus-on="cr-tibble1">
 <div class="narrative">
-<p>This module will help you learn how to use the quarto extension <code>closeread</code> to tell stories with your data. To the right is a plot of the amount of hotdogs consumed per minute by winners. When you scroll, you’ll see the plot stays to the right and new text emerges.</p>
+<p>This module will help you learn how to use the quarto extension <code>closeread</code> to tell stories with your data. To the right is a tibble of the data we will be using. When you scroll, you’ll see the tibble stays to the right and new text emerges.</p>
 </div>
 </div>
 <div class="trigger new-trigger" data-focus-on="cr-tibble1">
 <div class="narrative">
-<p>This scrolling feature helps you tell stories about your data, some people call it “scrollytelling.”</p>
+<p>This scrolling feature helps you tell stories about your data, which people have named “scrollytelling.”</p>
 </div>
 </div>
 </div>
@@ -250,14 +291,53 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="cr-main">
-<div data-focus-on="cr-main">
-<p>Here.</p>
+<section id="lets-get-started" class="level1">
+<h1>Let’s get started</h1>
+<p><strong>FIRST TALK THROUGH CLOSEREAD INSTALL</strong></p>
+<p>To begin, you will need to set up Closeread. Start a new qmd file with this YAML:</p>
+<p>title: My First Closeread</p>
+<p>author: Your Name</p>
+<p>format: closeread-html</p>
+<p>Next, you will need to install the Closeread extension. At the bottom of your screen, you should have a “console” open where the output of your code appears as you run it in RStudio. Next to console, you’ll see something called the “Terminal”, open that up and paste in the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>quarto add qmd<span class="sc">-</span>lab<span class="sc">/</span>closeread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now, You will need to get the <code>readr</code> and <code>tidyverse</code> packages. If you have never used them before, you may have to run install.packages(“readr”), etc.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Next, you will need to import our hotdog data and separate it into male winners and female winners.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hotdog_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"hotdog_clean.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now, separate the data into <code>hotdog_men</code> a dataset of only the male winners, and <code>hotdog_women</code> a dataset of only the women who have won.</p>
+<div class="callout callout-style-simple callout-caution no-icon callout-titled" title="Reveal the Code">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Reveal the Code
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hotdog_men <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hotdog_women <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
 </div>
 <div class="@cr-main">
 
 </div>
+</section>
 </div>
 </div>
+</section>
 </section>
 </section>
 </div>
