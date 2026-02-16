@@ -89,10 +89,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
-          --cr-narrative-background-color-sidebar: darkgreen;
+          --cr-narrative-text-color-sidebar: white;
 --cr-section-background-color: transparent;
 --cr-narrative-text-color-overlay: black;
---cr-narrative-text-color-sidebar: white;
+--cr-narrative-background-color-sidebar: darkgreen;
         }
       </style>
     
@@ -123,7 +123,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div id="cr-intro">
-<p><img src="https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png" class="img-fluid figure-img"></p>
+<figcaption>Nathan’s Webpage</figcaption>
+</figure>
+</div>
 <section id="welcome-video" class="level1">
 <h1>Welcome video</h1>
 <p>If you’re interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan’s Famous Hot Dog Eating Contest and the science behind it.</p>
@@ -133,6 +138,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Nathan’s Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.</p>
+</section>
+<section id="todo-data-storytelling-intro-let-ppl-know-what-theyre-getting-into" class="level1">
+<h1>TODO: data storytelling intro (let ppl know what they’re getting into)</h1>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -254,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-sources" class="level4">
 <h4 class="anchored" data-anchor-id="data-sources">Data Sources</h4>
 <ul>
-<li><a href="Wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)" target="_blank">Wikipedia.org</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)" target="_blank">TODO: Wikipedia.org</a></li>
 </ul>
 <div class="@cr-intro">
 <div class="cr-section cr-column-screen sidebar-left">
@@ -293,24 +301,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cr-main">
 <section id="lets-get-started" class="level1">
 <h1>Let’s get started</h1>
-<p><strong>FIRST TALK THROUGH CLOSEREAD INSTALL</strong></p>
-<p>To begin, you will need to set up Closeread. Start a new qmd file with this YAML:</p>
-<p>title: My First Closeread</p>
-<p>author: Your Name</p>
-<p>format: closeread-html</p>
+<p>To begin, you will need to set up Closeread. Copy and paste the following block of code into a new qmd file.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> My First Closeread</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> Your Name</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> closeread-html</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Get the packages we need to work with our data (uncomment this chunk)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>#```{r}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>library(readr) # This will help us read in our data</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>library(tidyverse) # This will help us work with our data and make plots</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>#```</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Get our data (uncomment this chunk)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>#```{r}</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>hotdog_clean &lt;- read_csv("hotdog_clean.csv")</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>#```</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>:::{#cr-intro}</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>This is where you will start working! The three colon symbols denote a section, which is how your closeread will be organized.</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Next, you will need to install the Closeread extension. At the bottom of your screen, you should have a “console” open where the output of your code appears as you run it in RStudio. Next to console, you’ll see something called the “Terminal”, open that up and paste in the following code:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>quarto add qmd<span class="sc">-</span>lab<span class="sc">/</span>closeread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Now, You will need to get the <code>readr</code> and <code>tidyverse</code> packages. If you have never used them before, you may have to run install.packages(“readr”), etc.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Next, you will need to import our hotdog data and separate it into male winners and female winners.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hotdog_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"hotdog_clean.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>quarto add qmd-lab/closeread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now, separate the data into <code>hotdog_men</code> a dataset of only the male winners, and <code>hotdog_women</code> a dataset of only the women who have won.</p>
 <div class="callout callout-style-simple callout-caution no-icon callout-titled" title="Reveal the Code">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -325,8 +340,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hotdog_men <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hotdog_women <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hotdog_men <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hotdog_women <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
