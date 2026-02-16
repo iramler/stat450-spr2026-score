@@ -21,7 +21,7 @@ library(tidyverse)
 library(readr)
 
 # Load cleaned dataset (confirmed correct path)
-hotdog_clean <- read_csv("../../hotdogs/hotdog_clean.csv")
+hotdog_clean <- read_csv("hotdog_clean.csv")
 
 # Split genders (based on your coding: Sex == 1 men, Sex == 0 women)
 hotdog_men <- hotdog_clean |> filter(Sex == 1)

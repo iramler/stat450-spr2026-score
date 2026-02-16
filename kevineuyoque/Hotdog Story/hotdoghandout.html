@@ -7,6 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kevin Euyoque">
+<meta name="dcterms.date" content="2026-02-20">
+<meta name="description" content="A data visualization module using Nathan’s Hot Dog Eating Contest data through a closeread story.">
 
 <title>Closeread Scrollytelling Handout (R + Quarto)</title>
 <style>
@@ -20,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -47,20 +83,43 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Closeread Scrollytelling Handout (R + Quarto)</h1>
-<p class="subtitle lead">Nathan’s Hot Dog Eating Contest Module</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">tidyverse</div>
+    <div class="quarto-category">closeread</div>
+    <div class="quarto-category">data visualization</div>
+    <div class="quarto-category">scrollytelling</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A data visualization module using Nathan’s Hot Dog Eating Contest data through a closeread story.
+  </div>
 </div>
 
-
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Kevin Euyoque </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            St.&nbsp;Lawrence University
+          </p>
+      </div>
+  </div>
 
 <div class="quarto-title-meta">
 
+      
     <div>
-    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-             <p>Kevin Euyoque </p>
-          </div>
+      <p class="date">February 20, 2026</p>
+    </div>
   </div>
-    
   
     
   </div>
@@ -70,38 +129,59 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="what-you-will-need" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-will-need">What you will need</h2>
-<section id="software" class="level3">
-<h3 class="anchored" data-anchor-id="software">Software</h3>
-<ul>
-<li>R</li>
-<li>RStudio</li>
-<li>Closereaed</li>
-</ul>
+<section id="module" class="level2">
+<h2 class="anchored" data-anchor-id="module">Module</h2>
+<p>Please note that these materials have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
 </section>
-<section id="required-packages" class="level3">
-<h3 class="anchored" data-anchor-id="required-packages">Required Packages</h3>
-<ul>
-<li>tidyverse -readr</li>
-</ul>
-</section>
-<section id="introduction" class="level3">
-<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<hr>
-</section>
-</section>
-<section id="introduction-1" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-1">Introduction</h2>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The Nathan’s Famous Hot Dog Eating Contest has been held annually since 1972. Over time, changes in contest duration, training methods, and competitive intensity have shaped modern performance levels.</p>
 <p>In this module, students explore contest data through a <strong>closeread scrollytelling format</strong> in Quarto. The goal is not only to analyze performance trends, but to understand how data visualization can be structured into a guided narrative.</p>
-<p>Rather than simply presenting graphs, this activity emphasizes:</p>
-<ul>
-<li>Establishing a baseline</li>
-<li>Identifying structural shifts</li>
-<li>Testing explanations with better metrics</li>
-</ul>
-<hr>
+<p>Rather than simply producing graphs, students will learn how to structure visualizations into a guided analytical narrative.</p>
+</section>
+<section id="background-closeread" class="level2">
+<h2 class="anchored" data-anchor-id="background-closeread">Background: Closeread</h2>
+<p><a href="https://closeread.dev"><strong>Closeread</strong></a> is a Quarto extension that enables scrollytelling for HTML documents.</p>
+<p>Scrollytelling is a style of web-based storytelling in which:</p>
+<p>Text and graphics transition as the reader scrolls</p>
+<p>Visual elements become “sticky” and remain fixed while the narrative changes</p>
+<p>Attention is directed intentionally toward specific analytical moments</p>
+<p>Closeread allows these techniques to be implemented directly within Quarto using structured sections and plot references.</p>
+<section id="core-closeread-structure" class="level3">
+<h3 class="anchored" data-anchor-id="core-closeread-structure">Core Closeread Structure</h3>
+<p>Closeread documents are built using three key components:</p>
+<ol type="1">
+<li>Sections</li>
+</ol>
+<p>Sections define areas where scrollytelling behavior occurs</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">':::{.cr-section}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">...</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">:::'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ":::{.cr-section}\n...\n:::"</code></pre>
+</div>
+</div>
+<p>Everything inside a .cr-section behaves as part of the scroll-driven story.</p>
+<ol start="2" type="1">
+<li>Stickies (Plots or Elements to Highlight)</li>
+</ol>
+<p>A sticky element is defined with a unique ID:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="st">':::{#cr-plotname}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;plot code&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">:::'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ":::{#cr-plotname}\n&lt;plot code&gt;\n:::"</code></pre>
+</div>
+</div>
+<p>This element becomes pinned (or “sticky”) when triggered.</p>
+<ol start="3" type="1">
+<li>Referencing a Sticky</li>
+</ol>
+<p>Inside the narrative text, reference the sticky using:</p>
+<p><span class="citation" data-cites="cr-plotname">@cr-plotname</span></p>
+<p>When that line scrolls into view, the corresponding sticky element becomes the focus.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -116,15 +196,125 @@ Learning Objectives
 <div class="callout-body-container callout-body">
 <p>By the end of this activity, you will be able to:</p>
 <ol type="1">
-<li>Interpret time series visualizations of competitive performance.</li>
-<li>Distinguish between total counts and standardized rates (ex, hot dogs per minute).</li>
-<li>Identify structural shifts in long term trends.</li>
-<li>Use closeread in Quarto to create scrollytelling visualizations.</li>
+<li>Create time series visualizations using ggplot2</li>
+<li>Explain why standardizing measurements (ex: hot dogs per minute) improves comparisons across time</li>
+<li>Identify structural shifts in performance trends</li>
+<li>Implement closeread syntax to build a scrollytelling data document in Quarto</li>
+<li>Combine narrative reasoning with visual evidence</li>
 </ol>
 </div>
 </div>
 </div>
-<hr>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Methods">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Methods
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Technology Requirements</p>
+<ul>
+<li>R</li>
+<li>RStudio</li>
+<li>Quarto with closeread extension installed</li>
+</ul>
+<p>Statistical Concepts Used</p>
+<ul>
+<li>Time series plots</li>
+<li>Standardization (rates vs totals)</li>
+<li>Visual trend analysis</li>
+<li>Annotation of key observations</li>
+</ul>
+<p>Technical Concepts Used</p>
+<ul>
+<li>tidyverse for data manipulation and plotting</li>
+<li>Closeread section and sticky syntax</li>
+<li>Narrative-triggered visualization</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>This module uses a cleaned dataset of winners from the Nathan’s Famous Hot Dog Eating Contest from 1972 to 2025.</p>
+<p>Download data: <a href="%22hotdog_clean.csv%22">hotdog_clean.csv</a></p>
+<details>
+<summary>
+<b>Variable Descriptions</b>
+</summary>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Year</td>
+<td>Year the competition took place</td>
+</tr>
+<tr class="even">
+<td>Sex</td>
+<td>Sex of the winner for the year the competition took place</td>
+</tr>
+<tr class="odd">
+<td>Dogs</td>
+<td>Total hot dogs eaten</td>
+</tr>
+<tr class="even">
+<td>Winner</td>
+<td>Name of the winner for their sex category</td>
+</tr>
+<tr class="odd">
+<td>Time</td>
+<td>Time in minutes the competition elapsed</td>
+</tr>
+<tr class="even">
+<td>DPM</td>
+<td>Dogs eaten per minute</td>
+</tr>
+</tbody>
+</table>
+</details>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<p>Students will:</p>
+<ol type="1">
+<li>Construct a baseline plot of total hot dogs eaten over time.</li>
+<li>Identify a structural shift in the early 2000s.</li>
+<li>Standardize performance using hot dogs per minute.</li>
+<li>Use closeread references to structure a scroll-based narrative.</li>
+<li>Highlight Joey Chestnut’s winning years within the larger historical trend.</li>
+</ol>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Conclusion">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conclusion
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This module demonstrates how statistical reasoning and visual storytelling can be integrated into a cohesive scrollytelling experience. By combining careful metric selection with structured narrative flow, students learn not only how to analyze data, but how to communicate it effectively.</p>
+</div>
+</div>
+</div>
+<section id="author" class="level4">
+<h4 class="anchored" data-anchor-id="author">Author</h4>
+<p>Created by Kevin Euyoque</p>
+</section>
 </section>
 
 </main>
