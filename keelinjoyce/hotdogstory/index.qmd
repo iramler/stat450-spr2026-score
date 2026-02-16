@@ -24,30 +24,45 @@ pedagogical and industry peer-reviews to become a published module on
 the SCORE Network. However, instructors are still welcome to use these
 materials if they are so inclined.
 
-### Introduction
+## Introduction
 
-Nathan's Famous Hotdog Eating Contest is a contest held every year on the 4th of July in which competitive eaters compete to eat the most amount of hotdogs in a specified amount of time. Recent competitions have been run for a total of either 10 or 12 minutes, but earlier competitions were much shorter. 
+Nathan's Famous Hotdog Eating Contest is a contest held every year on
+the 4th of July in which competitive eaters compete to eat the most
+amount of hotdogs in a specified amount of time. Recent competitions
+have been run for a total of either 10 or 12 minutes, but earlier
+competitions were much shorter.
 
-This dataset looks at the winner of the competition each year, the gender (only some years have data on female winners), the year the competition took place, the total runtime of the competition that year, how many hotdogs were eaten by the winner, and variable of how many hotdogs per minute the winner ate to account for different competition runtimes.
+This dataset looks at the winner of the competition each year, the
+gender (only some years have data on female winners), the year the
+competition took place, the total runtime of the competition that year,
+how many hotdogs were eaten by the winner, and variable of how many
+hotdogs per minute the winner ate to account for different competition
+runtimes.
 
-![2025 Winners- Joey Shestnut and Miki Sudo ](https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-famous-july-4th-international-hot-dog-eating-contest-2024/intro-1719859047.jpg){#fig-intro}
+![2025 Winners- Joey Chestnut and Miki
+Sudo](https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-famous-july-4th-international-hot-dog-eating-contest-2024/intro-1719859047.jpg){#fig-intro}
 
-In this module, we will look at how to use the Closeread Quarto extension to tell a story using data.
+In this module, we will look at how to use the Closeread Quarto
+extension to tell a story using data.
 
-The champion data for this module comes from
+The data for this module comes from
 [Wikipedia](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"},
-and has been cleaned into a .csv file for convenience. 
+and has been cleaned into a .csv file for convenience.
 
-Take a look at the Wikipedia Page to see the original data and familiarize yourself with the story. There are many factors that contribute to changes in the data that you will want to have an idea of to complete your storytelling.
+Take a look at the [Wikipedia
+page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
+to see the original data and familiarize yourself with the story. There
+are many anecdotes that explain changes in the data and you will want to
+have an idea of these in order to effectively communicate your
+storytelling.
 
-The cleaned data set can be downloaded and imported here. 
-Download Data:
+The cleaned data set can be downloaded and imported here. Download Data:
 [HotdogData.csv](HotdogData.csv)
+
 ```{r message=FALSE}
 library(readr)
 hotdog_data <- read_csv("~/Downloads/HotdogData.csv")
 ```
-
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 By the end of this tutorial, students will be able to:
@@ -56,9 +71,8 @@ By the end of this tutorial, students will be able to:
 
 2.  Analyze these visualizations to tell a story.
 
-3.  Use the Closeread Quarto extention to assemble data, visualizations, 
-and analyses into a cohesive and visually appealing project.
-
+3.  Use the Closeread Quarto extention to assemble data, visualizations,
+    and analyses into a cohesive and visually appealing project.
 :::
 
 ::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
@@ -70,29 +84,37 @@ or more class periods.
 **Technology Requirement:**
 
 This activity is designed to be completed primarily in `R` using a
-Quarto document workflow with a Closeread format. Students should be 
-comfortable importing data and performing basic data visualizations with 
+Quarto document workflow with a Closeread format. Students should be
+comfortable importing data and performing basic data visualizations with
 packages from the tidyverse (especially `readr`, `dplyr`, and `tidyr`).
 
-We will use the Closeread extension to assemble data storytelling. No previous
-experience using Closeread is required.
+We will use the Closeread extension to assemble data storytelling. No
+previous experience using Closeread is required.
 
 </details>
 :::
 
-### Data
+## Getting Started
 
-The `cleaned hotdog` dataset contains 69 rows, one per competition champion, 
-and includes variables of the year they won, gender, how many hotdogs were 
-eaten by the winner, the run time of the competition that year, and a 
-proportion variable of how many hotdogs were eaten per minute.
+#### Learning Closeread
 
-Download Data:
-[HotdogData.csv](HotdogData.csv)
+Before starting to create your document, look at the [Closeread
+website](https://closeread.dev){target="_blank"} to get an idea of how
+it works and how it can be used. There are many example codes that can
+be used to create your own Closeread document. Make sure to look at the
+[Gallery](https://closeread.dev/gallery/){target="_blank"} and
+[Reference](https://closeread.dev/reference/){target="_blank"} pages. There is also a lot of information at [gastonsanchez.com](https://www.gastonsanchez.com/learn-closeread/modules/){target="_blank"}.
+Get an idea of some of the basic syntax before moving forward.
 
-<details>
+#### Data
 
-<summary><b>Variable Descriptions</b></summary>
+The `cleaned hotdog` dataset contains 69 rows, one per competition
+champion, and includes variables of the year they won, gender, how many
+hotdogs were eaten by the winner, the run time of the competition that
+year, and a proportion variable of how many hotdogs were eaten per
+minute.
+
+Download Data: [HotdogData.csv](HotdogData.csv)
 
 | Variable | Description |
 |------------------------------------|------------------------------------|
@@ -103,166 +125,268 @@ Download Data:
 | Time | Time (in minutes) of the competition (not consistant year to year) |
 | Hotdogs_per_minute | Proportion of how many hotdogs per minute were eaten (to account for time difference) |
 
-
-</details>
-
 #### Data Source
 
 -   [wikipedia.org](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
 
+## Creating Your Closeread
 
-## Creating Data Visualizations
-
-### Motivating question
+#### Motivating question
 
 In this module, we investigate the following research question:
 
-> **What are some factors that contribute to how many hotdogs the winner of 
-> Nathan's Famous Hotdog Eating Contest eats and how can we tell that story
-> using data?**
+> **What are some factors that contribute to how many hotdogs the winner
+> of Nathan's Famous Hotdog Eating Contest eats and how can we tell that
+> story using data?**
 
 > In other words, how can we use Closeread for effective data
 > storytelling?
 
-### Prepping Workspace
+#### Prepping Workspace
 
-To begin, we will need to load the packages we will be using. For this analysis, you'll need to load the `dplyr`, `tidyr`, and `vcd` packages.
+In a new Quarto Document, paste the following header to create a
+Closeread document
 
+```{r echo=TRUE, eval=FALSE}
+---
+title: Nathan's Hotdog Eating Contest
+author: Your Name
+format:
+  closeread-html:
+    cr-style:
+      narrative-background-color-sidebar: "#182"
+      narrative-text-color-sidebar: "#fff"
+      section-background-color: "#f7f6f5"
+---
+```
+
+The format for a Closeread header is similar to that of the typical
+.html document with a few alterations. Most of the aesthetics are coded
+for in the header.
+
+-   `narrative-background-color-sidebar` changes the color of the
+    sidebar
+
+-   `narrative-text-color-sidebar` changes the color of the text on
+    the sidebar
+
+-   `section-background-color` changes the overall background color
+
+There are many more aesthetic changes that can be made to the Closeread
+document. Look at the [Closeread
+website](https://closeread.dev){target="_blank"} to find more aesthetic options.
+
+To begin, we will need to load the packages we will be using. For this
+module, you'll need to load the `tidyverse` and `ggrepel` packages.
+
+```{r echo=TRUE, eval=FALSE}
+
+# If you need to install either of these uncomment the line below
+# install.packages(c("tidyverse","ggrepel"))
+
+library(tidyverse)
+library(ggrepel)
+```
+
+Now we should read in the data. Save the .csv file to your computer and
+read it in. For convenience, we will store it as an object named
+`hotdog_cleaned`. You might need to change the file path to match your
+setup.
+
+<details>
+
+<summary><b>Click to reveal code</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+hotdog_cleaned <- readr::read_csv("~/Downloads/HotdogData.csv")
+```
+
+</details>
+
+For our storytelling, we will want to add an image to the document. For
+Closeread syntax, include `::::` before and after any insertions or
+code. Below is the code to add the image from the sample Closeread. You
+may use the same image or find your own and add it.
+
+```{r echo=TRUE, eval=FALSE}
+:::{#cr-intro}
+![](https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-famous-july-4th-international-hot-dog-eating-contest-2024/intro-1719859047.jpg)
+:::
+```
+
+Notice the `::::` before and after the code chunk. This is important in
+Closeread syntax. Also notice `{#cr-intro}`. You will want to name each
+addition to your document to be able to call them back later. We will go into 
+this further as we progress.
+
+## Reshaping Data
+
+After looking at some of the information on the
+[Wikipedia page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
+on the Nathan's Hotdog Eating Contest, you may have noticed that every year has 
+a male winner but the female winners are not as consistent. Let's start by using
+the indicator variable for `Sex` and filtering to only include male winners for 
+our first visualization. For now we only want to look at male winners.
+
+Try on your own to use the `filter` function to modify the dataset.
+
+<details>
+
+<summary><b>Click to reveal code</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+hotdog_men <- hotdog_cleaned |> filter(Sex == 1)
+```
+
+## Creating Visualizations
+
+Before we can move forward with the Closeread extension, we will want to
+create the basic graph that we will work off of. Create a scatterplot
+with Year on the x-axis and Hotdogs_per_minute on the y-axis. Add a
+title and fix the labels. Here is the sample code if needed:
+
+<details>
+
+<summary><b>Click to reveal code</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  ylim(0, 8) + ## this line ensures the dimensions are the same for all plots
+  labs(y = "Hotdogs Per Minute", 
+       title = "Hotdogs Eaten by Competition Winner By Year") +
+  theme_minimal()
+```
+</details>
+
+## Starting with Closeread
+There is a general format to all Closeread documents. Here is an example to show
+you the syntax of adding `text sections that scroll` and `stickies` that stay on
+the side.
+Note that stickies are named so they can be called back with different sections 
+of text without recoding each time. We will use this specifically for our main 
+graph in this module.
+
+```{r echo=TRUE, eval=FALSE}
+:::{.cr-section}
+
+:::{#cr-sticky-id}
+Content that stays fixed (image, plot, text)
+:::
+
+Text that scrolls and triggers changes. @cr-sticky-id
+
+:::
+```
+
+Once you have a general idea of how Closeread documents are coded and how the syntax works we can begin to create a story.
+
+Looking at the example Clsoeread document, we already have our heading and main image added. We want some text to introduce our topic further. 
+
+Here is the text from the example, or create your own based off of what you have read about.
 <details>
 <summary><b>Click to reveal code</b></summary>
 
-```{r}
-#| echo: true
-#| eval: false
+```{r echo=TRUE, eval=FALSE}
+::: cr-section
+How many hotdogs per minute does the winner of each year's champion of the 
+Nathan's Hotdog Eating Contest eat?
+```
+</details>
+Note how the `:::` and `cr-section` are used. 
 
-# If you need to install any of these uncomment the line below
-# install.packages(c("dplyr","tidyr", "vcd"))
+#### Placing a graph as a sticky
+We want to insert the graph we have made as a sticky on the right of the document so that we can have associated scrolly text on the left. To do so, you will want to name your graph with `::: {#cr-graphname}`. The first graph in the example is named `@cr-biggraph`.
 
-library(dplyr)
-library(tidyr)
-library(vcd)
+Uncomment any commented lines when you add to your document.
+```{r echo=TRUE, eval=FALSE}
+::: {#cr-biggraph}
+## ```{r}
+ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  ylim(0, 8) +
+  labs(y = "Hotdogs Per Minute",
+       title = "Hotdogs Eaten by Competition Winner By Year") +
+  theme_minimal()
+##```
+:::
+```
+
+Once you have your graph named as a sticky, it will not show up until you call it. Add the text that you want to go along with your plot with `@cr-biggraph` following your text to assign it to your plot.
+
+Here is the example code, but feel free to write what you want.
+```{r echo=TRUE, eval=FALSE}
+There are a few interesting trends that stand out here. @cr-biggraph
+
+Why do we think that there is a continual decrease in the first \~10 years?
+```
+Notice that any additional paragraphs of text do not need to call the graph if they are directly following a paragraph that calls it. The graph will not disappear unless you call something else or tell it to go away.
+
+We want to talk about the trend at the beginning of the graph now. Looking at the data and reading about the contest from the Wikipedia page, you will see that earlier competitions had much shorter runtimes than more recent competitions.
+
+Alter the original graph to highlight the first 8 years of the competition and label the points with how many minutes the total competition was.
+<details>
+<summary><b>Click to reveal code</b></summary>
+```{r echo=TRUE, eval=FALSE}
+## uncomment lines for r chunk
+::: {#cr-runtime}
+## ```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+hotdog_time <- hotdog_men |> slice(44:51) 
+
+ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  ylim(0, 8) +
+  labs(y = "Hotdogs Per Minute", title = "Hotdogs Eaten by Competition Winner By Year") +
+  geom_text_repel(data = hotdog_time, aes(label = Time)) +
+  geom_point(data = hotdog_time, size = 2, colour = "red") +
+  theme_minimal()
+## ```
+:::
+```
+</details>
+
+Add some text to explain the context of your graph to readers and call the 
+graph to go along with it.
+<details>
+<summary><b>Click to reveal code</b></summary>
+```{r echo=TRUE, eval=FALSE}
+This means that contestants were able to eat more hotdogs per minute as they 
+were eating for less time. @cr-runtime
 ```
 </details>
 
 
-Now we should read in the data. Save the csv file to your computer and read it in. For convenience, we will all store it as an object named `lol_genders`.
+## Extensions?
 
-
-<details>
-<summary><b>Click to reveal code</b></summary>
-
-```{r}
-#| echo: true
-#| eval: false
-
-
-# You might need to change the file path to match your setup.
-lol_genders <- readr::read_csv("lol_gender_lanes_patch16.2.csv")
-```
-</details>
-
-## Exploratory Analysis
-
-Before attempting to conduct a formal statistical inference on these data, we will start with some numerical and graphical summaries to better understand the data.
-
-
-### Univariate Analyses
-
-We'll first investigate each of the main variables of interest (`gender` and `lane`) to familiarize ourselves with them.
-
-
-- Start by make a table that displays the number of champions associated with each gender.
-
-> Question: How many champions are included in this table? How many rows are there in the `lol_genders` dataset?
-
-> Question: What might be happening?
-
-Before continuing, lets remove these two champions that don't have an assigned gender. 
-
-If you are curious which champions they are, run the following code.
-
-```{r}
-#| echo: true
-#| eval: false
-
-
-lol_genders |>
-  filter(is.na(gender))
-```
-
-
-To remove them we can use the `drop_na` function from the `tidyr` package.
-
-```{r}
-#| echo: true
-#| eval: false
-
-
-lol_MFonly <- lol_genders |> drop_na(gender)
-```
-
-Now, we'll investigate the the `lane` variable. Be sure to use the trimmed dataset that excluded the champions that didn't have genders assigned to them.
-
-```{r}
-#| echo: true
-#| eval: false
-
-
-table(lol_MFonly$lane)
-```
-
-### Bivariate Analysis
-
-- Two-ways tables
-
-- Bar charts
-
-- Mosaic Plots
-
-## Inferential Statistics
-
-### Overview of Chi-Square Test
-
-Give big picture of chi-square test. Maybe outline the steps and then give the details?
-
-### Hypotheses
-
-### Computing the Chi-square test statistic and p-value
-
-### Interpreting Results
-
-- Report and interpret an effect size for association (e.g., Cramér's V).
-
-- Use residuals / cell contributions to identify which category combinations drive the association.
-
-### Extensions?
-
-- Simulated p-value
-- Other ways to interpret results
-- Other variables? (maybe the genre?)
-- Other games?
-
-
+-   
+-   
+-   
+-   
 
 ## Optional: Instructor Materials for Introductory Statistics Courses
 
-Need to provide a trimmed down version for intro stat classes. Maybe more
+Need to provide a trimmed down version for intro stat classes. Maybe
+more
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
 Reserved for the conclusion
 :::
 
 ::: {.callout-note collapse="true" title="Additional Reading"}
-
-If you are interested in learning more about how gender impacts game play and design in League of Legends, check out these articles.
+If you are interested in learning more about how gender impacts game
+play and design in League of Legends, check out these articles.
 
 -   [A Survey of League of Legends Champions from a Gendered
-    Perspective](https://womeningamestudies.com/a-survey-of-league-of-legends-champions-from-a-gendered-perspective/){target="_blank"} by Sarah Beck
+    Perspective](https://womeningamestudies.com/a-survey-of-league-of-legends-champions-from-a-gendered-perspective/){target="_blank"}
+    by Sarah Beck
 
 -   [an analysis of gender and roles of league of legends
-    champions](https://cjleo.com/blog/an-analysis-of-gender-and-roles-of-league-of-legends-champions/#:~:text=Cho'Gath%2C%20Kindred%2C%20Nocturne,champions%20in%20League%20of%20Legends.){target="_blank"} by Cheryl-Jean Leo
+    champions](https://cjleo.com/blog/an-analysis-of-gender-and-roles-of-league-of-legends-champions/#:~:text=Cho'Gath%2C%20Kindred%2C%20Nocturne,champions%20in%20League%20of%20Legends.){target="_blank"}
+    by Cheryl-Jean Leo
 
--   [Investigating Match Performance Differences between Genders of League of Legends Champions](https://dl.acm.org/doi/fullHtml/10.1145/3472538.3472549) by Ivan Ramler, Choong-Soo Lee, and Sarah Strong 
-
-
+-   [Investigating Match Performance Differences between Genders of
+    League of Legends
+    Champions](https://dl.acm.org/doi/fullHtml/10.1145/3472538.3472549)
+    by Ivan Ramler, Choong-Soo Lee, and Sarah Strong
 :::
