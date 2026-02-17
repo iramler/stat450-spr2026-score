@@ -54,7 +54,6 @@ ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
   geom_point(data = hotdog_time, size = 2, colour = "red") +
   theme_minimal()
 ```
-
 :::
 
 This means that contestants were able to eat more hotdogs per minute as they were eating for less time. @cr-runtime

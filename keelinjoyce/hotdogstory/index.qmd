@@ -6,7 +6,7 @@ author:
     affiliation:
       - id: slu
         name: St. Lawrence University
-date: "February 9, 2026"
+date: "February 17, 2026"
 description: "A tutorial on the Closeread Quarto extension for storytelling using Nathan's Hotdog Eating Contest Winners"
 editor: 
   canonical: true
@@ -45,18 +45,22 @@ Sudo](https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-
 In this module, we will look at how to use the Closeread Quarto
 extension to tell a story using data.
 
+##### Here is an example [Nathan's Hotdog Eating Contest Closeread](file:///Users/keelinjoyce/Desktop/SYE/github%20repos/stat450-spr2026-score/keelinjoyce/hotdogstory/ClosereadSolution.html){target="_blank"} telling the story of the contest using data visualization. This is what we will be creating in this module.
+
 The data for this module comes from
 [Wikipedia](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"},
 and has been cleaned into a .csv file for convenience.
 
-Take a look at the [Wikipedia
+Take a look at the [Nathan's Hotdog Eating Contest Wikipedia
 page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
 to see the original data and familiarize yourself with the story. There
 are many anecdotes that explain changes in the data and you will want to
 have an idea of these in order to effectively communicate your
 storytelling.
 
-The cleaned data set can be downloaded and imported here. Download Data:
+The cleaned data set can be downloaded and imported here. 
+
+Download Data:
 [HotdogData.csv](HotdogData.csv)
 
 ```{r message=FALSE}
@@ -94,6 +98,25 @@ previous experience using Closeread is required.
 </details>
 :::
 
+## Installing Closeread
+
+Installing Closeread is simple once you have Quarto downloaded. Follow
+along here or on the [Closeread website home page](https://closeread.dev)
+for more information on installation and getting started.
+
+In the directory that you want, paste this into your terminal:
+
+```{r echo=TRUE, eval=FALSE}
+quarto add qmd-lab/closeread
+```
+
+Anytime you are creating a Closeread document, make sure your header includes:
+
+```{r echo=TRUE, eval=FALSE}
+format:
+  closeread-html:
+```
+
 ## Getting Started
 
 #### Learning Closeread
@@ -103,7 +126,9 @@ website](https://closeread.dev){target="_blank"} to get an idea of how
 it works and how it can be used. There are many example codes that can
 be used to create your own Closeread document. Make sure to look at the
 [Gallery](https://closeread.dev/gallery/){target="_blank"} and
-[Reference](https://closeread.dev/reference/){target="_blank"} pages. There is also a lot of information at [gastonsanchez.com](https://www.gastonsanchez.com/learn-closeread/modules/){target="_blank"}.
+[Reference](https://closeread.dev/reference/){target="_blank"} pages.
+There is also a lot of information at
+[gastonsanchez.com](https://www.gastonsanchez.com/learn-closeread/modules/){target="_blank"}.
 Get an idea of some of the basic syntax before moving forward.
 
 #### Data
@@ -167,14 +192,15 @@ for in the header.
 -   `narrative-background-color-sidebar` changes the color of the
     sidebar
 
--   `narrative-text-color-sidebar` changes the color of the text on
-    the sidebar
+-   `narrative-text-color-sidebar` changes the color of the text on the
+    sidebar
 
 -   `section-background-color` changes the overall background color
 
 There are many more aesthetic changes that can be made to the Closeread
 document. Look at the [Closeread
-website](https://closeread.dev){target="_blank"} to find more aesthetic options.
+website](https://closeread.dev){target="_blank"} to find more aesthetic
+options. Feel free to style it to your preference.
 
 To begin, we will need to load the packages we will be using. For this
 module, you'll need to load the `tidyverse` and `ggrepel` packages.
@@ -198,7 +224,7 @@ setup.
 <summary><b>Click to reveal code</b></summary>
 
 ```{r echo=TRUE, eval=FALSE}
-hotdog_cleaned <- readr::read_csv("~/Downloads/HotdogData.csv")
+hotdog_cleaned <- readr::read_csv("HotdogData.csv")
 ```
 
 </details>
@@ -216,17 +242,18 @@ may use the same image or find your own and add it.
 
 Notice the `::::` before and after the code chunk. This is important in
 Closeread syntax. Also notice `{#cr-intro}`. You will want to name each
-addition to your document to be able to call them back later. We will go into 
-this further as we progress.
+addition to your document to be able to call them back later. We will go
+into this further as we progress.
 
 ## Reshaping Data
 
-After looking at some of the information on the
-[Wikipedia page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
-on the Nathan's Hotdog Eating Contest, you may have noticed that every year has 
-a male winner but the female winners are not as consistent. Let's start by using
-the indicator variable for `Sex` and filtering to only include male winners for 
-our first visualization. For now we only want to look at male winners.
+After looking at some of the information on the [Wikipedia
+page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
+on the Nathan's Hotdog Eating Contest, you may have noticed that every
+year has a male winner but the female winners are not as consistent.
+Let's start by using the indicator variable for `Sex` and filtering to
+only include male winners for our first visualization. For now we only
+want to look at male winners.
 
 Try on your own to use the `filter` function to modify the dataset.
 
@@ -257,15 +284,16 @@ ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
        title = "Hotdogs Eaten by Competition Winner By Year") +
   theme_minimal()
 ```
+
 </details>
 
 ## Starting with Closeread
-There is a general format to all Closeread documents. Here is an example to show
-you the syntax of adding `text sections that scroll` and `stickies` that stay on
-the side.
-Note that stickies are named so they can be called back with different sections 
-of text without recoding each time. We will use this specifically for our main 
-graph in this module.
+
+There is a general format to all Closeread documents. Here is an example
+to show you the syntax of adding `text sections that scroll` and
+`stickies` that stay on the side. Note that stickies are named so they
+can be called back with different sections of text without recoding each
+time. We will use this specifically for our main graph in this module.
 
 ```{r echo=TRUE, eval=FALSE}
 :::{.cr-section}
@@ -279,12 +307,17 @@ Text that scrolls and triggers changes. @cr-sticky-id
 :::
 ```
 
-Once you have a general idea of how Closeread documents are coded and how the syntax works we can begin to create a story.
+Once you have a general idea of how Closeread documents are coded and
+how the syntax works we can begin to create a story.
 
-Looking at the example Clsoeread document, we already have our heading and main image added. We want some text to introduce our topic further. 
+Looking at the example Clsoeread document, we already have our heading
+and main image added. We want some text to introduce our topic further.
 
-Here is the text from the example, or create your own based off of what you have read about.
+Here is the text from the example, or create your own based off of what
+you have read about.
+
 <details>
+
 <summary><b>Click to reveal code</b></summary>
 
 ```{r echo=TRUE, eval=FALSE}
@@ -292,13 +325,20 @@ Here is the text from the example, or create your own based off of what you have
 How many hotdogs per minute does the winner of each year's champion of the 
 Nathan's Hotdog Eating Contest eat?
 ```
+
 </details>
-Note how the `:::` and `cr-section` are used. 
+
+Note how the `:::` and `cr-section` are used.
 
 #### Placing a graph as a sticky
-We want to insert the graph we have made as a sticky on the right of the document so that we can have associated scrolly text on the left. To do so, you will want to name your graph with `::: {#cr-graphname}`. The first graph in the example is named `@cr-biggraph`.
+
+We want to insert the graph we have made as a sticky on the right of the
+document so that we can have associated scrolly text on the left. To do
+so, you will want to name your graph with `::: {#cr-graphname}`. The
+first graph in the example is named `@cr-biggraph`.
 
 Uncomment any commented lines when you add to your document.
+
 ```{r echo=TRUE, eval=FALSE}
 ::: {#cr-biggraph}
 ## ```{r}
@@ -312,21 +352,38 @@ ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
 :::
 ```
 
-Once you have your graph named as a sticky, it will not show up until you call it. Add the text that you want to go along with your plot with `@cr-biggraph` following your text to assign it to your plot.
+Once you have your graph named as a sticky, it will not show up until
+you call it. Add the text that you want to go along with your plot with
+`@cr-biggraph` following your text to assign it to your plot.
 
 Here is the example code, but feel free to write what you want.
+
 ```{r echo=TRUE, eval=FALSE}
 There are a few interesting trends that stand out here. @cr-biggraph
 
 Why do we think that there is a continual decrease in the first \~10 years?
 ```
-Notice that any additional paragraphs of text do not need to call the graph if they are directly following a paragraph that calls it. The graph will not disappear unless you call something else or tell it to go away.
 
-We want to talk about the trend at the beginning of the graph now. Looking at the data and reading about the contest from the Wikipedia page, you will see that earlier competitions had much shorter runtimes than more recent competitions.
+Notice that any additional paragraphs of text do not need to call the
+graph if they are directly following a paragraph that calls it. The
+graph will not disappear unless you call something else or tell it to go
+away.
 
-Alter the original graph to highlight the first 8 years of the competition and label the points with how many minutes the total competition was.
+### Runtime
+
+We want to talk about the trend at the beginning of the graph now.
+Looking at the data and reading about the contest from the Wikipedia
+page, you will see that earlier competitions had much shorter runtimes
+than more recent competitions.
+
+Alter the original graph to highlight the first 8 years of the
+competition and label the points with how many minutes the total
+competition was.
+
 <details>
+
 <summary><b>Click to reveal code</b></summary>
+
 ```{r echo=TRUE, eval=FALSE}
 ## uncomment lines for r chunk
 ::: {#cr-runtime}
@@ -344,49 +401,202 @@ ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
 ## ```
 :::
 ```
+
 </details>
 
-Add some text to explain the context of your graph to readers and call the 
-graph to go along with it.
-<details>
-<summary><b>Click to reveal code</b></summary>
+Add some text to explain the context of your graph to readers and call
+the graph to go along with it.
+
 ```{r echo=TRUE, eval=FALSE}
 This means that contestants were able to eat more hotdogs per minute as they 
 were eating for less time. @cr-runtime
 ```
+
+### 2001 Jump
+
+We also want to explain the large jump in number of hotdogs eaten
+between 2000 and 2001. If you have not already found the explanation for
+this jump, continue reading the [Wikipedia
+page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}.
+
+Once you have a general understanding to be able to continue your
+storytelling, alter the original graph to highlight the winner in 2001
+and label with the name of the winner. Use `geom_text_repel` to move the
+name of the winner for aesthetic purposes. These coordinates have been
+found to work best.
+
+```{r echo=TRUE, eval=FALSE}
+nudge_y = -0.75, nudge_x = -1
+```
+
+<details>
+
+<summary><b>Click to reveal full code</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+hotdog_2001 <- hotdog_men |> slice(25) |>
+  summarise(Year, Winner, Hotdogs_per_minute)
+
+ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  ylim(0, 8) +
+  labs(y = "Hotdogs Per Minute", title = "Hotdogs Eaten by Competition Winner By Year") +
+  geom_text_repel(data = hotdog_2001, aes(label = Winner),
+                  nudge_y = -0.75, nudge_x = -1) +
+  geom_point(data = hotdog_2001, size = 2, colour = "red") +
+  theme_minimal()
+```
+
 </details>
 
+Make sure to name the chunk appropriately and call it back with the
+explanatory text that you want on the side.
 
-## Extensions?
+<details>
 
--   
--   
--   
--   
+<summary><b>Click to reveal text from example</b></summary>
 
-## Optional: Instructor Materials for Introductory Statistics Courses
+```{r echo=TRUE, eval=FALSE}
+There is also quite a large jump in number of hotdogs consumed per minute between
+2000 and 2001. There were no changes in rules and both competitions were 12 
+minutes. What could account for Kobayashi (2001 winner) eating nearly double the
+amount that previous winners had? @cr-label2001
+```
 
-Need to provide a trimmed down version for intro stat classes. Maybe
-more
+</details>
 
-::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
-Reserved for the conclusion
+At this point in the example Closeread, there is an image included.
+Either use the image provided or find your own to enhance your document.
+
+```{r echo=TRUE, eval=FALSE}
+::: {#cr-kobayashi}
+![](https://i.guim.co.uk/img/media/c3fb7fa62b488a153448562ae34d77694a64299d/
+      0_0_2849_2848/master/2849.jpg?width=480&dpr=1&s=none&crop=none)
 :::
 
-::: {.callout-note collapse="true" title="Additional Reading"}
-If you are interested in learning more about how gender impacts game
-play and design in League of Legends, check out these articles.
+In 2001, Takeru Kobayashi introduced the Solomon method of competitive hotdog
+eating. This includes breaking the hotdog in half, eating the meat first, and 
+dipping the bun in water. @cr-kobayashi
+```
 
--   [A Survey of League of Legends Champions from a Gendered
-    Perspective](https://womeningamestudies.com/a-survey-of-league-of-legends-champions-from-a-gendered-perspective/){target="_blank"}
-    by Sarah Beck
+### Kobayashi to Chestnut
 
--   [an analysis of gender and roles of league of legends
-    champions](https://cjleo.com/blog/an-analysis-of-gender-and-roles-of-league-of-legends-champions/#:~:text=Cho'Gath%2C%20Kindred%2C%20Nocturne,champions%20in%20League%20of%20Legends.){target="_blank"}
-    by Cheryl-Jean Leo
+As you have most likely learned from your reading or previous knowledge,
+after Kobyashi reigned for many years, he was overtaken in 2007 by Joey
+Chestnut.
 
--   [Investigating Match Performance Differences between Genders of
-    League of Legends
-    Champions](https://dl.acm.org/doi/fullHtml/10.1145/3472538.3472549)
-    by Ivan Ramler, Choong-Soo Lee, and Sarah Strong
+Alter the original graph to make a visualization showing the years in
+which Kobayashi won in one color and the years Chestnut won in another.
+Label both with the name of the winner. Add a text section to go with
+the plot.
+
+<details>
+
+<summary><b>Click to reveal code</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+hotdog_kobayashi <- hotdog_men |> filter(Winner == "Takeru Kobayashi")
+hotdog_joey <- hotdog_men |> filter(Winner == "Joey Chestnut")
+hotdog_kobayashi_label <- hotdog_kobayashi |> slice(4)
+hotdog_joey_label <- hotdog_joey |> slice(15)
+
+ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  ylim(0, 8) +
+  labs(y = "Hotdogs Per Minute", 
+       title = "Hotdogs Eaten by Competition Winner By Year") +
+  geom_text_repel(data = hotdog_kobayashi_label, aes(label = Winner), 
+                  nudge_y = -0.5, colour = "red") +
+  geom_point(data = hotdog_kobayashi, size = 2, colour = "red") +
+  geom_text_repel(data = hotdog_joey_label, aes(label = Winner),
+                  nudge_y = 0.5, colour = "dodgerblue") +
+  geom_point(data = hotdog_joey, size = 2, colour = "dodgerblue") +
+  theme_minimal()
+```
+
+</details>
+
+<details>
+
+<summary><b>Click to reveal text from example</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+Following the end to Kobayashi's reign, Joey Chestnut, the current name in 
+Nathan hotdog competitive eating entered the scene. @cr-winnerswitch
+```
+
+</details>
+
+### Chestnut's Wins
+
+Referring back to the [Wikipedia
+page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"},
+add a section talking about the current champion and his wins (as well
+as losses).
+
+Alter either the original graph or the graph we just made to label only
+Chestnut's wins and label his name.
+
+<details>
+
+<summary><b>Click to reveal code</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+hotdog_joey_label2 <- hotdog_joey |> slice(1)
+ggplot(data = hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  ylim(0, 8) +
+  labs(y = "Hotdogs Per Minute", title = "Hotdogs Eaten by Competition Winner By Year") +
+  geom_text_repel(data = hotdog_joey_label2, aes(label = Winner),
+                  nudge_x = 0.5, nudge_y = -0.4, colour = "dodgerblue") +
+  geom_point(data = hotdog_joey_label2, size = 2, colour = "dodgerblue") +
+  theme_minimal()
+```
+
+</details>
+
+<details>
+
+<summary><b>Click to reveal text from example</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+Joey Chestnut had a winning streak for years, excluding 2015 (when he lost with 
+60 hotdogs compared to Matt Stonie's 62) and 2024 (when he was barred from the 
+competition due to sponsership conflicts) @cr-joey
+```
+
+</details>
+
+## Extensions for Further Storytelling
+
+-   Continue the storytelling with a plot including data from female
+    winners
+    -   compare trends between male and female winners
+    -   Miki Sudo reign
+-   Find other stories from researching the competition to include in
+    the storytelling
+-   Create more Closeread documents with new data
+
+::: {.callout-note collapse="true" title="Optional: Instructor Materials for Introductory Statistics Courses" appearance="minimal"}
+For Introductory Statistics Courses the data in the scatterplots can be assessed without the use of Closeread. Students are able to view the Closeread example to analyze the data and come to conclusions.
+:::
+
+::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+This module teaches the basics of how to use Closeread for data storytelling. After completing the module students should have a basic understanding of how to create their own Closeread story. It can be adapted for an introductory level class if needed. 
+:::
+
+::: {.callout-note collapse="true" title="Module Readings"}
+-   [Nathan's Hotdog Eating Contest Wikipedia
+    page](https://en.wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest){target="_blank"}
+
+    -   This page gives the background into the story that is being told through the Closeread. All information used in the example document as well as additional information can be found on this page. 
+
+
+-   [Closeread website](https://closeread.dev){target="_blank"}
+
+    -   The Closeread website provides information on what Closeread is, how it works, how to use it, and provides examples for newer learners.
+  
+-   [gastonsanchez.com](https://www.gastonsanchez.com/learn-closeread/modules/){target="_blank"}
+
+    -  This website provides further information on creating Closeread documents and provides multiple examples for students to learn from.
 :::
