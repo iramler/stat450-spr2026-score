@@ -685,7 +685,14 @@ mantelhaen.test(EraTable)
 
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
-Reserved for the conclusion
+
+In this module, you learned about how to conduct both an exploratory and inferential analysis of "two-way tables" in R. (i.e., analyzing the association between two categorical variables)
+
+In addition to running through the analysis, we discussed...
+
+
+
+
 :::
 
 ::: {.callout-note collapse="true" title="Additional Reading"}
