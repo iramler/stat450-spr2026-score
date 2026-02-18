@@ -83,10 +83,10 @@ window.Quarto = {
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
-          --cr-narrative-sidebar-width: minmax(500px, 1fr);
---cr-narrative-background-color-sidebar: #09753C;
+          --cr-poem-font-family: Gotham;
 --cr-narrative-text-color-sidebar: white;
---cr-poem-font-family: Gotham;
+--cr-narrative-sidebar-width: minmax(600px, 1fr);
+--cr-narrative-background-color-sidebar: #09753C;
         }
       </style>
     
@@ -157,12 +157,22 @@ The Nathan’s Famous Fourth of July International Hot Dog Eating Contest has a 
 </div>
 <div class="trigger new-trigger" data-focus-on="cr-points">
 <div class="narrative">
-<p>Now we can start the story from the beginning! (Let’s add the data points without formatting…)shows us the big picture for the historical timeline of winners across Nathan’s story. We added the points without formatting to be able to create a baseline from which to build up our descriptions of special aspects of the data-that’s the main goal for data storytelling in highlighting the meaningful from the seemingly unclear.</p>
+<p>Now we can start the story from the beginning! (Let’s add the data points without formatting…)</p>
+</div>
+</div>
+<div class="trigger">
+<div class="narrative">
+<p>This shows us the big picture for the historical timeline of winners across Nathan’s story. We added the points without formatting to be able to create a baseline from which to build up our descriptions of special aspects of the data-that’s the main goal for data storytelling in highlighting the meaningful from the seemingly unclear.</p>
 </div>
 </div>
 <div class="trigger new-trigger" data-focus-on="cr-women">
 <div class="narrative">
-<p>can distinguish categories in the data by taking advantage of the <code>ggplot2</code> library. This particular data set does not include many categories that would allow us to see different dimensions of the data points. However, we can use the winners’ genders to highlight a breakthrough in the competitions , and can use that to our advantage to extrapolate the narrative to other competitive eating events, and changes they underwent to make competitions inclusive, or more fun!<br>
+
+</div>
+</div>
+<div class="trigger">
+<div class="narrative">
+<p>We can distinguish categories in the data by taking advantage of the <code>ggplot2</code> library. This particular data set does not include many categories that would allow us to see different dimensions of the data points. However, we can use the winners’ genders to highlight a breakthrough in the competitions , and can use that to our advantage to extrapolate the narrative to other competitive eating events, and changes they underwent to make competitions inclusive, or more fun!<br>
 <br>
 - Here we map the <code>color aesthetics</code> of the plot to distinguish between male and women in the competition with 2 different colors.<br>
 <br>
@@ -199,7 +209,7 @@ In the women’s category, Miki Sudo, native to Florida, is the overall champion
 </div>
 <div class="trigger">
 <div class="narrative">
-<p>when it comes to making inferences on time series data like this one, it is easy to infer things that aren’t necessarily causal or follow a mathematical trend. Perhaps that is the distribution of the points for this particular data and that’s the information we have and work with. - Other data sets with independent variables other than <code>time</code> allow us to draw more nuanced interpretations on the relationships between the variables in out plot.</p>
+<p>When it comes to making inferences on time series data like this one, it is easy to infer things that aren’t necessarily causal or follow a mathematical trend. Perhaps that is the distribution of the points for this particular data and that’s the information we have and work with. - Other data sets with independent variables other than <code>time</code> allow us to draw more nuanced interpretations on the relationships between the variables in out plot.</p>
 </div>
 </div>
 <div class="trigger">
@@ -219,9 +229,9 @@ In the women’s category, Miki Sudo, native to Florida, is the overall champion
 </div>
 <div class="trigger">
 <div class="narrative">
-<p>This is the solution plot for the exercise in this module. Many solutions possible. A correct plot includes:<br>
+<p>This is the solution plot for the exercise in this module. Many solutions are possible. A correct plot includes:<br>
 - Labeled axes for <code>x = year</code> and <code>y = dogs eaten per minute</code><br>
-- Scatterplot for all the observations in the data set.<br>
+- Scatter plot for all the observations in the data set.<br>
 - Highlight for Joey Chestnut’s observations.<br>
 - Different color and/or shape for Joey Chestnut’s observations.<br>
 - Annotation that explains shortly which points correspond to Joey Chestnut’s wins.<br>
