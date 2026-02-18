@@ -73,6 +73,45 @@ snapshot based on patch 16.2, and many champions can be played
 effectively in multiple lanes depending on strategy, player skill, and
 balance changes.
 
+
+## Optional Background: Gender and League of Legends
+
+::: {.callout-note collapse="true" title="Background & Context (Optional Reading)" appearance="minimal"}
+
+### Workplace Culture and Legal Action
+
+In 2018, Riot Games — the developer of *League of Legends* — faced public scrutiny following reports of gender discrimination and workplace culture concerns. A class-action lawsuit alleged systemic discrimination in hiring, pay, and promotion. In 2021, Riot agreed to a settlement exceeding $100 million and committed to external monitoring and workplace reforms.[^riot_settlement][^riot_wiki]
+
+### Representation and Champion Design
+
+*League of Legends* has also been criticized for early character design trends in which many female champions were perceived as highly stylized or sexualized. Within online communities, this led to the informal nickname “League of Boobs.” Riot developers have acknowledged aspects of this criticism, including stating that at least one champion design was “unnecessarily sexualized.”[^kaisa]
+
+In more recent years, champion releases have shown greater diversity in body types, armor design, age representation, and narrative characterization.
+
+### Company Responses and Reform Efforts
+
+Riot has publicly committed to diversity and inclusion initiatives, publishing annual progress reports outlining hiring goals, employee resource groups, and representation data.[^riot_di] In its 2021 Diversity & Inclusion report, Riot stated that women comprised approximately 25% of its leadership council and that internal pay equity reviews showed no statistically significant gender-based pay differences globally.[^riot_2021]
+
+Riot has also adopted policies through its Social Impact Fund stating that it will not support organizations that discriminate on the basis of gender, gender identity, or sexual orientation.[^riot_sif]
+
+### Why This Context Matters
+
+This module does not evaluate workplace culture or artistic design decisions. Instead, this background provides context for why examining patterns of gender representation — including whether gameplay roles are distributed differently across genders — may be of interest. The statistical analysis that follows focuses strictly on the data.
+
+:::
+
+[^riot_settlement]: Riot Games. “Riot Settlement.” https://www.riotgames.com/en/news/riot-settlement  
+[^riot_wiki]: Wikipedia contributors. “Riot Games.” https://en.wikipedia.org/wiki/Riot_Games  
+[^kaisa]: PC Gamer. “Riot regrets ‘unnecessarily sexualized’ design of League of Legends champion Kai’Sa.” https://www.pcgamer.com/riot-regrets-unnecessarily-sexualized-design-of-league-of-legends-champion-kaisa/  
+[^riot_di]: Riot Games. “Diversity & Inclusion.” https://www.riotgames.com/en/diversity-and-inclusion  
+[^riot_2021]: Riot Games. “Annual Diversity & Inclusion Progress Report 2021.” https://www.riotgames.com/en/news/annual-diversity-and-inclusion-d-i-progress-report-2021  
+[^riot_sif]: Riot Games. “Social Impact Fund.” https://www.riotgames.com/en/who-we-are/social-impact/social-impact-fund
+
+:::
+
+
+
+
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 By the end of this tutorial, students will be able to:
 
@@ -685,7 +724,14 @@ mantelhaen.test(EraTable)
 
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
-Reserved for the conclusion
+
+In this module, you learned about how to conduct both an exploratory and inferential analysis of "two-way tables" in R. (i.e., analyzing the association between two categorical variables)
+
+In addition to running through the analysis, we discussed...
+
+
+
+
 :::
 
 ::: {.callout-note collapse="true" title="Additional Reading"}
