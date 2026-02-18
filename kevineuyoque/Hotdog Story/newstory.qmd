@@ -13,6 +13,19 @@ execute:
   message: false
 ---
 
+# Closeread Data Story
+
+This section demonstrates how to build a scrollytelling page with **closeread**.
+
+## Closeread pieces you will see below
+
+- **Section:** Everything inside `::::{.cr-section ...}` becomes part of the scrolling story.
+- **Sticky (target):** A plot is made “sticky” by wrapping it with an ID like `:::{#cr-total-dogs-by-year}`.
+- **Trigger (reference):** In the narrative text, writing `@cr-total-dogs-by-year` triggers that sticky plot to focus as you scroll.
+
+---
+
+
 ```{r}
 #| label: setup
 #| include: false
@@ -69,11 +82,16 @@ How closeread works:
 ::::{.cr-section layout="sidebar-left"}
 
 
-Step 1 — Total hot dogs over time (men) @cr-total-dogs-by-year
+Step 1 — Baseline totals (men) @cr-total-dogs-by-year
 
 Let’s begin with the simplest view, the total number of hot dogs eaten by the men’s winner each year.
 
+Why: A baseline plot helps you identify “story moments” (spikes in the data, plateaus, eras)
 Prompt: Why might totals be misleading for comparing across years?
+
+In closeread, the plot becomes a sticky when it is wrapped in a target block like {#cr-total-dogs-by-year}.
+
+@cr-total-dogs-by-year 
 
 :::{#cr-total-dogs-by-year}
 

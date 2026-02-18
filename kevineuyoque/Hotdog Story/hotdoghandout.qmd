@@ -1,5 +1,5 @@
 ---
-title: "Closeread Scrollytelling Handout (R + Quarto)"
+title: "Closeread Scrollytelling Module (R + Quarto)"
 author:
   - name: Kevin Euyoque
     affiliation:
@@ -53,9 +53,9 @@ Sections define areas where scrollytelling behavior occurs
 
 ```{r}
 #| warning: false
-':::{.cr-section}
+'::::{.cr-section}
 ...
-:::'
+::::'
 ```
 
 Everything inside a .cr-section behaves as part of the scroll-driven story.
@@ -86,7 +86,7 @@ When that line scrolls into view, the corresponding sticky element becomes the f
 
 By the end of this activity, you will be able to:
 
-1. Create time series visualizations using ggplot2
+1. Create time series visualizations using ggplot
 2. Explain why standardizing measurements (ex: hot dogs per minute) improves comparisons across time
 3. Identify structural shifts in performance trends
 4. Implement closeread syntax to build a scrollytelling data document in Quarto

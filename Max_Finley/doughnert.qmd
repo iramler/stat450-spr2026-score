@@ -4,7 +4,12 @@ format: html
 ---
 
 ```{r}
+library(dplyr)
+library(ggplot2)
 library(readr)
+
+twentyseven <- read_csv("~/Downloads/Export.csv")
+
 # --- Set 1: Book Files ---
 # Read, select columns, and force Time to be character
 book_adj <- read_csv("~/Downloads/Book(Sheet1)-3.csv") %>% 
@@ -219,7 +224,7 @@ ggplot(df_diff, aes(x = donuts, y = time_sec_adj)) +
 
 ```{r}
 df_diff2 <- df_diff |> filter(donuts > 0)
-ggplot(df_diff2, aes(x = donuts, y = Position)) +
+ggplot(df_diff2, aes(x = donuts, y = time_sec_adj)) +
   geom_point(fill = "#d95f02") +
   geom_smooth() +
   labs(

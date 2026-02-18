@@ -35,7 +35,7 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 
 :::{#cr-intro}
 
-![](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png)
+![Nathan's Webpage](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png) 
 
 # Welcome video
 
@@ -46,6 +46,8 @@ If you're interested in understanding how competitive eaters are able to consume
 # Introduction
 
 Nathan's Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.
+
+# TODO: data storytelling intro (let ppl know what they're getting into)
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 By the end of this tutorial, students will be able to:
@@ -109,7 +111,7 @@ Download Data:
 
 #### Data Sources
 
--   [Wikipedia.org](Wikipedia.org/wiki/Nathan%27s_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)){target="_blank"}
+-   [TODO: Wikipedia.org](https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)){target="_blank"}
 
 ::: @cr-intro
 
@@ -131,36 +133,37 @@ This scrolling feature helps you tell stories about your data, which people have
 
 # Let's get started
 
-To begin, you will need to set up Closeread. Start a new qmd file with this YAML:
+To begin, you will need to set up Closeread. Copy and paste the following block of code into a new qmd file.
 
+```markdown
+---
 title: My First Closeread
-
 author: Your Name
-
 format: closeread-html
+---
 
+Get the packages we need to work with our data (uncomment this chunk)
+#```{r}
+library(readr) # This will help us read in our data
+library(tidyverse) # This will help us work with our data and make plots
+#```
+
+Get our data (uncomment this chunk)
+#```{r}
+hotdog_clean <- read_csv("hotdog_clean.csv")
+#```
+
+:::{#cr-intro}
+
+This is where you will start working! The three colon symbols denote a section, which is how your closeread will be organized.
+
+:::
+```
 
 Next, you will need to install the Closeread extension. At the bottom of your screen, you should have a "console" open where the output of your code appears as you run it in RStudio. Next to console, you'll see something called the "Terminal", open that up and paste in the following code:
 
-```{r}
-#| echo: true
-#| eval: false
+```markdown
 quarto add qmd-lab/closeread
-```
-
-
-Now, You will need to get the `readr` and `tidyverse` packages. If you have never used them before, you may have to run install.packages("readr"), etc.
-```{r}
-#| echo: true
-library(readr)
-library(tidyverse)
-```
-
-Next, you will need to import our hotdog data and separate it into male winners and female winners.
-```{r}
-#| echo: true
-#| message: false
-hotdog_clean <- read_csv("hotdog_clean.csv")
 ```
 
 Now, separate the data into `hotdog_men` a dataset of only the male winners, and `hotdog_women` a dataset of only the women who have won. 
@@ -172,5 +175,6 @@ hotdog_men <- hotdog_clean |> filter(Sex == 1)
 hotdog_women <- hotdog_clean |> filter(Sex == 0)
 ```
 :::
+
 
 ::::: @cr-main
