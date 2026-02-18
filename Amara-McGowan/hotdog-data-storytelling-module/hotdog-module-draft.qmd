@@ -1,6 +1,8 @@
 ---
 title: "Looking into Nathan's Famous Hot Dog Eating Contest with Closeread"
-author: Amara McGowan
+author: 
+- name: Amara McGowan
+  url: https://www.linkedin.com/in/amaramcgowan/
 format:
   closeread-html:
     cr-style:
@@ -35,13 +37,14 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 
 :::{#cr-intro}
 
-![Nathan's Webpage](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png) 
+![Nathan's Hotdog Eating Contest](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png) 
 
 # Welcome video
 
-If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it. 
+If you would like to learn more about Nathan's Hotdog Eating Contest, take a moment to watch the first five minutes of the following video.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/txMPjvIlVpk?si=hXjLB4LBoAESAx1t&end=297" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 # Introduction
 
@@ -175,6 +178,10 @@ hotdog_men <- hotdog_clean |> filter(Sex == 1)
 hotdog_women <- hotdog_clean |> filter(Sex == 0)
 ```
 :::
+
+If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
 
 
 ::::: @cr-main
