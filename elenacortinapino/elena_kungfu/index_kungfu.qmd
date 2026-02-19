@@ -1,0 +1,132 @@
+---
+title: "Kung Fu - Data manipulation, data visualization and Hypothesis Testing"
+subtitle: "2025 World Kung Fu Championship Data Analysis Module - WOP."
+author:
+  - name: "Elena Cortina Pino"
+    url: https://www.linkedin.com/in/elenacortina
+description: "Kung Fu: Fighting."
+format: 
+  html:
+    embed-resources: false
+categories:
+  - Data visualization
+  - Tests
+  - Other
+---
+
+
+```{r}
+#| message: false
+#| echo: false
+#| warning: false
+
+# Loading the libraries in:
+
+library(pdftools)
+library(tidyverse)
+library(ggplot2)
+library(here)
+```
+
+## Background
+
+### World Kungfu Championships 2025: Forms, Groups, Ranking
+
+The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years. At the WKFC, mutual understanding is fostered through skill and cultural exchanges. In the spirit of sport, growth, development, and health are the core values of the event.
+
+##### COMPETITION EVENTS
+
+### Individual Events
+
+| Taijiquan-type Events | Nanquan-type Events | Other |
+|-------------------|----------------------|-------------------------------|
+| Chen Style | Yongchunquan (Wing Chun) | Xingyiquan |
+| Yang Style | Wuzuquan (Ngo Cho) | Baguazhang |
+| Wu Style | Cailifoquan (Choy Lay Fut) | Bajiquan |
+| Wuu Style | Hongjiaquan (Hung Gar) | Tongbiquan |
+| Sun Style | Dishuquan | Piguaquan |
+| 42-posture Taijiquan | other southern styles | Fanziquan |
+| other Taijiquan routines |  | Ditangquan |
+|  |  | Yingzhaoquan (Eagle Style) |
+|  |  | Tanglangquan (Mantis Style) |
+|  |  | Chaquan |
+|  |  | Huaquan |
+|  |  | Paoquan |
+|  |  | Hongquan |
+|  |  | Shaolinquan |
+|  |  | Wudangquan |
+|  |  | Emeiquan |
+|  |  | other types of traditional styles |
+
+### Another table: Weaponry
+
+| Single-weapon Routines | Double-weapon Routines | Flexible/Soft-weapon Routines |
+|-------------------|----------------------|-------------------------------|
+| Dao (Broadsword) | Shuangdao (Double Broadsword) | Jiujiebian (Nine Section Whip Chain) |
+| Jian (Straight Sword) | Shuangjian (Double Straight Sword/ Double Long Tassel Straight Sword) | Shuangjiegun (Nunchucks) |
+| Gun (Cudgel/Staff) | Shuangbian (DoubleNineSection Whip Chain/ One Nine Section Whip Chain with Broadsword) | Sanjiegun (Three Section Staff) |
+| Qiang (Spear) | Shuanggou (Double Tiger Hooks) | Liuxingchui (Meteor Hammer) |
+| Pudao | Shuangbishou (DoubleDaggers) | Shengbiao (Rope Dart) |
+| Guandao (Kwan Dao) | Shuangyue (Bagua Double Deer Horn Knives) | other traditional flexible/soft-weapon routines |
+| Shanzi (Fan) | other traditional double-weapon routines |  |
+| Bishou(Dagger) |  |  |
+| Changsuijian (Long Tassel Straight Sword) |  |  |
+| Taijijian |  |  |
+| 42-posture Taijijian |  |  |
+| Taijidao |  |  |
+| Taijiqiang |  |  |
+| Taijishan |  |  |
+| Zuijian (Drunken Sword) |  |  |
+| Nandao(Southern Broadsword) |  |  |
+| Nangun (Southern Staff/Cudgel) |  |  |
+| other traditional single-weapon routines |  |  |
+
+#### Groups:
+
+Groups are classification on age requirements for competition:\
+\
+-   Group A: 11 years of age and below (born in and after 2014).\
+-   Group B: 12‐14 years of age (the year of birth: 2011 - 2013).\
+-   Group C: 15‐17 years of age (the year of birth: 2008 - 2010).\
+-   Group D: 18‐39 years of age (the year of birth: 1986 - 2007).\
+-   Group E: 40‐59 years of age (the year of birth: 1966 - 1985).\
+-   Group F: 60 years of age and above (born in and before 1965).\
+
+#### Awards
+-   1st, 2nd and 3rd Category Prize recipients will receive medals and achievement certificates.\
+-   If the actual number of participants is 12 or more persons in an individual event, the awarding methods are as follows:\
+    Gold, silver and bronze medals and certificates will be awarded to the athletes ranked top 3 of the individual events respectively.\
+-   2nd Category Prize (Awarded to 20% of the actual number of participants) recipients will receive medals and achievement certificates.\
+-   3rd Category Prize (Awarded to 30% of the actual number of participants) recipients will receive medals and achievement certificates.\
+-   Other athletes will receive participation certificates only.
+
+#### Data
+
+The data comes from the results book of the 2025 10th World Kung Fu Championship, from The International Wushu Federation (IWUF).\
+
+The result book is only available online as a 218-page pdf document containing the tables from each event, group and form separately. This pdf document was parsed into a csv document containing the same information.
+
+For the purpose of this module, the data as been trimmed to include only individual events but not group events.
+
+##### Variables
+
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description |
+|-------------------|-----------------------------------------------------|
+| Rank     | Rank of athlete in the event   |
+| Team     | Country the athlete is representing |
+| Athlete | Athlete's name |
+| Score    | Numerical score  out of 10 possible points   |
+| Remark | Prize awarded based on the score and event  |
+
+</details>
+
+
+
+##### Materials
+
+For this module, the materials are the [kung fu](kungfu_data.csv) data set and the solution document.
