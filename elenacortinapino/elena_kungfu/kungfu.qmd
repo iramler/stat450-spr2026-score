@@ -1,14 +1,101 @@
 ---
-title: "kungfu"
+title: "Kung Fu - Tests, data visualzation anf Hypothesis Testing"
+subtitle: "Using closeread HTML to tell the story of Nathan's Hot Dog Eating Competition."
+author:
+  - name: "Elena Cortina Pino"
+  url: https://www.linkedin.com/in/elenacortina
+description: "Kung Fu - Fighting."
 format: html
+
 ---
 
+
+Loading the libraries in:
 ```{r}
-import kagglehub
+library(pdftools)
+library(tidyverse)
+library(ggplot2)
 
-# Download latest version
-path = kagglehub.dataset_download("predact/world-wushu-championships-2017")
-
-print("Path to dataset files:", path)
 ```
 
+
+## Background
+
+### World Kungfu Championships 2025: Forms, Groups, Ranking
+
+
+#### INTRODUCTION TO WORLD KUNGFU CHAMPIONSHIPS
+
+The World Kungfu Championships (WKFC), hosted by the IWUF, is an international level sportingeventestablished in 2004 to propagate the development of wushu around the world. As there are dozens of kungfu(traditional wushu) styles represented in the WKFC, these championships offer a unique platformfor thousandsof practitioners of all ages and varying skill levels to come together every two years. At theWKFC, mutualunderstanding is fostered through skill and cultural exchanges. In the spirit of sport, growth, development, andhealth are the core values of the event. 
+
+
+##### COMPETITION EVENTS\
+
+Individual Events\
+Taijiquan-type Events:\
+\
+Chen Style, Yang Style, Wu Style, Wuu Style, Sun Style, 42-posture
+Taijiquan, and other Taijiquan routines. \
+\
+Nanquan-type Events:\
+Yongchunquan (Wing Chun), Wuzuquan (Ngo Cho), Cailifoquan (Choy Lay
+Fut), Hongjiaquan (Hung Gar) , Dishuquan, and other southern styles.\
+\
+Other Style Events:\
+Xingyiquan, Baguazhang, Bajiquan, Tongbiquan, Piguaquan, Fanziquan, Ditangquan, Yingzhaoquan (Eagle Style), Tanglangquan (Mantis Style), Chaquan, Huaquan, Paoquan, Hongquan, Shaolinquan, Wudangquan, Emeiquan, and other types of traditional styles
+
+
+Individual Events
+Single-weapon Routines:\
+\
+Dao (Broadsword), Jian (Straight Sword), Gun (Cudgel/Staff), Qiang (Spear), Pudao, Guandao (Kwan Dao), Shanzi (Fan), Bishou(Dagger),Changsuijian (Long Tassel Straight Sword), Taijijian, 42-posture Taijijian, Taijidao, Taijiqiang, Taijishan, Zuijian (Drunken Sword), Nandao(Southern Broadsword), Nangun (Southern Staff/Cudgel), and other traditional single-weapon routines. \
+
+Double-weapon Routines:\
+\
+Shuangdao (Double Broadsword), Shuangjian (Double Straight Sword/ Double Long Tassel Straight Sword), Shuangbian (DoubleNineSection Whip Chain/ One Nine Section Whip Chain with Broadsword), Shuanggou (Double Tiger Hooks), Shuangbishou (DoubleDaggers),Shuangyue (Bagua Double Deer Horn Knives), and other traditional double-weapon routines. \
+\
+Flexible/Soft-weapon Routines:
+\
+Jiujiebian (Nine Section Whip Chain), Shuangjiegun (Nunchucks), Sanjiegun (Three Section Staff), Liuxingchui (Meteor Hammer), Shengbiao (Rope Dart), and other traditional flexible/soft-weapon routines.
+
+
+Duilian Events (Choreographed Sparring)\
+l Two (2) Person Duilian:\
+Bare-hand duilian
+Weapon duilian
+Bare-hand vs. weapon duilian\
+
+l Three (3) Person Duilian:\
+Bare-hand duilian
+Weapon duilian
+Bare-hand vs. weapon duilian\
+
+3. Jiti Events (Group Routine)
+Jiti group bare-hand routine
+Jiti group weapon routine
+
+
+#### Groups:
+Groups are classification on age requirements for competition:\
+
+- Group A: 11 years of age and below (born in and after 2014).\
+- Group B: 12‐14 years of age (the year of birth: 2011 - 2013).\
+- Group C: 15‐17 years of age (the year of birth: 2008 - 2010). \
+- Group D: 18‐39 years of age (the year of birth: 1986 - 2007).\ 
+- Group E: 40‐59 years of age (the year of birth: 1966 - 1985).\ 
+- Group F: 60 years of age and above (born in and before 1965)\
+
+
+
+#### Awards
+\
+
+- 1st, 2nd and 3rd Category Prize recipients will receive medals and achievement certificates. \
+- If the actual number of participants is 12 or more persons in an individual event, the awarding methods are as follows:
+\
+Gold, silver and bronze medals and certificates will be awarded to the athletes ranked top 3 of the individual events respectively. \
+\
+2nd Category Prize (Awarded to 20% of the actual number of participants) recipients will receive medals and achievement certificates. \
+3rd Category Prize (Awarded to 30% of the actual number of participants) recipients will receive medals and achievement certificates. \
+\
+- Other athletes will receive participation certificates only.
