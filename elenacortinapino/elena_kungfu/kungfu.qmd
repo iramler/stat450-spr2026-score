@@ -36,6 +36,15 @@ We'll need to do some significant `stringr` work to separate the information in 
 3. Group
 
 ```{r}
-kungfu_stringr <- kungfu |> 
+#| label: triedtopythonmywaythroughthis_couldnt
+
+sex = c("Men's ")
+kungfu_strings <- kungfu |> select(-Page) |> str_extract(Form, sex)
+
+# need to deal with the strings
+```
+
+```{r}
+
 ```
 
