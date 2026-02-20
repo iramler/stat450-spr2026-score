@@ -5,8 +5,8 @@ date: February 19, 2026
 format: html
 ---
 
+### Load libraries
 
-### Load libraries 
 ```{r}
 #| message: false
 #| warning: false
@@ -17,16 +17,12 @@ library(ggplot2)
 
 ```
 
-
-
-
-
 ### Know Thy Data
+
 ```{r}
 kungfu<- read.csv("kungfu_data.csv")
 head(kungfu, 25)
 ```
-
 
 Because of the way the raw data was presented in the result book, the parsing process helped us, but only so much! We have a lot of information in the result book data about the athletes and the organization of the competition that we can use for the data analysis process, but it is not in a useful format in the current way it's presented after the parsing process.
 
@@ -36,15 +32,55 @@ We'll need to do some significant `stringr` work to separate the information in 
 3. Group
 
 ```{r}
-#| label: triedtopythonmywaythroughthis_couldnt
+#| message: false
+#| warning: false
 
-sex = c("Men's ")
-kungfu_strings <- kungfu |> select(-Page) |> str_extract(Form, sex)
 
-# need to deal with the strings
+# this took forever to figure out 
+
+kungfu_strings <- kungfu |> select(-Page) |> filter(Form != "Bare-hand Duilian(2 Persons)", Form != "Weapon Duilian(2 Persons)", Form != "Other Duilian") |> # this line gets rid of the form "duilian" because that's a group event
+  separate_wider_regex(Form, c(sex = "^.", Form = ".*")) # this made the Sex column with the first letter of the words "Men's" and "Women's"
 ```
 
 ```{r}
+#| message: false
+#| warning: false
 
+# this code gets rid of the end of "en's and "omen's"
+getting_rid_of_up_to_form <- kungfu_strings |> separate_wider_regex(Form,
+  patterns = c(
+    delete = "^[^\\s]+",
+    "\\s+",
+    rest = ".*"))
+
+# we're getting there 
 ```
+
+
+
+```{r}
+#| message: false
+#| warning: false
+
+# this code creates the form column by selecting everything up to the capital G for "Group" and by doing that creates the column for Group
+
+selecting_the_form <- getting_rid_of_up_to_form |> select(-delete) |>  separate_wider_regex(rest,
+  patterns = c(
+    Form = ".*?(?=G)", 
+    Group = ".*"))
+```
+Now the situation is manageable. The remaining step is carpentry that repairs the missing `Group` category we lost during the parsing process of the result book.\
+
+```{r}
+# this line gives me a csv file that I will add letters to the groups that are missing the letter by hand
+write.csv(selecting_the_form, "write_group_letter.csv")
+```
+
+Add the new csv back into here
+```{r}
+lets_go <- read.csv(groups_added_kungfu.csv)
+```
+
+
+
 
