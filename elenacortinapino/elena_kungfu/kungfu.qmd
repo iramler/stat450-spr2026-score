@@ -56,8 +56,6 @@ getting_rid_of_up_to_form <- kungfu_strings |> separate_wider_regex(Form,
 # we're getting there 
 ```
 
-
-
 ```{r}
 #| message: false
 #| warning: false
@@ -71,14 +69,10 @@ selecting_the_form <- getting_rid_of_up_to_form |> select(-delete) |>  separate_
 ```
 Now the situation is manageable. The remaining step is carpentry that repairs the missing `Group` category we lost during the parsing process of the result book.\
 
-```{r}
-# this line gives me a csv file that I will add letters to the groups that are missing the letter by hand
-write.csv(selecting_the_form, "write_group_letter.csv")
-```
 
-Add the new csv back into here
+Add the new final clean everything correct and checked thrice csv back into here: the data frame is called `kf`
 ```{r}
-lets_go <- read.csv(groups_added_kungfu.csv)
+kf <- read.csv("kungfu.csv")
 ```
 
 

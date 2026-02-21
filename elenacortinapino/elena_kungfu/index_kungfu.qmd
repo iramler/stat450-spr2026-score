@@ -117,9 +117,11 @@ For the purpose of this module, the data as been trimmed to include only individ
 
 | Variable | Description |
 |-------------------|-----------------------------------------------------|
+| Sex     | Sex of athlete   |
+| Form    | Kung fu form the athlete competed in|
 | Rank     | Rank of athlete in the event   |
 | Team     | Country the athlete is representing |
-| Athlete | Athlete's name |
+| Athlete |  Athlete's name |
 | Score    | Numerical score  out of 10 possible points   |
 | Remark | Prize awarded based on the score and event  |
 
@@ -129,4 +131,4 @@ For the purpose of this module, the data as been trimmed to include only individ
 
 ##### Materials
 
-For this module, the materials are the [kung fu](kungfu_data.csv) data set and the solution document.
+For this module, the materials are the [kung fu](kungfu.csv) data set and the solution document.
