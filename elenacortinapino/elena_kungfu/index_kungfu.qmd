@@ -1,6 +1,6 @@
 ---
 title: "Kung Fu - Data manipulation, data visualization and Hypothesis Testing"
-subtitle: "2025 World Kung Fu Championship Data Analysis Module - WOP."
+subtitle: "2025 World Kung Fu Championship Data Analysis Module - WIP."
 author:
   - name: "Elena Cortina Pino"
     url: https://www.linkedin.com/in/elenacortina
@@ -131,4 +131,4 @@ For the purpose of this module, the data as been trimmed to include only individ
 
 ##### Materials
 
-For this module, the materials are the [kung fu](kungfu.csv) data set and the solution document.
+For this module, the materials are the [kung fu](kungfu.csv) data set and [the solution QMD](kungfu.qmd).
