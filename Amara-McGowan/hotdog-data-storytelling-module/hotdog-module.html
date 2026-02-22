@@ -225,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="installing-closeread">Installing Closeread</h2>
 <p>Follow along below or refer to the <a href="https://closeread.dev">Closeread homepage</a> for more information about installation.</p>
 <ol type="1">
-<li><p>In RStudio, open the project folder where you’d like to work and create a new Quarto document.</p></li>
+<li><p>In RStudio, open the project folder where you’d like to work.</p></li>
 <li><p>At the bottom of the RStudio window, locate the Console. Next to it, select the Terminal tab.</p></li>
 <li><p>In the terminal, paste and run the following command:</p></li>
 </ol>
@@ -233,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>quarto add qmd<span class="sc">-</span>lab<span class="sc">/</span>closeread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="4" type="1">
-<li><p>When prompted with messages like <i>“Do you trust the authors of this extension?”</i> or <i>“Would you like to continue?”</i>, type Y to say yes and continue with the installation.</p></li>
+<li><p>When prompted with messages like <i>“Do you trust the authors of this extension?”</i> or <i>“Would you like to continue?”</i>, type Y into the terminal to confirm and proceed with the installation.</p></li>
 <li><p>After completing these steps, the Quarto extension Closeread will be installed.</p></li>
 </ol>
 <p>To use the extension in a Quarto document, include the following in your document header:</p>
@@ -241,6 +241,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  closeread<span class="sc">-</span>html<span class="sc">:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="basics-of-closeread" class="level2">
+<h2 class="anchored" data-anchor-id="basics-of-closeread">Basics of Closeread</h2>
+</section>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<p>To begin, create a new Quarto document in the project folder where you have installed the Closeread extension. Next, edit the document header to enable Closeread. You can customize the colors however you would like, for example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your title"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Your name</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">closeread-html</span><span class="kw">:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">cr-style</span><span class="kw">:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">narrative-background-color-sidebar</span><span class="kw">:</span><span class="at"> darkgreen</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">section-background-color</span><span class="kw">:</span><span class="at"> transparent</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">narrative-text-color-sidebar</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details>
+<summary>
+<b>Click to reveal code</b>
+</summary>
+</details>
 </section>
 
 </main>

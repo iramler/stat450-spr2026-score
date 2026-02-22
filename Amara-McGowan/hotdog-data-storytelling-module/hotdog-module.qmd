@@ -81,7 +81,7 @@ The data was scraped and cleaned from this Wikipedia page:
 
 Follow along below or refer to the [Closeread homepage](https://closeread.dev) for more information about installation. 
 
-1. In RStudio, open the project folder where you'd like to work and create a new Quarto document.
+1. In RStudio, open the project folder where you'd like to work.
 
 2. At the bottom of the RStudio window, locate the Console. Next to it, select the Terminal tab. 
 
@@ -91,7 +91,7 @@ Follow along below or refer to the [Closeread homepage](https://closeread.dev) f
 quarto add qmd-lab/closeread
 ```
 
-4. When prompted with messages like <i>"Do you trust the authors of this extension?"</i>  or <i>"Would you like to continue?"</i>, type Y to say yes and continue with the installation. 
+4. When prompted with messages like <i>"Do you trust the authors of this extension?"</i>  or <i>"Would you like to continue?"</i>, type Y into the terminal to confirm and proceed with the installation. 
 
 5. After completing these steps, the Quarto extension Closeread will be installed. 
 
@@ -100,3 +100,31 @@ To use the extension in a Quarto document, include the following in your documen
 format:
   closeread-html:
 ```
+
+## Basics of Closeread
+
+
+## Getting Started 
+
+To begin, create a new Quarto document in the project folder where you have installed the Closeread extension. Next, edit the document header to enable Closeread. You can customize the colors however you would like, for example:
+
+```yaml
+---
+title: "Your title"
+author: Your name
+format:
+  closeread-html:
+    cr-style:
+      narrative-background-color-sidebar: darkgreen
+      section-background-color: transparent
+      narrative-text-color-sidebar: white
+---
+```
+
+
+<details>
+
+<summary><b>Click to reveal code</b></summary>
+
+
+</details>
