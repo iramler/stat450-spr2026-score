@@ -1,5 +1,5 @@
 ---
-title: "An Introduction to Data Scrollytelling Using Nathan's Hot Dog Eating Contest"
+title: "An Introduction to Data Scrollytelling: Nathan's Hot Dog Eating Contest"
 author: 
 - name: Amara McGowan
 - url: https://www.linkedin.com/in/amaramcgowan/
@@ -15,13 +15,13 @@ pedagogical and industry peer-reviews to become a published module on
 the SCORE Network. However, instructors are still welcome to use these
 materials if they are so inclined.
 
-## Welcome Video
+# Welcome Video
 
-If you are unfamiliar with Nathan's Hot Dog Contest, please watch the first five minutes of this video:
+If you are unfamiliar with Nathan's Hot Dog Contest, please watch the first minute of this video:
 
-<iframe width = "560" height = "315" src = "https://www.youtube.com/embed/txMPjvIlVpk?si=hXjLB4LBoAESAx1t&end=297" title = "YouTube video player" frameborder = "0" allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy = "strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width = "560" height = "315" src = "https://www.youtube.com/embed/txMPjvIlVpk?si=hXjLB4LBoAESAx1t&end=75" title = "YouTube video player" frameborder = "0" allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy = "strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## Introduction 
+# Introduction 
 
 Nathan's Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the "Super Bowl" of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.  
 
@@ -30,10 +30,11 @@ In this module, you will learn how to use the quarto extension `closeread` to te
 ::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
 By the end of this tutorial, you will be able to:
 
-1.  Critically examine the story and context behind a dataset.
+1.  Identify meaningful questions about a dataset.
 
-2.  Use the Closeread Quarto extension to make a compelling, visually
-    engaging story.
+2.  Transform a dataset to answer those questions. 
+
+3.  Use the `Closeread` Quarto extension to create a visually engaging story showcasing your findings.
 :::
 
 ::: {.callout-note collapse = "true" title = "Activity Length" appearance = "minimal"}
@@ -52,7 +53,7 @@ making basic plots with packages from the tidyverse
 No previous experience with Closeread is required.
 :::
 
-## Data
+# Data
 
 The `HotdogData.csv` dataset contains 69 rows, each representing a winner of Nathan's Hot Dog Eating Contest. Returning winners appear multiple times, and many years include two winners (one man and one woman). The primary variables in the dataset are `Dogs` and `Time`.
 
@@ -77,7 +78,7 @@ The data was scraped and cleaned from this Wikipedia page:
 [https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)](https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)){target="_blank"}
 </details>
 
-## Installing Closeread
+# Installing Closeread
 
 Follow along below or refer to the [Closeread homepage](https://closeread.dev) for more information about installation. 
 
@@ -95,16 +96,98 @@ quarto add qmd-lab/closeread
 
 5. After completing these steps, the Quarto extension Closeread will be installed. 
 
-To use the extension in a Quarto document, include the following in your document header:
-```{r echo = TRUE, eval = FALSE}
+# Using Closeread
+
+Before we get started on a Quarto document, please take a moment to read through this section to learn more about how to use Closeread.
+
+To use the Closeread extension in a Quarto document, you have to include the following in your document header:
+
+```yaml
+---
 format:
   closeread-html:
+---
 ```
 
-## Basics of Closeread
+You can customize your Closeread with `cr-style`, which you include in your header. 
+
+<details>
+<summary><b>Click to reveal some basic customization options</b></summary>
+
+```yaml
+---
+format:
+  closeread-html: 
+    cr-style:
+  
+      # Sidebar Background (text area as you scroll)
+      narrative-background-color-sidebar: darkgreen
+      
+      # Section Background (area next to the sidebar)
+      section-background-color: white
+      
+      # Sidebar Text Color
+      narrative-text-color-sidebar: white
+---
+```
+</details>
 
 
-## Getting Started 
+If you want to customize your Closeread further, there are more options here: [Closeread Styling Page](https://closeread.dev/guide/styling.html)
+
+To make a Closeread document, you need a section, a sticky, and a trigger. 
+
+::: {.callout-note collapse = "true" title = "Section" appearance = "minimal"}
+A section (`cr-section`) contains everything you want to appear in your Closeread document. If you type inside of the section, the text will appear on your sidebar. If you type outside of your section, the text will render like it would on a normal Quarto document. This is how you format a section:
+
+```markdown
+
+Anything you put here would render normally 
+
+:::{.cr-section} 
+
+You can put graphs, text, and picturs here. 
+
+When you are typing the text for your sidebars, this is where you put it.
+
+This is also where you will put your stickies!
+
+::: 
+```
+:::
+
+::: {.callout-note collapse = "true" title = "Sticky" appearance = "minimal"}
+A sticky looks like this:
+
+```markdown
+
+:::{#cr-ID}
+
+# You can put a code chunk with a plot here
+
+:::
+```
+:::
+
+::: {.callout-note collapse = "true" title = "Trigger" appearance = "minimal"}
+A trigger looks like:`@cr-myplot`
+
+```markdown
+
+When this text scrolls into view it will reveal my first plot. @cr-myplot
+
+:::{#cr-myplot}
+
+# Code for plot 1
+
+:::
+
+```
+:::
+
+
+
+# Getting Started 
 
 To begin, create a new Quarto document in the project folder where you have installed the Closeread extension. Next, edit the document header to enable Closeread. You can customize the colors however you would like, for example:
 
@@ -121,10 +204,19 @@ format:
 ---
 ```
 
+Next, download the data [HotdogData.csv](HotdogData.csv), get the tidyverse package and read in the dataset using `readr`. 
 
 <details>
 
 <summary><b>Click to reveal code</b></summary>
 
+```{r}
+#| echo: true
+#| eval: false
+
+library(tidyverse)
+
+hotdog_winners <- read_csv("HotdogData.csv")
+```
 
 </details>

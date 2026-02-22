@@ -7,10 +7,11 @@ format:
   closeread-html:
     cr-style:
       narrative-background-color-sidebar: darkgreen
-      section-background-color: transparent
-      narrative-text-color-overlay: black
+      section-background-color: white
       narrative-text-color-sidebar: white
 ---
+
+Hello, where does this text go? 
 
 
 ```{r}
@@ -22,7 +23,7 @@ library(tidyverse)
 ```{r}
 #| include: false
 #hotdog_clean <- read_csv("Amara-McGowan/hotdog-data-storytelling-module/hotdog_clean.csv")
-hotdog_clean <- read_csv("hotdog_clean.csv")
+hotdog_clean <- read_csv("HotdogData.csv")
 
 hotdog_men <- hotdog_clean |> filter(Sex == 1)
 hotdog_women <- hotdog_clean |> filter(Sex == 0)
@@ -42,6 +43,8 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 ::: @cr-intro
 
 ::::: {.cr-section}
+
+Hello, part two!
 
 :::{#cr-tibble1 .cr-sticky}
 ```{r}
