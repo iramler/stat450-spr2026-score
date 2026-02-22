@@ -1,8 +1,8 @@
 ---
-title: "Looking into Nathan's Famous Hot Dog Eating Contest with Closeread"
+title: "Finished Closeread Example"
 author: 
 - name: Amara McGowan
-  url: https://www.linkedin.com/in/amaramcgowan/
+- url: https://www.linkedin.com/in/amaramcgowan/
 format:
   closeread-html:
     cr-style:
@@ -11,6 +11,7 @@ format:
       narrative-text-color-overlay: black
       narrative-text-color-sidebar: white
 ---
+
 
 ```{r}
 #| include: false
@@ -37,85 +38,7 @@ ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
 
 :::{#cr-intro}
 
-![Nathan's Hotdog Eating Contest](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png) 
-
-# Welcome video
-
-If you would like to learn more about Nathan's Hotdog Eating Contest, take a moment to watch the first five minutes of the following video.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/txMPjvIlVpk?si=hXjLB4LBoAESAx1t&end=297" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-# Introduction
-
-Nathan's Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.
-
-# TODO: data storytelling intro (let ppl know what they're getting into)
-
-::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
-By the end of this tutorial, students will be able to:
-
-1. Create a "scrollytelling" document with Closeread.
-
-2. Create scatterplots to look at patterns in data.
-
-3. Form questions about the data based on visualizations. 
-
-4. Investigate questions about the data.
-:::
-
-::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
-This could be suitable of an out of class activity or one that spans one
-or more class periods.
-:::
-
-::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
-**Technology Requirement:**
-
-This activity is designed to be completed primarily in `R` using a
-Quarto document workflow. Students should be comfortable importing data
-and making basic plots with packages from the tidyverse
-(especially `readr` and `ggplot2`).
-:::
-
-::: {.callout-caution collapse="true" title="Research Questions" appearance="minimal"}
-
-During this lab, you'll investigate the following research questions:
-
-+ Question one
-+ Question two
-
-:::
-
-
-### Data
-
-The `hotdog_clean.csv` dataset contains 69 rows, one per
-Nathan's Famous Hot Dog Eating Contest Winner, with returning winners
-showing up in the data multiple times. The primary variables in the 
-data are `Dogs` and `Time`.
-
-Download Data:
-<!--TODO: [add later](add later) -->
-
-<details>
-
-<summary><b>Variable Descriptions</b></summary>
-
-| Variable | Description |
-|------------------------------------|------------------------------------|
-| Year | Year the Competition took place |
-| Sex | Sex of the Winner (0 = Woman, 1 = Man) |
-| Dogs | How many hotdogs the winner consumed |
-| Winner | First and Last Name of the Winner |
-| Time | Duration of the competition in minutes |
-
-</details>
-
-#### Data Sources
-
--   [TODO: Wikipedia.org](https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)){target="_blank"}
-
+![Nathan's Hotdog Eating Contest](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/c1821c62-2e1d-4c0f-ad6b-a6ceed199107/frankie-lying.png)
 ::: @cr-intro
 
 ::::: {.cr-section}

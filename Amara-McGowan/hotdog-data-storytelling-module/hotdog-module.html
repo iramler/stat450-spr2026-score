@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Amara McGowan">
 
-<title>Looking into Nathan’s Famous Hot Dog Eating Contest with Closeread</title>
+<title>An Introduction to Data Scrollytelling Using Nathan’s Hot Dog Eating Contest</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,59 +58,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="hotdog-module-draft_files/libs/clipboard/clipboard.min.js"></script>
-<script src="hotdog-module-draft_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="hotdog-module-draft_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="hotdog-module-draft_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="hotdog-module-draft_files/libs/quarto-html/popper.min.js"></script>
-<script src="hotdog-module-draft_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="hotdog-module-draft_files/libs/quarto-html/anchor.min.js"></script>
-<link href="hotdog-module-draft_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hotdog-module-draft_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="hotdog-module-draft_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="hotdog-module-draft_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="hotdog-module-draft_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="hotdog-module-draft_files/libs/quarto-contrib/intersection-observer-polyfill-1.0.0/intersection-observer.js"></script>
-<script src="hotdog-module-draft_files/libs/quarto-contrib/scrollama-3.2.0/scrollama.min.js"></script>
-<script src="hotdog-module-draft_files/libs/quarto-contrib/closeread-0.1.0/closeread.js"></script>
-<meta cr-debug-mode="false">
-<meta cr-remove-header-space="false">
+<script src="hotdog-module_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hotdog-module_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="hotdog-module_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="hotdog-module_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="hotdog-module_files/libs/quarto-html/popper.min.js"></script>
+<script src="hotdog-module_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hotdog-module_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hotdog-module_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hotdog-module_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hotdog-module_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hotdog-module_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hotdog-module_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="_extensions/qmd-lab/closeread/closeread.css">
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 
-<main class="content column-page" id="quarto-document-content">
-      <!-- user-provided yaml closeread style options -->
-      <style>
-        :root {
-          --cr-section-background-color: transparent;
---cr-narrative-text-color-sidebar: white;
---cr-narrative-text-color-overlay: black;
---cr-narrative-background-color-sidebar: darkgreen;
-        }
-      </style>
-    
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Looking into Nathan’s Famous Hot Dog Eating Contest with Closeread</h1>
-</div>
-
-
-
-<div class="quarto-title-meta column-page">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p><a href="https://www.linkedin.com/in/amaramcgowan/">Amara McGowan</a> </p>
-          </div>
+<h1 class="title">An Introduction to Data Scrollytelling Using Nathan’s Hot Dog Eating Contest</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Data Visualization</div>
+    <div class="quarto-category">Closeread Extention</div>
+    <div class="quarto-category">Data Storytelling</div>
   </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
     
   
     
@@ -122,25 +104,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cr-intro">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/a65fb3e8-370a-4f06-852c-39610ca5fad7/frankie.png" class="img-fluid figure-img"></p>
-<figcaption>Nathan’s Hotdog Eating Contest</figcaption>
-</figure>
-</div>
-<section id="welcome-video" class="level1">
-<h1>Welcome video</h1>
-<p>If you would like to learn more about Nathan’s Hotdog Eating Contest, take a moment to watch the first five minutes of the following video.</p>
+<p>Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
+<section id="welcome-video" class="level2">
+<h2 class="anchored" data-anchor-id="welcome-video">Welcome Video</h2>
+<p>If you are unfamiliar with Nathan’s Hot Dog Contest, please watch the first five minutes of this video:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/txMPjvIlVpk?si=hXjLB4LBoAESAx1t&amp;end=297" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
 </iframe>
 </section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Nathan’s Famous Hot Dog Eating Contest is a competitive eating competition where contestants are given 10 minutes to eat as many hotdogs (bun and all) as they can manage. In its early years the duration of the competition varied, but for the past decade it has been a 10-minute cutoff.</p>
-</section>
-<section id="todo-data-storytelling-intro-let-ppl-know-what-theyre-getting-into" class="level1">
-<h1>TODO: data storytelling intro (let ppl know what they’re getting into)</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Nathan’s Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the “Super Bowl” of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.</p>
+<p>In this module, you will learn how to use the quarto extension <code>closeread</code> to tell a story using data from Nathan’s Hot Dog Contest. TODO: add example!</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -153,12 +127,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>By the end of this tutorial, students will be able to:</p>
+<p>By the end of this tutorial, you will be able to:</p>
 <ol type="1">
-<li><p>Create a “scrollytelling” document with Closeread.</p></li>
-<li><p>Create scatterplots to look at patterns in data.</p></li>
-<li><p>Form questions about the data based on visualizations.</p></li>
-<li><p>Investigate questions about the data.</p></li>
+<li><p>Critically examine the story and context behind a dataset.</p></li>
+<li><p>Use the Closeread Quarto extension to make a compelling, visually engaging story.</p></li>
 </ol>
 </div>
 </div>
@@ -192,34 +164,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Technology Requirement:</strong></p>
-<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow. Students should be comfortable importing data and making basic plots with packages from the tidyverse (especially <code>readr</code> and <code>ggplot2</code>).</p>
+<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow with a Closeread format. Students should be comfortable importing data and making basic plots with packages from the tidyverse (especially <code>readr</code>, <code>dplr</code>, and <code>ggplot2</code>).</p>
+<p>No previous experience with Closeread is required.</p>
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-caution no-icon callout-titled" title="Research Questions">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Caution</span>Research Questions
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>During this lab, you’ll investigate the following research questions:</p>
-<ul>
-<li>Question one</li>
-<li>Question two</li>
-</ul>
-</div>
-</div>
-</div>
-<section id="data" class="level3">
-<h3 class="anchored" data-anchor-id="data">Data</h3>
-<p>The <code>hotdog_clean.csv</code> dataset contains 69 rows, one per Nathan’s Famous Hot Dog Eating Contest Winner, with returning winners showing up in the data multiple times. The primary variables in the data are <code>Dogs</code> and <code>Time</code>.</p>
-<p>Download Data: <!--TODO: [add later](add later) --></p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>The <code>HotdogData.csv</code> dataset contains 69 rows, each representing a winner of Nathan’s Hot Dog Eating Contest. Returning winners appear multiple times, and many years include two winners (one man and one woman). The primary variables in the dataset are <code>Dogs</code> and <code>Time</code>.</p>
+<p>Download Data: <a href="HotdogData.csv">HotdogData.csv</a></p>
 <details>
 <summary>
 <b>Variable Descriptions</b>
@@ -238,15 +192,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Year</td>
-<td>Year the Competition took place</td>
+<td>Year the competition took place</td>
 </tr>
 <tr class="even">
 <td>Sex</td>
-<td>Sex of the Winner (0 = Woman, 1 = Man)</td>
+<td>Sex of the winner (0 = Woman, 1 = Man)</td>
 </tr>
 <tr class="odd">
 <td>Dogs</td>
-<td>How many hotdogs the winner consumed</td>
+<td>Total hot dogs consumed by the winner</td>
 </tr>
 <tr class="even">
 <td>Winner</td>
@@ -259,106 +213,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </details>
-<section id="data-sources" class="level4">
-<h4 class="anchored" data-anchor-id="data-sources">Data Sources</h4>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)" target="_blank">TODO: Wikipedia.org</a></li>
-</ul>
-<div class="@cr-intro">
-<div class="cr-section cr-column-screen sidebar-left">
-<div class="narrative-col">
-<div class="trigger new-trigger" data-focus-on="cr-tibble1">
-<div class="narrative">
-<p>This module will help you learn how to use the quarto extension <code>closeread</code> to tell stories with your data. To the right is a tibble of the data we will be using. When you scroll, you’ll see the tibble stays to the right and new text emerges.</p>
-</div>
-</div>
-<div class="trigger new-trigger" data-focus-on="cr-tibble1">
-<div class="narrative">
-<p>This scrolling feature helps you tell stories about your data, which people have named “scrollytelling.”</p>
-</div>
-</div>
-</div>
-<div class="sticky-col">
-<div class="sticky-col-stack">
-<div id="cr-tibble1" class="cr-sticky sticky">
+<details>
+<summary>
+<b>Data Source</b>
+</summary>
+<p>The data was scraped and cleaned from this Wikipedia page:</p>
+<a href="https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)" target="_blank">https://en.wikipedia.org/wiki/Nathan’s_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)</a>
+</details>
+</section>
+<section id="installing-closeread" class="level2">
+<h2 class="anchored" data-anchor-id="installing-closeread">Installing Closeread</h2>
+<p>Follow along below or refer to the <a href="https://closeread.dev">Closeread homepage</a> for more information about installation.</p>
+<ol type="1">
+<li><p>In RStudio, open the project folder where you’d like to work and create a new Quarto document.</p></li>
+<li><p>At the bottom of the RStudio window, locate the Console. Next to it, select the Terminal tab.</p></li>
+<li><p>In the terminal, paste and run the following command:</p></li>
+</ol>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 5
-   Year   Sex  Dogs Winner              Time
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;
-1  2025     1  70   Joey Chestnut         10
-2  2025     0  33   Miki Sudo             10
-3  2024     1  58   Patrick Bertoletti    10
-4  2024     0  51   Miki Sudo             10
-5  2023     1  62   Joey Chestnut         10
-6  2023     0  39.5 Miki Sudo             10</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>quarto add qmd<span class="sc">-</span>lab<span class="sc">/</span>closeread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="cr-main">
-<section id="lets-get-started" class="level1">
-<h1>Let’s get started</h1>
-<p>To begin, you will need to set up Closeread. Copy and paste the following block of code into a new qmd file.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> My First Closeread</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> Your Name</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> closeread-html</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Get the packages we need to work with our data (uncomment this chunk)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>#```{r}</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>library(readr) # This will help us read in our data</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>library(tidyverse) # This will help us work with our data and make plots</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>#```</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Get our data (uncomment this chunk)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>#```{r}</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>hotdog_clean &lt;- read_csv("hotdog_clean.csv")</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>#```</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>:::{#cr-intro}</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>This is where you will start working! The three colon symbols denote a section, which is how your closeread will be organized.</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Next, you will need to install the Closeread extension. At the bottom of your screen, you should have a “console” open where the output of your code appears as you run it in RStudio. Next to console, you’ll see something called the “Terminal”, open that up and paste in the following code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>quarto add qmd-lab/closeread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now, separate the data into <code>hotdog_men</code> a dataset of only the male winners, and <code>hotdog_women</code> a dataset of only the women who have won.</p>
-<div class="callout callout-style-simple callout-caution no-icon callout-titled" title="Reveal the Code">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Caution</span>Reveal the Code
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<ol start="4" type="1">
+<li><p>When prompted with messages like <i>“Do you trust the authors of this extension?”</i> or <i>“Would you like to continue?”</i>, type Y to say yes and continue with the installation.</p></li>
+<li><p>After completing these steps, the Quarto extension Closeread will be installed.</p></li>
+</ol>
+<p>To use the extension in a Quarto document, include the following in your document header:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hotdog_men <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hotdog_women <span class="ot">&lt;-</span> hotdog_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-</div>
-<p>If you’re interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan’s Famous Hot Dog Eating Contest and the science behind it.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
-</iframe>
-<div class="@cr-main">
-
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  closeread<span class="sc">-</span>html<span class="sc">:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-</div>
-</div>
-</section>
-</section>
-</section>
-</div>
 
 </main>
 <!-- /main column -->

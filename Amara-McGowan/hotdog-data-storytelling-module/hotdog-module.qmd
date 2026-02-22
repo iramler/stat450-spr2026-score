@@ -1,0 +1,102 @@
+---
+title: "An Introduction to Data Scrollytelling Using Nathan's Hot Dog Eating Contest"
+author: 
+- name: Amara McGowan
+- url: https://www.linkedin.com/in/amaramcgowan/
+format: html
+categories:
+  - Data Visualization
+  - Closeread Extention
+  - Data Storytelling
+---
+
+Please note that these material have not yet completed the required
+pedagogical and industry peer-reviews to become a published module on
+the SCORE Network. However, instructors are still welcome to use these
+materials if they are so inclined.
+
+## Welcome Video
+
+If you are unfamiliar with Nathan's Hot Dog Contest, please watch the first five minutes of this video:
+
+<iframe width = "560" height = "315" src = "https://www.youtube.com/embed/txMPjvIlVpk?si=hXjLB4LBoAESAx1t&end=297" title = "YouTube video player" frameborder = "0" allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy = "strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Introduction 
+
+Nathan's Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the "Super Bowl" of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.  
+
+In this module, you will learn how to use the quarto extension `closeread` to tell a story using data from Nathan's Hot Dog Contest. TODO: add example!
+
+::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
+By the end of this tutorial, you will be able to:
+
+1.  Critically examine the story and context behind a dataset.
+
+2.  Use the Closeread Quarto extension to make a compelling, visually
+    engaging story.
+:::
+
+::: {.callout-note collapse = "true" title = "Activity Length" appearance = "minimal"}
+This could be suitable of an out of class activity or one that spans one
+or more class periods.
+:::
+
+::: {.callout-note collapse = "true" title = "Methods" appearance = "minimal"}
+**Technology Requirement:**
+
+This activity is designed to be completed primarily in `R` using a
+Quarto document workflow with a Closeread format. Students should be comfortable importing data and
+making basic plots with packages from the tidyverse
+(especially `readr`, `dplr`, and `ggplot2`).
+
+No previous experience with Closeread is required.
+:::
+
+## Data
+
+The `HotdogData.csv` dataset contains 69 rows, each representing a winner of Nathan's Hot Dog Eating Contest. Returning winners appear multiple times, and many years include two winners (one man and one woman). The primary variables in the dataset are `Dogs` and `Time`.
+
+Download Data: [HotdogData.csv](HotdogData.csv)
+
+<details>
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description |
+|------------------------------------|------------------------------------|
+| Year | Year the competition took place |
+| Sex | Sex of the winner (0 = Woman, 1 = Man) |
+| Dogs | Total hot dogs consumed by the winner |
+| Winner | First and Last Name of the Winner |
+| Time | Duration of the competition in minutes |
+</details>
+
+<details>
+<summary><b>Data Source</b></summary>
+The data was scraped and cleaned from this Wikipedia page:
+
+[https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)](https://en.wikipedia.org/wiki/Nathan's_Hot_Dog_Eating_Contest#By_year_(color-coded_by_belt_color)){target="_blank"}
+</details>
+
+## Installing Closeread
+
+Follow along below or refer to the [Closeread homepage](https://closeread.dev) for more information about installation. 
+
+1. In RStudio, open the project folder where you'd like to work and create a new Quarto document.
+
+2. At the bottom of the RStudio window, locate the Console. Next to it, select the Terminal tab. 
+
+3. In the terminal, paste and run the following command:
+
+```{r echo = TRUE, eval = FALSE}
+quarto add qmd-lab/closeread
+```
+
+4. When prompted with messages like <i>"Do you trust the authors of this extension?"</i>  or <i>"Would you like to continue?"</i>, type Y to say yes and continue with the installation. 
+
+5. After completing these steps, the Quarto extension Closeread will be installed. 
+
+To use the extension in a Quarto document, include the following in your document header:
+```{r echo = TRUE, eval = FALSE}
+format:
+  closeread-html:
+```
