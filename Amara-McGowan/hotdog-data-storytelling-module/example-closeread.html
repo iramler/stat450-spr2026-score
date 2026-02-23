@@ -54,8 +54,8 @@ ul.task-list li input[type="checkbox"] {
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
-          --cr-narrative-text-color-sidebar: white;
---cr-narrative-background-color-sidebar: darkgreen;
+          --cr-narrative-background-color-sidebar: darkgreen;
+--cr-narrative-text-color-sidebar: white;
 --cr-section-background-color: white;
         }
       </style>
@@ -90,32 +90,27 @@ ul.task-list li input[type="checkbox"] {
 <div class="narrative-col">
 <div class="trigger">
 <div class="narrative">
-<p>There’s a lot of money behind the first place title of Nathan’s Hot Dog Eating Contest. So, how many hotdogs does someone really have to eat to win the contest, and has it always been that way? Do competitive eaters just get better and better every year, eating more and more hotdogs?</p>
-</div>
-</div>
-<div class="trigger">
-<div class="narrative">
-<p>Let’s find out.</p>
+<p>Nathan’s Hot Dog Eating Contest is a competitive eating contest where people from around the world try to eat as many hotdogs as possible in a limited amount of time. The contest has not always had a set duration, but the competition has been fixed at 10 minutes long since 2008. The top five competitors of the contest are awarded large cash prizes, with the 1st place prize in 2025 being $10,000. 10 grand is a lot of money. How much does it really take to win 1st place in Nathan’s Hot Dog Eating Contest? Does it get harder and harder every year? In other words, how many hotdogs do the winners eat and do the winners eat more and more hotdogs every year?</p>
 </div>
 </div>
 <div class="trigger new-trigger" data-focus-on="cr-plot1">
 <div class="narrative">
-<p>Here is a plot of how many hotdogs the winner of Nathan’s Hot Dog Eating Contest ate each year.</p>
+<p>The plot to the right shows the total hotdogs eaten by every winner over time. Look at the pattern in the plot. As time goes on, winners do tend to eat more hotdogs, but there is a weird spike around 2000. Let’s find out what happened to cause the amount of hotdogs winners ate to increase by so much!</p>
+</div>
+</div>
+<div class="trigger new-trigger" data-focus-on="cr-table1">
+<div class="narrative">
+<p>Taking a closer look at the competitions from 1999 to 2003 shows us who is responsible for the spike in hotdogs consumed in the early 2000s.</p>
 </div>
 </div>
 <div class="trigger">
 <div class="narrative">
-<p>Hmmm, this plot looks pretty interesting. Why is there a dip in the middle and how come people can eat so many more hotdogs now than they used to be able to?</p>
+<p>In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, about double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner?</p>
 </div>
 </div>
-<div class="trigger">
+<div class="trigger new-trigger" data-focus-on="cr-photo1">
 <div class="narrative">
-<p>Thinking about our variables, the duration of the contest (Time) is not similar across different years, so it is not really fair to compare winners from earlier years to more recent years based on total dogs eaten.</p>
-</div>
-</div>
-<div class="trigger new-trigger" data-focus-on="cr-plot2">
-<div class="narrative">
-<p>When we make a new variable called hotdogs_per_minute, we are able to see how many hotdogs each winner was able to eat per minute instead of overall, helping us see who the best eaters really were without being distracted by who had the longest time to eat.</p>
+<p>Kobayashi ate so many more hotdogs because…</p>
 </div>
 </div>
 <div class="trigger">
@@ -143,9 +138,9 @@ ul.task-list li input[type="checkbox"] {
 <p>What happened there? Let’s find out who won that year!</p>
 </div>
 </div>
-<div class="trigger new-trigger" data-focus-on="cr-plot3">
+<div class="trigger">
 <div class="narrative">
-<p>Again, another new one.</p>
+<p>Wow! Look at the jump 2000 to 2001, 21.5 hotdogs to 50 hotdogs total and the hotdogs_per_minute doubled too! Who is Takeru Kobayashi? Take a moment to google him.</p>
 </div>
 </div>
 </div>
@@ -156,10 +151,32 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="example-closeread_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="example-closeread_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
+</div>
+</div>
+<div id="cr-table1" class="sticky">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+   Year   Sex  Dogs Winner            Time
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;
+1  2003     1  44.5 Takeru Kobayashi    12
+2  2002     1  50.5 Takeru Kobayashi    12
+3  2001     1  50   Takeru Kobayashi    12
+4  2000     1  25.1 Kazutoyo Arai       12
+5  1999     1  21.5 Steve Keiner        12</code></pre>
+</div>
+</div>
+</div>
+<div id="cr-photo1" class="sticky">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.guim.co.uk/img/media/c3fb7fa62b488a153448562ae34d77694a64299d/0_0_2849_2848/master/2849.jpg?width=480&amp;dpr=1&amp;s=none&amp;crop=none" class="img-fluid figure-img"></p>
+<figcaption>The Guardian</figcaption>
+</figure>
 </div>
 </div>
 <div id="cr-plot2" class="sticky">
@@ -203,17 +220,6 @@ ul.task-list li input[type="checkbox"] {
 3  2001     1  50   Takeru Kobayashi    12               4.17
 4  2002     1  50.5 Takeru Kobayashi    12               4.21
 5  2003     1  44.5 Takeru Kobayashi    12               3.71</code></pre>
-</div>
-</div>
-</div>
-<div id="cr-plot3" class="sticky">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="example-closeread_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
 </div>
 </div>
 </div>

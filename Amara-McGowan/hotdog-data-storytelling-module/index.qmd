@@ -409,7 +409,7 @@ hotdog_winners |>
 
 </details>
 
-c.  Create a trigger (`@cr-table1`) for your second sticky. 
+c.  Add a trigger (`@cr-table1`) for your second sticky. 
 
     Write 2-3 sentences reacting to the table. How many hotdogs did the winner in 2000 eat? How many        hotdogs did the winner from 2001 eat? Was it a big difference? Who is the winner from 2001?             Remember, you're telling the reader a story.
 
@@ -431,6 +431,67 @@ Now that we know Takeru Kobayashi is the winner behind the huge spike in the amo
 Take a moment to look Kobayashi up and try to figure out how he was able to eat so many more hotdogs than the winner from the year before him. 
 
 If you need help finding out how, try searching the internet for things like <i>"How does Kobayashi eat so many hotdogs?"</i> or <i>"What did Kobayashi do in 2001 to win Nathan's Hot Dog Contest?"</i>
+
+Once you have found out what Kobayashi did differently than previous winners, look for a picture of him that you like. We will continue our story by adding a picture of Kobayashi and a summary of what he did.
+
+::: {.callout-note  title = "Exercise 6: Mention of Kobayashi"}
+a.  Create a third sticky called `#cr-photo1`.
+
+<details>
+<summary><b>Click for solution</b></summary>
+
+```markdown
+
+:::{#cr-photo1}
+
+Put the image here
+
+:::
+
+```
+</details>
+
+
+b.  Put the Kobayashi image of your choice inside your `cr-photo1` sticky.
+
+    To include an image, you will have to use the following format: `![]()`
+    
+    
+    The website title will go inside of the brackets [], as a way to give credit for the image. Whatever     you type there will appear under the image. The image address goes inside of the parenthesis (), you     can get it by clicking on the image you're interested in online and selecting "copy image address"      and then pasting it between the parenthesis. 
+
+<details>
+<summary><b>Click for example</b></summary>
+
+If a link is showing up instead of your image, make sure that you have included an exclamation point before your brackets. 
+
+```markdown
+:::{#cr-photo1}
+
+![website_title](image_address)
+
+:::
+```
+</details>
+
+c.  Add a trigger (`@cr-photo1`) for your new sticky. 
+
+    Write 2-3 sentences explaining how Kobayashi ate so many hotdogs. What did Kobayashi do differently     than previous winners? How did Kobayashi contribute to the higher amount of hotdogs eaten by future     competitors?
+    
+<details>
+<summary><b>Click for example</b></summary>
+```markdown
+:::{#cr-photo1}
+
+Put the image here...
+
+:::
+
+Kobayashi ate so many more hotdogs because...@cr-photo1
+
+```
+</details>
+:::
+
 
 
 # Closing Video

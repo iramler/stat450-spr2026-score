@@ -13,35 +13,48 @@ format:
 #| include: false
 library(tidyverse)
 hotdog_winners <- read_csv("HotdogData.csv")
-```
-
-```{r}
-#| include: false
 hotdogs_per_min <- hotdog_winners |> mutate(hotdogs_per_minute = Dogs/Time)
 ```
 
 :::{.cr-section}
 
-There's a lot of money behind the first place title of Nathan's Hot Dog Eating Contest. So, how many hotdogs does someone really have to eat to win the contest, and has it always been that way? Do competitive eaters just get better and better every year, eating more and more hotdogs? 
+Nathan's Hot Dog Eating Contest is a competitive eating contest where people from around
+the world try to eat as many hotdogs as possible in a limited amount of time. The contest
+has not always had a set duration, but the competition has been fixed at 10 minutes long since
+2008. The top five competitors of the contest are awarded large cash prizes, with the 1st place 
+prize in 2025 being $10,000. 10 grand is a lot of money. How much does it really take to win 1st
+place in Nathan's Hot Dog Eating Contest? Does it get harder and harder every year? In other 
+words, how many hotdogs do the winners eat and do the winners eat more and more hotdogs every year?
 
-Let's find out. 
-
-Here is a plot of how many hotdogs the winner of Nathan's Hot Dog Eating Contest ate each year. @cr-plot1
 
 :::{#cr-plot1}
 ```{r}
 ggplot(data = hotdog_winners, aes(x = Year, y = Dogs)) +
   geom_point() +
   theme_minimal() +
-  labs(y = "Hotdogs Consumed", title = "Amount of Hotdogs Consumed by Winners")
+  labs(y = "Hotdogs Eaten", title = "Total Hotdogs Eaten by Winners Over Time")
 ```
 :::
 
-Hmmm, this plot looks pretty interesting. Why is there a dip in the middle and how come people can eat so many more hotdogs now than they used to be able to?
+The plot to the right shows the total hotdogs eaten by every winner over time. Look at the pattern in the plot. As time goes on, winners do tend to eat more hotdogs, but there is a weird spike around 2000. Let's find out what happened to cause the amount of hotdogs winners ate to increase by so much! @cr-plot1
 
-Thinking about our variables, the duration of the contest (Time) is not similar across different years, so it is not really fair to compare winners from earlier years to more recent years based on total dogs eaten.
+:::{#cr-table1}
+```{r}
+hotdog_winners |>
+  filter(Year >= 1999, Year <= 2003)
+```
+:::
 
-When we make a new variable called hotdogs_per_minute, we are able to see how many hotdogs each winner was able to eat per minute instead of overall, helping us see who the best eaters really were without being distracted by who had the longest time to eat. @cr-plot2
+Taking a closer look at the competitions from 1999 to 2003 shows us who is responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1
+
+In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, about double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? 
+
+:::{#cr-photo1}
+![The Guardian](https://i.guim.co.uk/img/media/c3fb7fa62b488a153448562ae34d77694a64299d/0_0_2849_2848/master/2849.jpg?width=480&dpr=1&s=none&crop=none)
+:::
+
+Kobayashi ate so many more hotdogs because...@cr-photo1
+
 
 :::{#cr-plot2}
 ```{r}
@@ -90,18 +103,6 @@ hotdogs_per_min |>
 
 :::
 
-
-
-
-Again, another new one. @cr-plot3
-
-:::{#cr-plot3}
-```{r}
-ggplot(data = hotdogs_per_min, aes(x = Year, y = hotdogs_per_minute, color = Sex)) +
-  geom_point() +
-  theme_minimal() +
-  labs(y = "Hotdogs Consumed per min", title = "Amount of Hotdogs Consumed per by Winners")
-```
-:::
+Wow! Look at the jump 2000 to 2001, 21.5 hotdogs to 50 hotdogs total and the hotdogs_per_minute doubled too! Who is Takeru Kobayashi? Take a moment to google him. 
 
 :::
