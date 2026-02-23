@@ -1,8 +1,6 @@
 ---
-title: "Finished Closeread Example"
-author: 
-- name: Amara McGowan
-- url: https://www.linkedin.com/in/amaramcgowan/
+title: "Understanding Nathan's Hot Dog Contest"
+author: Amara McGowan
 format:
   closeread-html:
     cr-style:
@@ -11,103 +9,99 @@ format:
       narrative-text-color-sidebar: white
 ---
 
-Hello, where does this text go? 
-
-
 ```{r}
 #| include: false
-library(readr)
 library(tidyverse)
+hotdog_winners <- read_csv("HotdogData.csv")
 ```
 
 ```{r}
 #| include: false
-#hotdog_clean <- read_csv("Amara-McGowan/hotdog-data-storytelling-module/hotdog_clean.csv")
-hotdog_clean <- read_csv("HotdogData.csv")
+hotdogs_per_min <- hotdog_winners |> mutate(hotdogs_per_minute = Dogs/Time)
+```
 
-hotdog_men <- hotdog_clean |> filter(Sex == 1)
-hotdog_women <- hotdog_clean |> filter(Sex == 0)
+:::{.cr-section}
 
-hotdog_men_min <- hotdog_men |> mutate(Hotdogs_per_minute = Dogs/Time)
-hotdog_women_min <-hotdog_women |> mutate(Hotdogs_per_minute = Dogs/Time)
+There's a lot of money behind the first place title of Nathan's Hot Dog Eating Contest. So, how many hotdogs does someone really have to eat to win the contest, and has it always been that way? Do competitive eaters just get better and better every year, eating more and more hotdogs? 
 
-ggplot(data = hotdog_men_min, aes(x = Year, y = Hotdogs_per_minute)) +
+Let's find out. 
+
+Here is a plot of how many hotdogs the winner of Nathan's Hot Dog Eating Contest ate each year. @cr-plot1
+
+:::{#cr-plot1}
+```{r}
+ggplot(data = hotdog_winners, aes(x = Year, y = Dogs)) +
   geom_point() +
   theme_minimal() +
-  labs(y = "Hotdogs Per Minute", title = "Amount of Hotdogs Consumed Per Minute by Winners")
+  labs(y = "Hotdogs Consumed", title = "Amount of Hotdogs Consumed by Winners")
 ```
+:::
 
-:::{#cr-intro}
+Hmmm, this plot looks pretty interesting. Why is there a dip in the middle and how come people can eat so many more hotdogs now than they used to be able to?
 
-![Nathan's Hotdog Eating Contest](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/c1821c62-2e1d-4c0f-ad6b-a6ceed199107/frankie-lying.png)
-::: @cr-intro
+Thinking about our variables, the duration of the contest (Time) is not similar across different years, so it is not really fair to compare winners from earlier years to more recent years based on total dogs eaten.
 
-::::: {.cr-section}
+When we make a new variable called hotdogs_per_minute, we are able to see how many hotdogs each winner was able to eat per minute instead of overall, helping us see who the best eaters really were without being distracted by who had the longest time to eat. @cr-plot2
 
-Hello, part two!
-
-:::{#cr-tibble1 .cr-sticky}
+:::{#cr-plot2}
 ```{r}
-#| warning: false
-head(hotdog_clean)
+ggplot(data = hotdogs_per_min, aes(x = Year, y = hotdogs_per_minute)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = "Hotdogs Consumed per min", title = "Amount of Hotdogs Consumed per by Winners")
 ```
 :::
 
-This module will help you learn how to use the quarto extension `closeread` to tell stories with your data. To the right is a tibble of the data we will be using. When you scroll, you'll see the tibble stays to the right and new text emerges. @cr-tibble1
+What's wrong with this plot? The general pattern is still similar. Why might that be? 
 
-This scrolling feature helps you tell stories about your data, which people have named "scrollytelling." @cr-tibble1
-:::
+One explanation is that the duration of the competition changes. When we look at the competetion in its earlier 5 years compared to its latest five years. @cr-table1
 
-::::: {#cr-main}
+:::{#cr-table1}
 
-# Let's get started
-
-To begin, you will need to set up Closeread. Copy and paste the following block of code into a new qmd file.
-
-```markdown
----
-title: My First Closeread
-author: Your Name
-format: closeread-html
----
-
-Get the packages we need to work with our data (uncomment this chunk)
-#```{r}
-library(readr) # This will help us read in our data
-library(tidyverse) # This will help us work with our data and make plots
-#```
-
-Get our data (uncomment this chunk)
-#```{r}
-hotdog_clean <- read_csv("hotdog_clean.csv")
-#```
-
-:::{#cr-intro}
-
-This is where you will start working! The three colon symbols denote a section, which is how your closeread will be organized.
-
-:::
-```
-
-Next, you will need to install the Closeread extension. At the bottom of your screen, you should have a "console" open where the output of your code appears as you run it in RStudio. Next to console, you'll see something called the "Terminal", open that up and paste in the following code:
-
-```markdown
-quarto add qmd-lab/closeread
-```
-
-Now, separate the data into `hotdog_men` a dataset of only the male winners, and `hotdog_women` a dataset of only the women who have won. 
-
-::: {.callout-caution collapse = "true" title = "Reveal the Code" appearance = "minimal"}
 ```{r}
-#| echo: true
-hotdog_men <- hotdog_clean |> filter(Sex == 1)
-hotdog_women <- hotdog_clean |> filter(Sex == 0)
+earliest_five <- hotdogs_per_min |>
+  arrange(Year) |>
+  slice_head(n = 5)
+
+latest_five <- hotdogs_per_min |>
+  arrange(desc(Year)) |>
+  slice_head(n = 5)
+
+table <- bind_rows(earliest_five, latest_five) |>
+  arrange(Year)
+
+table
 ```
 :::
 
-If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it. 
+The earliest five winners competed in competitions all under 5 minutes long, while the most recent five winners, some years repeating, are 10 minutes long. This means in earlier years they were eating for less time and therefore may have been able to eat more for longer, whereas the more recent competitors may have slowed down after the first few minutes of eating, lowering their average hotdog per minute rate. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
+That still doesn't explain why there is a clear jump around the early 2000s. @cr-plot2
+
+What happened there? Let's find out who won that year! @cr-table2
+
+:::{#cr-table2}
+```{r}
+hotdogs_per_min |>
+  filter(Year > 1998) |>
+  arrange((Year)) |>
+  slice_head(n = 5)
+```
+
+:::
 
 
-::::: @cr-main
+
+
+Again, another new one. @cr-plot3
+
+:::{#cr-plot3}
+```{r}
+ggplot(data = hotdogs_per_min, aes(x = Year, y = hotdogs_per_minute, color = Sex)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = "Hotdogs Consumed per min", title = "Amount of Hotdogs Consumed per by Winners")
+```
+:::
+
+:::

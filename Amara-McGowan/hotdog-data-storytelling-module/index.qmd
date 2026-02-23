@@ -2,7 +2,7 @@
 title: "An Introduction to Data Scrollytelling: Nathan's Hot Dog Eating Contest"
 author: 
 - name: Amara McGowan
-- url: https://www.linkedin.com/in/amaramcgowan/
+  url: https://www.linkedin.com/in/amaramcgowan/
 format: html
 categories:
   - Data Visualization
@@ -25,7 +25,7 @@ If you are unfamiliar with Nathan's Hot Dog Contest, please watch the first minu
 
 Nathan's Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the "Super Bowl" of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.  
 
-In this module, you will learn how to use the quarto extension `closeread` to tell a story using data from Nathan's Hot Dog Contest. TODO: add example!
+In this module, you will learn how to use the quarto extension `closeread` to tell a story using data from Nathan's Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: TODO (ADD FINISHED ONE).
 
 ::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
 By the end of this tutorial, you will be able to:
@@ -34,7 +34,7 @@ By the end of this tutorial, you will be able to:
 
 2.  Transform a dataset to answer those questions. 
 
-3.  Use the `Closeread` Quarto extension to create a visually engaging story showcasing your findings.
+3.  Use the `Closeread` Quarto extension to create a visually engaging story.
 :::
 
 ::: {.callout-note collapse = "true" title = "Activity Length" appearance = "minimal"}
@@ -200,12 +200,10 @@ If you would like more information about the three parts of a Closeread (the sec
 
 Create a new Quarto document in the project folder where you installed the Closeread extension. 
 
-::: {.callout-note  title = "Exercise 1: Enable Closeread"}
-
-Try editing the YAML header to enable Closeread and customize the colors. 
+::: {.callout-note  title = "Exercise 1: Enable Closeread & Load Data"}
+a.  Try editing the YAML header to enable Closeread and customize the colors. 
 
 <details>
-
 <summary><b>Click for solution</b></summary>
 
 ```yaml
@@ -221,32 +219,115 @@ format:
 ---
 ```
 </details>
-:::
 
-Download [HotdogData.csv](HotdogData.csv) to your project folder.
-
-::: {.callout-note  title = "Exercise 2: Read in the Data"}
-
-Load tidyverse and read `HotdogData.csv` as `hotdog_winners`.
+b.  Download [HotdogData.csv](HotdogData.csv) to your project folder. Then, Load tidyverse and read `HotdogData.csv` as `hotdog_winners`, making sure that the code will not appear when you render the document.
 
 <details>
-
 <summary><b>Click for solution</b></summary>
 
 ```{r}
-#| echo: true
-#| eval: false
+#| include: false
+
+library(tidyverse)
+hotdog_winners <- read_csv("HotdogData.csv")
+```
+
+```markdown
+#| include: false
 
 library(tidyverse)
 
 hotdog_winners <- read_csv("HotdogData.csv")
 ```
 </details>
+
 :::
+
+::: {.callout-note  title = "Exercise 2: Brainstorm Questions"}
+Now our document is ready! What story should we tell? 
+
+Think of 2 questions that you would like to investigate about these winners.
+
+<details>
+<summary><b>Click for example questions</b></summary>
+Some questions we might explore:
+
+1.  How many hotdogs does someone need to eat to win the contest and has that number gone up over time?
+
+2.  Do male and female winners show different patterns over time?  
+</details>
+:::
+
+
+::: {.callout-note  title = "Exercise 3: Start Your Closeread Story"}
+For our story, we will investigate: "How many hotdogs does someone need to eat to win the contest and has that number gone up over time?" 
+
+Create a `cr-section`. Inside, introduce your reader to Nathan's contest and your guiding question with plain text. 
+
+<details>
+<summary><b>Click for an example</b></summary>
+
+```markdown
+:::{.cr-section}
+
+Nathan's Hot Dog Eating Contest is a competitive eating contest where people from around
+the world try to eat as many hotdogs as possible in a limited amount of time. The contest
+has not always had a set duration, but the competition has been fixed at 10 minutes long since
+2008. The top five competitors of the contest are awarded large cash prizes, with the 1st place 
+prize in 2025 being $10,000. 10 grand is a lot of money. How much does it really take to win 1st
+place in Nathan's Hot Dog Eating Contest? Does it get harder and harder every year? In other 
+words, how many hotdogs do the winners eat and do the winners eat more and more hotdogs every year?
+
+:::
+```
+</details>
+:::
+
+Now that we have introduced the readers of our story to our data and our question, we should make a plot to start working on finding an answer. 
+
+When you are data scrollytelling, it is nice to put visuals on the right side of the sidebar, so that readers can look at graphs and scroll through text that explains what they are looking at on the side.
+
+Let's make a sticky that will help us see how many hotdogs winners eat to claim 1st place and whether the number of hotdogs they have to eat to win has increased over the years. 
+
+::: {.callout-note  title = "Exercise 4: Create Your First Sticky"}
+a.  Create a sticky called `#cr-plot1` inside your `cr-section`.
+
+<details>
+<summary><b>Click for solution</b></summary>
+
+```markdown
+:::{.cr-section}
+
+Your introduction text here...
+
+:::{#cr-plot1}
+
+:::
+
+:::
+```
+</details>
+
+b.  Inside the sticky, plot Total Hotdogs Eaten by Winners Over Time. 
+
+<details>
+<summary><b>Click for solution</b></summary>
+
+```{r}
+ggplot(data = hotdog_winners, aes(x = Year, y = Dogs)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = "Hotdogs Eaten", title = "Total Hotdogs Eaten by Winners Over Time")
+```
+
+</details>
+:::
+
+
 
 # Closing Video
 
-If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it. 
+If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
 

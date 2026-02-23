@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Amara McGowan">
 
 <title>An Introduction to Data Scrollytelling: Nathan’s Hot Dog Eating Contest</title>
 <style>
@@ -94,6 +95,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://www.linkedin.com/in/amaramcgowan/">Amara McGowan</a> </p>
+          </div>
+  </div>
     
   
     
@@ -114,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Nathan’s Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the “Super Bowl” of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.</p>
-<p>In this module, you will learn how to use the quarto extension <code>closeread</code> to tell a story using data from Nathan’s Hot Dog Contest. TODO: add example!</p>
+<p>In this module, you will learn how to use the quarto extension <code>closeread</code> to tell a story using data from Nathan’s Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: TODO (ADD FINISHED ONE).</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -131,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><p>Identify meaningful questions about a dataset.</p></li>
 <li><p>Transform a dataset to answer those questions.</p></li>
-<li><p>Use the <code>Closeread</code> Quarto extension to create a visually engaging story showcasing your findings.</p></li>
+<li><p>Use the <code>Closeread</code> Quarto extension to create a visually engaging story.</p></li>
 </ol>
 </div>
 </div>
@@ -355,17 +362,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
 <p>Create a new Quarto document in the project folder where you installed the Closeread extension.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 1: Enable Closeread">
+<div class="callout callout-style-default callout-note callout-titled" title="Exercise 1: Enable Closeread &amp; Load Data">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Exercise 1: Enable Closeread
+<span class="screen-reader-only">Note</span>Exercise 1: Enable Closeread &amp; Load Data
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try editing the YAML header to enable Closeread and customize the colors.</p>
+<ol type="a">
+<li>Try editing the YAML header to enable Closeread and customize the colors.</li>
+</ol>
 <details>
 <summary>
 <b>Click for solution</b>
@@ -381,28 +390,125 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">narrative-text-color-sidebar</span><span class="kw">:</span><span class="at"> white</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<ol start="2" type="a">
+<li>Download <a href="HotdogData.csv">HotdogData.csv</a> to your project folder. Then, Load tidyverse and read <code>HotdogData.csv</code> as <code>hotdog_winners</code>, making sure that the code will not appear when you render the document.</li>
+</ol>
+<details>
+<summary>
+<b>Click for solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>#| include: false</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>hotdog_winners &lt;- read_csv("HotdogData.csv")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </div>
-<p>Download <a href="HotdogData.csv">HotdogData.csv</a> to your project folder.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 2: Read in the Data">
+<div class="callout callout-style-default callout-note callout-titled" title="Exercise 2: Brainstorm Questions">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Exercise 2: Read in the Data
+<span class="screen-reader-only">Note</span>Exercise 2: Brainstorm Questions
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Load tidyverse and read <code>HotdogData.csv</code> as <code>hotdog_winners</code>.</p>
+<p>Now our document is ready! What story should we tell?</p>
+<p>Think of 2 questions that you would like to investigate about these winners.</p>
+<details>
+<summary>
+<b>Click for example questions</b>
+</summary>
+<p>Some questions we might explore:</p>
+<ol type="1">
+<li><p>How many hotdogs does someone need to eat to win the contest and has that number gone up over time?</p></li>
+<li><p>Do male and female winners show different patterns over time?<br>
+</p></li>
+</ol>
+</details>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercise 3: Start Your Closeread Story">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 3: Start Your Closeread Story
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For our story, we will investigate: “How many hotdogs does someone need to eat to win the contest and has that number gone up over time?”</p>
+<p>Create a <code>cr-section</code>. Inside, introduce your reader to Nathan’s contest and your guiding question with plain text.</p>
+<details>
+<summary>
+<b>Click for an example</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>:::{.cr-section}</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Nathan's Hot Dog Eating Contest is a competitive eating contest where people from around</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>the world try to eat as many hotdogs as possible in a limited amount of time. The contest</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>has not always had a set duration, but the competition has been fixed at 10 minutes long since</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ss">2008. </span>The top five competitors of the contest are awarded large cash prizes, with the 1st place </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>prize in 2025 being $10,000. 10 grand is a lot of money. How much does it really take to win 1st</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>place in Nathan's Hot Dog Eating Contest? Does it get harder and harder every year? In other </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>words, how many hotdogs do the winners eat and do the winners eat more and more hotdogs every year?</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<p>Now that we have introduced the readers of our story to our data and our question, we should make a plot to start working on finding an answer.</p>
+<p>When you are data scrollytelling, it is nice to put visuals on the right side of the sidebar, so that readers can look at graphs and scroll through text that explains what they are looking at on the side.</p>
+<p>Let’s make a sticky that will help us see how many hotdogs winners eat to claim 1st place and whether the number of hotdogs they have to eat to win has increased over the years.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercise 4: Create Your First Sticky">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 4: Create Your First Sticky
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Create a sticky called <code>#cr-plot1</code> inside your <code>cr-section</code>.</li>
+</ol>
+<details>
+<summary>
+<b>Click for solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>:::{.cr-section}</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Your introduction text here...</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>:::{#cr-plot1}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<ol start="2" type="a">
+<li>Inside the sticky, plot Total Hotdogs Eaten by Winners Over Time.</li>
+</ol>
 <details>
 <summary>
 <b>Click for solution</b>
 </summary>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>hotdog_winners <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"HotdogData.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hotdog_winners, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Dogs)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Hotdogs Eaten"</span>, <span class="at">title =</span> <span class="st">"Total Hotdogs Eaten by Winners Over Time"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </details>
 </div>
@@ -410,7 +516,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="closing-video" class="level1">
 <h1>Closing Video</h1>
-<p>If you’re interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan’s Famous Hot Dog Eating Contest and the science behind it.</p>
+<p>If you’re interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan’s Famous Hot Dog Eating Contest and the science behind it:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
 </iframe>
 </section>
