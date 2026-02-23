@@ -198,7 +198,15 @@ If you would like more information about the three parts of a Closeread (the sec
 
 # Getting Started 
 
-To begin, create a new Quarto document in the project folder where you have installed the Closeread extension. Next, edit the document header to enable Closeread. You can customize the colors however you would like, for example:
+Create a new Quarto document in the project folder where you installed the Closeread extension. 
+
+::: {.callout-note  title = "Exercise 1: Enable Closeread"}
+
+Try editing the YAML header to enable Closeread and customize the colors. 
+
+<details>
+
+<summary><b>Click for solution</b></summary>
 
 ```yaml
 ---
@@ -212,12 +220,18 @@ format:
       narrative-text-color-sidebar: white
 ---
 ```
+</details>
+:::
 
-Next, download the data [HotdogData.csv](HotdogData.csv), get the tidyverse package and read in the dataset using `readr`. 
+Download [HotdogData.csv](HotdogData.csv) to your project folder.
+
+::: {.callout-note  title = "Exercise 2: Read in the Data"}
+
+Load tidyverse and read `HotdogData.csv` as `hotdog_winners`.
 
 <details>
 
-<summary><b>Click to reveal code</b></summary>
+<summary><b>Click for solution</b></summary>
 
 ```{r}
 #| echo: true
@@ -227,5 +241,17 @@ library(tidyverse)
 
 hotdog_winners <- read_csv("HotdogData.csv")
 ```
-
 </details>
+:::
+
+# Closing Video
+
+If you're interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan's Famous Hot Dog Eating Contest and the science behind it. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> 
+
+# References
+
+Bray, A., & Goldie, J. (2024). *Closeread*. https://closeread.dev/
+
+![Nathan's Hotdog Eating Contest](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/c1821c62-2e1d-4c0f-ad6b-a6ceed199107/frankie-lying.png)

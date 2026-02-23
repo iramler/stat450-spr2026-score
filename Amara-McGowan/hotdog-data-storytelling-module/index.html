@@ -354,7 +354,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
-<p>To begin, create a new Quarto document in the project folder where you have installed the Closeread extension. Next, edit the document header to enable Closeread. You can customize the colors however you would like, for example:</p>
+<p>Create a new Quarto document in the project folder where you installed the Closeread extension.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercise 1: Enable Closeread">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 1: Enable Closeread
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try editing the YAML header to enable Closeread and customize the colors.</p>
+<details>
+<summary>
+<b>Click for solution</b>
+</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your title"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Your name</span></span>
@@ -365,10 +380,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">section-background-color</span><span class="kw">:</span><span class="at"> transparent</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">narrative-text-color-sidebar</span><span class="kw">:</span><span class="at"> white</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Next, download the data <a href="HotdogData.csv">HotdogData.csv</a>, get the tidyverse package and read in the dataset using <code>readr</code>.</p>
+</details>
+</div>
+</div>
+<p>Download <a href="HotdogData.csv">HotdogData.csv</a> to your project folder.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercise 2: Read in the Data">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 2: Read in the Data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load tidyverse and read <code>HotdogData.csv</code> as <code>hotdog_winners</code>.</p>
 <details>
 <summary>
-<b>Click to reveal code</b>
+<b>Click for solution</b>
 </summary>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -376,6 +405,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>hotdog_winners <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"HotdogData.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
+</div>
+</div>
+</section>
+<section id="closing-video" class="level1">
+<h1>Closing Video</h1>
+<p>If you’re interested in understanding how competitive eaters are able to consume so much food, here is a video referencing Nathan’s Famous Hot Dog Eating Contest and the science behind it.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D9DZmoRY0H4?si=AVxTT6zn5CAQxNfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p>Bray, A., &amp; Goldie, J. (2024). <em>Closeread</em>. https://closeread.dev/</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/c1821c62-2e1d-4c0f-ad6b-a6ceed199107/frankie-lying.png" class="img-fluid figure-img"></p>
+<figcaption>Nathan’s Hotdog Eating Contest</figcaption>
+</figure>
+</div>
 </section>
 
 </main>
