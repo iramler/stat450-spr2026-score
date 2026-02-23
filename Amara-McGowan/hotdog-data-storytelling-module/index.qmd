@@ -268,6 +268,9 @@ Create a `cr-section`. Inside, introduce your reader to Nathan's contest and you
 <summary><b>Click for an example</b></summary>
 
 ```markdown
+
+Code to read in the data
+
 :::{.cr-section}
 
 Nathan's Hot Dog Eating Contest is a competitive eating contest where people from around
@@ -296,6 +299,9 @@ a.  Create a sticky called `#cr-plot1` inside your `cr-section`.
 <summary><b>Click for solution</b></summary>
 
 ```markdown
+
+Code to read in the data
+
 :::{.cr-section}
 
 Your introduction text here...
@@ -321,7 +327,39 @@ ggplot(data = hotdog_winners, aes(x = Year, y = Dogs)) +
 ```
 
 </details>
+
+c.  Add a trigger (`@cr-plot1`) to make your sticky appear.   
+
+    Write 2-3 sentences reacting to the plot, what patterns do you notice? What seems surprising? If        your sentences are spaced out, add your trigger to the first sentence and your sticky will be stuck     to the right side of the screen until you trigger another sticky or end the section. 
+
+<details>
+<summary><b>Click for example </b></summary>
+
+```markdown
+
+Code to read in the data
+
+:::{.cr-section}
+
+Your intro text here...
+
+:::{#cr-plot1}
+
+Code for plot...
+
 :::
+
+The plot to the right shows the total hotdogs eaten by every winner over time.
+Look at the pattern in the plot. As time goes on, winners do tend to eat more
+hotdogs, but there is a weird spike around 2000. Let's find out what happened
+to cause the amount of hotdogs winners ate to increase by so much! @cr-plot1
+
+:::
+```
+</details>
+:::
+
+
 
 
 
