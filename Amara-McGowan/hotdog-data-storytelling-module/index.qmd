@@ -25,7 +25,7 @@ If you are unfamiliar with Nathan's Hot Dog Contest, please watch the first minu
 
 Nathan's Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the "Super Bowl" of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.  
 
-In this module, you will learn how to use the quarto extension `closeread` to tell a story using data from Nathan's Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: TODO (ADD FINISHED ONE).
+In this module, you will learn how to use the quarto extension `closeread` to tell a story using data from Nathan's Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: [Example Closeread](TODO: Fix Link!){target="_blank"}
 
 ::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
 By the end of this tutorial, you will be able to:
@@ -262,7 +262,7 @@ Some questions we might explore:
 ::: {.callout-note  title = "Exercise 3: Start Your Closeread Story"}
 For our story, we will investigate: "How many hotdogs does someone need to eat to win the contest and has that number gone up over time?" 
 
-Create a `cr-section`. Inside, introduce your reader to Nathan's contest and your guiding question with plain text. 
+Create a `cr-section`. Inside, introduce your reader to Nathan's contest and your guiding questions with plain text. 
 
 <details>
 <summary><b>Click for an example</b></summary>
@@ -286,11 +286,11 @@ words, how many hotdogs do the winners eat and do the winners eat more and more 
 </details>
 :::
 
-Now that we have introduced the readers of our story to our data and our question, we should make a plot to start working on finding an answer. 
+Now that we have introduced the readers of our story to our data and guiding questions, we should make a plot to start working on answering our questions.
 
-When you are data scrollytelling, it is nice to put visuals on the right side of the sidebar, so that readers can look at graphs and scroll through text that explains what they are looking at on the side.
+When you are data scrollytelling with Closeread, it is nice to put visuals on the right side of the sidebar in stickies, so that readers can look at the visuals while they scroll through text that explains what they are looking at.
 
-Let's make a sticky that will help us see how many hotdogs winners eat to claim 1st place and whether the number of hotdogs they have to eat to win has increased over the years. 
+Let's make a sticky that will help us start to share with our readers how many hotdogs winners have to eat to claim first place and whether the number of hotdogs they have to eat to win has increased over the years. 
 
 ::: {.callout-note  title = "Exercise 4: Create Your First Sticky"}
 a.  Create a sticky called `#cr-plot1` inside your `cr-section`.
@@ -330,7 +330,7 @@ ggplot(data = hotdog_winners, aes(x = Year, y = Dogs)) +
 
 c.  Add a trigger (`@cr-plot1`) to make your sticky appear.   
 
-    Write 2-3 sentences reacting to the plot, what patterns do you notice? What seems surprising? If        your sentences are spaced out, add your trigger to the first sentence and your sticky will be stuck     to the right side of the screen until you trigger another sticky or end the section. 
+    Write 2-3 sentences reacting to the plot. What patterns do you notice? What seems surprising? If        your sentences are spaced out, add your trigger to the first sentence and your sticky will be stuck     to the right side of the screen until you trigger another sticky or end the section. 
 
 <details>
 <summary><b>Click for example </b></summary>
@@ -359,8 +359,78 @@ to cause the amount of hotdogs winners ate to increase by so much! @cr-plot1
 </details>
 :::
 
+Looking at the plot, did you notice the dramatic jump from 2000 to 2001? It looks like the amount of hotdogs someone has to eat to claim first place nearly doubles in years after 2000. 
 
+Let's figure out why that happened.  
 
+::: {.callout-note  title = "Exercise 5: Create Another Sticky"}
+
+a.  Create a second sticky called `#cr-table1`.
+
+<details>
+<summary><b>Click for solution </b></summary>
+
+```markdown
+
+Code to read in the data
+
+:::{.cr-section}
+
+Your intro text here...
+
+:::{#cr-plot1}
+
+Code for plot...
+
+:::
+
+Trigger text here... @cr-plot1
+
+:::{#cr-table1}
+
+Code for table...
+
+:::
+
+:::
+```
+</details>
+
+b.  Inside your second sticky, create a table showing the data from the years 1999 to 2003.
+
+<details>
+<summary><b>Click for solution</b></summary>
+
+```{r}
+hotdog_winners |>
+  filter(Year >= 1999 & Year <= 2003) |>
+  arrange(Year)
+```
+
+</details>
+
+c.  Create a trigger (`@cr-table1`) for your second sticky. 
+
+    Write 2-3 sentences reacting to the table. How many hotdogs did the winner in 2000 eat? How many        hotdogs did the winner from 2001 eat? Was it a big difference? Who is the winner from 2001?             Remember, you're telling the reader a story.
+
+<details>
+<summary><b>Click for example</b></summary>
+
+```markdown
+
+Taking a closer look at the competitions from 1999 to 2003 shows us who is responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1
+
+In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, about double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? 
+
+```
+</details>
+:::
+
+Now that we know Takeru Kobayashi is the winner behind the huge spike in the amount of hotdogs eaten during the competition, let's look him up and find out why he was able to eat so many hotdogs! 
+
+Take a moment to look Kobayashi up and try to figure out how he was able to eat so many more hotdogs than the winner from the year before him. 
+
+If you need help finding out how, try searching the internet for things like <i>"How does Kobayashi eat so many hotdogs?"</i> or <i>"What did Kobayashi do in 2001 to win Nathan's Hot Dog Contest?"</i>
 
 
 # Closing Video
@@ -372,5 +442,3 @@ If you're interested in understanding how competitive eaters are able to consume
 # References
 
 Bray, A., & Goldie, J. (2024). *Closeread*. https://closeread.dev/
-
-![Nathan's Hotdog Eating Contest](https://assets-us-01.kc-usercontent.com/7a9cec6a-38b8-00ad-2f1c-269f0461d7dc/c1821c62-2e1d-4c0f-ad6b-a6ceed199107/frankie-lying.png)
