@@ -3,7 +3,13 @@ title: "An Introduction to Data Scrollytelling: Nathan's Hot Dog Eating Contest"
 author: 
 - name: Amara McGowan
   url: https://www.linkedin.com/in/amaramcgowan/
+  affiliation:
+      - id: slu
+        name: St. Lawrence University
+date: "February 24, 2026"
+description: "A beginner's guide to the Closeread Quarto extension and data scrollytelling using Nathan's Hotdog Eating Contest Winners"
 format: html
+image: ThumbnailPhoto.png
 categories:
   - Data Visualization
   - Closeread Extention
