@@ -102,7 +102,7 @@ quarto add qmd-lab/closeread
 
 5.  After completing these steps, the Quarto extension Closeread will be installed. 
 
-# Using Closeread
+# Understanding Closeread
 
 Before we get started on a Quarto document, please take a moment to read through this section to learn more about how to use Closeread.
 
@@ -201,7 +201,7 @@ This text would appear at the same time as my plot. @cr-myplot
 If you would like more information about the three parts of a Closeread (the section, stickies, and triggers) you can review this page: [Closeread Components Guide](https://closeread.dev/guide/components.html)
 
 
-# Getting Started 
+# Creating a Closeread Document 
 
 Create a new Quarto document in the project folder where you installed the Closeread extension. 
 
@@ -536,7 +536,7 @@ shaking his body to force food down. @cr-photo1
 </details>
 :::
 
-Now we all know how Kobayashi did it, but how much faster is his method,
+Now we know how Kobayashi did it, but how much faster is his method,
 compared to earlier years? In our plot, the earliest winners ate a lot fewer 
 hotdogs than more recent champions. Maybe what early winners lacked in the amount 
 they were able to eat, they made up for in speed?
