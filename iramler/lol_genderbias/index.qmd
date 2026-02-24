@@ -597,7 +597,7 @@ $$
 
 Intuitively, once the row totals and column totals are fixed, only $(r-1)(c-1)$ cells can vary freely; the remaining cells are determined by the margins.
 
-For our `gender × lane` table, we have $r=2$ gender categories (female, male) and $c=5$ lane categories, so:
+For our `gender × lane` table, we have $r = 2$ gender categories (female, male) and $c = 5$ lane categories, so:
 
 $$
 df = (2-1)(5-1) = 4.
@@ -685,11 +685,11 @@ lol_chsqtest$residuals
 and are calculated as
 
 $$
-r_{ij} = \frac{(O_{ij}-E_{ij})}{\sqrt{E_{ij}}}
+res_{ij} = \frac{(O_{ij}-E_{ij})}{\sqrt{E_{ij}}}
 $$
 where:
 
-- $r_{ij}$: The Pearson residual for the cell in the $i^{th}$ row and $j^{th}$ column
+- $res_{ij}$: The Pearson residual for the cell in the $i^{th}$ row and $j^{th}$ column
 - $O_{ij}$: The observed value for the cell in the $i^{th}$ row and $j^{th}$ column
 - $E_{ij}$: The expected value for the cell in the $i^{th}$ row and $j^{th}$ column
 
@@ -720,7 +720,7 @@ $$
 So, therefore,
 
 $$
-stdres_{2,5} = \frac{(31-24.24})}{\sqrt{24.24(1-0.606)(1-0.235)}} \approx 2.5
+stdres_{2,5} = \frac{(31-24.24)}{\sqrt{24.24(1-0.606)(1-0.235)}} \approx 2.5
 $$
 
 
