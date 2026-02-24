@@ -262,16 +262,10 @@ Some questions we might explore:
 ::: {.callout-note  title = "Exercise 3: Start Your Closeread Story"}
 For our story, we will investigate: "How many hotdogs does someone need to eat to win the contest and has that number gone up over time?" 
 
-Create a `cr-section`. Inside, introduce your reader to Nathan's contest and your guiding questions with plain text. 
+a.  In plain text under your code, introduce your reader to Nathan's contest and your guiding questions.
 
 <details>
 <summary><b>Click for an example</b></summary>
-
-```markdown
-
-Code to read in the data
-
-:::{.cr-section}
 
 Nathan's Hot Dog Eating Contest is a competitive eating contest where people from around
 the world try to eat as many hotdogs as possible in a limited amount of time. The contest
@@ -280,6 +274,21 @@ has not always had a set duration, but the competition has been fixed at 10 minu
 prize in 2025 being $10,000. 10 grand is a lot of money. How much does it really take to win 1st
 place in Nathan's Hot Dog Eating Contest? Does it get harder and harder every year? In other 
 words, how many hotdogs do the winners eat and do the winners eat more and more hotdogs every year?
+</details>
+
+
+b.  Start a `cr-section` under your introduction.
+
+<details>
+<summary><b>Click for solution</b></summary>
+
+```markdown
+
+Code to read in the data
+
+Your introduction here... 
+
+:::{.cr-section}
 
 :::
 ```
@@ -302,9 +311,9 @@ a.  Create a sticky called `#cr-plot1` inside your `cr-section`.
 
 Code to read in the data
 
-:::{.cr-section}
-
 Your introduction text here...
+
+:::{.cr-section}
 
 :::{#cr-plot1}
 
@@ -339,9 +348,9 @@ c.  Add a trigger (`@cr-plot1`) to make your sticky appear.
 
 Code to read in the data
 
-:::{.cr-section}
-
 Your intro text here...
+
+:::{.cr-section}
 
 :::{#cr-plot1}
 
@@ -349,17 +358,21 @@ Code for plot...
 
 :::
 
-The plot to the right shows the total hotdogs eaten by every winner over time.
-Look at the pattern in the plot. As time goes on, winners do tend to eat more
-hotdogs, but there is a weird spike around 2000. Let's find out what happened
-to cause the amount of hotdogs winners ate to increase by so much! @cr-plot1
+The plot to the right shows the total hotdogs eaten by every winner over time. 
+As you can see, early winners of the competition ate less than 20 hotdogs before
+clamining victory. However, winners after 2000 ate more than 40 hot dogs!@cr-plot1
+
+Look at how the number of hotdogs eaten by the winner has changed over time.
+As time goes on, winners do tend to eat more hotdogs, but there is a weird spike 
+around 2000. Let's find out what happened to cause the amount of hotdogs winners 
+ate to increase by so much! 
 
 :::
 ```
 </details>
 :::
 
-Looking at the plot, did you notice the dramatic jump from 2000 to 2001? It looks like the amount of hotdogs someone has to eat to claim first place nearly doubles in years after 2000. 
+After looking at the plot, did you notice the dramatic jump from 2000 to 2001? It looks like the amount of hotdogs someone has to eat to claim first place nearly doubles after 2000. 
 
 Let's figure out why that happened.  
 
@@ -374,9 +387,9 @@ a.  Create a second sticky called `#cr-table1`.
 
 Code to read in the data
 
-:::{.cr-section}
-
 Your intro text here...
+
+:::{.cr-section}
 
 :::{#cr-plot1}
 
@@ -406,7 +419,6 @@ hotdog_winners |>
   filter(Year >= 1999 & Year <= 2003) |>
   arrange(Year)
 ```
-
 </details>
 
 c.  Add a trigger (`@cr-table1`) for your second sticky. 
@@ -420,7 +432,7 @@ c.  Add a trigger (`@cr-table1`) for your second sticky.
 
 Taking a closer look at the competitions from 1999 to 2003 shows us who is responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1
 
-In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, about double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? 
+In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? 
 
 ```
 </details>
@@ -432,7 +444,7 @@ Take a moment to look Kobayashi up and try to figure out how he was able to eat 
 
 If you need help finding out how, try searching the internet for things like <i>"How does Kobayashi eat so many hotdogs?"</i> or <i>"What did Kobayashi do in 2001 to win Nathan's Hot Dog Contest?"</i>
 
-Once you have found out what Kobayashi did differently than previous winners, look for a picture of him that you like. We will continue our story by adding a picture of Kobayashi and a summary of what he did.
+Once you have found out what Kobayashi did differently than previous winners, look for a picture of him that you like. We will continue our story by adding a picture of Kobayashi and a summary of how he doubled the amount of hotdogs people ate during the competition.
 
 ::: {.callout-note  title = "Exercise 6: Mention of Kobayashi"}
 a.  Create a third sticky called `#cr-photo1`.
@@ -486,13 +498,146 @@ Put the image here...
 
 :::
 
-Kobayashi ate so many more hotdogs because...@cr-photo1
+Kobayashi ate so many more hotdogs than previous winners because he invented a
+new technique for eating the hotdogs called the "Solomon Method," which involved
+splitting hotdogs in half, eating both at once, and soaking the hotdog bun in 
+water to make it easier to swallow. Kobayashi paired this new strategy with 
+shaking his body to force food down. @cr-photo1
 
 ```
 </details>
 :::
 
+Now we all know how Kobayashi did it, but how much faster is his method really,
+compared to earlier years? In our plot, the earliest winners ate a lot fewer 
+hotdogs than more recent champions. Maybe what early winners lacked in the amount 
+they were able to eat, they made up for in speed?
 
+So, how can we look at how fast winners were eating hotdogs, not just the total
+amount of hotdogs they were able to eat? 
+
+Let's make a new variable, that will help us see how the speed of winners has
+changed over time. 
+
+::: {.callout-note  title = "Exercise 7: Hotdogs Per Minute"}
+a.  Make a new code chunk outside of your Closeread section. Within your new
+    code chunk, create a new variable called `hotdogs_per_minute` that tells us
+    how many hotdogs per minute a winner ate during their competition.
+    
+<details>
+<summary><b>Click for solution</b></summary>
+
+```{r}
+hotdog_winners <- hotdog_winners |> mutate(hotdogs_per_minute = Dogs/Time)
+```
+
+</details>
+
+b.  Make a new sticky `#cr-plot2`. 
+
+<details>
+<summary><b>Click for solution</b></summary>
+
+```markdown
+:::{#cr-plot2}
+
+Code for the plot will go here...
+
+:::
+```
+</details>
+
+c.  Inside your new sticky, make a plot of Hotdogs Per Minute Eaten by Winners
+    Over Time. 
+
+<details>
+<summary><b>Click for solution</b></summary>
+
+```{r}
+ggplot(data = hotdog_winners, aes(x = Year, y = hotdogs_per_minute)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners")
+```
+</details>  
+
+d.  Add a trigger (`@cr-plot2`) for your new sticky.
+
+    Write 2-3 sentences explaining what you see. Is the trend similar to the 
+    other plot? What stands out about the trend? Make sure to let your reader 
+    know why this plot is interesting (looking at speed over time), so that your
+    story flows smoothly.
+    
+<details>
+<summary><b>Click for example</b></summary>
+
+```markdown
+
+Now we know how Kobayashi did it, but how much faster is his method really,
+compared to earlier years? This plot shows us how fast in hotdogs per minute
+winners were eating during the contest. @cr-plot2
+
+It's interesting to see that a few of the earliest winners ate at a similar speed,
+almost 5 hotdogs per minute, as Kobayashi did during his 2001 win where he
+introduced his new technique. Does this mean that his technique is not actually 
+faster than eating hotdogs one by one?
+```
+</details>  
+:::
+
+Do you notice anything interesting about speed over time from our new plot? 
+
+Why is it that some of the earliest winners were eating hotdogs at a similar rate
+as winners like Kobayashi, who is known for inventing a new technique that increased 
+the total amount of hotdogs winners were able to eat?
+
+::: {.callout-note  title = "Exercise 8: Context Matters"}
+a.  Why might early winners have such impressive hotdogs per minute rates?
+    
+<details>
+<summary><b>Click for answer</b></summary>
+
+The contest has not always been set to 10 minutes long. Early competitions were
+between 2 to 5 minutes long, eaters are able to go as fast as possible the whole 
+time. 
+
+Longer races, like all of the ones Kobayashi competed in, were 10-12 minutes 
+meaning that eaters had more time to get tired and slow down, causing their 
+rates to look similar to earlier competitors who were not using the Solomon 
+Method.
+</details>
+
+b.  Make a new sticky, `#cr-plot3`. Inside your new sticky, adjust your hotdogs
+    per minute plot so that points are colored by duration of the contest.
+    
+<details>
+<summary><b>Click for solution</b></summary>
+```{r}
+ggplot(data = hotdog_winners, aes(x = Year, y = hotdogs_per_minute, color = Time)) +
+  geom_point() +
+  scale_color_viridis_c(option = "plasma") +
+  theme_minimal() +
+  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners", color = "Contest Duration (in Minutes)")
+```
+</details>
+
+c.  Add a trigger (`@cr-plot3`) for your new sticky.
+    
+    Write 2-3 sentences to explain how understanding the context of duration of 
+    the contest helps us better interpret the speed of winners over time. Include
+    a closing sentence to wrap up your story.
+
+<details>
+<summary><b>Click for example</b></summary>
+
+TODO: Write example.
+
+</details>
+:::
+
+Congratulations! Now, you know how to scrollytell! 
+
+Closeread has all kinds of cool features that you can use to make your story even more engaging. If you want to learn more, you can learn how to highlight parts of your sticky, zoom in on plots and pictures, and see published examples of other Closeread stories here: [Closeread Gallery](https://closeread.dev/gallery/)
 
 # Closing Video
 

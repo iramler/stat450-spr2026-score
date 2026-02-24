@@ -1,5 +1,5 @@
 ---
-title: "Understanding Nathan's Hot Dog Contest"
+title: "Nathan's Hotdog Eating Contest Over Time"
 author: Amara McGowan
 format:
   closeread-html:
@@ -13,10 +13,9 @@ format:
 #| include: false
 library(tidyverse)
 hotdog_winners <- read_csv("HotdogData.csv")
-hotdogs_per_min <- hotdog_winners |> mutate(hotdogs_per_minute = Dogs/Time)
+hotdog_winners <- hotdog_winners |> mutate(hotdogs_per_minute = Dogs/Time)
 ```
 
-:::{.cr-section}
 
 Nathan's Hot Dog Eating Contest is a competitive eating contest where people from around
 the world try to eat as many hotdogs as possible in a limited amount of time. The contest
@@ -26,6 +25,9 @@ prize in 2025 being $10,000. 10 grand is a lot of money. How much does it really
 place in Nathan's Hot Dog Eating Contest? Does it get harder and harder every year? In other 
 words, how many hotdogs do the winners eat and do the winners eat more and more hotdogs every year?
 
+![Tasting Table](https://www.tastingtable.com/img/gallery/everything-to-know-about-nathans-famous-july-4th-international-hot-dog-eating-contest-2024/l-intro-1719859047.jpg)
+
+:::{.cr-section}
 
 :::{#cr-plot1}
 ```{r}
@@ -36,73 +38,64 @@ ggplot(data = hotdog_winners, aes(x = Year, y = Dogs)) +
 ```
 :::
 
-The plot to the right shows the total hotdogs eaten by every winner over time. Look at the pattern in the plot. As time goes on, winners do tend to eat more hotdogs, but there is a weird spike around 2000. Let's find out what happened to cause the amount of hotdogs winners ate to increase by so much! @cr-plot1
+The plot to the right shows the total hotdogs eaten by every winner over time. 
+As you can see, early winners of the competition ate less than 20 hotdogs before
+clamining victory. However, winners after 2000 ate more than 40 hot dogs!@cr-plot1
+
+Look at how the number of hotdogs eaten by the winner has changed over time.
+As time goes on, winners do tend to eat more hotdogs, but there is a weird spike 
+around 2000. Let's find out what happened to cause the amount of hotdogs winners 
+ate to increase by so much! 
 
 :::{#cr-table1}
 ```{r}
 hotdog_winners |>
-  filter(Year >= 1999, Year <= 2003)
+  filter(Year >= 1999, Year <= 2003) |>
+  arrange(Year)
 ```
 :::
 
 Taking a closer look at the competitions from 1999 to 2003 shows us who is responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1
 
-In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, about double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? 
+In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? 
 
 :::{#cr-photo1}
 ![The Guardian](https://i.guim.co.uk/img/media/c3fb7fa62b488a153448562ae34d77694a64299d/0_0_2849_2848/master/2849.jpg?width=480&dpr=1&s=none&crop=none)
 :::
 
-Kobayashi ate so many more hotdogs because...@cr-photo1
-
+Kobayashi ate so many more hotdogs than previous winners because he invented a
+new technique for eating the hotdogs called the "Solomon Method," which involved
+splitting hotdogs in half, eating both at once, and soaking the hotdog bun in 
+water to make it easier to swallow. Kobayashi paired this new strategy with 
+shaking his body to force food down. @cr-photo1
 
 :::{#cr-plot2}
 ```{r}
-ggplot(data = hotdogs_per_min, aes(x = Year, y = hotdogs_per_minute)) +
+ggplot(data = hotdog_winners, aes(x = Year, y = hotdogs_per_minute)) +
   geom_point() +
   theme_minimal() +
-  labs(y = "Hotdogs Consumed per min", title = "Amount of Hotdogs Consumed per by Winners")
+  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners")
 ```
 :::
 
-What's wrong with this plot? The general pattern is still similar. Why might that be? 
+Now we know how Kobayashi did it, but how much faster is his method really,
+compared to earlier years? This plot shows us how fast in hotdogs per minute
+winners were eating during the contest. @cr-plot2
 
-One explanation is that the duration of the competition changes. When we look at the competetion in its earlier 5 years compared to its latest five years. @cr-table1
+It's interesting to see that a few of the earliest winners ate at a similar speed,
+almost 5 hotdogs per minute, as Kobayashi did during his 2001 win where he
+introduced his new technique. Does this mean that his technique is not actually 
+faster than eating hotdogs one by one?
 
-:::{#cr-table1}
-
+:::{#cr-plot3}
 ```{r}
-earliest_five <- hotdogs_per_min |>
-  arrange(Year) |>
-  slice_head(n = 5)
-
-latest_five <- hotdogs_per_min |>
-  arrange(desc(Year)) |>
-  slice_head(n = 5)
-
-table <- bind_rows(earliest_five, latest_five) |>
-  arrange(Year)
-
-table
+ggplot(data = hotdog_winners, aes(x = Year, y = hotdogs_per_minute, color = Time)) +
+  geom_point() +
+  scale_color_viridis_c(option = "plasma") +
+  theme_minimal() +
+  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners", color = "Time (in Minutes)")
 ```
 :::
 
-The earliest five winners competed in competitions all under 5 minutes long, while the most recent five winners, some years repeating, are 10 minutes long. This means in earlier years they were eating for less time and therefore may have been able to eat more for longer, whereas the more recent competitors may have slowed down after the first few minutes of eating, lowering their average hotdog per minute rate. 
-
-That still doesn't explain why there is a clear jump around the early 2000s. @cr-plot2
-
-What happened there? Let's find out who won that year! @cr-table2
-
-:::{#cr-table2}
-```{r}
-hotdogs_per_min |>
-  filter(Year > 1998) |>
-  arrange((Year)) |>
-  slice_head(n = 5)
-```
-
-:::
-
-Wow! Look at the jump 2000 to 2001, 21.5 hotdogs to 50 hotdogs total and the hotdogs_per_minute doubled too! Who is Takeru Kobayashi? Take a moment to google him. 
-
+here. @cr-plot3
 :::
