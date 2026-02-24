@@ -32,3 +32,11 @@ materials if they are so inclined.
 :::
 
 # Data
+
+<details>
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description |
+|------------------------------------|------------------------------------|
+| Name | What is it? |
+</details>
