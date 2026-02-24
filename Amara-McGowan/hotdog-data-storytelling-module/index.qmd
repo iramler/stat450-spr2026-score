@@ -25,7 +25,7 @@ If you are unfamiliar with Nathan's Hot Dog Contest, please watch the first minu
 
 Nathan's Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the "Super Bowl" of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.  
 
-In this module, you will learn how to use the quarto extension `closeread` to tell a story using data from Nathan's Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: [Example Closeread](TODO: Fix Link!){target="_blank"}
+In this module, you will learn how to use the quarto extension `closeread` to tell a story using data from Nathan's Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: [Example Closeread](example-closeread.html){target="_blank"}
 
 ::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
 By the end of this tutorial, you will be able to:
@@ -48,7 +48,7 @@ or more class periods.
 This activity is designed to be completed primarily in `R` using a
 Quarto document workflow with a Closeread format. Students should be comfortable importing data and
 making basic plots with packages from the tidyverse
-(especially `readr`, `dplr`, and `ggplot2`).
+(especially `readr`, `dplyr`, and `ggplot2`).
 
 No previous experience with Closeread is required.
 :::
@@ -82,19 +82,19 @@ The data was scraped and cleaned from this Wikipedia page:
 
 Follow along below or refer to the [Closeread homepage](https://closeread.dev) for more information about installation. 
 
-1. In RStudio, open the project folder where you'd like to work.
+1.  In RStudio, open the project folder where you'd like to work.
 
-2. At the bottom of the RStudio window, locate the Console. Next to it, select the Terminal tab. 
+2.  At the bottom of the RStudio window, locate the Console. Next to it, select the       Terminal tab. 
 
-3. In the terminal, paste and run the following command:
+3.  In the terminal, paste and run the following command:
 
 ```{r echo = TRUE, eval = FALSE}
 quarto add qmd-lab/closeread
 ```
 
-4. When prompted with messages like <i>"Do you trust the authors of this extension?"</i>  or <i>"Would you like to continue?"</i>, type Y into the terminal to confirm and proceed with the installation. 
+4.  When prompted with messages like <i>"Do you trust the authors of this extension?"</i>  or <i>"Would you like to continue?"</i>, type Y into the terminal to confirm and proceed with the installation. 
 
-5. After completing these steps, the Quarto extension Closeread will be installed. 
+5.  After completing these steps, the Quarto extension Closeread will be installed. 
 
 # Using Closeread
 
@@ -177,16 +177,15 @@ Stickies (e.g. `#cr-ID`) stay stuck to the page, fixed in place while your sideb
 A trigger (e.g. `@cr-ID`) allows you to make something from the section, like text, be the signal that a particular graph should appear on the right of the sidebar at the same time as whatever text the trigger is on. This is how you format a trigger:
 
 ```markdown
-
 :::{.cr-section}
-
-This text would appear at the same time as my plot. @cr-myplot
 
 :::{#cr-myplot}
 
 # You would put the code chunk for my plot in here
 
 :::
+
+This text would appear at the same time as my plot. @cr-myplot
 
 :::
 
@@ -200,7 +199,7 @@ If you would like more information about the three parts of a Closeread (the sec
 
 Create a new Quarto document in the project folder where you installed the Closeread extension. 
 
-::: {.callout-note  title = "Exercise 1: Enable Closeread & Load Data"}
+::: {.callout-note  title = "Exercise 1: Enable Closeread & Load Data" icon = false}
 a.  Try editing the YAML header to enable Closeread and customize the colors. 
 
 <details>
@@ -220,7 +219,7 @@ format:
 ```
 </details>
 
-b.  Download [HotdogData.csv](HotdogData.csv) to your project folder. Then, Load tidyverse and read `HotdogData.csv` as `hotdog_winners`, making sure that the code will not appear when you render the document.
+b.  Download [HotdogData.csv](HotdogData.csv) to your project folder. Then, load tidyverse and read `HotdogData.csv` as `hotdog_winners`, making sure that the code will not appear when you render the document.
 
 <details>
 <summary><b>Click for solution</b></summary>
@@ -243,7 +242,7 @@ hotdog_winners <- read_csv("HotdogData.csv")
 
 :::
 
-::: {.callout-note  title = "Exercise 2: Brainstorm Questions"}
+::: {.callout-note  title = "Exercise 2: Brainstorm Questions" icon = false}
 Now our document is ready! What story should we tell? 
 
 Think of 2 questions that you would like to investigate about these winners.
@@ -259,10 +258,10 @@ Some questions we might explore:
 :::
 
 
-::: {.callout-note  title = "Exercise 3: Start Your Closeread Story"}
+::: {.callout-note  title = "Exercise 3: Start Your Closeread Story" icon = false}
 For our story, we will investigate: "How many hotdogs does someone need to eat to win the contest and has that number gone up over time?" 
 
-a.  In plain text under your code, introduce your reader to Nathan's contest and your guiding questions.
+a.  In plain text under your code to get our data, introduce your reader to Nathan's contest and your guiding questions.
 
 <details>
 <summary><b>Click for an example</b></summary>
@@ -301,7 +300,7 @@ When you are data scrollytelling with Closeread, it is nice to put visuals on th
 
 Let's make a sticky that will help us start to share with our readers how many hotdogs winners have to eat to claim first place and whether the number of hotdogs they have to eat to win has increased over the years. 
 
-::: {.callout-note  title = "Exercise 4: Create Your First Sticky"}
+::: {.callout-note  title = "Exercise 4: Create Your First Sticky" icon = false}
 a.  Create a sticky called `#cr-plot1` inside your `cr-section`.
 
 <details>
@@ -342,7 +341,7 @@ c.  Add a trigger (`@cr-plot1`) to make your sticky appear.
     Write 2-3 sentences reacting to the plot. What patterns do you notice? What seems surprising? If        your sentences are spaced out, add your trigger to the first sentence and your sticky will be stuck     to the right side of the screen until you trigger another sticky or end the section. 
 
 <details>
-<summary><b>Click for example </b></summary>
+<summary><b>Click for an example </b></summary>
 
 ```markdown
 
@@ -360,7 +359,7 @@ Code for plot...
 
 The plot to the right shows the total hotdogs eaten by every winner over time. 
 As you can see, early winners of the competition ate less than 20 hotdogs before
-clamining victory. However, winners after 2000 ate more than 40 hot dogs!@cr-plot1
+claiming victory. However, winners after 2000 ate more than 40 hot dogs! @cr-plot1
 
 Look at how the number of hotdogs eaten by the winner has changed over time.
 As time goes on, winners do tend to eat more hotdogs, but there is a weird spike 
@@ -376,7 +375,7 @@ After looking at the plot, did you notice the dramatic jump from 2000 to 2001? I
 
 Let's figure out why that happened.  
 
-::: {.callout-note  title = "Exercise 5: Create Another Sticky"}
+::: {.callout-note  title = "Exercise 5: Create Another Sticky" icon = false}
 
 a.  Create a second sticky called `#cr-table1`.
 
@@ -384,7 +383,6 @@ a.  Create a second sticky called `#cr-table1`.
 <summary><b>Click for solution </b></summary>
 
 ```markdown
-
 Code to read in the data
 
 Your intro text here...
@@ -409,7 +407,7 @@ Code for table...
 ```
 </details>
 
-b.  Inside your second sticky, create a table showing the data from the years 1999 to 2003.
+b.  Inside your second sticky, create a table showing the data from the years 1999 to     2003.
 
 <details>
 <summary><b>Click for solution</b></summary>
@@ -426,14 +424,38 @@ c.  Add a trigger (`@cr-table1`) for your second sticky.
     Write 2-3 sentences reacting to the table. How many hotdogs did the winner in 2000 eat? How many        hotdogs did the winner from 2001 eat? Was it a big difference? Who is the winner from 2001?             Remember, you're telling the reader a story.
 
 <details>
-<summary><b>Click for example</b></summary>
+<summary><b>Click for an example</b></summary>
 
 ```markdown
+Code to read in the data
 
-Taking a closer look at the competitions from 1999 to 2003 shows us who is responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1
+Your intro text here...
 
-In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? 
+:::{.cr-section}
 
+:::{#cr-plot1}
+
+Code for plot...
+
+:::
+
+Trigger text here... @cr-plot1
+
+:::{#cr-table1}
+
+Code for table...
+
+:::
+
+Taking a closer look at the competitions from 1999 to 2003 shows us who is 
+responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1
+
+In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru 
+Kobayashi ate 50, double the amount of hotdogs eaten by the winner from the year 
+before. How was Kobayashi able to eat double the amount of hotdogs of the previous 
+winner?
+
+:::
 ```
 </details>
 :::
@@ -446,14 +468,13 @@ If you need help finding out how, try searching the internet for things like <i>
 
 Once you have found out what Kobayashi did differently than previous winners, look for a picture of him that you like. We will continue our story by adding a picture of Kobayashi and a summary of how he doubled the amount of hotdogs people ate during the competition.
 
-::: {.callout-note  title = "Exercise 6: Mention of Kobayashi"}
+::: {.callout-note  title = "Exercise 6: Mention of Kobayashi" icon = false}
 a.  Create a third sticky called `#cr-photo1`.
 
 <details>
 <summary><b>Click for solution</b></summary>
 
 ```markdown
-
 :::{#cr-photo1}
 
 Put the image here
@@ -470,11 +491,12 @@ b.  Put the Kobayashi image of your choice inside your `cr-photo1` sticky.
     
     
     The website title will go inside of the brackets [], as a way to give credit for the image. Whatever     you type there will appear under the image. The image address goes inside of the parenthesis (), you     can get it by clicking on the image you're interested in online and selecting "copy image address"      and then pasting it between the parenthesis. 
+    
+    If a link is showing up instead of your image when you render your document, make sure that you have included an exclamation point before your brackets. 
+
 
 <details>
-<summary><b>Click for example</b></summary>
-
-If a link is showing up instead of your image, make sure that you have included an exclamation point before your brackets. 
+<summary><b>Click for an example</b></summary>
 
 ```markdown
 :::{#cr-photo1}
@@ -490,7 +512,7 @@ c.  Add a trigger (`@cr-photo1`) for your new sticky.
     Write 2-3 sentences explaining how Kobayashi ate so many hotdogs. What did Kobayashi do differently     than previous winners? How did Kobayashi contribute to the higher amount of hotdogs eaten by future     competitors?
     
 <details>
-<summary><b>Click for example</b></summary>
+<summary><b>Click for an example</b></summary>
 ```markdown
 :::{#cr-photo1}
 
@@ -508,29 +530,33 @@ shaking his body to force food down. @cr-photo1
 </details>
 :::
 
-Now we all know how Kobayashi did it, but how much faster is his method really,
+Now we all know how Kobayashi did it, but how much faster is his method,
 compared to earlier years? In our plot, the earliest winners ate a lot fewer 
 hotdogs than more recent champions. Maybe what early winners lacked in the amount 
 they were able to eat, they made up for in speed?
 
-So, how can we look at how fast winners were eating hotdogs, not just the total
+How can we look at how fast winners were eating hotdogs, not just the total
 amount of hotdogs they were able to eat? 
 
-Let's make a new variable, that will help us see how the speed of winners has
+Let's make a new variable to help us see how the speed of winners has
 changed over time. 
 
-::: {.callout-note  title = "Exercise 7: Hotdogs Per Minute"}
-a.  Make a new code chunk outside of your Closeread section. Within your new
-    code chunk, create a new variable called `hotdogs_per_minute` that tells us
-    how many hotdogs per minute a winner ate during their competition.
-    
-<details>
-<summary><b>Click for solution</b></summary>
-
 ```{r}
+#| include: false
 hotdog_winners <- hotdog_winners |> mutate(hotdogs_per_minute = Dogs/Time)
 ```
 
+::: {.callout-note  title = "Exercise 7: Hotdogs Per Minute" icon = false}
+Make a new code chunk outside of your Closeread section. I recommend putting it under the code you used to get our data. Make sure to add `#| include: false` to keep the code from showing up when you render your document. 
+    
+a.  Within your new code chunk, create a new variable called `hotdogs_per_minute`         that tells us how many hotdogs per minute a winner ate during their competition.
+ 
+<details>
+<summary><b>Click for solution</b></summary>
+```markdown
+#| include: false
+hotdog_winners <- hotdog_winners |> mutate(hotdogs_per_minute = Dogs/Time)
+```
 </details>
 
 b.  Make a new sticky `#cr-plot2`. 
@@ -569,34 +595,32 @@ d.  Add a trigger (`@cr-plot2`) for your new sticky.
     story flows smoothly.
     
 <details>
-<summary><b>Click for example</b></summary>
+<summary><b>Click for an example</b></summary>
 
 ```markdown
+Now we know how Kobayashi did it, but how much faster is his method
+compared to earlier years? 
 
-Now we know how Kobayashi did it, but how much faster is his method really,
-compared to earlier years? This plot shows us how fast in hotdogs per minute
-winners were eating during the contest. @cr-plot2
+This plot shows us how fast in hotdogs per minute winners have eaten over the years
+of the competition. @cr-plot2
 
-It's interesting to see that a few of the earliest winners ate at a similar speed,
-almost 5 hotdogs per minute, as Kobayashi did during his 2001 win where he
-introduced his new technique. Does this mean that his technique is not actually 
-faster than eating hotdogs one by one?
+It's interesting to see that a few of the earliest winners ate at a similar speed 
+as Kobayashi did during his 2001 win. If past winners could match his speed, why
+did they eat so many fewer total hotdogs?
 ```
 </details>  
 :::
 
 Do you notice anything interesting about speed over time from our new plot? 
 
-Why is it that some of the earliest winners were eating hotdogs at a similar rate
-as winners like Kobayashi, who is known for inventing a new technique that increased 
-the total amount of hotdogs winners were able to eat?
+Why had none of the winners from earlier years eaten as many total hotdogs as 
+Kobayashi when we can see that they matched his pace in hotdogs eaten per minute?
 
-::: {.callout-note  title = "Exercise 8: Context Matters"}
-a.  Why might early winners have such impressive hotdogs per minute rates?
+::: {.callout-note  title = "Exercise 8: Context Matters" icon = false}
+a.  Why do you think early winners have such impressive hotdogs per minute rates?
     
 <details>
 <summary><b>Click for answer</b></summary>
-
 The contest has not always been set to 10 minutes long. Early competitions were
 between 2 to 5 minutes long, eaters are able to go as fast as possible the whole 
 time. 
@@ -615,9 +639,9 @@ b.  Make a new sticky, `#cr-plot3`. Inside your new sticky, adjust your hotdogs
 ```{r}
 ggplot(data = hotdog_winners, aes(x = Year, y = hotdogs_per_minute, color = Time)) +
   geom_point() +
-  scale_color_viridis_c(option = "plasma") +
   theme_minimal() +
-  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners", color = "Contest Duration (in Minutes)")
+  scale_color_viridis_c(option = "plasma") +
+  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners", color = "Contest Duration (Mins)")
 ```
 </details>
 
@@ -628,16 +652,29 @@ c.  Add a trigger (`@cr-plot3`) for your new sticky.
     a closing sentence to wrap up your story.
 
 <details>
-<summary><b>Click for example</b></summary>
+<summary><b>Click for an example</b></summary>
+```markdown
+Some important context to remember about the competition is that the duration has 
+varied over the years. In this plot, brighter colors (e.g. yellow) show years 
+where the contest was longer and darker colors (e.g. blue) show years when the 
+contest was shorter. @cr-plot3
 
-TODO: Write example.
+Competitors who won when the contest was only 2 to 5 minutes long were able to eat 
+at full speed the entire time. Later winners, like Kobayashi, were eating for much 
+longer, leaving time for them to slow down from fatigue. Knowing this, we can 
+reason that early winners were not able to eat as many total dogs, despite matching
+Kobayashi's pace, because they did not have as much time to eat nor the technique 
+to continue at that pace for a longer duration.
 
+No matter the duration, it definitely takes dedication and a strong stomach to 
+place first in this famous competitive eating contest.
+```
 </details>
 :::
 
-Congratulations! Now, you know how to scrollytell! 
+Congratulations! You just finished your first data scrollytelling project!
 
-Closeread has all kinds of cool features that you can use to make your story even more engaging. If you want to learn more, you can learn how to highlight parts of your sticky, zoom in on plots and pictures, and see published examples of other Closeread stories here: [Closeread Gallery](https://closeread.dev/gallery/)
+Closeread has all kinds of cool features that you can use to make your story even more engaging. If you want to keep learning about Closeread, you can learn how to highlight parts of your sticky, zoom in on plots and pictures, and check out published examples of other Closeread stories here: [Closeread Gallery](https://closeread.dev/gallery/)
 
 # Closing Video
 

@@ -40,7 +40,7 @@ ggplot(data = hotdog_winners, aes(x = Year, y = Dogs)) +
 
 The plot to the right shows the total hotdogs eaten by every winner over time. 
 As you can see, early winners of the competition ate less than 20 hotdogs before
-clamining victory. However, winners after 2000 ate more than 40 hot dogs!@cr-plot1
+claiming victory. However, winners after 2000 ate more than 40 hot dogs! @cr-plot1
 
 Look at how the number of hotdogs eaten by the winner has changed over time.
 As time goes on, winners do tend to eat more hotdogs, but there is a weird spike 
@@ -63,10 +63,10 @@ In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Ko
 ![The Guardian](https://i.guim.co.uk/img/media/c3fb7fa62b488a153448562ae34d77694a64299d/0_0_2849_2848/master/2849.jpg?width=480&dpr=1&s=none&crop=none)
 :::
 
-Kobayashi ate so many more hotdogs than previous winners because he invented a
-new technique for eating the hotdogs called the "Solomon Method," which involved
+Kobayashi was able to eat twice as many hotdogs as previous winners because he 
+invented a new technique called the "Solomon Method." This new strategy involved 
 splitting hotdogs in half, eating both at once, and soaking the hotdog bun in 
-water to make it easier to swallow. Kobayashi paired this new strategy with 
+water to make it easier to swallow. Kobayashi paired the Solomon Method with 
 shaking his body to force food down. @cr-photo1
 
 :::{#cr-plot2}
@@ -78,24 +78,37 @@ ggplot(data = hotdog_winners, aes(x = Year, y = hotdogs_per_minute)) +
 ```
 :::
 
-Now we know how Kobayashi did it, but how much faster is his method really,
-compared to earlier years? This plot shows us how fast in hotdogs per minute
-winners were eating during the contest. @cr-plot2
+Now we know how Kobayashi did it, but how much faster is his method
+compared to earlier years? 
 
-It's interesting to see that a few of the earliest winners ate at a similar speed,
-almost 5 hotdogs per minute, as Kobayashi did during his 2001 win where he
-introduced his new technique. Does this mean that his technique is not actually 
-faster than eating hotdogs one by one?
+This plot shows us how fast in hotdogs per minute winners have eaten over the years
+of the competition. @cr-plot2
+
+It's interesting to see that a few of the earliest winners ate at a similar speed 
+as Kobayashi did during his 2001 win. If past winners could match his speed, why
+did they eat so many fewer total hotdogs?
 
 :::{#cr-plot3}
 ```{r}
 ggplot(data = hotdog_winners, aes(x = Year, y = hotdogs_per_minute, color = Time)) +
   geom_point() +
-  scale_color_viridis_c(option = "plasma") +
   theme_minimal() +
-  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners", color = "Time (in Minutes)")
+  scale_color_viridis_c(option = "plasma") +
+  labs(y = "Hotdogs Eaten Per Minute", title = "Amount of Hotdogs Eaten Per Minute by Winners", color = "Contest Duration (Mins)")
 ```
 :::
 
-here. @cr-plot3
+Some important context to remember about the competition is that the duration has varied 
+over the years. In this plot, brighter colors (e.g. yellow) show years where the 
+contest was longer and darker colors (e.g. blue) show years when the contest was shorter. @cr-plot3
+
+Competitors who won when the contest was only 2 to 5 minutes long were able to eat 
+at full speed the entire time. Later winners, like Kobayashi, were eating for much 
+longer, leaving time for them to slow down from fatigue. Knowing this, we can 
+reason that early winners were not able to eat as many total dogs, despite matching
+Kobayashi's pace, because they did not have as much time to eat nor the technique 
+to continue at that pace for a longer duration.
+
+No matter the duration, it definitely takes dedication and a strong stomach to 
+place first in this famous competitive eating contest.
 :::

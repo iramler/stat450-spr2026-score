@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Nathan’s Famous, an American hot dog brand established in Brooklyn, New York, in 1916, is widely recognized for its annual hot dog eating contest held each year on July 4th. Originally created as a promotional event to increase brand visibility, the contest has evolved into what many call the “Super Bowl” of competitive eating. Beginning in 2008, the event was standardized at a duration of ten minutes, though earlier competitions ranged from 2.5 to 12 minutes long. In order to compete, participants must be at least 18 years old and qualify by winning a smaller regional contest. On the day of the event, between 15 and 30 competitive eaters participate. In 2011, the organizers introduced separate divisions for men and women, resulting in two first-place winners each year. The top five competitors in each division receive cash prizes, with first place earning $10,000 in 2025.</p>
-<p>In this module, you will learn how to use the quarto extension <code>closeread</code> to tell a story using data from Nathan’s Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: <a href="TODO:%20Fix%20Link!" target="_blank">Example Closeread</a></p>
+<p>In this module, you will learn how to use the quarto extension <code>closeread</code> to tell a story using data from Nathan’s Hot Dog Contest. Upon completion of this module, you will have a Closeread document that looks similar to this: <a href="example-closeread.html" target="_blank">Example Closeread</a></p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -172,7 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Technology Requirement:</strong></p>
-<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow with a Closeread format. Students should be comfortable importing data and making basic plots with packages from the tidyverse (especially <code>readr</code>, <code>dplr</code>, and <code>ggplot2</code>).</p>
+<p>This activity is designed to be completed primarily in <code>R</code> using a Quarto document workflow with a Closeread format. Students should be comfortable importing data and making basic plots with packages from the tidyverse (especially <code>readr</code>, <code>dplyr</code>, and <code>ggplot2</code>).</p>
 <p>No previous experience with Closeread is required.</p>
 </div>
 </div>
@@ -342,18 +342,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A trigger (e.g.&nbsp;<code>@cr-ID</code>) allows you to make something from the section, like text, be the signal that a particular graph should appear on the right of the sidebar at the same time as whatever text the trigger is on. This is how you format a trigger:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>:::{.cr-section}</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>This text would appear at the same time as my plot. @cr-myplot</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>:::{#cr-myplot}</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu"># You would put the code chunk for my plot in here</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>:::{.cr-section}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>:::{#cr-myplot}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># You would put the code chunk for my plot in here</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>This text would appear at the same time as my plot. @cr-myplot</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -362,10 +361,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="getting-started" class="level1">
 <h1>Getting Started</h1>
 <p>Create a new Quarto document in the project folder where you installed the Closeread extension.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 1: Enable Closeread &amp; Load Data">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 1: Enable Closeread &amp; Load Data">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 1: Enable Closeread &amp; Load Data
@@ -391,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <ol start="2" type="a">
-<li>Download <a href="HotdogData.csv">HotdogData.csv</a> to your project folder. Then, Load tidyverse and read <code>HotdogData.csv</code> as <code>hotdog_winners</code>, making sure that the code will not appear when you render the document.</li>
+<li>Download <a href="HotdogData.csv">HotdogData.csv</a> to your project folder. Then, load tidyverse and read <code>HotdogData.csv</code> as <code>hotdog_winners</code>, making sure that the code will not appear when you render the document.</li>
 </ol>
 <details>
 <summary>
@@ -405,10 +404,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 2: Brainstorm Questions">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 2: Brainstorm Questions">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 2: Brainstorm Questions
@@ -430,10 +429,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 3: Start Your Closeread Story">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 3: Start Your Closeread Story">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 3: Start Your Closeread Story
@@ -442,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>For our story, we will investigate: “How many hotdogs does someone need to eat to win the contest and has that number gone up over time?”</p>
 <ol type="a">
-<li>In plain text under your code, introduce your reader to Nathan’s contest and your guiding questions.</li>
+<li>In plain text under your code to get our data, introduce your reader to Nathan’s contest and your guiding questions.</li>
 </ol>
 <details>
 <summary>
@@ -471,10 +470,10 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 <p>Now that we have introduced the readers of our story to our data and guiding questions, we should make a plot to start working on answering our questions.</p>
 <p>When you are data scrollytelling with Closeread, it is nice to put visuals on the right side of the sidebar in stickies, so that readers can look at the visuals while they scroll through text that explains what they are looking at.</p>
 <p>Let’s make a sticky that will help us start to share with our readers how many hotdogs winners have to eat to claim first place and whether the number of hotdogs they have to eat to win has increased over the years.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 4: Create Your First Sticky">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 4: Create Your First Sticky">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 4: Create Your First Sticky
@@ -528,7 +527,7 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 </ol>
 <details>
 <summary>
-<b>Click for example </b>
+<b>Click for an example </b>
 </summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Code to read in the data</span>
@@ -545,7 +544,7 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>The plot to the right shows the total hotdogs eaten by every winner over time. </span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>As you can see, early winners of the competition ate less than 20 hotdogs before</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>clamining victory. However, winners after 2000 ate more than 40 hot dogs!@cr-plot1</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>claiming victory. However, winners after 2000 ate more than 40 hot dogs! @cr-plot1</span>
 <span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>Look at how the number of hotdogs eaten by the winner has changed over time.</span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>As time goes on, winners do tend to eat more hotdogs, but there is a weird spike </span>
@@ -558,10 +557,10 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 </div>
 <p>After looking at the plot, did you notice the dramatic jump from 2000 to 2001? It looks like the amount of hotdogs someone has to eat to claim first place nearly doubles after 2000.</p>
 <p>Let’s figure out why that happened.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 5: Create Another Sticky">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 5: Create Another Sticky">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 5: Create Another Sticky
@@ -575,28 +574,27 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 <summary>
 <b>Click for solution </b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Code to read in the data</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>Your intro text here...</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>:::{.cr-section}</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>:::{#cr-plot1}</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>Code for plot...</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>Trigger text here... @cr-plot1</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>:::{#cr-table1}</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>Code for table...</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Code to read in the data</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>Your intro text here...</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>:::{.cr-section}</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>:::{#cr-plot1}</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>Code for plot...</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>Trigger text here... @cr-plot1</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>:::{#cr-table1}</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>Code for table...</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <ol start="2" type="a">
 <li>Inside your second sticky, create a table showing the data from the years 1999 to 2003.</li>
@@ -627,12 +625,37 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 </ol>
 <details>
 <summary>
-<b>Click for example</b>
+<b>Click for an example</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Taking a closer look at the competitions from 1999 to 2003 shows us who is responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru Kobayashi ate 50, double the amount of hotdogs eaten by the winner from the year before. How was Kobayashi able to eat double the amount of hotdogs of the previous winner? </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Code to read in the data</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Your intro text here...</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>:::{.cr-section}</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>:::{#cr-plot1}</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>Code for plot...</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>Trigger text here... @cr-plot1</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>:::{#cr-table1}</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>Code for table...</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>Taking a closer look at the competitions from 1999 to 2003 shows us who is </span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>responsible for the spike in hotdogs consumed in the early 2000s. @cr-table1</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>In 2000, eating 25.1 hotdogs was enough to claim first place. In 2001, Takeru </span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>Kobayashi ate 50, double the amount of hotdogs eaten by the winner from the year </span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>before. How was Kobayashi able to eat double the amount of hotdogs of the previous </span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>winner?</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -640,10 +663,10 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 <p>Take a moment to look Kobayashi up and try to figure out how he was able to eat so many more hotdogs than the winner from the year before him.</p>
 <p>If you need help finding out how, try searching the internet for things like <i>“How does Kobayashi eat so many hotdogs?”</i> or <i>“What did Kobayashi do in 2001 to win Nathan’s Hot Dog Contest?”</i></p>
 <p>Once you have found out what Kobayashi did differently than previous winners, look for a picture of him that you like. We will continue our story by adding a picture of Kobayashi and a summary of how he doubled the amount of hotdogs people ate during the competition.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 6: Mention of Kobayashi">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 6: Mention of Kobayashi">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 6: Mention of Kobayashi
@@ -657,23 +680,22 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 <summary>
 <b>Click for solution</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>:::{#cr-photo1}</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Put the image here</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>:::{#cr-photo1}</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Put the image here</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <ol start="2" type="a">
 <li><p>Put the Kobayashi image of your choice inside your <code>cr-photo1</code> sticky.</p>
 <p>To include an image, you will have to use the following format: <code>![]()</code></p>
-<p>The website title will go inside of the brackets [], as a way to give credit for the image. Whatever you type there will appear under the image. The image address goes inside of the parenthesis (), you can get it by clicking on the image you’re interested in online and selecting “copy image address” and then pasting it between the parenthesis.</p></li>
+<p>The website title will go inside of the brackets [], as a way to give credit for the image. Whatever you type there will appear under the image. The image address goes inside of the parenthesis (), you can get it by clicking on the image you’re interested in online and selecting “copy image address” and then pasting it between the parenthesis.</p>
+<p>If a link is showing up instead of your image when you render your document, make sure that you have included an exclamation point before your brackets.</p></li>
 </ol>
 <details>
 <summary>
-<b>Click for example</b>
+<b>Click for an example</b>
 </summary>
-<p>If a link is showing up instead of your image, make sure that you have included an exclamation point before your brackets.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>:::{#cr-photo1}</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="al">![website_title](image_address)</span></span>
@@ -686,7 +708,7 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 </ol>
 <details>
 <summary>
-<b>Click for example</b>
+<b>Click for an example</b>
 </summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>:::{#cr-photo1}</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -702,29 +724,29 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 </details>
 </div>
 </div>
-<p>Now we all know how Kobayashi did it, but how much faster is his method really, compared to earlier years? In our plot, the earliest winners ate a lot fewer hotdogs than more recent champions. Maybe what early winners lacked in the amount they were able to eat, they made up for in speed?</p>
-<p>So, how can we look at how fast winners were eating hotdogs, not just the total amount of hotdogs they were able to eat?</p>
-<p>Let’s make a new variable, that will help us see how the speed of winners has changed over time.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 7: Hotdogs Per Minute">
+<p>Now we all know how Kobayashi did it, but how much faster is his method, compared to earlier years? In our plot, the earliest winners ate a lot fewer hotdogs than more recent champions. Maybe what early winners lacked in the amount they were able to eat, they made up for in speed?</p>
+<p>How can we look at how fast winners were eating hotdogs, not just the total amount of hotdogs they were able to eat?</p>
+<p>Let’s make a new variable to help us see how the speed of winners has changed over time.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 7: Hotdogs Per Minute">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 7: Hotdogs Per Minute
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>Make a new code chunk outside of your Closeread section. I recommend putting it under the code you used to get our data. Make sure to add <code>#| include: false</code> to keep the code from showing up when you render your document.</p>
 <ol type="a">
-<li>Make a new code chunk outside of your Closeread section. Within your new code chunk, create a new variable called <code>hotdogs_per_minute</code> that tells us how many hotdogs per minute a winner ate during their competition.</li>
+<li>Within your new code chunk, create a new variable called <code>hotdogs_per_minute</code> that tells us how many hotdogs per minute a winner ate during their competition.</li>
 </ol>
 <details>
 <summary>
 <b>Click for solution</b>
 </summary>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>hotdog_winners <span class="ot">&lt;-</span> hotdog_winners <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">hotdogs_per_minute =</span> Dogs<span class="sc">/</span>Time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>#| include: false</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>hotdog_winners &lt;- hotdog_winners |&gt; mutate(hotdogs_per_minute = Dogs/Time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <ol start="2" type="a">
 <li>Make a new sticky <code>#cr-plot2</code>.</li>
@@ -766,26 +788,26 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 </ol>
 <details>
 <summary>
-<b>Click for example</b>
+<b>Click for an example</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Now we know how Kobayashi did it, but how much faster is his method really,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>compared to earlier years? This plot shows us how fast in hotdogs per minute</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>winners were eating during the contest. @cr-plot2</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>It's interesting to see that a few of the earliest winners ate at a similar speed,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>almost 5 hotdogs per minute, as Kobayashi did during his 2001 win where he</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>introduced his new technique. Does this mean that his technique is not actually </span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>faster than eating hotdogs one by one?</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Now we know how Kobayashi did it, but how much faster is his method</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>compared to earlier years? </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>This plot shows us how fast in hotdogs per minute winners have eaten over the years</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>of the competition. @cr-plot2</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>It's interesting to see that a few of the earliest winners ate at a similar speed </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>as Kobayashi did during his 2001 win. If past winners could match his speed, why</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>did they eat so many fewer total hotdogs?</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
 <p>Do you notice anything interesting about speed over time from our new plot?</p>
-<p>Why is it that some of the earliest winners were eating hotdogs at a similar rate as winners like Kobayashi, who is known for inventing a new technique that increased the total amount of hotdogs winners were able to eat?</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise 8: Context Matters">
+<p>Why had none of the winners from earlier years eaten as many total hotdogs as Kobayashi when we can see that they matched his pace in hotdogs eaten per minute?</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 8: Context Matters">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Exercise 8: Context Matters
@@ -793,7 +815,7 @@ Nathan’s Hot Dog Eating Contest is a competitive eating contest where people f
 </div>
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li>Why might early winners have such impressive hotdogs per minute rates?</li>
+<li>Why do you think early winners have such impressive hotdogs per minute rates?</li>
 </ol>
 <details>
 <summary>
@@ -812,9 +834,9 @@ Longer races, like all of the ones Kobayashi competed in, were 10-12 minutes mea
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hotdog_winners, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> hotdogs_per_minute, <span class="at">color =</span> Time)) <span class="sc">+</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Hotdogs Eaten Per Minute"</span>, <span class="at">title =</span> <span class="st">"Amount of Hotdogs Eaten Per Minute by Winners"</span>, <span class="at">color =</span> <span class="st">"Contest Duration (in Minutes)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Hotdogs Eaten Per Minute"</span>, <span class="at">title =</span> <span class="st">"Amount of Hotdogs Eaten Per Minute by Winners"</span>, <span class="at">color =</span> <span class="st">"Contest Duration (Mins)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -830,14 +852,27 @@ Longer races, like all of the ones Kobayashi competed in, were 10-12 minutes mea
 </ol>
 <details>
 <summary>
-<b>Click for example</b>
+<b>Click for an example</b>
 </summary>
-<p>TODO: Write example.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Some important context to remember about the competition is that the duration has </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>varied over the years. In this plot, brighter colors (e.g. yellow) show years </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>where the contest was longer and darker colors (e.g. blue) show years when the </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>contest was shorter. @cr-plot3</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>Competitors who won when the contest was only 2 to 5 minutes long were able to eat </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>at full speed the entire time. Later winners, like Kobayashi, were eating for much </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>longer, leaving time for them to slow down from fatigue. Knowing this, we can </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>reason that early winners were not able to eat as many total dogs, despite matching</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>Kobayashi's pace, because they did not have as much time to eat nor the technique </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>to continue at that pace for a longer duration.</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>No matter the duration, it definitely takes dedication and a strong stomach to </span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>place first in this famous competitive eating contest.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
-<p>Congratulations! Now, you know how to scrollytell!</p>
-<p>Closeread has all kinds of cool features that you can use to make your story even more engaging. If you want to learn more, you can learn how to highlight parts of your sticky, zoom in on plots and pictures, and see published examples of other Closeread stories here: <a href="https://closeread.dev/gallery/">Closeread Gallery</a></p>
+<p>Congratulations! You just finished your first data scrollytelling project!</p>
+<p>Closeread has all kinds of cool features that you can use to make your story even more engaging. If you want to keep learning about Closeread, you can learn how to highlight parts of your sticky, zoom in on plots and pictures, and check out published examples of other Closeread stories here: <a href="https://closeread.dev/gallery/">Closeread Gallery</a></p>
 </section>
 <section id="closing-video" class="level1">
 <h1>Closing Video</h1>
