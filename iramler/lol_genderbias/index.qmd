@@ -331,14 +331,14 @@ Also known as a *contingency table*, this is a grid of counts showing how many c
 The following code can make these tables for us.
 
 ```{r}
-lol_2way_table_raw <- table(lol_MFonly$gender,
+lol_2way_table <- table(lol_MFonly$gender,
                             lol_MFonly$lane)
 ```
 
 We can also use the `addmargins` function to place the totals on the table too.
 ```{r}
-lol_2way_table <- addmargins(lol_2way_table_raw)
-lol_2way_table
+lol_2way_table_with_margins <- addmargins(lol_2way_table_raw)
+lol_2way_table_with_margins
 ```
 
 > Question: How many female champions are in the jungle role?
@@ -579,7 +579,7 @@ Each piece of the summation is called the **contribution** to the test statistic
 We can use R to calculate each of these pieces for us. (Again noting that we will use the `chisq.test()` function to ultimately calculate all of this for us.)
 
 ```{r}
-test_stat <- sum( ((lol_2way_table_raw - lol_expected_counts)^2)  /lol_expected_counts )
+test_stat <- sum( ((lol_2way_table - lol_expected_counts)^2)  /lol_expected_counts )
 test_stat
 ```
 
@@ -616,7 +616,7 @@ The chi-square statistic is a sum of squared (standardized) differences, so it i
 In R, we can calculate the degrees of freedom with:
 
 ```{r}
-dof <- (nrow(lol_2way_table_raw) - 1) * (ncol(lol_2way_table_raw) - 1)
+dof <- (nrow(lol_2way_table) - 1) * (ncol(lol_2way_table) - 1)
 ```
 
 
@@ -640,27 +640,88 @@ vdist_chisquare_prob(perc = test_stat,
 
 ### Obtaining Output via `chisq.test()`
 
-The `chisq.test()` function can obtain all of the previous pieces for us...
+The `chisq.test()` function can obtain all of the previous pieces for us.
+
+To use the function, we simply give it the table of counts. i.e.,
 
 ```{r}
-lol_chsqtest <- chisq.test(lol_2way_table_raw)
+lol_chsqtest <- chisq.test(lol_2way_table)
 ```
+
+We can then view the results simply printing the object in a chunk.
 
 
 ```{r}
 lol_chsqtest
 ```
 
+To see the components in the Chi-Square test object, you can use the `names()` function like so:
+
 ```{r}
 names(lol_chsqtest)
 ```
 
+The `statistic`, `parameter`, and `p.value` components store the test statistic, degrees of freedom, and $p$-value respectively. 
 
+While the table of expected count is available by using the following.
 
 ```{r}
 # expected counts
 lol_chsqtest$expected
 ```
+
+There are also two types of _residuals_ available in the output which we discuss next.
+
+### Residuals in Chi-Square Tests
+
+Residuals can be used to help determine the mangitude of discrepancies between the observed and expected counts as they indicate which cells contribute most to the chi-square statistic. 
+
+Most specifically, the **Pearson residuals** can be retrieved from the following code:
+
+```{r}
+lol_chsqtest$residuals
+```
+
+and are calculated as
+
+$$
+r_{ij} = \frac{(O_{ij}-E_{ij})}{\sqrt{E_{ij}}}
+$$
+where:
+
+- $r_{ij}$: The Pearson residual for the cell in the $i^{th}$ row and $j^{th}$ column
+- $O_{ij}$: The observed value for the cell in the $i^{th}$ row and $j^{th}$ column
+- $E_{ij}$: The expected value for the cell in the $i^{th}$ row and $j^{th}$ column
+
+
+Positive residuals indicate that the observed count is higher than expected. For example, the residual for the "female-bottom" cell of 1.15 means that there are more female champions whose main lane is the bottom role (ADC) than expected if there was no relationship between the gender and main lane of a champion.
+
+Related to the Pearson residual is the **Standardized Pearson Residual** which adjusts the Pearson residual to provide for easier interpretations (similar to a standard z-score). 
+
+These are calculated as
+
+$$
+stdres_{ij} = \frac{(O_{ij}-E_{ij})}{\sqrt{E_{ij}(1-r_i)(1-c_j)}}
+$$
+Where $O_{ij}$ and $E_{ij}$ are as before.
+
+- $r_i = $ represents the total for row $i$ divided by the grand total (i.e., the total sample size)
+- $c_j = $ represents the total for column $j$ divided by the grand total (i.e., the total sample size)
+
+For example, for male top lane champions we can calculate it as follows.
+
+$$
+O_{2,5} = 31 \\
+E_{2,5} \approx 24.24 \\
+r_i = 103/170 \approx 0.606 \\
+c_j = 40/170 \approx 0.235
+$$
+
+So, therefore,
+
+$$
+stdres_{2,5} = \frac{(31-24.24})}{\sqrt{24.24(1-0.606)(1-0.235)}} \approx 2.5
+$$
 
 
 <!-- 
