@@ -1,0 +1,34 @@
+---
+title: "Module Two"
+author: 
+- name: Amara McGowan
+  url: https://www.linkedin.com/in/amaramcgowan/
+  affiliation:
+      - id: slu
+        name: St. Lawrence University
+date: "TBD"
+description: "TBD"
+format: html
+categories:
+  - TBD
+---
+
+Please note that these material have not yet completed the required
+pedagogical and industry peer-reviews to become a published module on
+the SCORE Network. However, instructors are still welcome to use these
+materials if they are so inclined.
+
+# Welcome Video
+
+# Introduction 
+
+::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
+:::
+
+::: {.callout-note collapse = "true" title = "Activity Length" appearance = "minimal"}
+:::
+
+::: {.callout-note collapse = "true" title = "Methods" appearance = "minimal"}
+:::
+
+# Data
