@@ -1,0 +1,13 @@
+---
+title: "Clash Royale Card Synergy: A Network Analysis Tutorial"
+author: "Kevin Euyoque"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
