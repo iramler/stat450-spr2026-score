@@ -11,3 +11,30 @@ execute:
   warning: false
   message: false
 ---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+```
+
+
+Goal of this module
+
+In this tutorial, we will treat Clash Royale cards as nodes in a network.
+
+Two cards are connected by an edge if they perform well together, measured by paired win rate.
+
+We will treat:
+
+- Cards -> nodes
+- Strong pair win-rates -> edges
+- Win-rate value -> edge weight
+
+By the end, we will:
+
+- Build a synergy network from paired win rates
+- Learn network vocabulary (nodes, edges, weights, degree)
+- Compute centrality (who matters most)
+- Find cliques / communities (tight synergy groups)
