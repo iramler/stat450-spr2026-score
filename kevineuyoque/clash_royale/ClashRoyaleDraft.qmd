@@ -19,8 +19,9 @@ execute:
 library(tidyverse)
 ```
 
+** Currently working on dataset
 
-Goal of this module
+## Goal of this module
 
 In this tutorial, we will treat Clash Royale cards as nodes in a network.
 
@@ -38,3 +39,50 @@ By the end, we will:
 - Learn network vocabulary (nodes, edges, weights, degree)
 - Compute centrality (who matters most)
 - Find cliques / communities (tight synergy groups)
+
+
+## Network Representation
+
+To represent Clash Royale synergy as a network, we will model the data as a graph.
+
+### Nodes
+
+A node represents one Clash Royale card.
+
+Examples of nodes could be:
+
+- Hog Rider
+- Fireball
+- Miner
+- Ice Spirit
+
+In the network, each card appears once as a node.
+
+## Edges
+
+An **edge** represents a connection between two nodes (two cards).
+
+In this module, an edge means:
+
+The two cards are commonly used together and they perform well together based on paired win rate
+
+So if two cards have strong synergy, they will be connected.
+
+### Edge weights
+
+Edges can also have a weight, which measures how strong the connection is.
+
+For Clash Royale synergy, the edge weight will be the paired win rate for that card pair.
+
+Interpretation:
+
+- Higher paired win rate → stronger connection 
+- Lower paired win rate → weaker connection 
+
+Why use a network?
+
+A network is useful here because it lets us study:
+
+- which cards connect to many others
+- which groups of cards form groups of synergy
+- how the meta might be structured through relationships, not just individual win rates
