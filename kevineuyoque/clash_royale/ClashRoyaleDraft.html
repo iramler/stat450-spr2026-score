@@ -46,9 +46,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#goal-of-this-module" id="toc-goal-of-this-module" class="nav-link active" data-scroll-target="#goal-of-this-module"><span class="header-section-number">1</span> Goal of this module</a></li>
-  <li><a href="#network-representation" id="toc-network-representation" class="nav-link" data-scroll-target="#network-representation"><span class="header-section-number">2</span> Network Representation</a></li>
-  <li><a href="#edges" id="toc-edges" class="nav-link" data-scroll-target="#edges"><span class="header-section-number">3</span> Edges</a></li>
+  <li><a href="#introduction-what-is-clash-royale" id="toc-introduction-what-is-clash-royale" class="nav-link active" data-scroll-target="#introduction-what-is-clash-royale"><span class="header-section-number">1</span> Introduction: What is Clash Royale?</a>
+  <ul class="collapse">
+  <li><a href="#goal-of-this-module" id="toc-goal-of-this-module" class="nav-link" data-scroll-target="#goal-of-this-module"><span class="header-section-number">1.1</span> Goal of this module</a></li>
+  </ul></li>
+  <li><a href="#network-representation" id="toc-network-representation" class="nav-link" data-scroll-target="#network-representation"><span class="header-section-number">2</span> Network Representation</a>
+  <ul class="collapse">
+  <li><a href="#nodes" id="toc-nodes" class="nav-link" data-scroll-target="#nodes"><span class="header-section-number">2.1</span> Nodes</a></li>
+  <li><a href="#edges" id="toc-edges" class="nav-link" data-scroll-target="#edges"><span class="header-section-number">2.2</span> Edges</a></li>
+  <li><a href="#edge-weights" id="toc-edge-weights" class="nav-link" data-scroll-target="#edge-weights"><span class="header-section-number">2.3</span> Edge weights</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -80,8 +87,14 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>** Currently working on dataset</p>
-<section id="goal-of-this-module" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="goal-of-this-module"><span class="header-section-number">1</span> Goal of this module</h2>
+<section id="introduction-what-is-clash-royale" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction: What is Clash Royale?</h1>
+<p>Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.</p>
+<p>Success in the game depends heavily on card combinations, as certain cards perform more effectively when used together. Because of this emphasis on synergy, Clash Royale provides a natural setting for studying relationships between elements using network analysis.</p>
+<p>Clash Royale was released globally on March 2, 2016</p>
+<p>The game has been out for 9 years.</p>
+<section id="goal-of-this-module" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="goal-of-this-module"><span class="header-section-number">1.1</span> Goal of this module</h2>
 <p>In this tutorial, we will treat Clash Royale cards as nodes in a network.</p>
 <p>Two cards are connected by an edge if they perform well together, measured by paired win rate.</p>
 <p>We will treat:</p>
@@ -98,11 +111,12 @@ ul.task-list li input[type="checkbox"] {
 <li>Find cliques / communities (tight synergy groups)</li>
 </ul>
 </section>
-<section id="network-representation" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="network-representation"><span class="header-section-number">2</span> Network Representation</h2>
+</section>
+<section id="network-representation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Network Representation</h1>
 <p>To represent Clash Royale synergy as a network, we will model the data as a graph.</p>
-<section id="nodes" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="nodes"><span class="header-section-number">2.1</span> Nodes</h3>
+<section id="nodes" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="nodes"><span class="header-section-number">2.1</span> Nodes</h2>
 <p>A node represents one Clash Royale card.</p>
 <p>Examples of nodes could be:</p>
 <ul>
@@ -113,15 +127,15 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>In the network, each card appears once as a node.</p>
 </section>
-</section>
-<section id="edges" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="edges"><span class="header-section-number">3</span> Edges</h2>
+<section id="edges" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="edges"><span class="header-section-number">2.2</span> Edges</h2>
 <p>An <strong>edge</strong> represents a connection between two nodes (two cards).</p>
 <p>In this module, an edge means:</p>
 <p>The two cards are commonly used together and they perform well together based on paired win rate</p>
 <p>So if two cards have strong synergy, they will be connected.</p>
-<section id="edge-weights" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="edge-weights"><span class="header-section-number">3.1</span> Edge weights</h3>
+</section>
+<section id="edge-weights" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="edge-weights"><span class="header-section-number">2.3</span> Edge weights</h2>
 <p>Edges can also have a weight, which measures how strong the connection is.</p>
 <p>For Clash Royale synergy, the edge weight will be the paired win rate for that card pair.</p>
 <p>Interpretation:</p>
