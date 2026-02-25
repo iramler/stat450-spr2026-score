@@ -21,6 +21,16 @@ library(tidyverse)
 
 ** Currently working on dataset
 
+# Introduction: What is Clash Royale?
+
+Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.
+
+Success in the game depends heavily on card combinations, as certain cards perform more effectively when used together. Because of this emphasis on synergy, Clash Royale provides a natural setting for studying relationships between elements using network analysis.
+
+Clash Royale was released globally on March 2, 2016
+
+The game has been out for 9 years.
+
 ## Goal of this module
 
 In this tutorial, we will treat Clash Royale cards as nodes in a network.
@@ -41,11 +51,11 @@ By the end, we will:
 - Find cliques / communities (tight synergy groups)
 
 
-## Network Representation
+# Network Representation
 
 To represent Clash Royale synergy as a network, we will model the data as a graph.
 
-### Nodes
+## Nodes
 
 A node represents one Clash Royale card.
 
@@ -68,7 +78,7 @@ The two cards are commonly used together and they perform well together based on
 
 So if two cards have strong synergy, they will be connected.
 
-### Edge weights
+## Edge weights
 
 Edges can also have a weight, which measures how strong the connection is.
 
