@@ -337,7 +337,7 @@ lol_2way_table <- table(lol_MFonly$gender,
 
 We can also use the `addmargins` function to place the totals on the table too.
 ```{r}
-lol_2way_table_with_margins <- addmargins(lol_2way_table_raw)
+lol_2way_table_with_margins <- addmargins(lol_2way_table)
 lol_2way_table_with_margins
 ```
 
@@ -345,18 +345,6 @@ lol_2way_table_with_margins
 
 > Question: What percent of male champions are supports? What percent of support champions are male?
 
-
-<!--
-
-Cut this piece
-
-These last two questions are common ways to think about interpreting the results. So much so that we might wish toalso compute **row** and **column** proportions. 
-
-```{r}
-signif(prop.table(x = lol_2way_table_raw, margin = 2), 2)
-```
-
--->
 
 #### Bar charts
 
@@ -724,24 +712,33 @@ stdres_{2,5} = \frac{(31-24.24)}{\sqrt{24.24(1-0.606)(1-0.235)}} \approx 2.5
 $$
 
 
-<!-- 
-Stopped here, need to continue updating rewording to fit my style.
--->
+Standardized Pearson residuals can then be used in a similar manner
+as z-scores. For example, large values (in terms of magnitude) indicate
+unusual features that might be of further interest. For Chi-Square
+tests, these usually indicate which cells contribute an unusually large
+amount to the chi-square statistic.
+
+
 
 
 
 
 ### Interpreting Results
 
-First, given the $p$-value we can provide a general concluding statement about the test.
+First, given the $p$-value we can provide a general concluding statement
+about the test. F
 
 
 
+
+<!-- 
+Stopped here, need to continue updating rewording to fit my style.
+-->
 
 - Report and interpret an effect size for association (e.g., Cramér's V).
 
 ```{r}
-assocstats(lol_2way_table_raw)
+assocstats(lol_2way_table)
 ```
 
 
