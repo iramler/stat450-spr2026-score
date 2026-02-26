@@ -1,16 +1,24 @@
 ---
-title: "Module Two"
-author: 
-- name: Amara McGowan
-  url: https://www.linkedin.com/in/amaramcgowan/
-  affiliation:
-      - id: slu
-        name: St. Lawrence University
+title: "Using Stepwise Regression to Reverse Engineer ESPN's Total Quarterback Rating Formula"
+author:
+  - name: Amara McGowan
+    url: https://www.linkedin.com/in/amaramcgowan/
+    affiliations:
+      - ref: slu
+  - name: Ivan Ramler
+    email: mailto:iramler@stlawu.edu
+    affiliations:
+      - ref: slu
+affiliations:
+  - id: slu
+    name: St. Lawrence University
 date: "TBD"
 description: "TBD"
 format: html
 categories:
-  - TBD
+  - Stepwise Regression
+  - Model Selection
+  - Supervised Machine Learning
 ---
 
 Please note that these material have not yet completed the required
@@ -20,7 +28,15 @@ materials if they are so inclined.
 
 # Welcome Video
 
+If you are unfamiliar with ESPN's Total Quarterback Rating (QBR), you can watch this video to learn more:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YaEixC8ieVg?si=Z5stXflgrJnU8iQD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 # Introduction 
+
+The National Football League (NFL) has 14 official positions: 7 offensive, 5 defensive, and 2 special teams positions. One of the offensive positions is called Quarterback (QB), and their role is to lead their team on the field. ESPN streams NFL games and provides a lot of data on NFL players, including their Total Quarterback Rating (QBR), a 0-100 score measuring a quarterback's contribution to winning. Higher scores indicate better performance.
+
+In this module, you will...
 
 ::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
 :::

@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Amara McGowan">
+<meta name="author" content="Ivan Ramler">
 <meta name="description" content="TBD">
 
-<title>Module Two</title>
+<title>Using Stepwise Regression to Reverse Engineer ESPN’s Total Quarterback Rating Formula</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,9 +50,11 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Module Two</h1>
+<h1 class="title">Using Stepwise Regression to Reverse Engineer ESPN’s Total Quarterback Rating Formula</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">TBD</div>
+    <div class="quarto-category">Stepwise Regression</div>
+    <div class="quarto-category">Model Selection</div>
+    <div class="quarto-category">Supervised Machine Learning</div>
   </div>
   </div>
 
@@ -62,11 +65,19 @@ ul.task-list li input[type="checkbox"] {
 </div>
 
 <div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Authors</div>
   <div class="quarto-title-meta-heading">Affiliation</div>
   
     <div class="quarto-title-meta-contents">
     <p class="author"><a href="https://www.linkedin.com/in/amaramcgowan/">Amara McGowan</a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            St.&nbsp;Lawrence University
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Ivan Ramler <a href="mailto:mailto:iramler@stlawu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
@@ -96,9 +107,14 @@ ul.task-list li input[type="checkbox"] {
 <p>Please note that these material have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
 <section id="welcome-video" class="level1">
 <h1>Welcome Video</h1>
+<p>If you are unfamiliar with ESPN’s Total Quarterback Rating (QBR), you can watch this video to learn more:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YaEixC8ieVg?si=Z5stXflgrJnU8iQD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
+<p>The National Football League (NFL) has 14 official positions: 7 offensive, 5 defensive, and 2 special teams positions. One of the offensive positions is called Quarterback (QB), and their role is to lead their team on the field. ESPN streams NFL games and provides a lot of data on NFL players, including their Total Quarterback Rating (QBR), a 0-100 score measuring a quarterback’s contribution to winning. Higher scores indicate better performance.</p>
+<p>In this module, you will…</p>
 <div class="callout callout-style-simple callout-note no-icon callout-empty-content callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
