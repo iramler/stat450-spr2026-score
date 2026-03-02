@@ -9,3 +9,10 @@ The goal for the me is to teach the reader about the tour and help them learn ab
 
 The idea I want the reader to take away is how to scrape data, how to create simple plots and to graph the data in a meaningful way.
 
+https://www.procyclingstats.com/race/tour-de-france/statistics
+```{r}
+library(dplyr)
+library(readr)
+library(tidyverse)
+rider = data
+```
