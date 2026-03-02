@@ -4,29 +4,24 @@ format: html
 ---
 
 ```{r}
-library(dplyr)
-library(ggplot2)
 library(readr)
-
-
+library(dplyr)
+library(tidyverse)
 # --- Set 2: Run Files ---
 # Read and force Time to be character
-run_adj <- read_csv("~/Downloads/5KRun1.csv") %>%
+X5KRun1 <- read_csv("~/Downloads/5KRun1.csv") %>%
   mutate(Time = as.character(Time))|> select(1:4) # Ensure this is text
 
-run_unadj <- read_csv("~/Downloads/5KRunUnadj1.csv") |> select(1:4)
+X5KRunUnadj1 <- read_csv("~/Downloads/5KRunUnadj1.csv") |> select(1:4)
 
-# --- Combine (Join) them ---
-X5KRun1 <- bind_rows(book_adj, run_adj)
-X5KRunUnadj1 <- bind_rows(book_unadj, run_unadj)
 
 # --- Clean Unadjusted ---
 X5KRunUnadj1 <- X5KRunUnadj1[, colSums(is.na(X5KRunUnadj1)) < nrow(X5KRunUnadj1)]
-
+```
 
 
 # adjusted dataset
-
+```{r}
 X5KRun1$Time <- as.character(X5KRun1$Time)
 fix_time <- function(x) {
   x <- as.character(x)
@@ -49,18 +44,19 @@ fix_time <- function(x) {
 }
 
 X5KRun1$Time <- fix_time(X5KRun1$Time)
-
+```
 
 # time_sec culumn
+```{r}
 X5KRun1$time_sec <- with(
   as.data.frame(do.call(rbind, strsplit(X5KRun1$Time, ":"))),
   as.integer(V1) * 3600 + as.integer(V2) * 60 + as.integer(V3)
 )
-
+```
 
 
 # unadjusted dataset
-
+```{r}
 X5KRunUnadj1$Time <- as.character(X5KRunUnadj1$Time)
 fix_time <- function(x) {
   x <- as.character(x)
@@ -83,17 +79,18 @@ fix_time <- function(x) {
 }
 
 X5KRunUnadj1$Time <- fix_time(X5KRunUnadj1$Time)
-
+```
 
 # time_sec culumn
-
+```{r}
 X5KRunUnadj1$time_sec <- with(
   as.data.frame(do.call(rbind, strsplit(X5KRunUnadj1$Time, ":"))),
-  as.integer(V1) * 3600 + as.integer(V2) * 60 + as.integer(V3))
-
+  as.integer(V1) * 3600 + as.integer(V2) * 60 + as.integer(V3)
+)
+```
 
 # time diff
-
+```{r}
 # time diff
 library(dplyr)
 
@@ -103,11 +100,11 @@ df_diff <- X5KRun1 %>%
              suffix = c("_adj", "_unadj")) %>%
   # The difference is Unadjusted (raw time) minus Adjusted (time after donuts)
   mutate(time_diff_sec = time_sec_unadj - time_sec_adj)
-
+```
 
 
 # doughnut table
-
+```{r}
 bonus_tbl <- data.frame(
   donuts = 1:40,
   bonus = c(
@@ -124,11 +121,11 @@ bonus_tbl <- data.frame(
 library(lubridate)
 bonus_tbl$bonus_sec <- as.numeric(hms(bonus_tbl$bonus))
 
-
+```
 
 
 # number of doughnuts
-
+```{r}
 # number of doughnuts
 # This counts how many bonus milestones from the table the runner actually achieved
 df_diff$donuts <- sapply(df_diff$time_diff_sec, function(x) {
@@ -143,13 +140,26 @@ df_diff$donuts <- sapply(df_diff$time_diff_sec, function(x) {
 # If your data has errors (like a runner matched with the wrong time), 
 # this removes people with impossible donut counts (e.g., > 13).
 df_diff <- df_diff %>% filter(donuts <= 13)
-
+```
 
 
 # results
-
+```{r}
 library(ggplot2)
-
+df_diff
+df_diff <- df_diff |> filter(donuts >= 1) |> mutate(
+  position = case_when(
+      Position <= 10  ~ "Top 10",
+      Position <= 25  ~ "Top 25",
+      Position <= 50 ~ "Top 50",
+      Position <= 100 ~ "Top 100",
+      Position <= 150 ~ "Top 150",
+      Position <= 200 ~ "Top 200",
+      Position >= 200 ~ "Top 258"
+    
+  )
+)
+df_diff
 ggplot(df_diff, aes(x = donuts)) +
   geom_bar(fill = "#d95f02") +
   labs(
@@ -158,10 +168,22 @@ ggplot(df_diff, aes(x = donuts)) +
     y = "Number of Runners"
   ) +
   theme_minimal()
+```
 
 
+```{r}
+df_differ <- df_diff |> mutate(timed = time_sec_adj / 60) |> mutate(timer = time_sec_unadj / 60)
+df_me <- df_differ |> select(Position, timer, donuts, timed) |> arrange(timed)
+df_me
+df_differ
+ggplot(data = df_differ, aes(x = donuts, y = timed, colour = Position))+
+  geom_jitter()
 
-ggplot(df_diff, aes(x = time_sec_unadj, y = time_sec_adj)) +
+
+```
+
+```{r}
+ggplot(df_differ, aes(x = timed, y = timer)) +
   geom_point(alpha = 0.7, color = "#2c7fb8") +
   # Adds a reference line where Adjusted = Original (0 donuts eaten)
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "red") +
@@ -172,9 +194,29 @@ ggplot(df_diff, aes(x = time_sec_unadj, y = time_sec_adj)) +
     y = "Adjusted Time (seconds)"
   ) +
   theme_minimal()
+library(broom)
+mod_don = lm(timed ~ timer + donuts, data = df_differ)
+summary(mod_don)
+mod_don
+residi_dono = augment(mod_don, df_differ)
+residi_dono |> summarise(mean = mean(.hat))
 
+residi_dono |> summarise(mean = mean(abs(.std.resid)))
 
+1.658-2.487
 
+3*0.829
+
+0.0338-0.0507
+3*0.0169
+residi_dono |> arrange(desc(abs(.std.resid))) |> slice(1:19) |> select(timed, timer, .std.resid, .hat, Position, donuts)
+residi_dono |> arrange(timed) |> slice(1:19) |> select(timed, timer, .std.resid, .hat, Position)
+
+residi_dono |> filter(donuts >=9) |> select(timed, timer, .std.resid, .hat, Position, donuts) |> arrange(desc(donuts))|> print(n = 26)
+plot(mod_don)
+```
+
+```{r}
 # 1. Create a new rank column based on the CORRECT column name (time_sec_adj)
 df_diff$time_rank <- rank(df_diff$time_sec_adj, ties.method = "min")
 
@@ -193,9 +235,11 @@ ggplot(df_diff, aes(x = rank_group, y = donuts)) +
     y = "Number of Donuts"
   ) +
   theme_minimal()
+```
 
-
+```{r}
 library(ggplot2)
+
 ggplot(df_diff, aes(x = donuts, y = time_sec_adj)) +
   geom_point(fill = "#d95f02") +
   geom_smooth() +
@@ -205,58 +249,18 @@ ggplot(df_diff, aes(x = donuts, y = time_sec_adj)) +
     y = "Time Adj"
   ) +
   theme_minimal()
+```
 
 
-
-
+```{r}
 df_diff2 <- df_diff |> filter(donuts > 0)
-ggplot(df_diff2, aes(x = donuts, y = time_sec_adj)) +
+ggplot(df_diff2, aes(x = donuts, y = Position)) +
   geom_point(fill = "#d95f02") +
   geom_smooth() +
   labs(
-    title = "Distribution of Donuts Eaten more than 0",
+    title = "Distribution of Donuts Eaten without triathletes",
     x = "Number of Donuts",
     y = "time adj"
   ) +
   theme_minimal()
 ```
-
-
-
-```{r}
-df_diff2 <- df_diff2 |> mutate(Timed = time_sec_unadj/60)
-df_fast <- df_diff2 |> filter(donuts >= 10) |> arrange(time_sec_unadj) |> slice(1) |> select(Time, Timed, Position, donuts)
-df_fast
-df_faster <- df_diff2 |> filter(donuts >= 10) |> arrange(desc(time_sec_unadj)) |> slice(1) |> select(Time, Timed, Position, donuts)
-df_faster
-df_fastest <- df_diff2 |> filter(donuts <= 3) |> arrange(time_sec_unadj) |> slice(1) |> select(Time, Timed, Position, donuts)
-df_fastest
-df_fastey <- df_diff2 |> filter(donuts <= 3) |> arrange(desc(time_sec_unadj)) |> slice(1) |> select(Time, Timed, Position, donuts)
-df_fastey
-```
-
-```{r}
-library(broom)
-mod_doner = lm(time_sec_adj ~ time_sec_unadj,data=df_diff2)
-mod_doner
-# every second of adjusted time is -4.35 seconds of adjusted time.
-summary(mod_doner)
-resided = augment(mod_doner,df_diff2)
-resided
-plot(mod_doner)
-```
-
-```{r}
-mod_atee = lm(time_sec_adj~donuts,data=df_diff2)
-mod_atee
-# every donut eaten is an expected 73 second off of their adjusted finishing time. 
-summary(mod_atee)
-residedate = augment(mod_atee,df_diff2)
-residedate
-plot(mod_atee)
-```
-
-
-
-
-

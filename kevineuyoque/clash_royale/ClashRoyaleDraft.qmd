@@ -17,9 +17,16 @@ execute:
 #| include: false
 
 library(tidyverse)
+library(vembedr)
 ```
 
 ** Currently working on dataset
+
+```{r}
+embed_url(https//youtu.be/_hNxfiXmeAE?si=HjrRfldWKD4SfZix)
+```
+
+
 
 # Introduction: What is Clash Royale?
 
@@ -89,7 +96,7 @@ Interpretation:
 - Higher paired win rate → stronger connection 
 - Lower paired win rate → weaker connection 
 
-Why use a network?
+## Why use a network?
 
 A network is useful here because it lets us study:
 

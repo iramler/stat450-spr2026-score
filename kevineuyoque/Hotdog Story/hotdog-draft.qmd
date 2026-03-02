@@ -56,7 +56,7 @@ Attention is directed intentionally toward specific analytical moments
 
 Closeread allows these techniques to be implemented directly within Quarto using structured sections and plot references.
 
-## Core Closeread Structure
+## Closeread Structure
 
 Closeread documents are built using three key components:
 
@@ -65,14 +65,12 @@ Closeread documents are built using three key components:
 Sections define areas where scrollytelling behavior occurs
 
 ```{r}
-#| warning: false
 '::::{.cr-section}
 ...
 ::::'
 ```
 
 Everything inside a .cr-section behaves as part of the scroll-driven story.
-
 
 2. Stickies (Plots or Elements to Highlight)
 
@@ -170,7 +168,6 @@ This module demonstrates how statistical reasoning and visual storytelling can b
 :::
 
 
-
 ```{r}
 #| label: setup
 #| include: false
@@ -219,6 +216,7 @@ Here, the anchor shows men’s winner performance over time, measured as hot dog
 
 ```{r}
 #| label: anchor
+#| echo: true
 ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
   geom_point() +
   labs(title = "Men: Winners’ Eating Rates Over Time",
@@ -234,9 +232,152 @@ Locate years that look unusually high compared to nearby years.
 
 Step 2 — Teach a storytelling transition: totals vs rates @cr-totals
 
-Instructional goal: Show how to justify a metric choice.
+Show how to justify a metric choice.
 A common storytelling move is: start with the obvious metric (totals) and then explain why you switch to a fairer metric (rates).
 
 This plot shows total hot dogs eaten by the men’s winner each year. @cr-totals
 
 :::{#cr-totals}
+
+```{r}
+#| label: totals
+#| echo: true
+ggplot(hotdog_men, aes(x = Year, y = Dogs)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Men: Total Hot Dogs Eaten by Year",
+    x = "Year",
+    y = "Total Hot Dogs (Winner)") +
+  theme_minimal()
+```
+
+:::
+
+This jump is worth investigating. Next, we check whether this is a real performance shift or a measurement issue
+
+Step 3 — Add a distribution view (rates) @cr-hist
+
+A histogram helps you define what “typical” looks like before you talk about extremes.
+
+This histogram summarizes men’s winner pace across years. @cr-hist
+
+:::{#cr-hist}
+
+```{r}
+#| label: hist
+#| echo: true
+ggplot(hotdog_men, aes(x = Hotdogs_per_minute)) +
+  geom_histogram(bins = 12) +
+  labs(
+    title = "Men: Distribution of Winner Pace",
+    x = "Hot Dogs per Minute",
+    y = "Count of Years") +
+  theme_minimal()
+```
+
+:::
+
+Step 4 — Return to the anchor frame (rates over time) @cr-rate-time
+
+Scrollytelling often reuses the same frame (Year vs performance) to keep readers oriented.
+
+Here we go back to the time series, now using the fair metric (hot dogs per minute). @cr-rate-time
+
+:::{#cr-rate-time}
+
+```{r}
+#| label: rate_time
+#| echo: true
+ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Men: Hot Dogs per Minute by Year",
+    x = "Year",
+    y = "Hot Dogs per Minute") +
+  theme_minimal()
+```
+
+:::
+
+Now answer the story question:
+Is the jump still there when we standardize?
+If yes, it supports the idea of a real performance-era shift.
+
+
+
+Step 5 — Summarize the long-run direction (smooth) @cr-smooth
+
+Smoothing helps you write a clean “big picture” sentence.
+
+A smoother reduces year-to-year noise so your reader can see the overall direction. @cr-smooth
+
+:::{#cr-smooth}
+
+```{r}
+#| label: smooth
+#| echo: true
+ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+  geom_point() +
+  geom_smooth() +
+  labs(
+    title = "Men: Smoothed Trend in Winner Pace",
+    x = "Year",
+    y = "Hot Dogs per Minute") +
+  theme_minimal()
+```
+
+:::
+
+At this point, your narrative should do one thing:
+Summarize the trend in one sentence.
+
+
+Step 6 — Highlight a competitor to define an era (Joey) @cr-joey
+
+Keep the same plot frame, but highlight one “character moment.”
+
+This is a common ending structure for data stories:
+we move from “trend” -> “era.” @cr-joey
+
+:::{#cr-joey}
+
+
+```{r}
+#| label: joey
+#| echo: true
+if ("Winner" %in% names(hotdog_men)) {
+
+  joey_wins <- hotdog_men |> filter(Winner == "Joey Chestnut")
+
+  ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+    geom_point(alpha = 0.6, color = "grey") +
+    geom_point(data = joey_wins, size = 2, color = "black") +
+    labs(
+      title = "Joey Chestnut’s Winning Years Highlighted",
+      x = "Year",
+      y = "Hot Dogs per Minute"
+    ) +
+    theme_minimal()
+
+} else {
+
+  ggplot(hotdog_men, aes(x = Year, y = Hotdogs_per_minute)) +
+    geom_point() +
+    labs(
+      title = "Joey highlight requires a Winner column",
+      x = "Year",
+      y = "Hot Dogs per Minute"
+    ) +
+    theme_minimal()
+
+}
+
+```
+:::
+:::
+## References
+
+Bray, A., & Goldie, J. (2024). Closeread. https://closeread.dev
+
