@@ -1,0 +1,17 @@
+does group d tend to have higher scores compared to A or F?
+
+is score
+adjusted for age?
+
+anova or side by side boxplots
+
+standards for age groups
+
+for the forms mainly look at group D and look into country effects
+
+are there certain scores where they won by 0.01
+for forms
+
+are the more popular forms the more competitive ones?
+
+get the data for 2024
