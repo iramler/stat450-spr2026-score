@@ -65,14 +65,12 @@ Closeread documents are built using three key components:
 Sections define areas where scrollytelling behavior occurs
 
 ```{r}
-#| warning: false
 '::::{.cr-section}
 ...
 ::::'
 ```
 
 Everything inside a .cr-section behaves as part of the scroll-driven story.
-
 
 2. Stickies (Plots or Elements to Highlight)
 
@@ -378,3 +376,8 @@ if ("Winner" %in% names(hotdog_men)) {
 
 ```
 :::
+:::
+## References
+
+Bray, A., & Goldie, J. (2024). Closeread. https://closeread.dev
+
