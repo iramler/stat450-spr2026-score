@@ -1,7 +1,12 @@
-# install.packages("remotes")
-# remotes::install_github("jthomasmock/espnscrapeR")
+install.packages("nflreadr")
 
-library(espnscrapeR)
+library(nflreadr)
 
-seasons <- 2004:2025
-all_qbr <- map_df(seasons, ~espnscrapeR::get_college_qbr(season = .x))
+nfl_qbr <- load_espn_qbr(summary_type = "week")
+# Connect w/ names + teams + week, before adding qbr
+
+schedules <- load_schedules(2025)
+# important for game scores
+
+player_stats <- load_player_stats(2025)
+# This has the stats (like comp) per week per player
