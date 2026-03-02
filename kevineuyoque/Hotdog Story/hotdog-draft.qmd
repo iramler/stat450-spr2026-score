@@ -56,7 +56,7 @@ Attention is directed intentionally toward specific analytical moments
 
 Closeread allows these techniques to be implemented directly within Quarto using structured sections and plot references.
 
-## Core Closeread Structure
+## Closeread Structure
 
 Closeread documents are built using three key components:
 
@@ -170,7 +170,6 @@ This module demonstrates how statistical reasoning and visual storytelling can b
 :::
 
 
-
 ```{r}
 #| label: setup
 #| include: false
@@ -240,3 +239,4 @@ A common storytelling move is: start with the obvious metric (totals) and then e
 This plot shows total hot dogs eaten by the men’s winner each year. @cr-totals
 
 :::{#cr-totals}
+
