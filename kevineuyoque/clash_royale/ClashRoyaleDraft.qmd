@@ -21,6 +21,7 @@ library(tidyverse)
 
 ** Currently working on dataset
 
+
 # Introduction: What is Clash Royale?
 
 Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.
@@ -89,7 +90,7 @@ Interpretation:
 - Higher paired win rate → stronger connection 
 - Lower paired win rate → weaker connection 
 
-Why use a network?
+## Why use a network?
 
 A network is useful here because it lets us study:
 
