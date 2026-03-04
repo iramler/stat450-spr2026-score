@@ -20,7 +20,7 @@ library(stargazer)
 ### Know Thy Data
 
 ```{r}
-kungfu<- read.csv("kungfu_data.csv")
+kungfu<- read.csv("kungfu_data_dirty.csv")
 head(kungfu, 25)
 ```
 
@@ -67,10 +67,11 @@ selecting_the_form <- getting_rid_of_up_to_form |> select(-delete) |>  separate_
     Form = ".*?(?=G)", 
     Group = ".*"))
 ```
+
 Now the situation is manageable. The remaining step is carpentry that repairs the missing `Group` category we lost during the parsing process of the result book.\
 
-
 Add the new final clean everything correct and checked thrice csv back into here: the data frame is called `kf`
+
 ```{r}
 kf <- read.csv("kungfu.csv")
 ```
@@ -79,20 +80,20 @@ Now we can start working with the data set to decide what to delete and what to 
 
 Things we can do:
 
-1. get rid of the entries for athletes who defaulted.
+1.  get rid of the entries for athletes who defaulted.
+
 -   Defaulting in the competition means they either got disqualified or had to step away from the competition voluntarily. Both outcomes resulted in them not getting scored.
 
-2. get summary statistics for both gender groups.
+2.  get summary statistics for both gender groups.
 
-3. get summary statistics for each (of the 6) age groups.
+3.  get summary statistics for each (of the 6) age groups.
 
-4. get summary statistics for each kung fu form in the competition.
+4.  get summary statistics for each kung fu form in the competition.
 
-5. get summary statistics for each country participating.
-
-
+5.  get summary statistics for each country participating.
 
 ### Part by part
+
 ```{r}
 # the number of total athletes before removing defaulted athletes is 2129
 kf_nodefault <- kf|> filter(Rank != "Default")
@@ -104,9 +105,9 @@ kf_nodefault <- kf|> filter(Rank != "Default")
 ```
 
 ```{r}
-kf_nodefault |> drop_na(Score) |> group_by(sex) |> summarise(mean(Score))
-kf_nodefault |> drop_na(Score) |> group_by(Team) |> summarise(mean(Score))
-kf_nodefault |> drop_na(Score) |> group_by(Form) |> summarise(mean(Score))
+kf_nodefault |> drop_na(Score) |> group_by(sex) |> summarise(mean(Score), print(mean(Score)))
+meanteam <- kf_nodefault |> drop_na(Score) |> group_by(Team) |> summarise(mean(Score)) |> select(-Team)
+getformscore<-kf_nodefault |> drop_na(Score) |> group_by(Form) |> summarise(mean(Score))
 kf_nodefault |> drop_na(Score) |> group_by(Group) |> summarise(mean(Score))
 
 # there are 1115 male competitors
@@ -114,10 +115,15 @@ kf_nodefault |> drop_na(Score) |> group_by(Group) |> summarise(mean(Score))
 
 # wow kung fu is not that male dominated!
 
+getformscore|> summarise(mean(`mean(Score)`))
+
 ```
 
-
-
-### Getting the data for other years
-
-
+| Mean for Sexes | Mean for all Teams | Mean for all Forms | Mean by Group |
+|----------------|--------------------|--------------------|---------------|
+| Men 8.44       | 8.5                | 8.47               | Group A 7.43  |
+| Women 8.43     |                    |                    | Group B 8.40  |
+|                |                    |                    | Group C 8.45  |
+|                |                    |                    | Group D 8.68  |
+|                |                    |                    | Group E 8.55  |
+|                |                    |                    | Group F 8.46  |
