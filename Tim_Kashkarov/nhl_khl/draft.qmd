@@ -21,9 +21,30 @@ df <- bind_rows(nhl_20245, khl_20245)
 ```
 
 ```{r}
+ggplot(df, aes(x = WinPerc, fill = league)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 12, alpha = 0.4, position = "identity") +
+  geom_density(alpha = 0.2) +
+  facet_wrap(~league, ncol = 1) +
+  labs(title = "Win Distribution (2024/25)", x = "Win (W / GP)", y = "Density") +
+  theme_minimal()
+
 ggplot(df, aes(x = league, y = WinPerc)) +
   geom_boxplot() +
-  labs(title = "Win% spread: NHL vs KHL (2024/25)", x = "", y = "Win% (W/GP)") +
+  labs(title = "Win spread: NHL vs KHL (2024/25)", x = "", y = "Win (W/GP)") +
   theme_minimal()
 ```
 
+```{r}
+spread <- df |>
+  group_by(league) |>
+  summarise(
+    teams = n(),
+    min = min(WinPerc),
+    max = max(WinPerc),
+    range = max - min,
+    IQR = IQR(WinPerc),
+    P90_P10 = quantile(WinPerc, 0.90) - quantile(WinPerc, 0.10),
+    .groups = "drop")
+spread
+```
+Smaller range / IQR(Q75 − Q25) / P90–P10(spread of most teams) -> tighter distribution -> more parity.
