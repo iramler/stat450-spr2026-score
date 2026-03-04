@@ -690,6 +690,19 @@ lol_chsqtest$stdres
 
 #### Using a Mosiac Plot 
 
+Meh...
+
+```{r}
+library(vcd)
+
+mosaic(lol_2way_table,
+       shade = TRUE,
+#       legend = TRUE,
+       main = "Mosaic plot shaded by standardized residuals: gender × lane")
+
+```
+
+
 ### Providing a Conclusion
 
 

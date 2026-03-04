@@ -1,0 +1,29 @@
+---
+title: "draft"
+format: html
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+library(lubridate)
+```
+
+```{r}
+nhl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/nhl_20245.csv")
+khl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/khl_20245.csv")
+```
+
+```{r}
+nhl_20245 <- nhl_20245 |> transmute(league = "NHL", team = Team, WinPerc = Wins / GamesPlayed)
+khl_20245 <- khl_20245 |> transmute(league = "KHL", team = Team, WinPerc = Wins / GamesPlayed)
+df <- bind_rows(nhl_20245, khl_20245)
+```
+
+```{r}
+ggplot(df, aes(x = league, y = WinPerc)) +
+  geom_boxplot() +
+  labs(title = "Win% spread: NHL vs KHL (2024/25)", x = "", y = "Win% (W/GP)") +
+  theme_minimal()
+```
+
