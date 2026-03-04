@@ -127,3 +127,7 @@ getformscore|> summarise(mean(`mean(Score)`))
 |                |                    |                    | Group D 8.68  |
 |                |                    |                    | Group E 8.55  |
 |                |                    |                    | Group F 8.46  |
+
+are there any forms where the difference across age groups is more amplified.
+
+analyse by form, which group do they belong to?
