@@ -1,10 +1,10 @@
 ---
-title: "Closeread Scrollytelling Handout (R + Quarto)"
+title: "Intro to Closeread Scrollytelling: Nathan's Hotdog Eating Contest"
 author:
   - name: Kevin Euyoque
     affiliation:
         name: St. Lawrence University
-date: "February 20, 2026"
+date: "March 2, 2026"
 description: "A data visualization module using Nathan’s Hot Dog Eating Contest data through a closeread story."
 editor:
   canonical: true
@@ -151,6 +151,19 @@ Download data: [hotdog_clean.csv]("hotdog_clean.csv")
 </details>
 
 
+## Closeread essentials
+
+Closeread adds one key idea to a normal Quarto document:
+
+- A plot becomes a target when it has an ID like {#cr-plotname}
+
+- Your narrative becomes a trigger when it references the target using @cr-plotname
+
+- When the reader scrolls to that trigger, the plot becomes the focus
+
+- You will see the same dataset multiple times. This is intentional, scrollytelling uses one anchor visualization and changes it slightly as the story advances.
+
+
 ## Exercises
 
 Students will:
@@ -161,7 +174,7 @@ Students will:
 4. Use closeread references to structure a scroll-based narrative.
 5. Highlight Joey Chestnut’s winning years within the larger historical trend.
 
-::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+::: {.callout-note collapse="true" title="Summary" appearance="minimal"}
 
 This module demonstrates how statistical reasoning and visual storytelling can be integrated into a cohesive scrollytelling experience. By combining careful metric selection with structured narrative flow, students learn not only how to analyze data, but how to communicate it effectively.
 
@@ -188,18 +201,6 @@ men_max_year <- hotdog_men |> slice_max(Hotdogs_per_minute, n = 1) |> pull(Year)
 
 :::{#cr-intro}
 
-
-#### Closeread essentials
-
-Closeread adds one key idea to a normal Quarto document:
-
-- A plot becomes a target when it has an ID like {#cr-plotname}
-
-- Your narrative becomes a trigger when it references the target using @cr-plotname
-
-- When the reader scrolls to that trigger, the plot becomes the focus
-
-- You will see the same dataset multiple times. This is intentional, scrollytelling uses one anchor visualization and changes it slightly as the story advances.
 
 :::
 
@@ -334,7 +335,7 @@ At this point, your narrative should do one thing:
 Summarize the trend in one sentence.
 
 
-Step 6 — Highlight a competitor to define an era (Joey) @cr-joey
+Step 6 — Highlight Joey Chestnut’s winning years within the larger historical trend. @cr-joey
 
 Keep the same plot frame, but highlight one “character moment.”
 
@@ -377,6 +378,12 @@ if ("Winner" %in% names(hotdog_men)) {
 ```
 :::
 :::
+
+## Conclusion
+Congratulations! You just finished your first data scrollytelling project!
+
+Closeread has many different ways it can be used to show data. Hopefully this helped understand its overall introduction through a fun scrollytelling format.
+
 ## References
 
 Bray, A., & Goldie, J. (2024). Closeread. https://closeread.dev

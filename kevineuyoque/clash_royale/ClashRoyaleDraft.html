@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -88,8 +122,40 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>** Currently working on dataset</p>
+<p>Ive made all 125 cards into a dataset however i need to make them into a new one that has the</p>
+<ul>
+<li>Number of decks with the pair of cards (sample size)</li>
+<li>Number of wins with the pair of cards</li>
+<li>Win rate for those pair</li>
+<li>It would be set up with every card listed in the columns and rows with that information for each</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cards <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clash_royale_cards_125.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>cards</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 125 × 5
+   card_name        elixir type     evolution hero_upgrade
+   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;    &lt;lgl&gt;     &lt;lgl&gt;       
+ 1 Barbarian Hut         7 Building FALSE     FALSE       
+ 2 Bomb Tower            4 Building FALSE     FALSE       
+ 3 Cannon                3 Building TRUE      FALSE       
+ 4 Elixir Collector      6 Building FALSE     FALSE       
+ 5 Goblin Cage           4 Building TRUE      FALSE       
+ 6 Goblin Drill          4 Building FALSE     FALSE       
+ 7 Goblin Hut            4 Building FALSE     FALSE       
+ 8 Inferno Tower         5 Building FALSE     FALSE       
+ 9 Mortar                4 Building TRUE      FALSE       
+10 Tesla                 4 Building TRUE      FALSE       
+# ℹ 115 more rows</code></pre>
+</div>
+</div>
 <section id="introduction-what-is-clash-royale" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction: What is Clash Royale?</h1>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/_hNxfiXmeAE" title="Clash Royale Gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
+</iframe>
 <p>Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.</p>
 <p>Success in the game depends heavily on card combinations, as certain cards perform more effectively when used together. Because of this emphasis on synergy, Clash Royale provides a natural setting for studying relationships between elements using network analysis.</p>
 <p>Clash Royale was released globally on March 2, 2016</p>
@@ -153,6 +219,7 @@ ul.task-list li input[type="checkbox"] {
 <li>which groups of cards form groups of synergy</li>
 <li>how the meta might be structured through relationships, not just individual win rates</li>
 </ul>
+<p>There are over 37,235,730,424,788 possible unique deck combinations</p>
 </section>
 </section>
 

@@ -18,17 +18,53 @@ execute:
 
 library(tidyverse)
 library(vembedr)
+library(igraph)
+library(netrankr)
+# devtools::install_github("schochastics/networkdata")
 ```
 
-** Currently working on dataset
+\*\* Currently working on dataset
+
+Ive made all 125 cards into a dataset however i need to make them into a new one that has the
+
+-   Number of decks with the pair of cards (sample size) DONE
+-   Number of wins with the pair of cards 
+-   Win rate for those pairs 
+-   (any win rate above 50% convert to a 1 and under to a 0)
+-   Replace the diagonal of the matrix with zeros 
+-   It would be set up with every card listed in the columns and rows with that information for each
+
 
 ```{r}
-embed_url(https//youtu.be/_hNxfiXmeAE?si=HjrRfldWKD4SfZix)
+library(readr)
+cr_season3_5000decks <- read_csv("cr_season3_5000decks.csv")
+View(cr_season3_5000decks)
+
+cards_id <- pivot_wider(data = cr_season3_5000decks, names_from = card, values_from = winner)
+
+clash_decks <- cards_id |> mutate(across(-id, ~replace(.,!is.na(.),1))) |>
+  mutate(across(-id, ~replace(.,is.na(.),0)))
+
+# gets rid of first column
+clash_deck_n <- t(as.matrix(clash_decks[,-1])) %*% as.matrix(clash_decks[,-1])
+
+clash_deck_wins
 ```
 
 
+```{r}
+library(tidyverse)
+
+cards <- read_csv("clash_royale_cards_125.csv")
+
+cards
+```
 
 # Introduction: What is Clash Royale?
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/_hNxfiXmeAE" title="Clash Royale Gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+</iframe>
 
 Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.
 
@@ -46,17 +82,16 @@ Two cards are connected by an edge if they perform well together, measured by pa
 
 We will treat:
 
-- Cards -> nodes
-- Strong pair win-rates -> edges
-- Win-rate value -> edge weight
+-   Cards -\> nodes
+-   Strong pair win-rates -\> edges
+-   Win-rate value -\> edge weight
 
 By the end, we will:
 
-- Build a synergy network from paired win rates
-- Learn network vocabulary (nodes, edges, weights, degree)
-- Compute centrality (who matters most)
-- Find cliques / communities (tight synergy groups)
-
+-   Build a synergy network from paired win rates
+-   Learn network vocabulary (nodes, edges, weights, degree)
+-   Compute centrality (who matters most)
+-   Find cliques / communities (tight synergy groups)
 
 # Network Representation
 
@@ -68,10 +103,10 @@ A node represents one Clash Royale card.
 
 Examples of nodes could be:
 
-- Hog Rider
-- Fireball
-- Miner
-- Ice Spirit
+-   Hog Rider
+-   Fireball
+-   Miner
+-   Ice Spirit
 
 In the network, each card appears once as a node.
 
@@ -93,13 +128,15 @@ For Clash Royale synergy, the edge weight will be the paired win rate for that c
 
 Interpretation:
 
-- Higher paired win rate → stronger connection 
-- Lower paired win rate → weaker connection 
+-   Higher paired win rate → stronger connection
+-   Lower paired win rate → weaker connection
 
 ## Why use a network?
 
 A network is useful here because it lets us study:
 
-- which cards connect to many others
-- which groups of cards form groups of synergy
-- how the meta might be structured through relationships, not just individual win rates
+-   which cards connect to many others
+-   which groups of cards form groups of synergy
+-   how the meta might be structured through relationships, not just individual win rates
+
+There are over 37,235,730,424,788 possible unique deck combinations
