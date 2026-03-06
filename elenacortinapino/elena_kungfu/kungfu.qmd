@@ -142,7 +142,10 @@ analyse by form, which group do they belong to?
 
 ![](cluster heatmap.png){fig-align="center"}
 
+###### Methods for measuring distances 
+Need to choose a type of measuring distance that works well with very small differences and (in some cases) no distance!
 
+s
 
 #### K-Means
 
