@@ -145,7 +145,15 @@ analyse by form, which group do they belong to?
 ###### Methods for measuring distances 
 Need to choose a type of measuring distance that works well with very small differences and (in some cases) no distance!
 
-s
+For now, let's use Euclidean distance 
+```{r}
+# first have to turn empty cells into `NA`
+
+# finding euclidean distance with R base function dist()
+dist.eucl <- dist(df.scaled, method = "euclidean")
+
+```
+
 
 #### K-Means
 
