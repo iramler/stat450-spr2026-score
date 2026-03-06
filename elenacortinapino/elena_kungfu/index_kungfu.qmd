@@ -30,6 +30,8 @@ library(here)
 
 ## Background
 
+[Wang Shengrong (Group D) Winner Drunken Fist CHN Team](https://www.youtube.com/watch?v=BFFqe0Iyqu0)
+
 ### World Kungfu Championships 2025: Forms, Groups, Ranking
 
 The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years. At the WKFC, mutual understanding is fostered through skill and cultural exchanges. In the spirit of sport, growth, development, and health are the core values of the event.
