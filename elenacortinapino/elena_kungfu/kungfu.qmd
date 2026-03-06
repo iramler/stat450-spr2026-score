@@ -117,6 +117,10 @@ kf_nodefault |> drop_na(Score) |> group_by(Group) |> summarise(mean(Score))
 
 getformscore|> summarise(mean(`mean(Score)`))
 
+ntnptpn <- kf_nodefault |> select(`Team`) |> mutate(countries = factor(Team)) |> group_by(countries) |> summarise(count = n()) |> arrange(desc(count))
+# 45 countries
+print(ntnptpn)
+
 ```
 
 | Mean for Sexes | Mean for all Teams | Mean for all Forms | Mean by Group |
@@ -131,3 +135,15 @@ getformscore|> summarise(mean(`mean(Score)`))
 are there any forms where the difference across age groups is more amplified.
 
 analyse by form, which group do they belong to?
+
+### Cluster Analysis
+
+#### Unsupervised/ supervised machine learning
+
+![](cluster heatmap.png){fig-align="center"}
+
+
+
+#### K-Means
+
+#### Hierarchical agglomerative clustering
