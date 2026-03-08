@@ -28,3 +28,4 @@ nfl_stats <- clean_stats |>
   left_join(clean_qbr, by = c("week", "player"))
 
 # TODO: Have to add in the clean schedules data, but still have to rep every team
+# Regular Regression (just for me) "Quantile Regression - Median" (for the module)
