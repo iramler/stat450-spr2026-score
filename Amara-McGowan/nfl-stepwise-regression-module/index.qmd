@@ -1,5 +1,5 @@
 ---
-title: "Using Stepwise Regression to Reverse Engineer ESPN's Total Quarterback Rating Formula in Julia"
+title: "Reverse Engineering ESPN's Total Quarterback Rating Formula with Quantile Regression in Julia, R, and Python"
 author:
   - name: Amara McGowan
     url: https://www.linkedin.com/in/amaramcgowan/
@@ -16,9 +16,7 @@ date: "TBD"
 description: "TBD"
 format: html
 categories:
-  - Stepwise Regression
-  - Model Selection
-  - Supervised Machine Learning
+  - Quantile Regression
 ---
 
 Please note that these material have not yet completed the required
@@ -49,14 +47,62 @@ In this module, you will...
 
 # Data
 
+The `nfl_qbr.csv` dataset contains 540 rows, with 65 quarterbacks... 
+
+Download Data: [nfl_qbr.csv](nfl_qbr.csv)
+
 <details>
 <summary><b>Variable Descriptions</b></summary>
 
 | Variable | Description |
 |------------------------------------|------------------------------------|
-| Name | What is it? |
+| week | Week of the Season |
+| player | Full Name of the Quarterback |
+| qbr | What is it? |
+| team | What is it? |
+| opponent_team | What is it? |
+| completions | What is it? |
+| attempts | What is it? |
+| passing_yards | What is it? |
+| passing_tds | What is it? |
+| passing_interceptions | What is it? |
+| sacks | What is it? |
+| fumbles | What is it? |
+| prop_total | What is it? |
+| result | What is it? |
 </details>
+
+<details>
+<summary><b>Data Source</b></summary>
+
+Include something about ESPN
+
+</details>
+
+# Quantile Regression
+
+Here
+
+# Julia, R, and Python
+
+::: {.panel-tabset}
+## Julia
+```markdown
+Julia code
+```
+## R
+
+```markdown
+R code
+```
+
+## Python
+
+```markdown
+Python code
+```
+:::
 
 # References
 
-Mock T (2022). espnscrapeR: Scrapes Or Collects NFL Data From ESPN. R package version 0.7.1, https://github.com/jthomasmock/espnscrapeR.
+Ho T, Carl S (2026). nflreadr: Download 'nflverse' Data. R package version 1.5.0.9002, https://nflreadr.nflverse.com.
