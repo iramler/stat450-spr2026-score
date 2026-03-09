@@ -1,0 +1,44 @@
+{string remove for international}?
+might ^
+
+string detect for womens and mens 
+
+form: 
+separate_wider using "Group " as the separator (starting with the letter)
+
+another separate wide on the space befroe and after the group letter 
+
+
+
+read tsv for the 9th year
+
+
+hyerarchical clustering 
+
+complete linkage: minmax 
+
+
+take a couple of sample points to illustrate the idea in the tutorial form of the module
+
+exploratory data analysis for the points since its not prediction.. 
+
+
+
+scaling pre-processing of the data: correlation 
+
+?z-scores: how does the age impact the score"" kind of analysis with z-score
+
+does the distance actually matter?
+
+
+task:
+1. analysis: get the tree chart and summarize  reuslts for the clusters
+
+
+2. get the forms in rows > columns are gorups > contents : average score   
+
+
+
+3. the variables are the age groups: dont shiffle thm
+
+clustering rows:
