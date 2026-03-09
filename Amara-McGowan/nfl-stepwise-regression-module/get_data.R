@@ -20,12 +20,28 @@ clean_qbr <- qbr |>
 
 clean_schedules <- schedules |>
   filter(game_type == "REG") |>
-  rename(team = home_team, opponent_team = away_team, opp_score = away_score) |>
-  select(week, team, opponent_team, opp_score, home_score, result, total) |>
+  rename(team = home_team) |>
+  select(week, team, away_team, away_score, home_score, result, total) |>
   mutate(prop_total = home_score / total)
 
-nfl_stats <- clean_stats |>
-  left_join(clean_qbr, by = c("week", "player"))
+home_teams <- clean_schedules |>
+  select(week, team, prop_total, result)
 
-# TODO: Have to add in the clean schedules data, but still have to rep every team
-# Regular Regression (just for me) "Quantile Regression - Median" (for the module)
+away_teams <- clean_schedules |>
+  select(week, away_team, home_score, away_score, total) |>
+  mutate(prop_total = away_score / total, result = away_score - home_score) |>
+  rename(team = away_team) |>
+  select(week, team, prop_total, result)
+
+team_stats <- bind_rows(home_teams, away_teams)
+
+nfl_qbr <- clean_qbr |>
+  left_join(clean_stats, by = c("week", "player")) |>
+  left_join(team_stats, by = c("week", "team"))
+
+write_csv(nfl_qbr, "nfl_qbr.csv")
+
+# Notes: 
+# - nfl_qbr has no missing values. 
+# - clean_stats has 81 unique QBs, but clean_qbr only reports QBR for 65 of them,
+#   so the final nfl_qbr dataset contains 65 players with player stats and qbr data.

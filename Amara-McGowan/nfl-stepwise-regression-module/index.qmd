@@ -36,13 +36,13 @@ The National Football League (NFL) has 14 official positions: 7 offensive, 5 def
 
 In this module, you will...
 
-::: {.callout-note collapse = "true" title = "Learning Objectives" appearance = "minimal"}
+:::{.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 :::
 
-::: {.callout-note collapse = "true" title = "Activity Length" appearance = "minimal"}
+:::{.callout-note collapse="true" title="Activity Length" appearance="minimal"}
 :::
 
-::: {.callout-note collapse = "true" title = "Methods" appearance = "minimal"}
+:::{.callout-note collapse="true" title="Methods" appearance="minimal"}
 :::
 
 # Data
@@ -83,20 +83,28 @@ Include something about ESPN
 
 Here
 
-# Julia, R, and Python
+# Getting Started in Julia, R, or Python
 
-::: {.panel-tabset}
+:::{.panel-tabset}
+
 ## Julia
+
+Package: QuantReg.jl
+
 ```markdown
 Julia code
 ```
 ## R
+
+Package: quantreg package
 
 ```markdown
 R code
 ```
 
 ## Python
+
+Package: statsmodels
 
 ```markdown
 Python code
