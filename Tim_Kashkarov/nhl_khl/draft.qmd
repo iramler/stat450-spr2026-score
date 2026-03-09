@@ -15,8 +15,8 @@ khl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/khl_20245.csv")
 ```
 
 ```{r}
-nhl_20245 <- nhl_20245 |> transmute(league = "NHL", team = Team, WinPerc = Wins / GamesPlayed)
-khl_20245 <- khl_20245 |> transmute(league = "KHL", team = Team, WinPerc = Wins / GamesPlayed)
+nhl_20245 <- nhl_20245 |> transmute(league = "NHL", team = Team, WinPerc = Wins / GamesPlayed, GF_pg = GF / GamesPlayed, GA_pg = GA / GamesPlayed)
+khl_20245 <- khl_20245 |> transmute(league = "KHL", team = Team, WinPerc = Wins / GamesPlayed, GF_pg = GF / GamesPlayed, GA_pg = GA / GamesPlayed)
 df <- bind_rows(nhl_20245, khl_20245)
 ```
 
@@ -47,4 +47,113 @@ spread <- df |>
     .groups = "drop")
 spread
 ```
-Smaller range / IQR(Q75 − Q25) / P90–P10(spread of most teams) -> tighter distribution -> more parity.
+Smaller range / IQR(Q75 − Q25) / P90–P10(spread of most teams) -> tighter distribution -> more parity
+
+```{r}
+cutoff_df <- df_top |>
+  group_by(league) |>
+  summarise(
+    n_teams = n(),
+    playoff_line = n_teams - 16 + 0.5)
+cutoff_df
+
+ggplot(df_top, aes(x = WinPerc, y = reorder(team, WinPerc), color = top3)) +
+  geom_point(size = 3) +
+  geom_hline(
+    data = cutoff_df,
+    aes(yintercept = playoff_line),
+    linetype = "dashed",
+    color = "blue",
+    inherit.aes = FALSE) +
+  facet_wrap(~league, scales = "free_y") +
+  scale_color_manual(values = c("black", "red")) +
+  labs(
+    title = "Team Win% in NHL vs KHL (2024–25)",
+    x = "Win Percentage",
+    y = "Team",
+    color = "Top 3") +
+  theme_minimal()
+```
+
+*Fligner–Killeen Hypothesis Test*
+
+H0: NHL and KHL have the same spread of Win% (same parity)
+H1: NHL spread is smaller than KHL (NHL has more parity)
+```{r}
+fligner.test(WinPerc ~ league, data = df)
+```
+p ≥ 0.05 -> not enough evidence that spreads differ
+
+
+*Permutation test on IQR*
+
+```{r}
+obs <- with(df, IQR(WinPerc[league=="KHL"]) - IQR(WinPerc[league=="NHL"]))
+obs
+```
+
+```{r}
+set.seed(1)
+
+B <- 10000
+diffs <- numeric(B)
+
+for(i in 1:B){
+  shuffled <- df |>
+    mutate(league_shuf = sample(league))
+  
+  diffs[i] <- with(shuffled,
+                   IQR(WinPerc[league_shuf=="KHL"]) - IQR(WinPerc[league_shuf=="NHL"]))
+}
+
+# one-sided p-value for "NHL has smaller spread" = "KHL - NHL is big/positive"
+p_val <- mean(diffs >= obs)
+p_val
+```
+
+```{r}
+df_test<- df |>
+  group_by(league) |>
+  summarise(
+    IQR = IQR(WinPerc),
+    MAD = median(abs(WinPerc - median(WinPerc))),
+    P90_P10 = quantile(WinPerc, 0.90) - quantile(WinPerc, 0.10),
+    .groups="drop"
+  )
+df_test
+```
+
+In all three measures, the KHL spread is larger than the NHL spread
+
+```{r}
+ggplot(df, aes(x = GF_pg, y = WinPerc)) +
+  geom_point() +
+  facet_wrap(~league) +
+  labs(
+    title = "Offense vs Winning",
+    x = "Goals Scored per Game",
+    y = "Win Percentage"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(df, aes(x = GA_pg, y = WinPerc)) +
+  geom_point() +
+  facet_wrap(~league) +
+  labs(
+    title = "Defense vs Winning",
+    x = "Goals Allowed per Game",
+    y = "Win Percentage"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+df |>
+  group_by(league) |>
+  summarise(corr_offense = cor(GF_pg, WinPerc),
+            corr_defense = cor(GA_pg, WinPerc))
+```
+
+Offense matters more in KHL, while defense matters more in NHL
