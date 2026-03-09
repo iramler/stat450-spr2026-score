@@ -124,17 +124,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>** Currently working on dataset</p>
 <p>Ive made all 125 cards into a dataset however i need to make them into a new one that has the</p>
 <ul>
-<li>Number of decks with the pair of cards (sample size)</li>
+<li>Number of decks with the pair of cards (sample size) DONE</li>
 <li>Number of wins with the pair of cards</li>
-<li>Win rate for those pair</li>
+<li>Win rate for those pairs</li>
+<li>(any win rate above 50% convert to a 1 and under to a 0)</li>
+<li>Replace the diagonal of the matrix with zeros</li>
 <li>It would be set up with every card listed in the columns and rows with that information for each</li>
 </ul>
+<p>We will be focusing on the season 3 of the game.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cards <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clash_royale_cards_125.csv"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>cards</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cr_season3_5000decks <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"cr_season3_5000decks.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>cards_id <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(<span class="at">data =</span> cr_season3_5000decks, <span class="at">names_from =</span> card, <span class="at">values_from =</span> winner)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>clash_decks <span class="ot">&lt;-</span> cards_id <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>id, <span class="sc">~</span><span class="fu">replace</span>(.,<span class="sc">!</span><span class="fu">is.na</span>(.),<span class="dv">1</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>id, <span class="sc">~</span><span class="fu">replace</span>(.,<span class="fu">is.na</span>(.),<span class="dv">0</span>)))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># gets rid of first column</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>clash_deck_n <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(clash_decks[,<span class="sc">-</span><span class="dv">1</span>])) <span class="sc">%*%</span> <span class="fu">as.matrix</span>(clash_decks[,<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Clash deck wins</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>clash_wins <span class="ot">&lt;-</span> cards_id <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>id, <span class="sc">~</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(.), <span class="dv">0</span>, <span class="fu">as.integer</span>(.))))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>clash_deck_wins <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(clash_wins[, <span class="sc">-</span><span class="dv">1</span>])) <span class="sc">%*%</span> <span class="fu">as.matrix</span>(clash_wins[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Clash deck win rate</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>clash_deck_rate <span class="ot">&lt;-</span> clash_deck_wins <span class="sc">/</span> clash_deck_n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows all the cards available to use </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># including if they have an evo and/or hero upgrade</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cards <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clash_royale_cards_125.csv"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cards</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 125 × 5
    card_name        elixir type     evolution hero_upgrade
@@ -159,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.</p>
 <p>Success in the game depends heavily on card combinations, as certain cards perform more effectively when used together. Because of this emphasis on synergy, Clash Royale provides a natural setting for studying relationships between elements using network analysis.</p>
 <p>Clash Royale was released globally on March 2, 2016</p>
-<p>The game has been out for 9 years.</p>
+<p>The game has been out for 10 years.</p>
 <section id="goal-of-this-module" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="goal-of-this-module"><span class="header-section-number">1.1</span> Goal of this module</h2>
 <p>In this tutorial, we will treat Clash Royale cards as nodes in a network.</p>

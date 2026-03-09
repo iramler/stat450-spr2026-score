@@ -35,10 +35,11 @@ Ive made all 125 cards into a dataset however i need to make them into a new one
 -   It would be set up with every card listed in the columns and rows with that information for each
 
 
+We will be focusing on the season 3 of the game.
+
 ```{r}
 library(readr)
 cr_season3_5000decks <- read_csv("cr_season3_5000decks.csv")
-View(cr_season3_5000decks)
 
 cards_id <- pivot_wider(data = cr_season3_5000decks, names_from = card, values_from = winner)
 
@@ -48,17 +49,61 @@ clash_decks <- cards_id |> mutate(across(-id, ~replace(.,!is.na(.),1))) |>
 # gets rid of first column
 clash_deck_n <- t(as.matrix(clash_decks[,-1])) %*% as.matrix(clash_decks[,-1])
 
-clash_deck_wins
+
+# Clash deck wins
+clash_wins <- cards_id |>
+  mutate(across(-id, ~ ifelse(is.na(.), 0, as.integer(.))))
+
+clash_deck_wins <- t(as.matrix(clash_wins[, -1])) %*% as.matrix(clash_wins[, -1])
+
+
+# Clash deck win rate
+clash_deck_rate <- clash_deck_wins / clash_deck_n
+
+clash_deck_wins["Zap", "Hog Rider"]
+clash_deck_n["Zap", "Hog Rider"]
+clash_deck_rate["Zap", "Hog Rider"]
 ```
+
+```{r}
+# Now need to remove the self-pairs
+diag(clash_deck_n) <- NA
+diag(clash_deck_wins) <- NA
+diag(clash_deck_rate) <- NA
+
+clash_deck_rate
+```
+```{r}
+# convert the table into an edge list
+pair_data <- as.data.frame(as.table(clash_deck_n)) |>
+  rename(card1 = Var1, card2 = Var2, decks = Freq) |>
+  mutate(
+    wins = as.vector(clash_deck_wins),
+    winrate = as.vector(clash_deck_rate)) |>
+  filter(card1 != card2)
+pair_data
+
+# Only show decks that have been used more than 50 times
+# this allows for only prominently used decks meaning more important
+# 1572 rows total
+pair_data <- pair_data |>
+  filter(decks > 50)
+pair_data
+```
+
+
 
 
 ```{r}
 library(tidyverse)
 
+# Shows all the cards available to use 
+# including if they have an evo and/or hero upgrade
 cards <- read_csv("clash_royale_cards_125.csv")
 
 cards
 ```
+
 
 # Introduction: What is Clash Royale?
 
@@ -72,7 +117,7 @@ Success in the game depends heavily on card combinations, as certain cards perfo
 
 Clash Royale was released globally on March 2, 2016
 
-The game has been out for 9 years.
+The game has been out for 10 years.
 
 ## Goal of this module
 
