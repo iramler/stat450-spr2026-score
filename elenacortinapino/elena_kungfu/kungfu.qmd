@@ -149,6 +149,9 @@ For now, let's use Euclidean distance
 ```{r}
 # first have to turn empty cells into `NA`
 
+
+
+
 # finding euclidean distance with R base function dist()
 dist.eucl <- dist(df.scaled, method = "euclidean")
 
