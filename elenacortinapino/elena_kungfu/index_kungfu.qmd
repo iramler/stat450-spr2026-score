@@ -1,5 +1,5 @@
 ---
-title: "Kung Fu - Data manipulation, data visualization and Hypothesis Testing"
+title: "Kung Fu - Data manipulation, data visualization and Complete Linkage Hierarchical Clustering"
 subtitle: "2025 World Kung Fu Championship Data Analysis Module - WIP."
 author:
   - name: "Elena Cortina Pino"
@@ -137,3 +137,26 @@ For the purpose of this module, the data as been trimmed to include only individ
 ##### Materials
 
 For this module, the materials are the [kung fu](kungfu.csv) data set and [the solution QMD](kungfu.qmd).
+
+
+
+### Complete Linkage Hierarchical Clustering
+
+Hierarchical Clustering via Complete Linkage is a Machine Learning technique that groups clusters of data from the furthermost point to the point of reference. In hierarchical clustering, the two nearest clusters are repeatedly merged until the desired number of clusters is reached. (Sokhonn , Park, Lee , 2024 , "Hierarchical Clustering via Single and Complete Linkage Using Fully Homomorphic Encryption ")
+Complete linkage is the metric through which we measure the clusters' proximity.
+
+This process serves as an exploratory data analysis technique, categorizing data into distinct groups or subsets, where elements within each subset are more similar to each other than to elements in different subsets. A useful application of this method for our case study data set on Kung Fu is understanding how the forms and the age groups can be grouped in clusters to understand the relationships between these two variables with respect to the scores.
+
+Our goal for this modules becomes mainly to answer some questions such as:
+
+1. Are there any forms where the difference across age groups is more amplified?
+
+2. Analysing the data by form, which group do they belong to judging by the score?
+
+
+.\
+.\
+.\
+.\
+
+

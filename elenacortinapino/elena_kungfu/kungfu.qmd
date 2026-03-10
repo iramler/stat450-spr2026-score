@@ -1,5 +1,6 @@
 ---
-title: title: "Kung Fu - Data manipulation, data visualization and Hypothesis Testing"
+title: title: "Kung Fu"
+subtitle: Complete Linkage Hierarchical Clustering
 author: Elena Cortina Pino
 date: February 19, 2026
 format: html
