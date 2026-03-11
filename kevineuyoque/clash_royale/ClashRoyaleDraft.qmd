@@ -91,14 +91,13 @@ pair_data <- pair_data |>
 
 ```
 
+
 ```{r}
 # any win rate above 50% convert to a 1 and under to a 0
 clash_deck_ratebinary <- ifelse(clash_deck_rate > 0.5, 1, 0)
 
 diag(clash_deck_ratebinary) <- 0
 ```
-
-
 
 
 
@@ -158,8 +157,11 @@ network <- graph_from_data_frame(
 network
 ```
 In this we see there are 69 cards that pass the greater than 50 decks filter
+
 - 69 nodes
+
 There is a total of 1572 card pair connections
+
 - 1572 edges
 
 
@@ -207,7 +209,9 @@ plot(network,
      vertex.size = 7,
      vertex.label.cex = .7,
      edge.width = E(network)$weight * 5)
+```
 
+```{r}
 # find most connected cards
 card_degree <- degree(network)
 sort(card_degree, decreasing = TRUE)[1:10]
@@ -226,7 +230,7 @@ lay <- layout_with_fr(network_small, niter = 5000)
 # plot
 plot(network_small,
      layout = lay,
-     vertex.size = 6,
+     vertex.size = 3,
      vertex.label.cex = 0.75,
      edge.width = E(network_small)$winrate * 4)
 ```
