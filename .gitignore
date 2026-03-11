@@ -12,6 +12,17 @@
 # User-specific files
 .Ruserdata
 
+# Word temporary and autosave files
+~$*
+*.tmp
+*.bak
+*.wbk
+*.asd
+*.lnk
+*.lock
+*.docx~
+**/.DS_Store
+
 # Example code in package build process
 *-Ex.R
 
