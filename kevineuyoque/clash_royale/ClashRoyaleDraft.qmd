@@ -71,8 +71,8 @@ diag(clash_deck_n) <- NA
 diag(clash_deck_wins) <- NA
 diag(clash_deck_rate) <- NA
 
-clash_deck_rate
 ```
+
 ```{r}
 # convert the table into an edge list
 pair_data <- as.data.frame(as.table(clash_deck_n)) |>
@@ -81,15 +81,23 @@ pair_data <- as.data.frame(as.table(clash_deck_n)) |>
     wins = as.vector(clash_deck_wins),
     winrate = as.vector(clash_deck_rate)) |>
   filter(card1 != card2)
-pair_data
+
 
 # Only show decks that have been used more than 50 times
 # this allows for only prominently used decks meaning more important
 # 1572 rows total
 pair_data <- pair_data |>
   filter(decks > 50)
-pair_data
+
 ```
+
+```{r}
+# any win rate above 50% convert to a 1 and under to a 0
+clash_deck_ratebinary <- ifelse(clash_deck_rate > 0.5, 1, 0)
+
+diag(clash_deck_ratebinary) <- 0
+```
+
 
 
 
@@ -101,7 +109,6 @@ library(tidyverse)
 # including if they have an evo and/or hero upgrade
 cards <- read_csv("clash_royale_cards_125.csv")
 
-cards
 ```
 
 
@@ -142,6 +149,20 @@ By the end, we will:
 
 To represent Clash Royale synergy as a network, we will model the data as a graph.
 
+```{r}
+# Build the network graph
+network <- graph_from_data_frame(
+  pair_data,
+  directed = FALSE)
+
+network
+```
+In this we see there are 69 cards that pass the greater than 50 decks filter
+- 69 nodes
+There is a total of 1572 card pair connections
+- 1572 edges
+
+
 ## Nodes
 
 A node represents one Clash Royale card.
@@ -175,6 +196,41 @@ Interpretation:
 
 -   Higher paired win rate → stronger connection
 -   Lower paired win rate → weaker connection
+
+```{r}
+# Add edge weights
+E(network)$weight <- pair_data$winrate
+
+# plot a network
+plot(network,
+     layout = layout_with_fr,
+     vertex.size = 7,
+     vertex.label.cex = .7,
+     edge.width = E(network)$weight * 5)
+
+# find most connected cards
+card_degree <- degree(network)
+sort(card_degree, decreasing = TRUE)[1:10]
+
+
+# Filtered more decks since network too dense
+# show only strongest edges
+pair_data_small <- pair_data |>
+  filter(decks > 150, winrate > 0.52)
+
+network_small <- graph_from_data_frame(pair_data_small, directed = FALSE)
+
+# gives layout more time to spread out
+lay <- layout_with_fr(network_small, niter = 5000)
+
+# plot
+plot(network_small,
+     layout = lay,
+     vertex.size = 6,
+     vertex.label.cex = 0.75,
+     edge.width = E(network_small)$winrate * 4)
+```
+
 
 ## Why use a network?
 
