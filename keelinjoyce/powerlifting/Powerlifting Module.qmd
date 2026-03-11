@@ -1,0 +1,28 @@
+---
+title: "powerlifting module"
+author: "Keelin Joyce"
+format: html
+editor: visual
+---
+## Getting Started
+#### Importing Data 
+```{r}
+library(readr)
+library(tidyverse)
+library(ggplot2)
+
+library(readr)
+openpl_male <- read_csv("keelinjoyce/powerlifting/openpl_male.csv")
+View(openpl_male)
+
+openpl_female <- read_csv("openpl_female.csv")
+View(openpl_female)
+```
+
+#### Assessing Data
+```{r}
+ggplot(data = openpl_female, aes(x = Bench)) +
+  geom_histogram() +
+  facet_wrap(~AgeClass)
+```
+

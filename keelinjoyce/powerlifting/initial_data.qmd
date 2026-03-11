@@ -3,7 +3,9 @@ title: "Code to Wrangle Open Powerlifting Data"
 format: html
 editor: visual
 ---
+
 ## Wrangling Open Powerlifting Data
+
 ```{r}
 library(readr)
 library(curl)
@@ -142,7 +144,9 @@ write_csv(openpl_female, "openpl_sample_female.csv")
 ```
 
 ## Familiarizing with Data
+
 #### Lookiing at histograms for normality
+
 ```{r}
 ggplot(data = openpl_female, aes(x = TotalKg)) +
   geom_histogram()
@@ -167,6 +171,7 @@ ggplot(data = openpl_male, aes(x = Bench)) +
 ```
 
 #### Grouping by Age
+
 ```{r}
 age_avgs_female <- openpl_female |> 
   filter(!is.na(AgeClass)) |>
@@ -207,11 +212,9 @@ ggplot(data = age_avgs_male, aes(x = AgeClass, y = Bench)) +
 ```
 
 ## Testing for normality
+
 ```{r}
 shaprio_data_female <- openpl_female |> 
   select(Bench)
 shapiro.test(shaprio_data_female)
 ```
-
-
-

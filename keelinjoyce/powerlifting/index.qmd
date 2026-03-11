@@ -1,0 +1,148 @@
+---
+title: "Female Powerlifting: Performing Kruskal-Wallis and Dunn's Test Analyses Across Age Groups"
+author:
+  - name: "Keelin Joyce"
+    email: kjoyc22@stlawu.edu
+    affiliation:
+      - id: slu
+        name: St. Lawrence University
+  - name: "Ivan Ramler"
+    email: iramler@stlawu.edu
+    affiliation:
+      - ref: slu
+
+date: March 25, 2026
+description: This module explores results from powerlifting competitions, comparing the ranks between age groups.
+categories: 
+  - non-parametric analysis
+  - Kruskal-Wallis Test
+  - post-hoc Dunn's Test
+image: "https://www.greatestphysiques.com/wp-content/uploads/2017/10/Stefanie-Cohen.05.jpg"
+---
+![Female Powerlifter: Stefanie Cohen](https://www.greatestphysiques.com/wp-content/uploads/2017/10/Stefanie-Cohen.05.jpg){width=75%}
+
+## Welcome Video
+
+For those interested in how some events in powerlifting competitions look, please check out this video from Day 1 of Powerlifting America Open Nationals from @A7Intl.
+
+<iframe width="360" height="640"
+src="https://www.youtube.com/embed/x3wKUPmtSEs"
+title="YouTube video player"
+frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen>
+</iframe>
+
+## Introduction
+
+In powerlifting competitions, athletes compete in three compound events to lift as much weight as possible. [Bench press](https://www.youtube.com/shorts/hWbUlkb5Ms4?feature=share){target="_blank"} is done with athletes laying flat on their back and lowering the bar to their chest and lifting back up, targeting upper body (specifically chest, triceps, and shoulders). [Deadlifts](https://www.youtube.com/shorts/ZaTM37cfiDs?feature=share){target="_blank"} are a full body lift in which athletes lift a bar from the ground to hip level (targets glutes, hamstrings, and back). [Squats](https://www.youtube.com/shorts/PPmvh7gBTi0){target="_blank"} are done with a barbell on their back, just below the shoulders, and hinging until the hips are lower than the top of the knee (targeting quads, glutes, hamstrings, and core).
+
+This module analyzes results from powerlifting competitions. Results are found at  [OpenPowerlifting](https://www.openpowerlifting.org){target="_blank"}, a project aimed at collecting powerlifting data over time. Performances are ranked by how much weight is lifted and athletes are sorted into age classes. You will compare the rankings achieved by athletes across age classes and distinguish any differences between classes.
+
+::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+This activity would likely be suitable for an in-class example that lasts roughly 60 minutes.
+:::
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of the activity, you will be able to:
+
+1.  Assess and sort large data sets appropriately in order to run statistical tests.
+2.  Analyze non-parametric comparisons using the Kruskal-Wallis Test.
+3.  Assess differences between two groups using Dunn's comparison test.
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+For this activity, students will primarily use their previous knowledge of ANOVA and Tukey testing to apply it to non parametric data. 
+:::
+
+::: {.callout-note collapse="true" title="Technology Requirements" appearance="minimal"}
+The testing is designed to be completed using RStudio and is not designed to be done by hand.
+
+Analyses can be done on paper following the testing completed in RStudio.
+:::
+
+## Data
+
+The initial dataset from [OpenPowerlifting Dataset](https://www.openpowerlifting.org){target="_blank"} contains 3,863,253 rows and 42 columns but has been condensed to a female dataset (6, 661 observations and 14 variables) and male dataset (7,350 observations and 14 variables) from [SCORE Sports Data Repository](https://data.scorenetwork.org/powerlifting/openpowerlifting.html){target="_blank"}. Each row represents a powerlifting athlete and variables including their demographics and how much weight they lifted (in kilograms).
+
+Download wrangled and cleaned data: 
+
+Male athletes: [openpl_male.csv](openpl_sample_male.csv) 
+Female athletes: [openpl_female.csv](openpl_sample_female.csv)
+
+<details>
+
+<summary><b>Descriptions of Relevant Variables</b></summary>
+
+| Variable     | Description                                                                           |
+|--------------|---------------------------------------------------------------------------------------|
+| Name         | Name of the athlete                                                                   |
+| Age          | Age of the athlete on the start date                                                  |
+| AgeClass     | Age class the athlete falls in (e.g. 40-45)                                           |
+| BodyweightKg | Recorded bodyweight of athlete in kilograms at the start of the event                 |
+| Squat        | Weight in kilograms of the athlete's best attempt at squatting                        |
+| Bench        | Weight in kilograms of the athlete's best attempt at benching                         |
+| Deadlift     | Weight in kilograms of the athlete's best attempt at deadlifting                      |
+| TotalKg      | Sum of weight lifted between the three exercises                                      |
+| Place        | The recorded place of the athlete at the end of the meet                              |
+| Date         | Date the competition was held                                                         |
+
+**Data Source**
+
+Adapted from
+
+-   [OpenPowerlifting](https://www.openpowerlifting.org0){target="_blank"}
+
+and
+
+-   [SCORE Sports Data Repository](https://data.scorenetwork.org/powerlifting/openpowerlifting.html){target="_blank"}
+
+## Performing the Tests
+```{r echo=TRUE, eval=FALSE}
+library(tidyverse)
+library(readr)
+library(ggplot2)
+
+openpl_male <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keelinjoyce/powerlifting/openpl_sample_male.csv")
+
+openpl_female <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keelinjoyce/powerlifting//openpl_sample_female.csv")
+```
+
+#### Kruskal-Wallis Test of Differences
+The Kruskal-Wallis test is a non-parametric test to determine if there are significant difference between independent groups. It is typically used as an alternative to ANOVA testing on non-normal data and compares the medians of the data as opposed to the means.
+
+To run the Kruskal-Wallis test, the data gets ranked from 1-n before being grouped by level, in this case AgeClass.
+
+```{r echo=TRUE, eval=FALSE}
+female_bench_ranked <- openpl_female |> arrange(desc(Bench)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Bench, rank)
+
+female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+```
+Create a boxplot to look at the distribution of bench weight across age classes
+
+<summary><b>Click to reveal code</b></summary>
+
+```{r echo=TRUE, eval=FALSE}
+ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
+  geom_boxplot()
+```
+
+</details>
+
+#### Dunn's Test of Pairwise Comparisons
+
+## Visualizing Results
+
+## Materials
+
+
+
+::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+reserved for conclusion
+:::
