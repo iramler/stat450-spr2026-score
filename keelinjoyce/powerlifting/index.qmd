@@ -98,7 +98,7 @@ and
 -   [SCORE Sports Data Repository](https://data.scorenetwork.org/powerlifting/openpowerlifting.html){target="_blank"}
 
 ## Performing the Tests
-```{r echo=TRUE, eval=FALSE}
+```{r warning=FALSE, output=FALSE}
 library(tidyverse)
 library(readr)
 library(ggplot2)
@@ -111,9 +111,42 @@ openpl_female <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keel
 #### Kruskal-Wallis Test of Differences
 The Kruskal-Wallis test is a non-parametric test to determine if there are significant difference between independent groups. It is typically used as an alternative to ANOVA testing on non-normal data and compares the medians of the data as opposed to the means.
 
+-   Used when
+
+    -   population medians (null hypothesis is population medians are equal)
+
+    -   the data is continuous or ordinal
+
+    -   the assumptions (mainly normality) are violated for a one-way ANOVA
+
+    -   observations are independent
+
+    -   sample size is at least 5
+
+-   How to run test
+
+    -   form hypothesis
+
+    -   rank data from smallest to largest from all groups
+
+    -   find the sum of the ranks for each group
+
+    -   use test in R to calculate the Kruskal-Wallis H statistic
+
+    -   if p-value is less than 0.05, reject the null indicating as least one group differs slightly
+
+    -   if null is rejected, use Dunn's test (pairwise comparison test) to find which groups specifically differ
+
+#### Forming a Hypothesis
+For a Kruskal-Wallis test, the null hypothesis is always that there is no difference in medians between groups and the alternative hypothesis claims that there is a difference between at least two groups.
+
+$H_0:$ there is no difference in medians between groups
+
+$H_a:$ at least one group differs from another
+
 To run the Kruskal-Wallis test, the data gets ranked from 1-n before being grouped by level, in this case AgeClass.
 
-```{r echo=TRUE, eval=FALSE}
+```{r echo=TRUE, output = FALSE}
 female_bench_ranked <- openpl_female |> arrange(desc(Bench)) |>
   mutate(rank = row_number()) |>
   filter(!is.na(AgeClass)) |>
@@ -126,16 +159,94 @@ female_bench_ranked |>
 ```
 Create a boxplot to look at the distribution of bench weight across age classes
 
+<details>
 <summary><b>Click to reveal code</b></summary>
-
-```{r echo=TRUE, eval=FALSE}
+```{r echo=TRUE, eval=TRUE}
 ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
-  geom_boxplot()
+  geom_boxplot() +
+  theme_minimal()
+```
+</details>
+The boxplot shows the general trend of the data increases to a peak between 20-34 and steadily decreases after that.
+
+A scatterplot of the average bench between age groups shows a similar peak in performance.
+```{r}
+female_bench_plot <- female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(total = sum(rank), average = total/n())
+
+ggplot(data = female_bench_plot, aes(x = AgeClass, y = average)) +
+  geom_point() +
+  scale_y_reverse() +
+  theme_minimal()
 ```
 
-</details>
+Run the test using the `kruskal.test()` function:
+```{r}
+female_bench_results <- kruskal.test(female_bench_ranked$rank ~ 
+                                       female_bench_ranked$AgeClass)
+female_bench_results
+```
+Using an alpha value of 0.5, our results are significant and we can claim that there is a significant difference between at least two groups.
 
 #### Dunn's Test of Pairwise Comparisons
+The Dunn's Test is a pairwise comparison test (similar to a Tukey Test) that determines which groups are significantly different from each other once we have determined there are differences.
+
+Load in the necessary packages for the test:
+```{r warning=FALSE, output=FALSE}
+library(dunn.test)
+library(FSA)
+library(reshape2)
+```
+
+Use the `dun.test()` function to compile p-values of the differences between groups and form a table of the values:
+```{r output=TRUE}
+female_bench_dunn <- dunn.test(female_bench_ranked$rank, female_bench_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(female_bench_dunn$P.adjusted, female_bench_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `female_bench_dunn$P.adjusted`)
+dunn_results_df
+```
+
+Because there are so many groups to compare, it is difficult to look at each p-value individually. Look at the range to see the variation in p-values:
+```{r}
+range(dunn_results_df$p_value)
+```
+
+Create a heatmap of the p-values to see where the results are significantly different:
+```{r}
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = log_p)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  theme_minimal()
+```
+The -log p-value heatmap shows us how many zeros are following the decimal point indicating that the blue values are more significantly difference.
+
+Using an alpha value of 0.05, construct another heatmap indicating which values are significant or not.
+```{r}
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  theme_minimal()
+```
+The results in blue show there is not a significant difference between the two groups.
+
+Using an alpha value of 0.01:
+```{r}
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.01,1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  theme_minimal()
+```
+By lowering the alpha value, you can see there are fewer significant values.
+
 
 ## Visualizing Results
 
