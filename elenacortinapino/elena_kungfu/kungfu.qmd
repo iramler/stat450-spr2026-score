@@ -16,6 +16,7 @@ format: html
 library(tidyverse)
 library(ggplot2)
 library(stargazer)
+library("FactoMineR")
 ```
 
 ### Know Thy Data
@@ -97,7 +98,7 @@ Things we can do:
 
 ```{r}
 # the number of total athletes before removing defaulted athletes is 2129
-kf_nodefault <- kf|> filter(Rank != "Default")
+sample_kungfu <- kf|> filter(Rank != "Default") |> drop_na(Score) |> select(-X, -Rank, -Remark) 
 # the number of athletes after removing defaulting athletes is 1989
 # difference is 140 athletes.
 
@@ -143,14 +144,22 @@ analyse by form, which group do they belong to?
 
 ![](cluster heatmap.png){fig-align="center"}
 
+
+
+```{r}
+# This line shows the amount of events for each form
+interesting <- sample_kungfu |> group_by(Form) |> summarise(haha = n())
+
+# this line will explain why there are so many NA values in the matrix
+```
+
 ###### Methods for measuring distances 
 Need to choose a type of measuring distance that works well with very small differences and (in some cases) no distance!
 
 For now, let's use Euclidean distance 
 ```{r}
-# first have to turn empty cells into `NA`
 
-
+# from the factoextra package , using the formula `fviz_hmfa` to generate the plot
 
 
 # finding euclidean distance with R base function dist()
@@ -159,6 +168,44 @@ dist.eucl <- dist(df.scaled, method = "euclidean")
 ```
 
 
-#### K-Means
-
 #### Hierarchical agglomerative clustering
+
+
+[reference link for how to do the heatmap](https://www.datanovia.com/en/lessons/heatmap-in-r-static-and-interactive-visualization/)
+
+
+```{r}
+hehe_kungfu <- sample_kungfu |> group_by(Group, Form) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Form, values_from = mean_score)
+```
+
+
+```{r}
+mat <- as.matrix(hehe_kungfu[,-1])
+rownames(mat) <- hehe_kungfu$Group
+```
+
+```{r}
+pheatmap(
+  mat,
+  scale = "none",
+  clustering_distance_rows = "euclidean",
+  clustering_distance_cols = "euclidean",
+  clustering_method = "complete"
+)
+```
+
+
+```{r}
+
+# reference code
+heatmap(matrix_kf, scale = "column")
+# custom color palette
+col<- colorRampPalette(c("red", "white", "blue"))(256)
+library("RColorBrewer")
+col <- colorRampPalette(brewer.pal(10, "RdYlBu"))(256)
+
+```
+
+
+
+
