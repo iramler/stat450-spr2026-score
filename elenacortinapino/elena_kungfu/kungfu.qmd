@@ -16,7 +16,7 @@ format: html
 library(tidyverse)
 library(ggplot2)
 library(stargazer)
-library("FactoMineR")
+library(pheatmap)
 ```
 
 ### Know Thy Data
@@ -175,37 +175,84 @@ dist.eucl <- dist(df.scaled, method = "euclidean")
 
 
 ```{r}
-hehe_kungfu <- sample_kungfu |> group_by(Group, Form) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Form, values_from = mean_score)
+hehe_kungfu <- sample_kungfu |> group_by(Group, Form) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score)
 ```
 
 
 ```{r}
 mat <- as.matrix(hehe_kungfu[,-1])
-rownames(mat) <- hehe_kungfu$Group
+rownames(mat) <- hehe_kungfu$Form
+mat[is.na(mat)] <- 0
+# now we have `na` values converted to zeroes
+print(mat)
+
+# now we will make the heatmap (accept a mess due to zeroes)
+# or code zeroes to be black or neon, something that doesn't relate to 
+# the rest of the heatmap's color spectrum
+
 ```
 
 ```{r}
+#| label: heatmap
+#| warning: false
+
+
 pheatmap(
   mat,
-  scale = "none",
+  scale = "column", # BIG  QUESTION  MARK
   clustering_distance_rows = "euclidean",
   clustering_distance_cols = "euclidean",
-  clustering_method = "complete"
-)
+  clustering_method = "complete",
+  show_colnames = TRUE, 
+  show_rownames = TRUE,
+  fontsize_row = 7,
+  fontsize_col = 7, 
+  main = "Heatmap with dendrogram",
+  legend = F)
 ```
 
 
 ```{r}
+#| warning: false
+#| eval: false
+#| message: false
+#| label: references
 
 # reference code
 heatmap(matrix_kf, scale = "column")
-# custom color palette
+# custom color palette sample code
 col<- colorRampPalette(c("red", "white", "blue"))(256)
 library("RColorBrewer")
 col <- colorRampPalette(brewer.pal(10, "RdYlBu"))(256)
 
+
+
+
+heat_plot <- pheatmap(data, 
+                      col = brewer.pal(10, 'RdYlGn'), # choose a colour scale for your data
+                      cluster_rows = T, cluster_cols = T, # set to FALSE if you want to remove the dendograms
+                      clustering_distance_cols = 'euclidean',
+                      clustering_distance_rows = 'euclidean',
+                      clustering_method = 'ward.D',
+                      annotation_row = gene_functions_df, # row (gene) annotations
+                      annotation_col = ann_df, # column (sample) annotations
+                      annotation_colors = ann_colors, # colours for your annotations
+                      annotation_names_row = F, 
+                      annotation_names_col = F,
+                      fontsize_row = 10,          # row label font size
+                      fontsize_col = 7,          # column label font size 
+                      angle_col = 45, # sample names at an angle
+                      legend_breaks = c(-2, 0, 2), # legend customisation
+                      legend_labels = c("Low", "Medium", "High"), # legend customisation
+                      show_colnames = T, show_rownames = F, # displaying column and row names
+                      main = "Super heatmap with annotations") # a title for our heatmap
 ```
 
 
 
+These are the only events that have full participation for all age groups:\
+- Single-weapon routines_Dao (Broadsword) \
+- Single-weapon routines_Gun (Cudgel/Staff)\
+- Single-weapon routines_Jian (Straight Sword) \
+- bare-hand routines_Other routines\
 
