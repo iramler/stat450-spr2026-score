@@ -23,7 +23,6 @@ library(ggplot2)
 library(gplots)
 library(pheatmap)
 library("RColorBrewer")
-#library(mice)
 ```
 
 
@@ -61,13 +60,16 @@ heatmap <- pheatmap(
   cluster_cols = F,
   show_colnames = TRUE, 
   show_rownames = TRUE,
-  fontsize_row = 7,
-  fontsize_col = 7, 
+  display_numbers = T,
+  cellwidth = NA, # adjust export size to account for print needs
+  cellheight = NA, 
   angle_col = 0,
-  main = "Complete Linknage Clustered Heatmap with Dendrograms",
-  cutree_rows = 5,
+  number_color = "#303030",
+  border_color = "#303030", 
+  main = "Complete Linkage Clustered Heatmap with Dendrograms",
+  cutree_rows = 7,
   color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(100),
-  legend = T)
-
+  legend = T,
+  legend_labels = NA)
 ```
 

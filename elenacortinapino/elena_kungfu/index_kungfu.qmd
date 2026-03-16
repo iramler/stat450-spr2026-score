@@ -1,18 +1,19 @@
 ---
-title: "Kung Fu - Data manipulation, data visualization and Complete Linkage Hierarchical Clustering"
-subtitle: "2025 World Kung Fu Championship Data Analysis Module - WIP."
+title: "2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering"
+subtitle: "Exploratory data analysis of the age groups and kung fu forms"
 author:
   - name: "Elena Cortina Pino"
     url: https://www.linkedin.com/in/elenacortina
-description: "Kung Fu: Fighting."
+description: "This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data."
 lightbox: true
 format: 
   html:
     embed-resources: false
 categories:
+  - Hierarchical clustering
   - Data visualization
-  - Tests
-  - Other
+  - Complete Linkage
+  - Z-Scores
 ---
 
 ```{r}
