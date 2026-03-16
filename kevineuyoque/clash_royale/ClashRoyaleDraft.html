@@ -197,11 +197,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(clash_deck_ratebinary) <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows all the cards available to use </span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># including if they have an evo and/or hero upgrade</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>cards <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clash_royale_cards_125.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows all the cards available to use </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># including if they have an evo and/or hero upgrade</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>cards <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"clash_royale_cards_125.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="introduction-what-is-clash-royale" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction: What is Clash Royale?</h1>
@@ -241,9 +239,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>network</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 65d95e6 UN-- 69 1572 -- 
+<pre><code>IGRAPH 89bd799 UN-- 69 1572 -- 
 + attr: name (v/c), decks (e/n), wins (e/n), winrate (e/n)
-+ edges from 65d95e6 (vertex names):
++ edges from 89bd799 (vertex names):
  [1] Hog Rider     --Zap Valkyrie      --Zap Giant Skeleton--Zap
  [4] Baby Dragon   --Zap Mini P.E.K.K.A--Zap Witch         --Zap
  [7] Musketeer     --Zap Balloon       --Zap Arrows        --Zap
@@ -322,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtered more decks since network too dense</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># show only strongest edges</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pair_data_small <span class="ot">&lt;-</span> pair_data <span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(decks <span class="sc">&gt;</span> <span class="dv">150</span>, winrate <span class="sc">&gt;</span> <span class="fl">0.52</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(decks <span class="sc">&gt;</span> <span class="dv">320</span>, winrate <span class="sc">&gt;</span> <span class="fl">0.47</span>)</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>network_small <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_small, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -332,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network_small,</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> lay,</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">3</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.75</span>,</span>
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fu">E</span>(network_small)<span class="sc">$</span>winrate <span class="sc">*</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -343,6 +341,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>Here we can see a 16 node network</p>
+<ul>
+<li>16 cards are used</li>
+</ul>
 </section>
 <section id="why-use-a-network" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="why-use-a-network"><span class="header-section-number">2.4</span> Why use a network?</h2>

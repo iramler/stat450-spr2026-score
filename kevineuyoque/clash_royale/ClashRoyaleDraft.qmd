@@ -102,12 +102,9 @@ diag(clash_deck_ratebinary) <- 0
 
 
 ```{r}
-library(tidyverse)
-
 # Shows all the cards available to use 
 # including if they have an evo and/or hero upgrade
 cards <- read_csv("clash_royale_cards_125.csv")
-
 ```
 
 
@@ -220,7 +217,7 @@ sort(card_degree, decreasing = TRUE)[1:10]
 # Filtered more decks since network too dense
 # show only strongest edges
 pair_data_small <- pair_data |>
-  filter(decks > 150, winrate > 0.52)
+  filter(decks > 320, winrate > 0.47)
 
 network_small <- graph_from_data_frame(pair_data_small, directed = FALSE)
 
@@ -230,11 +227,13 @@ lay <- layout_with_fr(network_small, niter = 5000)
 # plot
 plot(network_small,
      layout = lay,
-     vertex.size = 3,
+     vertex.size = 8,
      vertex.label.cex = 0.75,
      edge.width = E(network_small)$winrate * 4)
 ```
+Here we can see a 16 node network
 
+- 16 cards are used
 
 ## Why use a network?
 
