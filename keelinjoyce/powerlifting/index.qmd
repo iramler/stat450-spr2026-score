@@ -19,28 +19,25 @@ categories:
   - post-hoc Dunn's Test
 image: "https://www.greatestphysiques.com/wp-content/uploads/2017/10/Stefanie-Cohen.05.jpg"
 ---
-![Female Powerlifter: Stefanie Cohen](https://www.greatestphysiques.com/wp-content/uploads/2017/10/Stefanie-Cohen.05.jpg){width=75%}
+
+![Female Powerlifter: Stefanie Cohen](https://www.greatestphysiques.com/wp-content/uploads/2017/10/Stefanie-Cohen.05.jpg){width="75%"}
 
 ## Welcome Video
 
 For those interested in how some events in powerlifting competitions look, please check out this video from Day 1 of Powerlifting America Open Nationals from @A7Intl.
 
-<iframe width="360" height="640"
-src="https://www.youtube.com/embed/x3wKUPmtSEs"
-title="YouTube video player"
-frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-allowfullscreen>
+<iframe width="360" height="640" src="https://www.youtube.com/embed/x3wKUPmtSEs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+
 </iframe>
 
 ## Introduction
 
 In powerlifting competitions, athletes compete in three compound events to lift as much weight as possible. [Bench press](https://www.youtube.com/shorts/hWbUlkb5Ms4?feature=share){target="_blank"} is done with athletes laying flat on their back and lowering the bar to their chest and lifting back up, targeting upper body (specifically chest, triceps, and shoulders). [Deadlifts](https://www.youtube.com/shorts/ZaTM37cfiDs?feature=share){target="_blank"} are a full body lift in which athletes lift a bar from the ground to hip level (targets glutes, hamstrings, and back). [Squats](https://www.youtube.com/shorts/PPmvh7gBTi0){target="_blank"} are done with a barbell on their back, just below the shoulders, and hinging until the hips are lower than the top of the knee (targeting quads, glutes, hamstrings, and core).
 
-This module analyzes results from powerlifting competitions. Results are found at  [OpenPowerlifting](https://www.openpowerlifting.org){target="_blank"}, a project aimed at collecting powerlifting data over time. Performances are ranked by how much weight is lifted and athletes are sorted into age classes. You will compare the rankings achieved by athletes across age classes and distinguish any differences between classes.
+This module analyzes results from powerlifting competitions. Results are found at [OpenPowerlifting](https://www.openpowerlifting.org){target="_blank"}, a project aimed at collecting powerlifting data over time. Performances are ranked by how much weight is lifted and athletes are sorted into age classes. You will compare the rankings achieved by athletes across age classes and distinguish any differences between classes.
 
 ::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
-This activity would likely be suitable for an in-class example that lasts roughly 60 minutes.
+This activity would likely be suitable for an in-class example that lasts roughly 60 minutes as well as extensions that can be assigned as work outside of class or a second class period.
 :::
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
@@ -52,7 +49,7 @@ By the end of the activity, you will be able to:
 :::
 
 ::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
-For this activity, students will primarily use their previous knowledge of ANOVA and Tukey testing to apply it to non parametric data. 
+For this activity, students will primarily use their previous knowledge of ANOVA and Tukey testing to apply it to non parametric data.
 :::
 
 ::: {.callout-note collapse="true" title="Technology Requirements" appearance="minimal"}
@@ -65,27 +62,26 @@ Analyses can be done on paper following the testing completed in RStudio.
 
 The initial dataset from [OpenPowerlifting Dataset](https://www.openpowerlifting.org){target="_blank"} contains 3,863,253 rows and 42 columns but has been condensed to a female dataset (6, 661 observations and 14 variables) and male dataset (7,350 observations and 14 variables) from [SCORE Sports Data Repository](https://data.scorenetwork.org/powerlifting/openpowerlifting.html){target="_blank"}. Each row represents a powerlifting athlete and variables including their demographics and how much weight they lifted (in kilograms).
 
-Download wrangled and cleaned data: 
+Download wrangled and cleaned data:
 
-Male athletes: [openpl_male.csv](openpl_sample_male.csv) 
-Female athletes: [openpl_female.csv](openpl_sample_female.csv)
+Male athletes: [openpl_male.csv](openpl_sample_male.csv) Female athletes: [openpl_female.csv](openpl_sample_female.csv)
 
 <details>
 
 <summary><b>Descriptions of Relevant Variables</b></summary>
 
-| Variable     | Description                                                                           |
-|--------------|---------------------------------------------------------------------------------------|
-| Name         | Name of the athlete                                                                   |
-| Age          | Age of the athlete on the start date                                                  |
-| AgeClass     | Age class the athlete falls in (e.g. 40-45)                                           |
-| BodyweightKg | Recorded bodyweight of athlete in kilograms at the start of the event                 |
-| Squat        | Weight in kilograms of the athlete's best attempt at squatting                        |
-| Bench        | Weight in kilograms of the athlete's best attempt at benching                         |
-| Deadlift     | Weight in kilograms of the athlete's best attempt at deadlifting                      |
-| TotalKg      | Sum of weight lifted between the three exercises                                      |
-| Place        | The recorded place of the athlete at the end of the meet                              |
-| Date         | Date the competition was held                                                         |
+| Variable | Description |
+|---------------|---------------------------------------------------------|
+| Name | Name of the athlete |
+| Age | Age of the athlete on the start date |
+| AgeClass | Age class the athlete falls in (e.g. 40-45) |
+| BodyweightKg | Recorded bodyweight of athlete in kilograms at the start of the event |
+| Squat | Weight in kilograms of the athlete's best attempt at squatting |
+| Bench | Weight in kilograms of the athlete's best attempt at benching |
+| Deadlift | Weight in kilograms of the athlete's best attempt at deadlifting |
+| TotalKg | Sum of weight lifted between the three exercises |
+| Place | The recorded place of the athlete at the end of the meet |
+| Date | Date the competition was held |
 
 **Data Source**
 
@@ -98,6 +94,9 @@ and
 -   [SCORE Sports Data Repository](https://data.scorenetwork.org/powerlifting/openpowerlifting.html){target="_blank"}
 
 ## Performing the Tests
+
+#### Load in the Data
+
 ```{r warning=FALSE, output=FALSE}
 library(tidyverse)
 library(readr)
@@ -109,23 +108,28 @@ openpl_female <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keel
 ```
 
 #### Kruskal-Wallis Test of Differences
+
 The Kruskal-Wallis test is a non-parametric test to determine if there are significant difference between independent groups. It is typically used as an alternative to ANOVA testing on non-normal data and compares the medians of the data as opposed to the means.
 
--   Used when
+-   Used with
 
     -   population medians (null hypothesis is population medians are equal)
 
-    -   the data is continuous or ordinal
+    -   continuous or ordinal data
 
-    -   the assumptions (mainly normality) are violated for a one-way ANOVA
+    -   violated assumptions (mainly normality) for a one-way ANOVA
 
-    -   observations are independent
+    -   independent observations
 
-    -   sample size is at least 5
+    -   a sample size of at least 5
 
--   How to run test
+-   General steps to run Kruskal-Wallis test
 
-    -   form hypothesis
+    -   form a hypothesis: similar to ANOVA hypotheses
+
+        -  null hypothesis is population medians are equal
+        
+        -  alternate hypothesis is that at least one group is different
 
     -   rank data from smallest to largest from all groups
 
@@ -138,14 +142,18 @@ The Kruskal-Wallis test is a non-parametric test to determine if there are signi
     -   if null is rejected, use Dunn's test (pairwise comparison test) to find which groups specifically differ
 
 #### Forming a Hypothesis
-For a Kruskal-Wallis test, the null hypothesis is always that there is no difference in medians between groups and the alternative hypothesis claims that there is a difference between at least two groups.
 
-$H_0:$ there is no difference in medians between groups
+For a Kruskal-Wallis test,similar to an ANOVA test, the null hypothesis is always that there is no difference in medians between groups and the alternative hypothesis claims that there is a difference between at least two groups.
+
+$H_0:$ there is no difference in the median of powerlifting weight between age groups
 
 $H_a:$ at least one group differs from another
 
-To run the Kruskal-Wallis test, the data gets ranked from 1-n before being grouped by level, in this case AgeClass.
+To run the Kruskal-Wallis test, the data gets ranked from 1-n before being grouped by level, in this case AgeClass. 
 
+We want to rank the data before it is grouped so the overall rankings and where they land can be compared between groups.
+
+The following code arranges the data appropriately and ranks it before grouping by `AgeClass`
 ```{r echo=TRUE, output = FALSE}
 female_bench_ranked <- openpl_female |> arrange(desc(Bench)) |>
   mutate(rank = row_number()) |>
@@ -157,49 +165,64 @@ female_bench_ranked |>
   group_by(AgeClass)  |>
   summarise(n())
 ```
+
 Create a boxplot to look at the distribution of bench weight across age classes
 
 <details>
+
 <summary><b>Click to reveal code</b></summary>
+
 ```{r echo=TRUE, eval=TRUE}
 ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
   geom_boxplot() +
   theme_minimal()
 ```
-</details>
-The boxplot shows the general trend of the data increases to a peak between 20-34 and steadily decreases after that.
 
-A scatterplot of the average bench between age groups shows a similar peak in performance.
+</details>
+
+The boxplot shows the general trend of the data increases to a peak between 20-34 and steadily decreases after that. Because the sample size is small and does not create a full box for the 85-89 and 90-999 age groups, we will filter those out.
+
+A scatterplot of the average bench between age groups shows a similar peak in performance. We can also see that, because of the small sample size in the older groups, the trend that we expect is not shown.
+
 ```{r}
 female_bench_plot <- female_bench_ranked |>
   group_by(AgeClass)  |>
-  summarise(total = sum(rank), average = total/n())
+  summarise(total = sum(rank), median = median(total))
 
-ggplot(data = female_bench_plot, aes(x = AgeClass, y = average)) +
+ggplot(data = female_bench_plot, aes(x = AgeClass, y = median)) +
   geom_point() +
   scale_y_reverse() +
   theme_minimal()
 ```
 
+```{r}
+female_bench_ranked
+```
+
 Run the test using the `kruskal.test()` function:
+
 ```{r}
 female_bench_results <- kruskal.test(female_bench_ranked$rank ~ 
                                        female_bench_ranked$AgeClass)
 female_bench_results
 ```
+
 Using an alpha value of 0.5, our results are significant and we can claim that there is a significant difference between at least two groups.
 
 #### Dunn's Test of Pairwise Comparisons
+
 The Dunn's Test is a pairwise comparison test (similar to a Tukey Test) that determines which groups are significantly different from each other once we have determined there are differences.
 
 Load in the necessary packages for the test:
+
 ```{r warning=FALSE, output=FALSE}
 library(dunn.test)
 library(FSA)
 library(reshape2)
 ```
 
-Use the `dun.test()` function to compile p-values of the differences between groups and form a table of the values:
+Use the `dunn.test()` function to compile p-values of the differences between groups and form a table of the values:
+
 ```{r output=TRUE}
 female_bench_dunn <- dunn.test(female_bench_ranked$rank, female_bench_ranked$AgeClass, method = "bh")
 dunn_results_df <- as.data.frame(female_bench_dunn$P.adjusted, female_bench_dunn$comparisons) |>
@@ -210,49 +233,53 @@ dunn_results_df
 ```
 
 Because there are so many groups to compare, it is difficult to look at each p-value individually. Look at the range to see the variation in p-values:
+
 ```{r}
 range(dunn_results_df$p_value)
 ```
 
+## Visualizing Results
+
 Create a heatmap of the p-values to see where the results are significantly different:
+
 ```{r}
 dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
 
 ggplot(dunn_results_df, aes(x = group1, y = group2, fill = log_p)) +
   geom_tile(color = "white") +
-  scale_fill_gradient(low = "blue", high = "red") +
+  scale_fill_gradient(low = "black", high = "white") +
   theme_minimal()
 ```
+
 The -log p-value heatmap shows us how many zeros are following the decimal point indicating that the blue values are more significantly difference.
 
 Using an alpha value of 0.05, construct another heatmap indicating which values are significant or not.
+
 ```{r}
 dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
 
 ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
   geom_tile(color = "white") +
-  scale_fill_gradient(low = "blue", high = "red") +
   theme_minimal()
 ```
+
 The results in blue show there is not a significant difference between the two groups.
 
 Using an alpha value of 0.01:
+
 ```{r}
 dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.01,1,0)
 
 ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
   geom_tile(color = "white") +
-  scale_fill_gradient(low = "blue", high = "red") +
   theme_minimal()
 ```
-By lowering the alpha value, you can see there are fewer significant values.
 
+By lowering the alpha value, you can see there are fewer significant values.
 
 ## Visualizing Results
 
 ## Materials
-
-
 
 ::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
 reserved for conclusion
