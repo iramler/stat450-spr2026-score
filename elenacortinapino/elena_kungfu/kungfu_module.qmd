@@ -1,0 +1,72 @@
+---
+title: "Kung Fu"
+subtitle: Complete Linkage Hierarchical Clustering
+author: Elena Cortina Pino
+date: February 19, 2026
+format: html
+---
+
+
+# **This is the arranged document that consolidates information from `kungfu.qmd` and `cleaningmorekfdata.qmd` to serve as the Guide Quarto for the final Kung Fu Module**
+
+
+### Loading libraries
+
+```{r}
+#| message: false
+#| warning: false
+
+# Loading the libraries in:
+library(tidyverse)
+library(VIM)
+library(ggplot2)
+library(gplots)
+library(pheatmap)
+library("RColorBrewer")
+```
+
+
+
+### Loading Data
+
+
+```{r}
+# read `matrix_kf10.csv` which comes from many many many iterations of dplyr code
+
+matrix_kf10 <- read.csv("mat_10kf.csv")
+```
+
+
+
+### Plot 
+
+```{r}
+#| label: heatmap
+#| warning: false
+
+
+mat <- as.matrix(matrix_kf10[,-(1:2)])
+rownames(mat) <- as.character(matrix_kf10$recoded_forms)
+heatmap <- pheatmap(
+  mat,
+  scale = "row", # character indicating if the values should be centered and scaled in either the row direction or the column direction, or none.
+  clustering_distance_rows = 'euclidean',
+  clustering_distance_cols = 'euclidean',
+  clustering_method = "complete",
+  cluster_rows = T,
+  cluster_cols = T,
+  show_colnames = TRUE, 
+  show_rownames = TRUE,
+  fontsize_row = 7,
+  fontsize_col = 7, 
+  angle_col = 0,
+  main = "Heatmap with dendrogram",
+  cutree_rows = 5,
+  color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(100),
+  legend = T)
+
+
+#clusters<- heatmap$tree_row
+
+```
+
