@@ -23,6 +23,7 @@ library(ggplot2)
 library(gplots)
 library(pheatmap)
 library("RColorBrewer")
+#library(mice)
 ```
 
 
@@ -33,7 +34,7 @@ library("RColorBrewer")
 ```{r}
 # read `matrix_kf10.csv` which comes from many many many iterations of dplyr code
 
-matrix_kf10 <- read.csv("mat_10kf.csv")
+matrix_kf10 <- read.csv("mat_10kf.csv") |> select(-A) |> select(-`F`)
 ```
 
 
@@ -44,29 +45,29 @@ matrix_kf10 <- read.csv("mat_10kf.csv")
 #| label: heatmap
 #| warning: false
 
-
+# selecting OUT the non-numeric columns in the data frame
 mat <- as.matrix(matrix_kf10[,-(1:2)])
+# chooses which column from the dataset to use for the row names
 rownames(mat) <- as.character(matrix_kf10$recoded_forms)
+
+# using pheatmap to create the clustered heatmap
 heatmap <- pheatmap(
   mat,
   scale = "row", # character indicating if the values should be centered and scaled in either the row direction or the column direction, or none.
   clustering_distance_rows = 'euclidean',
-  clustering_distance_cols = 'euclidean',
+  #clustering_distance_cols = 'euclidean',
   clustering_method = "complete",
   cluster_rows = T,
-  cluster_cols = T,
+  cluster_cols = F,
   show_colnames = TRUE, 
   show_rownames = TRUE,
   fontsize_row = 7,
   fontsize_col = 7, 
   angle_col = 0,
-  main = "Heatmap with dendrogram",
+  main = "Complete Linknage Clustered Heatmap with Dendrograms",
   cutree_rows = 5,
   color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(100),
   legend = T)
-
-
-#clusters<- heatmap$tree_row
 
 ```
 

@@ -5,6 +5,7 @@ author:
   - name: "Elena Cortina Pino"
     url: https://www.linkedin.com/in/elenacortina
 description: "Kung Fu: Fighting."
+lightbox: true
 format: 
   html:
     embed-resources: false
