@@ -15,7 +15,7 @@ format: html
 # Loading the libraries in:
 library(tidyverse)
 library(ggplot2)
-library(stargazer)
+library(gplots)
 library(pheatmap)
 ```
 
@@ -98,17 +98,86 @@ Things we can do:
 
 ```{r}
 # the number of total athletes before removing defaulted athletes is 2129
-sample_kungfu <- kf|> filter(Rank != "Default") |> drop_na(Score) |> select(-X, -Rank, -Remark) 
+sample_kungfu <- kf|> filter(Rank != "Default") |> drop_na(Score) |> select(-X, -Rank, -Remark)
 # the number of athletes after removing defaulting athletes is 1989
 # difference is 140 athletes.
+```
 
 
+Writing sample_kungfu to make it usable to fix the form names
+
+```{r}
+#| eval: false
+#| echo: false
+
+
+# write.csv(sample_kungfu, "sample_kungfu.csv")
+```
+
+
+```{r}
+usable_sample_kungfu <- read.csv("sample_kungfu.csv") |> mutate(recoded_forms = fct_recode(Form,
+  # Shanzi variations
+  "Single weapon routines Shanzi (Fan)" = "Single weapon routines Shanzi (Fan)",
+  "Single weapon routines Shanzi (Fan)" = "Single weapon routines shanzi",
+  
+  # Pudao variations
+  "Single weapon routines Pudao" = "Single weapon routines Pudao",
+  "Single weapon routines Pudao" = "Single weapon routines Pudao/Dadao",
+  "Single weapon routines Pudao" = "Single weapon routines Pudao/Guandao (Kwan Dao)",
+  "Single weapon routines Pudao" = "Single weapon routines Guandao /Pudao",
+  "Single weapon routines Pudao" = "Single weapon routines Guandao (Kwan Dao)",
+  
+  # Weapon other variations
+  "Other weapon routines" = "weapon Other routines",
+  "Other weapon routines" = "weapon routines Other routines",
+  
+  # Bare hand other variations
+  "Other bare hand routines" = "bare hand routines Other routines",
+  "Other bare hand routines" = "Other bare hand routines ",
+  "Other bare hand routines" = "bare hand routines Other routines",
+  
+  # Taiji weapon variations
+  "Single weapon routines Other Taiji weapon" = "Single weapon routines Other taiji weapon",
+  "Single weapon routines Other Taiji weapon" = "Single weapon routines Other Taiji weapon"
+)) |> group_by(Group, recoded_forms) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score)
 
 ```
 
+
+Imputation: Chosen method KNN
+
+```{r}
+kf10_imp <- kNN(usable_sample_kungfu, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp, -recoded_forms_imp)  # You can adjust 'k' as needed
+```
+
+
+```{r}
+write.csv(kf10_imp, "mat_10kf.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```{r}
 kf_nodefault |> drop_na(Score) |> group_by(sex) |> summarise(mean(Score), print(mean(Score)))
+
+
 meanteam <- kf_nodefault |> drop_na(Score) |> group_by(Team) |> summarise(mean(Score)) |> select(-Team)
+
+
 getformscore<-kf_nodefault |> drop_na(Score) |> group_by(Form) |> summarise(mean(Score))
 kf_nodefault |> drop_na(Score) |> group_by(Group) |> summarise(mean(Score))
 
@@ -156,17 +225,6 @@ interesting <- sample_kungfu |> group_by(Form) |> summarise(haha = n())
 ###### Methods for measuring distances 
 Need to choose a type of measuring distance that works well with very small differences and (in some cases) no distance!
 
-For now, let's use Euclidean distance 
-```{r}
-
-# from the factoextra package , using the formula `fviz_hmfa` to generate the plot
-
-
-# finding euclidean distance with R base function dist()
-dist.eucl <- dist(df.scaled, method = "euclidean")
-
-```
-
 
 #### Hierarchical agglomerative clustering
 
@@ -175,15 +233,30 @@ dist.eucl <- dist(df.scaled, method = "euclidean")
 
 
 ```{r}
+
+# this is the code from chatgpt that gets the means for the matrix
+# below the code for the matrix is also from chat
 hehe_kungfu <- sample_kungfu |> group_by(Group, Form) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score)
+
+# then i wrote this as a new file and changed some stuff... 
+# we will never know what i changed because i also dont know
+# but i changed group names by hand , wont do it again
+
+# write.csv(hehe_kungfu, "10kf.csv")
 ```
 
 
 ```{r}
-mat <- as.matrix(hehe_kungfu[,-1])
-rownames(mat) <- hehe_kungfu$Form
-mat[is.na(mat)] <- 0
-# now we have `na` values converted to zeroes
+kf10 <- read.csv("10kf.csv")
+```
+
+
+```{r}
+mat <- as.matrix(kf10[,-1])
+rownames(mat) <- kf10$Form
+mat[is.na(mat)] <- 8.50
+# replace na's with means either from groups or forms
+
 print(mat)
 
 # now we will make the heatmap (accept a mess due to zeroes)
@@ -192,24 +265,47 @@ print(mat)
 
 ```
 
+Use the complete function from tidyr to fill in missing factor combinations in your data.frame with NA.
+
+Then you can use the na.value parameter in the color gradient to set the color.
+
+
+
+**Revise this  source for clustering**:
+
+https://rlbarter.github.io/superheat/clustering.html
+
+
+
 ```{r}
 #| label: heatmap
 #| warning: false
 
 
-pheatmap(
+heatmap <- pheatmap(
   mat,
-  scale = "column", # BIG  QUESTION  MARK
-  clustering_distance_rows = "euclidean",
-  clustering_distance_cols = "euclidean",
+  scale = "row", # character indicating if the values should be centered and scaled in either the row direction or the column direction, or none.
+  clustering_distance_rows = 'canberra',
+  clustering_distance_cols = 'canberra',
   clustering_method = "complete",
+  cluster_rows = T,
+  cluster_cols = T,
   show_colnames = TRUE, 
   show_rownames = TRUE,
   fontsize_row = 7,
   fontsize_col = 7, 
+  angle_col = 0,
   main = "Heatmap with dendrogram",
-  legend = F)
+  cutree_rows = 5,
+  color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(100),
+  legend = T)
+
+
+#clusters<- heatmap$tree_row
+
 ```
+
+
 
 
 ```{r}
@@ -221,9 +317,8 @@ pheatmap(
 # reference code
 heatmap(matrix_kf, scale = "column")
 # custom color palette sample code
-col<- colorRampPalette(c("red", "white", "blue"))(256)
+col<- colorRampPalette(c("azure", "white", "#e00707"))(256)
 library("RColorBrewer")
-col <- colorRampPalette(brewer.pal(10, "RdYlBu"))(256)
 
 
 
@@ -248,11 +343,28 @@ heat_plot <- pheatmap(data,
                       main = "Super heatmap with annotations") # a title for our heatmap
 ```
 
+```{r}
+kungfu_7 <- read.csv("kungfu_7.csv")
+kungfu_8 <- read.csv("kungfu_8.csv")
+kungfu_9 <- read.csv("kungfu_9.csv")
+
+```
+
+```{r}
+working_eight <- kungfu_8 |> group_by(Form) |> summarise(haha = n()) |> select(Form)
 
 
-These are the only events that have full participation for all age groups:\
-- Single-weapon routines_Dao (Broadsword) \
-- Single-weapon routines_Gun (Cudgel/Staff)\
-- Single-weapon routines_Jian (Straight Sword) \
-- bare-hand routines_Other routines\
+write.csv(working_eight, "8 events.csv")
+```
+
+```{r}
+working_nine <- kungfu_9 |> group_by(Form) |> summarise(haha = n()) |> select(Form)
+write.csv(working_nine, "9 events.csv")
+
+```
+
+```{r}
+working_ten <- kf |> group_by(Form) |> summarise(haha = n()) |> select(Form)
+write.csv(working_ten, "10 events.csv")
+```
 
