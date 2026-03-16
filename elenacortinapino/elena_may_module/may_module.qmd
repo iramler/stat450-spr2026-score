@@ -1,0 +1,45 @@
+---
+title: "Cleaning Kung Fu Data from the 10th WKFC: Scraping, regex, dplyr."
+author: Elena Cortina Pino
+format: html
+---
+
+
+
+
+
+
+Data by years:
+
+7th:\
+
+[Reference document](https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf)
+
+This year's data only comprehends 5 age groups-\> unusable for our purposes.
+
+8th:\
+[Reference document](https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf)
+
+9th:\
+[Reference document](https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf)
+
+
+
+
+##### Variables
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description                                |
+|----------|--------------------------------------------|
+| Sex      | Sex of athlete                             |
+| Form     | Kung fu form the athlete competed in       |
+| Rank     | Rank of athlete in the event               |
+| Team     | Country the athlete is representing        |
+| Athlete  | Athlete's name                             |
+| Score    | Numerical score out of 10 possible points  |
+| Remark   | Prize awarded based on the score and event |
+
+</details>

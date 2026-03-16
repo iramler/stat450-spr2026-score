@@ -6,6 +6,7 @@ author:
     url: https://www.linkedin.com/in/elenacortina
 description: "This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data."
 lightbox: true
+  effect: fade
 format: 
   html:
     embed-resources: false
@@ -31,15 +32,17 @@ library(here)
 
 ## Background
 
-[Wang Shengrong (Group D) Winner Drunken Fist CHN Team](https://www.youtube.com/watch?v=BFFqe0Iyqu0)
+{{< Wang Shengrong (Group D) Winner Drunken Fist CHN Team https://www.youtube.com/watch?v=BFFqe0Iyqu0 >}}
 
-[Zhou Qi (Group D) Winner Drunken Fist CHN Team](https://www.youtube.com/watch?v=xt8F0JfdMis)
+
+{{< Zhou Qi (Group D) Winner Drunken Fist CHN Team https://www.youtube.com/watch?v=xt8F0JfdMis >}}
 
 ### World Kungfu Championships 2025: Forms, Groups, Ranking
 
-The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years. At the WKFC, mutual understanding is fostered through skill and cultural exchanges. In the spirit of sport, growth, development, and health are the core values of the event.
+The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.\
 
-##### COMPETITION EVENTS
+##### Competing Kung Fu Events
+The table below depicts all the participating kung fu forms at the 10th WKFC.
 
 ### Individual Events
 
@@ -63,7 +66,7 @@ The World Kung fu Championships (WKFC), hosted by the IWUF, is an international 
 |  |  | Emeiquan |
 |  |  | other types of traditional styles |
 
-### Another table: Weaponry
+### Weaponry
 
 | Single-weapon Routines | Double-weapon Routines | Flexible/Soft-weapon Routines |
 |-------------------|----------------------|-------------------------------|
@@ -86,7 +89,10 @@ The World Kung fu Championships (WKFC), hosted by the IWUF, is an international 
 | Nangun (Southern Staff/Cudgel) |  |  |
 | other traditional single-weapon routines |  |  |
 
-#### Groups:
+#### Groups
+
+The competition welcomes competitors of all ages. The age categories are divided according to the following periods.\
+\
 
 | Groups | Age | Classification on age requirements for competition |
 |:--------:|:---------------------:|:-------------------------------------:|
@@ -109,10 +115,13 @@ The World Kung fu Championships (WKFC), hosted by the IWUF, is an international 
 #### Data
 
 The data comes from the results book of the 2025 10th World Kung Fu Championship, from The International Wushu Federation (IWUF).\
+\
+The result book is only available online as a 218-page pdf document containing the tables from each event, group and form separately. This pdf document was parsed into a csv document containing the same information.\
+\
+For the purpose of this module, the data as been trimmed to include only individual events but not group events.\
+\
+The ready-to-use data set in matrix form is available for this module in the `Materials` section.
 
-The result book is only available online as a 218-page pdf document containing the tables from each event, group and form separately. This pdf document was parsed into a csv document containing the same information.
-
-For the purpose of this module, the data as been trimmed to include only individual events but not group events.
 
 ##### Variables
 
@@ -122,13 +131,13 @@ For the purpose of this module, the data as been trimmed to include only individ
 
 | Variable | Description                                |
 |----------|--------------------------------------------|
-| Sex      | Sex of athlete                             |
-| Form     | Kung fu form the athlete competed in       |
-| Rank     | Rank of athlete in the event               |
-| Team     | Country the athlete is representing        |
-| Athlete  | Athlete's name                             |
-| Score    | Numerical score out of 10 possible points  |
-| Remark   | Prize awarded based on the score and event |
+| Form  | Kung fu form the athlete competed in |
+| A | Means per form for Group A participants |
+| B | Means per form for Group B participants |
+| C | Means per form for Group C participants |
+| D | Means per form for Group D participants |
+| E | Means per form for Group E participants |
+| F | Means per form for Group F participants |
 
 </details>
 
@@ -148,7 +157,7 @@ This year's data only comprehends 5 age groups-\> unusable for our purposes.
 
 ##### Materials
 
-For this module, the materials are the [kung fu](kungfu.csv) data set and [the solution QMD](kungfu.qmd).
+For this module, the materials are the [kung fu](mat_10kf.csv) data set and [the solution QMD](kungfu.qmd).
 
 ### Complete Linkage Hierarchical Clustering
 
@@ -158,13 +167,12 @@ This process serves as an exploratory data analysis technique, categorizing data
 
 Our goal for this modules becomes mainly to answer some questions such as:
 
-1.  Are there any forms where the difference across age groups is more amplified?
 
-2.  Analysing the data by form, which group do they belong to judging by the score?
+#### The Heatmap here:
+![Complete Linkage Clustered Heatmap](热度图三月16edit.png){.lightbox}
 
-.\
-.\
-.\
-.\
 
-\*\*
+
+
+
+
