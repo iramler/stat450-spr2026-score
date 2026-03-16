@@ -12,6 +12,11 @@ execute:
   message: false
 ---
 
+Please note that these material have not yet completed the required
+pedagogical and industry peer-reviews to become a published module on
+the SCORE Network. However, instructors are still welcome to use these
+materials if they are so inclined.
+
 ```{r}
 #| label: setup
 #| include: false
@@ -23,9 +28,8 @@ library(netrankr)
 # devtools::install_github("schochastics/networkdata")
 ```
 
-\*\* Currently working on dataset
 
-Ive made all 125 cards into a dataset however i need to make them into a new one that has the
+I created a dataset containing all 125 cards, and the next step is to transform it into a card by card matrix that summarizes pair frequency, wins, and win rates.
 
 -   Number of decks with the pair of cards (sample size) DONE
 -   Number of wins with the pair of cards 
@@ -92,6 +96,7 @@ pair_data <- pair_data |>
 ```
 
 
+
 ```{r}
 # any win rate above 50% convert to a 1 and under to a 0
 clash_deck_ratebinary <- ifelse(clash_deck_rate > 0.5, 1, 0)
@@ -118,9 +123,7 @@ Clash Royale is a real-time strategy mobile game developed by Supercell in which
 
 Success in the game depends heavily on card combinations, as certain cards perform more effectively when used together. Because of this emphasis on synergy, Clash Royale provides a natural setting for studying relationships between elements using network analysis.
 
-Clash Royale was released globally on March 2, 2016
-
-The game has been out for 10 years.
+We will focus on Season 3 deck data.
 
 ## Goal of this module
 
@@ -140,6 +143,10 @@ By the end, we will:
 -   Learn network vocabulary (nodes, edges, weights, degree)
 -   Compute centrality (who matters most)
 -   Find cliques / communities (tight synergy groups)
+
+## Data
+
+
 
 # Network Representation
 
@@ -196,6 +203,34 @@ Interpretation:
 -   Higher paired win rate → stronger connection
 -   Lower paired win rate → weaker connection
 
+
+# Pick 16 cards from the dataset for which we will use
+
+# go back to adjacency matrix 
+# only 16 nodes and only have edges for nodes with higher than 50% win rate
+
+```{r}
+used_cards <- c("Hog Rider", "Zap", "Valkyrie", "Giant Skeleton", "Baby Dragon",
+                "Mini P.E.K.K.A", "Witch", "Musketeer", "Balloon", "Arrows", "Skeleton Army", "Electro Wizard", "Mega Knight", "Fireball", "Executioner", "P.E.K.K.A")
+```
+
+```{r}
+pair_data_16 <- pair_data |>
+  filter(card1 %in% used_cards, card2 %in% used_cards)
+
+
+
+network_16 <- graph_from_data_frame(pair_data_16, directed = FALSE)
+
+plot(network_16,
+     layout = layout_with_fr,
+     vertex.size = 8,
+     vertex.label.cex = .8,
+     edge.width = E(network_16)$winrate * 4)
+
+```
+
+
 ```{r}
 # Add edge weights
 E(network)$weight <- pair_data$winrate
@@ -217,7 +252,7 @@ sort(card_degree, decreasing = TRUE)[1:10]
 # Filtered more decks since network too dense
 # show only strongest edges
 pair_data_small <- pair_data |>
-  filter(decks > 320, winrate > 0.47)
+  filter(decks > 290, winrate > 0.50)
 
 network_small <- graph_from_data_frame(pair_data_small, directed = FALSE)
 
