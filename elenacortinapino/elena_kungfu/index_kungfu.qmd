@@ -6,7 +6,6 @@ author:
     url: https://www.linkedin.com/in/elenacortina
 description: "This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data."
 lightbox: true
-  effect: fade
 format: 
   html:
     embed-resources: false
@@ -141,19 +140,7 @@ The ready-to-use data set in matrix form is available for this module in the `Ma
 
 </details>
 
-Data by years:
 
-7th:\
-
-[Reference document](https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf)
-
-This year's data only comprehends 5 age groups-\> unusable for our purposes.
-
-8th:\
-[Reference document](https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf)
-
-9th:\
-[Reference document](https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf)
 
 ##### Materials
 
@@ -165,14 +152,50 @@ Hierarchical Clustering via Complete Linkage is a Machine Learning technique tha
 
 This process serves as an exploratory data analysis technique, categorizing data into distinct groups or subsets, where elements within each subset are more similar to each other than to elements in different subsets. A useful application of this method for our case study data set on Kung Fu is understanding how the forms and the age groups can be grouped in clusters to understand the relationships between these two variables with respect to the scores.
 
-Our goal for this modules becomes mainly to answer some questions such as:
-
 
 #### The Heatmap here:
-![Complete Linkage Clustered Heatmap](热度图三月16edit.png){.lightbox}
+![Complete Linkage Clustered Heatmap](finalgamecomeon.png){.lightbox}
+
+
+To preserve the most information possible from the data, we removed groups A and F since their scores across forms were considerably and understandably lower than the other groups. Athletes at the very beginning and end of their Kung Fu career can experience high levels of exhaustion, insufficient technique on the side of the infants participating and decay of explosiveness and endurance tat a sport such as Kung Fu requires.\
+\
+
+Participants from the ages between 12 and 59 years old can be considered the most competitive athletes in the competition because they can leverage the explosiveness and endurance of being at the peak of age ability and the technique from having trained for long enough.\
+
+
+### Z-Scores
+
+$Z = \frac{x-\mu}{\sigma}$
+How many standard deviations from the mean a particular observation is. Values closer to the mean have the bright red color and values far from the mean are mapped in blue.\
+
+
+#### Euclidean distance
+
+$balkkdsdjdnldlnlcdknvcl$
+
+Literal distances between two points used to make the clusters.
+\
+The rows of the data matrix are re-ordered according to the hierarchical clustering result, putting similar observations close to each other.\
 
 
 
+### Dendrograms
 
+The dendrograms are the lines on the outside of the plot that connect forms with one another and then connect groups of forms to other groups.
+
+### Other specific plot characteristics
+
+
+We have also identified that there are 6 main categories of forms, hence we have deliberately separated clusters of forms into 6 groups. Intuitively, this works by cutting the outermost _branches_ of the dendrogram tree until we have six major clusters of forms.
+
+
+### Conclusion from the exploration
+
+Group D participants, thanks to being in their physical prime and having sufficient technique development excel in scoring across all Kung Fu forms.
+
+Most of the _Single Weapon Routies_ cluster together in scoring in two main clusters.
+
+
+# Activity
 
 

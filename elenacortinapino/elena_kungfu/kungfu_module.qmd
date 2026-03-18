@@ -45,9 +45,9 @@ matrix_kf10 <- read.csv("mat_10kf.csv") |> select(-A) |> select(-`F`)
 #| warning: false
 
 # selecting OUT the non-numeric columns in the data frame
-mat <- as.matrix(matrix_kf10[,-(1:2)])
+mat <- as.matrix(matrix_kf10[,-1])
 # chooses which column from the dataset to use for the row names
-rownames(mat) <- as.character(matrix_kf10$recoded_forms)
+rownames(mat) <- as.character(matrix_kf10$Forms)
 
 # using pheatmap to create the clustered heatmap
 heatmap <- pheatmap(
@@ -67,7 +67,7 @@ heatmap <- pheatmap(
   number_color = "#303030",
   border_color = "#303030", 
   main = "Complete Linkage Clustered Heatmap with Dendrograms",
-  cutree_rows = 7,
+  cutree_rows = 6, # number of major clusters of forms
   color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(100),
   legend = T,
   legend_labels = NA)

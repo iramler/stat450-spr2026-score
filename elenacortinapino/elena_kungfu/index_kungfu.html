@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Elena Cortina Pino">
-<meta name="description" content="Kung Fu: Fighting.">
+<meta name="description" content="This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data.">
 
-<title>Kung Fu - Data manipulation, data visualization and Complete Linkage Hierarchical Clustering</title>
+<title>2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -37,7 +37,39 @@ ul.task-list li input[type="checkbox"] {
 <script src="index_kungfu_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_kungfu_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_kungfu_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="index_kungfu_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="index_kungfu_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="index_kungfu_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -49,18 +81,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Kung Fu - Data manipulation, data visualization and Complete Linkage Hierarchical Clustering</h1>
-<p class="subtitle lead">2025 World Kung Fu Championship Data Analysis Module - WIP.</p>
+<h1 class="title">2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering</h1>
+<p class="subtitle lead">Exploratory data analysis of the age groups and kung fu forms</p>
   <div class="quarto-categories">
+    <div class="quarto-category">Hierarchical clustering</div>
     <div class="quarto-category">Data visualization</div>
-    <div class="quarto-category">Tests</div>
-    <div class="quarto-category">Other</div>
+    <div class="quarto-category">Complete Linkage</div>
+    <div class="quarto-category">Z-Scores</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Kung Fu: Fighting.
+    This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data.
   </div>
 </div>
 
@@ -85,13 +118,15 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
-<p><a href="https://www.youtube.com/watch?v=BFFqe0Iyqu0">Wang Shengrong (Group D) Winner Drunken Fist CHN Team</a></p>
-<p><a href="https://www.youtube.com/watch?v=xt8F0JfdMis">Zhou Qi (Group D) Winner Drunken Fist CHN Team</a></p>
+{{&lt; Wang Shengrong (Group D) Winner Drunken Fist CHN Team https://www.youtube.com/watch?v=BFFqe0Iyqu0 &gt;}}
+{{&lt; Zhou Qi (Group D) Winner Drunken Fist CHN Team https://www.youtube.com/watch?v=xt8F0JfdMis &gt;}}
 <section id="world-kungfu-championships-2025-forms-groups-ranking" class="level3">
 <h3 class="anchored" data-anchor-id="world-kungfu-championships-2025-forms-groups-ranking">World Kungfu Championships 2025: Forms, Groups, Ranking</h3>
-<p>The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years. At the WKFC, mutual understanding is fostered through skill and cultural exchanges. In the spirit of sport, growth, development, and health are the core values of the event.</p>
-<section id="competition-events" class="level5">
-<h5 class="anchored" data-anchor-id="competition-events">COMPETITION EVENTS</h5>
+<p>The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.<br>
+</p>
+<section id="competing-kung-fu-events" class="level5">
+<h5 class="anchored" data-anchor-id="competing-kung-fu-events">Competing Kung Fu Events</h5>
+<p>The table below depicts all the participating kung fu forms at the 10th WKFC.</p>
 </section>
 </section>
 <section id="individual-events" class="level3">
@@ -198,8 +233,8 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<section id="another-table-weaponry" class="level3">
-<h3 class="anchored" data-anchor-id="another-table-weaponry">Another table: Weaponry</h3>
+<section id="weaponry" class="level3">
+<h3 class="anchored" data-anchor-id="weaponry">Weaponry</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 26%">
@@ -307,9 +342,56 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <section id="groups" class="level4">
-<h4 class="anchored" data-anchor-id="groups">Groups:</h4>
-<div class="line-block">Groups | Age | Classification on age requirements for competition\</div>
-<p>|————–|———-|——————————————-| | A| 11 years of age and below | born in and after 2014 | | B| 12‐14 years of age | the year of birth: 2011 - 2013 | | C| 15‐17 years of age | the year of birth: 2008 - 2010 | | D| 18‐39 years of age | the year of birth: 1986 - 2007 | | E| 40‐59 years of age | the year of birth: 1966 - 1985 | | F| 60 years of age and above | born in and before 1965 |</p>
+<h4 class="anchored" data-anchor-id="groups">Groups</h4>
+<p>The competition welcomes competitors of all ages. The age categories are divided according to the following periods.<br>
+<br>
+</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 31%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Groups</th>
+<th style="text-align: center;">Age</th>
+<th style="text-align: center;">Classification on age requirements for competition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">11 years of age and below</td>
+<td style="text-align: center;">Born in and after 2014</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">12‐14 years of age</td>
+<td style="text-align: center;">The year of birth: 2011 - 2013</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">15‐17 years of age</td>
+<td style="text-align: center;">The year of birth: 2008 - 2010</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">18‐39 years of age</td>
+<td style="text-align: center;">The year of birth: 1986 - 2007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">40‐59 years of age</td>
+<td style="text-align: center;">The year of birth: 1966 - 1985</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">60 years of age and above</td>
+<td style="text-align: center;">Born in and before 1965</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="awards" class="level4">
 <h4 class="anchored" data-anchor-id="awards">Awards</h4>
@@ -329,9 +411,12 @@ Gold, silver and bronze medals and certificates will be awarded to the athletes 
 <section id="data" class="level4">
 <h4 class="anchored" data-anchor-id="data">Data</h4>
 <p>The data comes from the results book of the 2025 10th World Kung Fu Championship, from The International Wushu Federation (IWUF).<br>
-</p>
-<p>The result book is only available online as a 218-page pdf document containing the tables from each event, group and form separately. This pdf document was parsed into a csv document containing the same information.</p>
-<p>For the purpose of this module, the data as been trimmed to include only individual events but not group events.</p>
+<br>
+The result book is only available online as a 218-page pdf document containing the tables from each event, group and form separately. This pdf document was parsed into a csv document containing the same information.<br>
+<br>
+For the purpose of this module, the data as been trimmed to include only individual events but not group events.<br>
+<br>
+The ready-to-use data set in matrix form is available for this module in the <code>Materials</code> section.</p>
 <section id="variables" class="level5">
 <h5 class="anchored" data-anchor-id="variables">Variables</h5>
 <details>
@@ -339,10 +424,6 @@ Gold, silver and bronze medals and certificates will be awarded to the athletes 
 <b>Variable Descriptions</b>
 </summary>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -351,49 +432,40 @@ Gold, silver and bronze medals and certificates will be awarded to the athletes 
 </thead>
 <tbody>
 <tr class="odd">
-<td>Sex</td>
-<td>Sex of athlete</td>
-</tr>
-<tr class="even">
 <td>Form</td>
 <td>Kung fu form the athlete competed in</td>
 </tr>
+<tr class="even">
+<td>A</td>
+<td>Means per form for Group A participants</td>
+</tr>
 <tr class="odd">
-<td>Rank</td>
-<td>Rank of athlete in the event</td>
+<td>B</td>
+<td>Means per form for Group B participants</td>
 </tr>
 <tr class="even">
-<td>Team</td>
-<td>Country the athlete is representing</td>
+<td>C</td>
+<td>Means per form for Group C participants</td>
 </tr>
 <tr class="odd">
-<td>Athlete</td>
-<td>Athlete’s name</td>
+<td>D</td>
+<td>Means per form for Group D participants</td>
 </tr>
 <tr class="even">
-<td>Score</td>
-<td>Numerical score out of 10 possible points</td>
+<td>E</td>
+<td>Means per form for Group E participants</td>
 </tr>
 <tr class="odd">
-<td>Remark</td>
-<td>Prize awarded based on the score and event</td>
+<td>F</td>
+<td>Means per form for Group F participants</td>
 </tr>
 </tbody>
 </table>
 </details>
-<p>Data by years:</p>
-<p>7th:<br>
-</p>
-<p><a href="https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf">Reference document</a></p>
-<p>This year’s data only comprehends 5 age groups-&gt; unusable for our purposes.</p>
-<p>8th:<br>
-<a href="https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf">Reference document</a></p>
-<p>9th:<br>
-<a href="https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf">Reference document</a></p>
 </section>
 <section id="materials" class="level5">
 <h5 class="anchored" data-anchor-id="materials">Materials</h5>
-<p>For this module, the materials are the <a href="kungfu.csv">kung fu</a> data set and <a href="kungfu.qmd">the solution QMD</a>.</p>
+<p>For this module, the materials are the <a href="mat_10kf.csv">kung fu</a> data set and <a href="kungfu.qmd">the solution QMD</a>.</p>
 </section>
 </section>
 </section>
@@ -401,17 +473,39 @@ Gold, silver and bronze medals and certificates will be awarded to the athletes 
 <h3 class="anchored" data-anchor-id="complete-linkage-hierarchical-clustering">Complete Linkage Hierarchical Clustering</h3>
 <p>Hierarchical Clustering via Complete Linkage is a Machine Learning technique that groups clusters of data from the furthermost point to the point of reference. In hierarchical clustering, the two nearest clusters are repeatedly merged until the desired number of clusters is reached. (Sokhonn, Park, Lee , 2024 , “Hierarchical Clustering via Single and Complete Linkage Using Fully Homomorphic Encryption”) Complete linkage is the metric through which we measure the clusters’ proximity.</p>
 <p>This process serves as an exploratory data analysis technique, categorizing data into distinct groups or subsets, where elements within each subset are more similar to each other than to elements in different subsets. A useful application of this method for our case study data set on Kung Fu is understanding how the forms and the age groups can be grouped in clusters to understand the relationships between these two variables with respect to the scores.</p>
-<p>Our goal for this modules becomes mainly to answer some questions such as:</p>
-<ol type="1">
-<li><p>Are there any forms where the difference across age groups is more amplified?</p></li>
-<li><p>Analysing the data by form, which group do they belong to judging by the score?</p></li>
-</ol>
-<p>.<br>
-.<br>
-.<br>
-.<br>
+<section id="the-heatmap-here" class="level4">
+<h4 class="anchored" data-anchor-id="the-heatmap-here">The Heatmap here:</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="finalgamecomeon.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Complete Linkage Clustered Heatmap"><img src="finalgamecomeon.png" class="img-fluid figure-img" alt="Complete Linkage Clustered Heatmap"></a></p>
+<figcaption>Complete Linkage Clustered Heatmap</figcaption>
+</figure>
+</div>
+<p>To preserve the most information possible from the data, we removed groups A and F since their scores across forms were considerably and understandably lower than the other groups. Athletes at the very beginning and end of their Kung Fu career can experience high levels of exhaustion, insufficient technique on the side of the infants participating and decay of explosiveness and endurance tat a sport such as Kung Fu requires.<br>
+<br>
 </p>
-<p>**</p>
+<p>Participants from the ages between 12 and 59 years old can be considered the most competitive athletes in the competition because they can leverage the explosiveness and endurance of being at the peak of age ability and the technique from having trained for long enough.<br>
+</p>
+</section>
+</section>
+<section id="z-scores" class="level3">
+<h3 class="anchored" data-anchor-id="z-scores">Z-Scores</h3>
+<p><span class="math inline">\(Z = \frac{x-\mu}{\sigma}\)</span> How many standard deviations from the mean a particular observation is. Values closer to the mean have the bright red color and values far from the mean are mapped in blue.<br>
+</p>
+<section id="euclidean-distance" class="level4">
+<h4 class="anchored" data-anchor-id="euclidean-distance">Euclidean distance</h4>
+<p><span class="math inline">\(balkkdsdjdnldlnlcdknvcl\)</span></p>
+<p>Literal distances between two points used to make the clusters.<br>
+The rows of the data matrix are re-ordered according to the hierarchical clustering result, putting similar observations close to each other.<br>
+</p>
+</section>
+</section>
+<section id="dendrograms" class="level3">
+<h3 class="anchored" data-anchor-id="dendrograms">Dendrograms</h3>
+</section>
+<section id="other-specific-plot-characteristics" class="level3">
+<h3 class="anchored" data-anchor-id="other-specific-plot-characteristics">Other specific plot characteristics</h3>
+<p>The means are scaled by <code>row</code>. This</p>
 </section>
 </section>
 
@@ -818,6 +912,38 @@ Gold, silver and bronze medals and certificates will be awarded to the athletes 
   });
   </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
