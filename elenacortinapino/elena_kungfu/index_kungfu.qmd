@@ -171,7 +171,7 @@ How many standard deviations from the mean a particular observation is. Values c
 
 #### Euclidean distance
 
-$balkkdsdjdnldlnlcdknvcl$
+$d = \sqrt{\Sigma(x_i+ y_i)^2}$
 
 Literal distances between two points used to make the clusters.
 \
