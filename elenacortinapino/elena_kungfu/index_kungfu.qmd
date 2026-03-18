@@ -1,10 +1,10 @@
 ---
 title: "2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering"
-subtitle: "Exploratory data analysis of the age groups and kung fu forms"
+subtitle: "Exploratory data analysis of the age groups and Kung Fu forms"
 author:
   - name: "Elena Cortina Pino"
     url: https://www.linkedin.com/in/elenacortina
-description: "This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data."
+description: "This module goes through the process of creating a heatmap to visualize the relationship in scoring across Kung Fu forms and age groups for competitive Kung Fu data."
 lightbox: true
 format: 
   html:
@@ -31,17 +31,17 @@ library(here)
 
 ## Background
 
-{{< Wang Shengrong (Group D) Winner Drunken Fist CHN Team https://www.youtube.com/watch?v=BFFqe0Iyqu0 >}}
+{{< video https://www.youtube.com/watch?v=BFFqe0Iyqu0
+    title="Wang Shengrong (Group D) Winner Drunken Fist CHN Team"
+    start="46"
+    aspect-ratio="21x9" >}}
 
+### World Kung Fu Championships 2025: Forms, Groups, Ranking
 
-{{< Zhou Qi (Group D) Winner Drunken Fist CHN Team https://www.youtube.com/watch?v=xt8F0JfdMis >}}
-
-### World Kungfu Championships 2025: Forms, Groups, Ranking
-
-The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.\
+The World Kung Fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of Kung Fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.\
 
 ##### Competing Kung Fu Events
-The table below depicts all the participating kung fu forms at the 10th WKFC.
+The table below depicts all the participating Kung Fu forms at the 10th WKFC.
 
 ### Individual Events
 
@@ -130,7 +130,7 @@ The ready-to-use data set in matrix form is available for this module in the `Ma
 
 | Variable | Description                                |
 |----------|--------------------------------------------|
-| Form  | Kung fu form the athlete competed in |
+| Form  | Kung Fu form the athlete competed in |
 | A | Means per form for Group A participants |
 | B | Means per form for Group B participants |
 | C | Means per form for Group C participants |
@@ -144,7 +144,7 @@ The ready-to-use data set in matrix form is available for this module in the `Ma
 
 ##### Materials
 
-For this module, the materials are the [kung fu](mat_10kf.csv) data set and [the solution QMD](kungfu.qmd).
+For this module, the materials are the [Kung Fu](mat_10kf.csv) data set and [the solution QMD](kungfu.qmd).
 
 ### Complete Linkage Hierarchical Clustering
 
@@ -166,7 +166,9 @@ Participants from the ages between 12 and 59 years old can be considered the mos
 ### Z-Scores
 
 $Z = \frac{x-\mu}{\sigma}$
-How many standard deviations from the mean a particular observation is. Values closer to the mean have the bright red color and values far from the mean are mapped in blue.\
+
+
+| How many standard deviations from the mean a particular observation is. Values closer to the mean have the bright red color and values far from the mean are mapped in blue.\
 
 
 #### Euclidean distance
