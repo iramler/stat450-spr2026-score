@@ -1,4 +1,4 @@
-# install.packages("nflreadr")
+#install.packages("nflreadr")
 
 library(nflreadr)
 library(tidyverse)
@@ -9,9 +9,10 @@ stats <- load_player_stats(2025, summary_level = "week")
 
 clean_stats <- stats |>
   filter(position == "QB", season_type == "REG") |>
-  rename(player = player_display_name, sacks = sacks_suffered, fumbles = sack_fumbles) |>
+  rename(player = player_display_name, sacks = sacks_suffered, fumbles = sack_fumbles,
+         sack_yards = sack_yards_lost) |>
   select(player, week, team, opponent_team, completions, attempts, passing_yards,
-         passing_tds, passing_interceptions, sacks, fumbles) 
+         passing_tds, passing_interceptions, sacks, sack_yards, fumbles) 
 
 clean_qbr <- qbr |>
   filter(season_type == "Regular") |>
