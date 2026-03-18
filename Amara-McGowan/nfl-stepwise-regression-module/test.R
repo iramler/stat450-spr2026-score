@@ -4,6 +4,8 @@ library(quantreg)
 
 # https://www.pro-football-reference.com/about/glossary.htm#ay/a
 
+# (Adjusted Net Yards Per Attempt (ANY/A))
+
 nfl_qbr <- read_csv("nfl_qbr.csv") |>
   mutate(comp_rate = completions / attempts,
          anypa = (passing_yards + (20 * passing_tds) - (45 * passing_interceptions) - sack_yards) /
