@@ -373,9 +373,9 @@ lgl (2): evolution, hero_upgrade
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>network</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 63a5081 UN-- 69 1572 -- 
+<pre><code>IGRAPH c402981 UN-- 69 1572 -- 
 + attr: name (v/c), decks (e/n), wins (e/n), winrate (e/n)
-+ edges from 63a5081 (vertex names):
++ edges from c402981 (vertex names):
  [1] Hog Rider     --Zap Valkyrie      --Zap Giant Skeleton--Zap
  [4] Baby Dragon   --Zap Mini P.E.K.K.A--Zap Witch         --Zap
  [7] Musketeer     --Zap Balloon       --Zap Arrows        --Zap
@@ -433,16 +433,7 @@ lgl (2): evolution, hero_upgrade
 <li>how the meta might be structured through relationships, not just individual win rates</li>
 </ul>
 <p>There are over 37,235,730,424,788 possible unique deck combinations</p>
-</section>
-</section>
-<section id="pick-16-cards-from-the-dataset-for-which-we-will-use" class="level1">
-<h1>Pick 16 cards from the dataset for which we will use</h1>
-</section>
-<section id="go-back-to-adjacency-matrix" class="level1">
-<h1>go back to adjacency matrix</h1>
-</section>
-<section id="only-16-nodes-and-only-have-edges-for-nodes-with-higher-than-50-win-rate" class="level1">
-<h1>only 16 nodes and only have edges for nodes with higher than 50% win rate</h1>
+<p>(Pick 16 cards from the dataset for which we will use, go back to adjacency matrix, only 16 nodes and only have edges for nodes with higher than 50% win rate)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>used_cards <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Hog Rider"</span>, <span class="st">"Zap"</span>, <span class="st">"Valkyrie"</span>, <span class="st">"Giant Skeleton"</span>, <span class="st">"Baby Dragon"</span>,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Mini P.E.K.K.A"</span>, <span class="st">"Witch"</span>, <span class="st">"Musketeer"</span>, <span class="st">"Balloon"</span>, <span class="st">"Arrows"</span>, <span class="st">"Skeleton Army"</span>, <span class="st">"Electro Wizard"</span>, <span class="st">"Mega Knight"</span>, <span class="st">"Fireball"</span>, <span class="st">"Executioner"</span>, <span class="st">"P.E.K.K.A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -468,6 +459,10 @@ lgl (2): evolution, hero_upgrade
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="below-are-test-runs-using-other-methods" class="level1">
+<h1>below are test runs using other methods</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add edge weights</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(network)<span class="sc">$</span>weight <span class="ot">&lt;-</span> pair_data<span class="sc">$</span>winrate</span>

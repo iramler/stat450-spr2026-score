@@ -278,10 +278,7 @@ A network is useful here because it lets us study:
 There are over 37,235,730,424,788 possible unique deck combinations
 
 
-# Pick 16 cards from the dataset for which we will use
-
-# go back to adjacency matrix 
-# only 16 nodes and only have edges for nodes with higher than 50% win rate
+(Pick 16 cards from the dataset for which we will use, go back to adjacency matrix, only 16 nodes and only have edges for nodes with higher than 50% win rate)
 
 ```{r}
 used_cards <- c("Hog Rider", "Zap", "Valkyrie", "Giant Skeleton", "Baby Dragon",
@@ -304,6 +301,8 @@ plot(network_16,
 
 ```
 
+
+# below are test runs using other methods
 
 ```{r}
 # Add edge weights
