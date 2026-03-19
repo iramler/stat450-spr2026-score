@@ -31,10 +31,32 @@ library(here)
 
 ## Background
 
-{{< video https://www.youtube.com/watch?v=BFFqe0Iyqu0
-    title="Wang Shengrong (Group D) Winner Drunken Fist CHN Team"
-    start="46"
-    aspect-ratio="21x9" >}}
+
+    
+```{r}
+#| message: false
+#| label: startat47
+#| eval: false
+#| warning: false
+
+
+#{{< video https://www.youtube.com/watch?v=BFFqe0Iyqu0
+  #  title="Wang Shengrong (Group D) Winner Drunken Fist CHN Team"
+  #  start="46"
+  #  aspect-ratio="21x9" >}}
+```
+  
+    
+    
+::: {#fig-cern}
+
+{{< video https://www.youtube.com/watch?v=BFFqe0Iyqu0 >}}
+
+The video "Wang Shengrong (Group D) Winner Drunken Fist CHN Team"
+
+:::
+
+@fig-cern
 
 ### World Kung Fu Championships 2025: Forms, Groups, Ranking
 
