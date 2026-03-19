@@ -1,21 +1,24 @@
 ---
 title: "Clash Royale Card Synergy: A Network Analysis Tutorial"
-author: "Kevin Euyoque"
-format:
-  html:
-    toc: true
-    toc-depth: 2
-    number-sections: true
-execute:
-  echo: true
-  warning: false
-  message: false
+author:
+  - name: Kevin Euyoque
+    affiliations:
+      - ref: slu
+affiliations:
+  - id: slu
+    name: St. Lawrence University
+date: "TBD"
+description: "A network analysis tutorial exploring card synergy in Clash Royale using Season 3 deck data."
+format: html
+categories:
+  - Network Analysis
+  - Data Visualization
+  - igraph
+  - R
 ---
 
-Please note that these material have not yet completed the required
-pedagogical and industry peer-reviews to become a published module on
-the SCORE Network. However, instructors are still welcome to use these
-materials if they are so inclined.
+Please note that these materials have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.
+
 
 ```{r}
 #| label: setup
@@ -28,18 +31,109 @@ library(netrankr)
 # devtools::install_github("schochastics/networkdata")
 ```
 
+## Welcome Video
 
-I created a dataset containing all 125 cards, and the next step is to transform it into a card by card matrix that summarizes pair frequency, wins, and win rates.
+If you are unfamiliar with Clash Royale, you can watch this short gameplay video for an introduction to the game:
 
--   Number of decks with the pair of cards (sample size) DONE
--   Number of wins with the pair of cards 
--   Win rate for those pairs 
--   (any win rate above 50% convert to a 1 and under to a 0)
--   Replace the diagonal of the matrix with zeros 
--   It would be set up with every card listed in the columns and rows with that information for each
+<iframe width="800" height="450" src="https://www.youtube.com/embed/_hNxfiXmeAE" title="Clash Royale Gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+</iframe>
 
 
-We will be focusing on the season 3 of the game.
+## Introduction:
+
+Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.
+
+Success in the game depends heavily on card combinations, as certain cards perform more effectively when used together. Because of this emphasis on synergy, Clash Royale provides a natural setting for studying relationships between elements using network analysis.
+
+
+:::{.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this tutorial, you will be able to:
+
+- explain how a card-pair dataset can be represented as a network
+- construct matrices showing pair counts, pair wins, and pair win rates
+- convert a matrix of card relationships into an edge list
+- build and visualize a weighted network using igraph
+- interpret what a card synergy network suggests about the Clash Royale meta
+:::
+
+:::{.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+This module could be used as a short in-class lab, a longer out-of-class assignment, or part of a larger unit on network analysis and data visualization.
+:::
+
+:::{.callout-note collapse="true" title="Methods" appearance="minimal"}
+Technology Requirement:
+
+This activity is designed to be completed in R using RStudio and Quarto.
+
+Packages used in this module:
+
+- tidyverse
+- igraph
+- vembedr
+- netrankr
+
+Some previous experience with data wrangling in R is helpful, but no previous experience with network analysis is required.
+:::
+
+
+## Data
+
+The main dataset used in this module is cr_season3_5000decks.csv, which contains deck-level Clash Royale data from Season 3. Each row corresponds to a card appearing in a specific deck, along with whether that deck won.
+
+We will reshape this data so that each deck becomes one row and each card becomes its own column. From there, we will calculate how often pairs of cards appear together, how often those pairs win, and their overall paired win rates.
+
+Download Data: [cr_season3_5000decks.csv]("cr_season3_5000decks.csv")
+
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description |
+|----------|-------------|
+| id | Unique identifier for each deck |
+| card | Name of the Clash Royale card appearing in the deck |
+| winner | Indicator for whether the deck won the match |
+
+</details>
+
+<details> <summary><b>Data Notes</b></summary>
+
+The analysis in this module focuses on building a card-by-card relationship structure. Specifically, we want to create:
+
+- the number of decks containing each pair of cards
+- the number of wins for each pair
+- the paired win rate for each pair
+- a binary version of the win rate matrix
+- a filtered edge list for network construction
+- The diagonal of each matrix is removed because a card is not paired with itself in this analysis.
+
+</details>
+
+
+## Goal of this module
+
+In this tutorial, we will treat Clash Royale cards as nodes in a network.
+
+Two cards are connected by an edge if they perform well together, measured by paired win rate.
+
+We will treat:
+
+-   Cards -\> nodes
+-   Strong pair win-rates -\> edges
+-   Win-rate value -\> edge weight
+
+By the end, we will:
+
+-   Build a synergy network from paired win rates
+-   Learn network vocabulary (nodes, edges, weights, degree)
+-   Compute centrality (who matters most)
+-   Find cliques / communities (tight synergy groups)
+
+
+## Get started
+
 
 ```{r}
 library(readr)
@@ -113,38 +207,8 @@ cards <- read_csv("clash_royale_cards_125.csv")
 ```
 
 
-# Introduction: What is Clash Royale?
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/_hNxfiXmeAE" title="Clash Royale Gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
-</iframe>
-
-Clash Royale is a real-time strategy mobile game developed by Supercell in which players build decks of eight cards and compete in one on one battles. Each card represents a troop, spell, or building with distinct mechanics and strategic roles.
-
-Success in the game depends heavily on card combinations, as certain cards perform more effectively when used together. Because of this emphasis on synergy, Clash Royale provides a natural setting for studying relationships between elements using network analysis.
-
-We will focus on Season 3 deck data.
-
-## Goal of this module
-
-In this tutorial, we will treat Clash Royale cards as nodes in a network.
-
-Two cards are connected by an edge if they perform well together, measured by paired win rate.
-
-We will treat:
-
--   Cards -\> nodes
--   Strong pair win-rates -\> edges
--   Win-rate value -\> edge weight
-
-By the end, we will:
-
--   Build a synergy network from paired win rates
--   Learn network vocabulary (nodes, edges, weights, degree)
--   Compute centrality (who matters most)
--   Find cliques / communities (tight synergy groups)
-
-## Data
 
 
 
@@ -202,6 +266,16 @@ Interpretation:
 
 -   Higher paired win rate → stronger connection
 -   Lower paired win rate → weaker connection
+
+## Why use a network?
+
+A network is useful here because it lets us study:
+
+-   which cards connect to many others
+-   which groups of cards form groups of synergy
+-   how the meta might be structured through relationships, not just individual win rates
+
+There are over 37,235,730,424,788 possible unique deck combinations
 
 
 # Pick 16 cards from the dataset for which we will use
@@ -269,13 +343,3 @@ plot(network_small,
 Here we can see a 16 node network
 
 - 16 cards are used
-
-## Why use a network?
-
-A network is useful here because it lets us study:
-
--   which cards connect to many others
--   which groups of cards form groups of synergy
--   how the meta might be structured through relationships, not just individual win rates
-
-There are over 37,235,730,424,788 possible unique deck combinations
