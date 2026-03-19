@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kevin Euyoque">
+<meta name="author" content="Ivan Ramler">
 <meta name="description" content="A network analysis tutorial exploring card synergy in Clash Royale using Season 3 deck data.">
 
 <title>Clash Royale Card Synergy: A Network Analysis Tutorial</title>
@@ -97,11 +98,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 <div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Authors</div>
   <div class="quarto-title-meta-heading">Affiliation</div>
   
     <div class="quarto-title-meta-contents">
-    <p class="author">Kevin Euyoque </p>
+    <p class="author">Kevin Euyoque <a href="mailto:kevin.euyoque04@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            St.&nbsp;Lawrence University
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Ivan Ramler <a href="mailto:mailto:iramler@stlawu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
@@ -178,6 +187,9 @@ Activity Length
 </div>
 </div>
 </div>
+</section>
+<section id="a-class-period" class="level1">
+<h1>a class period</h1>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Methods">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -194,16 +206,18 @@ Methods
 <p>This activity is designed to be completed in R using RStudio and Quarto.</p>
 <p>Packages used in this module:</p>
 <ul>
-<li>tidyverse</li>
-<li>igraph</li>
-<li>vembedr</li>
-<li>netrankr</li>
+<li><a href="inserturl" target="_blank">tidyverse</a></li>
+<li><a href="inserturl" target="_blank">igraph</a></li>
+<li><a href="inserturl" target="_blank">vembedr</a></li>
+<li><a href="inserturl" target="_blank">netrankr</a></li>
 </ul>
 <p>Some previous experience with data wrangling in R is helpful, but no previous experience with network analysis is required.</p>
 </div>
 </div>
 </div>
 </section>
+<section id="add-a-hyperlink-that-sends-the-reader-to-the-page-for-each-package" class="level1">
+<h1>add a hyperlink that sends the reader to the page for each package</h1>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <p>The main dataset used in this module is cr_season3_5000decks.csv, which contains deck-level Clash Royale data from Season 3. Each row corresponds to a card appearing in a specific deck, along with whether that deck won.</p>
@@ -251,6 +265,9 @@ Methods
 </ul>
 </details>
 </section>
+</section>
+<section id="insert-into-module-instead" class="level1">
+<h1>insert into module instead</h1>
 <section id="goal-of-this-module" class="level2">
 <h2 class="anchored" data-anchor-id="goal-of-this-module">Goal of this module</h2>
 <p>In this tutorial, we will treat Clash Royale cards as nodes in a network.</p>
@@ -362,6 +379,7 @@ lgl (2): evolution, hero_upgrade
 </div>
 </div>
 </section>
+</section>
 <section id="network-representation" class="level1">
 <h1>Network Representation</h1>
 <p>To represent Clash Royale synergy as a network, we will model the data as a graph.</p>
@@ -373,9 +391,9 @@ lgl (2): evolution, hero_upgrade
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>network</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH c402981 UN-- 69 1572 -- 
+<pre><code>IGRAPH 9583a89 UN-- 69 1572 -- 
 + attr: name (v/c), decks (e/n), wins (e/n), winrate (e/n)
-+ edges from c402981 (vertex names):
++ edges from 9583a89 (vertex names):
  [1] Hog Rider     --Zap Valkyrie      --Zap Giant Skeleton--Zap
  [4] Baby Dragon   --Zap Mini P.E.K.K.A--Zap Witch         --Zap
  [7] Musketeer     --Zap Balloon       --Zap Arrows        --Zap
@@ -440,17 +458,19 @@ lgl (2): evolution, hero_upgrade
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pair_data_16 <span class="ot">&lt;-</span> pair_data <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(card1 <span class="sc">%in%</span> used_cards, card2 <span class="sc">%in%</span> used_cards)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(card1 <span class="sc">%in%</span> used_cards, card2 <span class="sc">%in%</span> used_cards) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">synergy =</span> <span class="fu">ifelse</span>(winrate <span class="sc">&gt;</span> <span class="fl">0.50</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(card1, card2, synergy)</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>network_16 <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_16, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network_16,</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout_with_fr,</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> .<span class="dv">8</span>,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fu">E</span>(network_16)<span class="sc">$</span>winrate <span class="sc">*</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>network_16 <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_16, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network_16,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout_with_fr,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> .<span class="dv">8</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fu">E</span>(network_16)<span class="sc">$</span>synergy <span class="sc">*</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

@@ -2,6 +2,11 @@
 title: "Clash Royale Card Synergy: A Network Analysis Tutorial"
 author:
   - name: Kevin Euyoque
+    email: kevin.euyoque04@gmail.com
+    affiliations:
+      - ref: slu
+  - name: Ivan Ramler
+    email: mailto:iramler@stlawu.edu
     affiliations:
       - ref: slu
 affiliations:
@@ -60,6 +65,7 @@ By the end of this tutorial, you will be able to:
 :::{.callout-note collapse="true" title="Activity Length" appearance="minimal"}
 This module could be used as a short in-class lab, a longer out-of-class assignment, or part of a larger unit on network analysis and data visualization.
 :::
+# a class period
 
 :::{.callout-note collapse="true" title="Methods" appearance="minimal"}
 Technology Requirement:
@@ -68,14 +74,15 @@ This activity is designed to be completed in R using RStudio and Quarto.
 
 Packages used in this module:
 
-- tidyverse
-- igraph
-- vembedr
-- netrankr
+- [tidyverse](inserturl){target="_blank"}
+- [igraph](inserturl){target="_blank"}
+- [vembedr](inserturl){target="_blank"}
+- [netrankr](inserturl){target="_blank"}
 
 Some previous experience with data wrangling in R is helpful, but no previous experience with network analysis is required.
 :::
 
+# add a hyperlink that sends the reader to the page for each package
 
 ## Data
 
@@ -110,7 +117,7 @@ The analysis in this module focuses on building a card-by-card relationship stru
 - The diagonal of each matrix is removed because a card is not paired with itself in this analysis.
 
 </details>
-
+# insert into module instead
 
 ## Goal of this module
 
@@ -280,6 +287,11 @@ There are over 37,235,730,424,788 possible unique deck combinations
 
 (Pick 16 cards from the dataset for which we will use, go back to adjacency matrix, only 16 nodes and only have edges for nodes with higher than 50% win rate)
 
+# make an exercise using diff win rates diff cards for new matrix
+
+# add random deck builder for said exercise
+
+# write on the centrality of the decks
 ```{r}
 used_cards <- c("Hog Rider", "Zap", "Valkyrie", "Giant Skeleton", "Baby Dragon",
                 "Mini P.E.K.K.A", "Witch", "Musketeer", "Balloon", "Arrows", "Skeleton Army", "Electro Wizard", "Mega Knight", "Fireball", "Executioner", "P.E.K.K.A")
@@ -287,7 +299,11 @@ used_cards <- c("Hog Rider", "Zap", "Valkyrie", "Giant Skeleton", "Baby Dragon",
 
 ```{r}
 pair_data_16 <- pair_data |>
-  filter(card1 %in% used_cards, card2 %in% used_cards)
+  filter(card1 %in% used_cards, card2 %in% used_cards) |>
+  mutate(synergy = ifelse(winrate > 0.57, 1, 0)) |>
+  #filter(synergy == 1) |>
+  select(card1, card2, synergy) 
+  
 
 
 
@@ -297,7 +313,7 @@ plot(network_16,
      layout = layout_with_fr,
      vertex.size = 8,
      vertex.label.cex = .8,
-     edge.width = E(network_16)$winrate * 4)
+     edge.width = E(network_16)$synergy)
 
 ```
 
