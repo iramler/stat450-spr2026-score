@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Elena Cortina Pino">
-<meta name="description" content="This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data.">
+<meta name="description" content="This module goes through the process of creating a heatmap to visualize the relationship in scoring across Kung Fu forms and age groups for competitive Kung Fu data.">
 
 <title>2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering</title>
 <style>
@@ -82,7 +82,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering</h1>
-<p class="subtitle lead">Exploratory data analysis of the age groups and kung fu forms</p>
+<p class="subtitle lead">Exploratory data analysis of the age groups and Kung Fu forms</p>
   <div class="quarto-categories">
     <div class="quarto-category">Hierarchical clustering</div>
     <div class="quarto-category">Data visualization</div>
@@ -93,7 +93,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    This module goes through the process of creating a heatmap to visualize the relationship in scoring across kung fu forms and age groups for competitive kung fu data.
+    This module goes through the process of creating a heatmap to visualize the relationship in scoring across Kung Fu forms and age groups for competitive Kung Fu data.
   </div>
 </div>
 
@@ -118,14 +118,16 @@ window.Quarto = {
 
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
-<div class="quarto-video ratio ratio-21x9"><iframe data-external="1" src="https://www.youtube.com/embed/BFFqe0Iyqu0?start=46" title="Wang Shengrong (Group D) Winner Drunken Fist CHN Team" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<section id="world-kungfu-championships-2025-forms-groups-ranking" class="level3">
-<h3 class="anchored" data-anchor-id="world-kungfu-championships-2025-forms-groups-ranking">World Kungfu Championships 2025: Forms, Groups, Ranking</h3>
-<p>The World Kung fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of kung fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.<br>
+<p>Wang Shengrong (Group D) Winner Drunken Fist CHN Team</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BFFqe0Iyqu0?si=koIdq7uZ7_F2Vpda" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<section id="world-kung-fu-championships-2025-forms-groups-ranking" class="level3">
+<h3 class="anchored" data-anchor-id="world-kung-fu-championships-2025-forms-groups-ranking">World Kung Fu Championships 2025: Forms, Groups, Ranking</h3>
+<p>The World Kung Fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of Kung Fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.<br>
 </p>
 <section id="competing-kung-fu-events" class="level5">
 <h5 class="anchored" data-anchor-id="competing-kung-fu-events">Competing Kung Fu Events</h5>
-<p>The table below depicts all the participating kung fu forms at the 10th WKFC.</p>
+<p>The table below depicts all the participating Kung Fu forms at the 10th WKFC.</p>
 </section>
 </section>
 <section id="individual-events" class="level3">
@@ -432,7 +434,7 @@ The ready-to-use data set in matrix form is available for this module in the <co
 <tbody>
 <tr class="odd">
 <td>Form</td>
-<td>Kung fu form the athlete competed in</td>
+<td>Kung Fu form the athlete competed in</td>
 </tr>
 <tr class="even">
 <td>A</td>
@@ -464,7 +466,7 @@ The ready-to-use data set in matrix form is available for this module in the <co
 </section>
 <section id="materials" class="level5">
 <h5 class="anchored" data-anchor-id="materials">Materials</h5>
-<p>For this module, the materials are the <a href="mat_10kf.csv">kung fu</a> data set and <a href="kungfu.qmd">the solution QMD</a>.</p>
+<p>For this module, the materials are the <a href="mat_10kf.csv">Kung Fu</a> data set and <a href="kungfu.qmd">the solution QMD</a>.</p>
 </section>
 </section>
 </section>
@@ -472,20 +474,6 @@ The ready-to-use data set in matrix form is available for this module in the <co
 <h3 class="anchored" data-anchor-id="complete-linkage-hierarchical-clustering">Complete Linkage Hierarchical Clustering</h3>
 <p>Hierarchical Clustering via Complete Linkage is a Machine Learning technique that groups clusters of data from the furthermost point to the point of reference. In hierarchical clustering, the two nearest clusters are repeatedly merged until the desired number of clusters is reached. (Sokhonn, Park, Lee , 2024 , “Hierarchical Clustering via Single and Complete Linkage Using Fully Homomorphic Encryption”) Complete linkage is the metric through which we measure the clusters’ proximity.</p>
 <p>This process serves as an exploratory data analysis technique, categorizing data into distinct groups or subsets, where elements within each subset are more similar to each other than to elements in different subsets. A useful application of this method for our case study data set on Kung Fu is understanding how the forms and the age groups can be grouped in clusters to understand the relationships between these two variables with respect to the scores.</p>
-<section id="the-heatmap-here" class="level4">
-<h4 class="anchored" data-anchor-id="the-heatmap-here">The Heatmap here:</h4>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="finalgamecomeon.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Complete Linkage Clustered Heatmap"><img src="finalgamecomeon.png" class="img-fluid figure-img" alt="Complete Linkage Clustered Heatmap"></a></p>
-<figcaption>Complete Linkage Clustered Heatmap</figcaption>
-</figure>
-</div>
-<p>To preserve the most information possible from the data, we removed groups A and F since their scores across forms were considerably and understandably lower than the other groups. Athletes at the very beginning and end of their Kung Fu career can experience high levels of exhaustion, insufficient technique on the side of the infants participating and decay of explosiveness and endurance tat a sport such as Kung Fu requires.<br>
-<br>
-</p>
-<p>Participants from the ages between 12 and 59 years old can be considered the most competitive athletes in the competition because they can leverage the explosiveness and endurance of being at the peak of age ability and the technique from having trained for long enough.<br>
-</p>
-</section>
 </section>
 <section id="z-scores" class="level3">
 <h3 class="anchored" data-anchor-id="z-scores">Z-Scores</h3>
@@ -502,19 +490,37 @@ The rows of the data matrix are re-ordered according to the hierarchical cluster
 <section id="dendrograms" class="level3">
 <h3 class="anchored" data-anchor-id="dendrograms">Dendrograms</h3>
 <p>The dendrograms are the lines on the outside of the plot that connect forms with one another and then connect groups of forms to other groups.</p>
+<p>Dendrograms are commonly utilized in the field of Biology to represent groups of genetically resembling species.</p>
+<p>###MAKE THIS SMALLER ### <img src="dendrogram_explained.png" class="img-fluid" width="300" alt="A simplified phylogenetic tree of the kingdom Animalia showing only the nine most species-rich phyla"></p>
+<p>“Inactivity Is Nycthemeral, Endogenously Generated, Homeostatically Regulated, and Melatonin Modulated in a Free-Living Platyhelminth Flatworm” by Biologist Shauni E. T. Omond (2017).</p>
 </section>
 <section id="other-specific-plot-characteristics" class="level3">
 <h3 class="anchored" data-anchor-id="other-specific-plot-characteristics">Other specific plot characteristics</h3>
 <p>We have also identified that there are 6 main categories of forms, hence we have deliberately separated clusters of forms into 6 groups. Intuitively, this works by cutting the outermost <em>branches</em> of the dendrogram tree until we have six major clusters of forms.</p>
+<section id="the-heatmap-here" class="level4">
+<h4 class="anchored" data-anchor-id="the-heatmap-here">The Heatmap here:</h4>
+<p><a href="american_heatmap.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="american_heatmap.png" class="img-fluid"></a></p>
+<p>To preserve the most information possible from the data, we removed groups A and F since their scores across forms were considerably and understandably lower than the other groups. Athletes at the very beginning and end of their Kung Fu career can experience high levels of exhaustion, insufficient technique on the side of the infants participating and decay of explosiveness and endurance tat a sport such as Kung Fu requires.<br>
+<br>
+</p>
+<p>Participants from the ages between 12 and 59 years old can be considered the most competitive athletes in the competition because they can leverage the explosiveness and endurance of being at the peak of age ability and the technique from having trained for long enough.<br>
+</p>
+</section>
 </section>
 <section id="conclusion-from-the-exploration" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion-from-the-exploration">Conclusion from the exploration</h3>
 <p>Group D participants, thanks to being in their physical prime and having sufficient technique development excel in scoring across all Kung Fu forms.</p>
-<p>Most of the <em>Single Weapon Routies</em> cluster together in scoring in two main clusters.</p>
+<p>Most of the <em>Single Weapon Routines</em> cluster together in scoring in two main clusters.</p>
 </section>
 </section>
 <section id="activity" class="level1">
 <h1>Activity</h1>
+<section id="poster" class="level3">
+<h3 class="anchored" data-anchor-id="poster">POSTER</h3>
+<p>explain that its part of a bigger project of kung fu: 1. cluster, 2. cleaning</p>
+<p>make placeholder index for both of the modules to have qr on the poster</p>
+<p>april 16 submit posterfor printing</p>
+</section>
 </section>
 
 </main>

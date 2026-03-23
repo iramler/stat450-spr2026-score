@@ -30,33 +30,11 @@ library(here)
 ```
 
 ## Background
-
-
     
-```{r}
-#| message: false
-#| label: startat47
-#| eval: false
-#| warning: false
+Wang Shengrong (Group D) Winner Drunken Fist CHN Team
 
 
-#{{< video https://www.youtube.com/watch?v=BFFqe0Iyqu0
-  #  title="Wang Shengrong (Group D) Winner Drunken Fist CHN Team"
-  #  start="46"
-  #  aspect-ratio="21x9" >}}
-```
-  
-    
-    
-::: {#fig-cern}
-
-{{< video https://www.youtube.com/watch?v=BFFqe0Iyqu0 >}}
-
-The video "Wang Shengrong (Group D) Winner Drunken Fist CHN Team"
-
-:::
-
-@fig-cern
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BFFqe0Iyqu0?si=koIdq7uZ7_F2Vpda" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### World Kung Fu Championships 2025: Forms, Groups, Ranking
 
@@ -175,16 +153,6 @@ Hierarchical Clustering via Complete Linkage is a Machine Learning technique tha
 This process serves as an exploratory data analysis technique, categorizing data into distinct groups or subsets, where elements within each subset are more similar to each other than to elements in different subsets. A useful application of this method for our case study data set on Kung Fu is understanding how the forms and the age groups can be grouped in clusters to understand the relationships between these two variables with respect to the scores.
 
 
-#### The Heatmap here:
-![Complete Linkage Clustered Heatmap](finalgamecomeon.png){.lightbox}
-
-
-To preserve the most information possible from the data, we removed groups A and F since their scores across forms were considerably and understandably lower than the other groups. Athletes at the very beginning and end of their Kung Fu career can experience high levels of exhaustion, insufficient technique on the side of the infants participating and decay of explosiveness and endurance tat a sport such as Kung Fu requires.\
-\
-
-Participants from the ages between 12 and 59 years old can be considered the most competitive athletes in the competition because they can leverage the explosiveness and endurance of being at the peak of age ability and the technique from having trained for long enough.\
-
-
 ### Z-Scores
 
 $Z = \frac{x-\mu}{\sigma}$
@@ -207,19 +175,43 @@ The rows of the data matrix are re-ordered according to the hierarchical cluster
 
 The dendrograms are the lines on the outside of the plot that connect forms with one another and then connect groups of forms to other groups.
 
+Dendrograms are commonly utilized in the field of Biology to represent groups of genetically resembling species.
+
+![A simplified phylogenetic tree of the kingdom Animalia showing only the nine most species-rich phyla](dendrogram_explained.png){fig-alt="Dendrogram: Phylogentic tree example" width=300}
+Refrence: "Inactivity Is Nycthemeral, Endogenously Generated, Homeostatically Regulated, and Melatonin Modulated in a Free-Living Platyhelminth Flatworm" by Biologist Shauni E. T. Omond (2017).
+
+
 ### Other specific plot characteristics
 
 
 We have also identified that there are 6 main categories of forms, hence we have deliberately separated clusters of forms into 6 groups. Intuitively, this works by cutting the outermost _branches_ of the dendrogram tree until we have six major clusters of forms.
+
+#### The Heatmap here:
+![ ](WKFC_heatmap.png){.lightbox}
+
+
+To preserve the most information possible from the data, we removed groups A and F since their scores across forms were considerably and understandably lower than the other groups. Athletes at the very beginning and end of their Kung Fu career can experience high levels of exhaustion, insufficient technique on the side of the infants participating and decay of explosiveness and endurance tat a sport such as Kung Fu requires.\
+\
+
+Participants from the ages between 12 and 59 years old can be considered the most competitive athletes in the competition because they can leverage the explosiveness and endurance of being at the peak of age ability and the technique from having trained for long enough.\
 
 
 ### Conclusion from the exploration
 
 Group D participants, thanks to being in their physical prime and having sufficient technique development excel in scoring across all Kung Fu forms.
 
-Most of the _Single Weapon Routies_ cluster together in scoring in two main clusters.
+Most of the _Single Weapon Routines_ cluster together in scoring in two main clusters.
 
 
-# Activity
+## Activity
+
+For this module, the activity will be an involved exercise in creating a heatmap similar to the one presented in this module, but using a different data set, this time from the 8th edition of the World Kung Fu Championships (2017).
 
 
+### POSTER
+
+explain that its part of a bigger project of kung fu: 1. cluster, 2. cleaning
+
+make placeholder index for both of the modules to have qr on the poster
+
+april 16 submit posterfor printing

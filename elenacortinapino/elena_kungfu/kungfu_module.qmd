@@ -23,6 +23,7 @@ library(ggplot2)
 library(gplots)
 library(pheatmap)
 library("RColorBrewer")
+library(grid)
 ```
 
 
@@ -48,6 +49,9 @@ matrix_kf10 <- read.csv("mat_10kf.csv") |> select(-A) |> select(-`F`)
 mat <- as.matrix(matrix_kf10[,-1])
 # chooses which column from the dataset to use for the row names
 rownames(mat) <- as.character(matrix_kf10$Forms)
+# setting the color palette to blue, white, red. intentionality.
+col<- colorRampPalette(c("#2565AD", "white", "#E34825"))(256)
+#trying to get thicker dendrogram lines
 
 # using pheatmap to create the clustered heatmap
 heatmap <- pheatmap(
@@ -68,8 +72,12 @@ heatmap <- pheatmap(
   border_color = "#303030", 
   main = "Complete Linkage Clustered Heatmap with Dendrograms",
   cutree_rows = 6, # number of major clusters of forms
-  color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(100),
+  color = col,
   legend = T,
-  legend_labels = NA)
+  legend_labels = "Z-scores",
+  legend_position = "top")
+
+
+# MOVE LEGEND TO TOP
 ```
 

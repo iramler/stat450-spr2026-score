@@ -321,3 +321,42 @@ working_ten <- kf |> group_by(Form) |> summarise(haha = n()) |> select(Form)
 write.csv(working_ten, "10 events.csv")
 ```
 
+
+
+```{r}
+#| label: another_situation
+# GETTING RID OF YEAR 9 AND EXPLAIN WHY
+
+activity_year9 <- read.csv("activity_kungfu_year9.csv") |> group_by(Group, Form) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score)
+```
+
+
+
+```{r}
+year8goat <- read.csv("year8forsure.csv") |> drop_na(Score) |> mutate(Form_new = fct_recode(Form,
+  "Imitation Eagle Style" = "Imitation Eagle Style",
+  "Imitation Eagle Style" = "Imitation Eagle Styles",
+  
+  "Other Taiji Weapon" = "Other Style Taiji Weapon",
+  "Other Taiji Weapon" = "Other Taiji Weapon",
+  
+  "Other Traditional Flexible/Soft Weapon" = "Other Traditional Flexible/Soft Weapon",
+  "Other Traditional Flexible/Soft Weapon" = "Other Traditional Flexible/Soft Weapon F",
+  
+  "Yang Style Taiji Jian" = "Yang StyleTaiji Jian",
+  "Yang Style Taiji Jian" = "Yang Style Taiji Jian",
+  
+  "Other Traditional Single Weapon" = "Other Traditional Single Weapon",
+  "Other Traditional Single Weapon" = "Other Traditional Single Weapons",
+  "Other Traditional Single Weapon" = "Other Traditional Weapon",
+  "Other Traditional Single Weapon" = "Other Weapon")) |> group_by(Group, Form_new) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score)
+```
+
+
+
+
+```{r}
+year8_imp_knn <- kNN(year8goat, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp)
+
+```
+
