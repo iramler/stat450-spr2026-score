@@ -1,6 +1,11 @@
 ---
-title: "cleaningmorekfdata"
+title: "Cleaning Kung Fu Data - Walkthrough document"
 format: html
+categories:
+  - Data cleaning
+  - Reg-ex
+  - Data visualization
+  - Data imputation
 ---
 
 ```{r}
@@ -75,13 +80,6 @@ kf10<- read.csv("10kf.csv")
 names(kf10)
 kf10 <- kf10 |> mutate(Form = factor(Form))
 levels(kf10$Form)
-```
-
-
-
-```{r}
-
-
 ```
 
 
