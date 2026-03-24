@@ -355,7 +355,7 @@ year8goat <- read.csv("year8forsure.csv") |> drop_na(Score) |> mutate(Form_new =
   "Other Traditional Single Weapon" = "Other Traditional Single Weapon",
   "Other Traditional Single Weapon" = "Other Traditional Single Weapons",
   "Other Traditional Single Weapon" = "Other Traditional Weapon",
-  "Other Traditional Single Weapon" = "Other Weapon")) |> group_by(Group, Form_new) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score)
+  "Other Traditional Single Weapon" = "Other Weapon")) |> group_by(Group, Form_new) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score) |> select(-A) |> select(-`F`) |>  select(-B)
 ```
 
 
@@ -365,8 +365,9 @@ year8goat <- read.csv("year8forsure.csv") |> drop_na(Score) |> mutate(Form_new =
 
 #| label: another_situation
 
-year8_imp_knn <- kNN(year8goat, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp, -`Form_new_imp`)
+year8_imp_knn <- kNN(year8goat, k = 5) |> select(-C_imp,-D_imp,-E_imp, -`Form_new_imp`)
 
+write.csv(year8_imp_knn, "year8kungfudata.csv")
 ```
 
 
