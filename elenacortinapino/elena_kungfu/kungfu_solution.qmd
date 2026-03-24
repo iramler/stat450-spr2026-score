@@ -1,0 +1,10 @@
+---
+title: "kungfu_solution"
+desciption: Solution file to the activity proposed in the Main Kung Fu Complete Linkage Clustering Heatmap Module
+format: html
+---
+
+solution file to the activity proposed above, the data to be used is [data for the 8th edition of the WKFC (2017)](year8forsure.csv), and the solved exercise is outlined in []().
+### Activity Solution
+
+The following solution is simply one of the many ways (as explained in the module) that exist to successfully and efficiently construct a complete linkage clustered heatmap for competitive Kung Fu data.

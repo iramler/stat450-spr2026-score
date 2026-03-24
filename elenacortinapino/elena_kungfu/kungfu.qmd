@@ -19,7 +19,13 @@ library(gplots)
 library(pheatmap)
 library(naniar)
 library(mice)
+library(VIM)
+library(gplots)
+library(pheatmap)
+library("RColorBrewer")
+library(grid)
 ```
+
 
 ### Know Thy Data
 
@@ -356,7 +362,13 @@ year8goat <- read.csv("year8forsure.csv") |> drop_na(Score) |> mutate(Form_new =
 
 
 ```{r}
-year8_imp_knn <- kNN(year8goat, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp)
+
+#| label: another_situation
+
+year8_imp_knn <- kNN(year8goat, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp, -`Form_new_imp`)
 
 ```
+
+
+
 
