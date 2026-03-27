@@ -38,6 +38,16 @@ materials if they are so inclined.
 ### World Kung Fu Championships 2025: Forms, Groups, Ranking
 
 The World Kung Fu Championships (WKFC), hosted by the IWUF, is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of Kung Fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.\
+\
+This module introduces Kung Fu to students in an exploratory approach allowing them to gain insight about the legendary sport and explains the process of utilizing complex, raw sports data to analyze the ways that championship scores relate across the competing Kung Fu forms.\
+\
+This module also introduces ingenious ways to address issues with missing data observations, and presenting that data in a meaningful graphic display that communicates the nature of the relationship across some variables at a glance.\
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+Students will gain experience constructing a complete linkage clustered heatmap.
+:::
+
+Athletes can compete in a wide of events:
 
 ## Competing Kung Fu Events
 
