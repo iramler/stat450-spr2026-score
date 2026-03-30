@@ -12,10 +12,10 @@ library(tidyverse)
 library(ggplot2)
 
 library(readr)
-openpl_male <- read_csv("keelinjoyce/powerlifting/openpl_male.csv")
+openpl_male <- read_csv("keelinjoyce/powerlifting/openpl_sample_male.csv")
 View(openpl_male)
 
-openpl_female <- read_csv("openpl_female.csv")
+openpl_female <- read_csv("keelinjoyce/powerlifting/openpl_sample_female.csv")
 View(openpl_female)
 ```
 
@@ -24,5 +24,63 @@ View(openpl_female)
 ggplot(data = openpl_female, aes(x = Bench)) +
   geom_histogram() +
   facet_wrap(~AgeClass)
+```
+
+## Running Kruskall-Wallis Test
+```{r}
+female_bench_ranked <- openpl_female |> arrange(desc(Bench)) |>
+  mutate(rank = row_number()) |>
+  filter(AgeClass != "90-999", AgeClass != "85-89") |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Bench, rank)
+
+female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+
+ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
+  geom_boxplot()
+
+female_bench_plot <- female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(total = sum(rank), average = total/n())
+
+ggplot(data = female_bench_plot, aes(x = AgeClass, y = average)) +
+  geom_point() +
+  scale_y_reverse() +
+  theme_minimal()
+
+female_bench_results <- kruskal.test(female_bench_ranked$rank ~ 
+                                       female_bench_ranked$AgeClass)
+female_bench_results
+```
+
+## Running Dunn's Pairwise Test
+```{r}
+library(dunn.test)
+library(FSA)
+library(reshape2)
+female_bench_dunn <- dunn.test(female_bench_ranked$rank, female_bench_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(female_bench_dunn$P.adjusted, female_bench_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `female_bench_dunn$P.adjusted`)
+
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.01,
+                               1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = p_value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  theme_minimal()
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  theme_minimal()
+
+range(dunn_results_df$p_value)
 ```
 

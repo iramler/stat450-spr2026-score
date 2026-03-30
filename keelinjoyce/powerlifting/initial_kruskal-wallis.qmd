@@ -94,13 +94,22 @@ openpl_male<-
   relocate(id, .before = Name) |>
   # the following code takes the random sample
   group_by(AgeClass) %>%
-  group_modify(~ if (nrow(.x) >= 500) sample_n(.x, 500) else .x) %>%
+  group_modify(~ if (nrow(.x) >= 20) sample_n(.x, 20) else .x) %>%
   ungroup() |>
   # keeping primary varaibles of interest
   select(Name,Age, AgeClass, BodyweightKg, 
          Squat, Bench, Deadlift, 
          TotalKg, Place, Dots, Wilks, Glossbrenner, Goodlift,
-         Date)
+         Date)|>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClassInd = if_else(AgeClass == "80-84" |
+                                 AgeClass == "85-89" |
+                                 AgeClass == "90-999",
+                               true = 1,
+                               false = 0)) |>
+  filter(AgeClassInd == 0) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12"))
+
 ```
 
 ```{r}
@@ -127,20 +136,59 @@ openpl_female<-
   relocate(id, .before = Name) |>
   # the following code takes the random sample
   group_by(AgeClass) %>%
-  group_modify(~ if (nrow(.x) >= 500) sample_n(.x, 500) else .x) %>%
+  group_modify(~ if (nrow(.x) >= 20) sample_n(.x, 20) else .x) %>%
   ungroup()  |>
-  # keeping primary varaibles of interest
+  # keeping primary variables of interest
   select(Name, Age, AgeClass, BodyweightKg, 
          Squat, Bench, Deadlift, 
          TotalKg, Place, Dots, Wilks, Glossbrenner, Goodlift,
-         Date)
+         Date) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClassInd = if_else(AgeClass == "80-84" |
+                                 AgeClass == "85-89" |
+                                 AgeClass == "90-999",
+                               true = 1,
+                               false = 0)) |>
+  filter(AgeClassInd == 0) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12"))
 
 ```
 
 ```{r}
+female_bench_ranked <- openpl_female |> arrange(desc(Bench)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Bench, rank)
+
+female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+
+ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
+  geom_boxplot() +
+  theme_minimal()
+
+female_bench_plot <- female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(total = sum(rank), median = median(Bench))
+
+ggplot(data = female_bench_plot, aes(x = AgeClass, y = median)) +
+  geom_point() +
+  labs(y = "Median Ranking") +
+  theme_minimal()
+```
+
+
+
+```{r}
 # uncomment the two write statements to save the files
-write_csv(openpl_male, "openpl_sample_male.csv")
-write_csv(openpl_female, "openpl_sample_female.csv")
+write_csv(openpl_male, "openpl_male.csv")
+write_csv(openpl_female, "openpl_female.csv")
+
+install.packages("openxlsx")
+library(openxlsx)
+write.xlsx(openpl_male, file = "openpl_male.xlsx")
 ```
 
 ## Familiarizing with Data
@@ -222,9 +270,6 @@ female_bench <- openpl_female |>
   ungroup() |>
   select(Bench, Age)
 
-is.numeric(female_bench)
-shapiro.test(female_bench)
-
 ggplot(data = openpl_female, aes(x = Bench)) +
   geom_histogram() +
   facet_wrap(~AgeClass)
@@ -256,6 +301,72 @@ ggplot(data = openpl_female, aes(x = Bench)) +
 
     -   if p-value is less than 0.05, reject the null indicating as least one group differs slightly
 
-    -   if null is rejected, use Dunn's test (pairwise comparison test to find which groups specifically differ
+    -   if null is rejected, use Dunn's test (pairwise comparison test) to find which groups specifically differ
 
+## Running Test
+Null hypothesis: there is no difference in medians ranking between age groups
+Alternative hypothesis: there is at least one group that is different from the others
+```{r}
+female_bench_ranked <- openpl_female |> arrange(desc(Bench)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Bench, rank)
 
+female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+
+ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
+  geom_boxplot()
+
+female_bench_plot <- female_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(total = sum(rank), average = total/n())
+
+ggplot(data = female_bench_plot, aes(x = AgeClass, y = average)) +
+  geom_point() +
+  scale_y_reverse() +
+  theme_minimal()
+
+female_bench_results <- kruskal.test(female_bench_ranked$rank ~ 
+                                       female_bench_ranked$AgeClass)
+female_bench_results
+```
+
+## Dunn's Test
+```{r}
+library(dunn.test)
+library(FSA)
+library(reshape2)
+female_bench_dunn <- dunn.test(female_bench_ranked$rank, female_bench_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(female_bench_dunn$P.adjusted, female_bench_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `female_bench_dunn$P.adjusted`)
+
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.01,
+                               1,0)
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  theme_minimal()
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = log_p)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "blue", high = "red") +
+  theme_minimal()
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = p_value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "red", high = "blue") +
+  theme_minimal()
+
+range(dunn_results_df$p_value)
+```
+
+https://rpkgs.datanovia.com/rstatix/reference/dunn_test.html
+https://pubmed.ncbi.nlm.nih.gov/9413454/
+This page uses data from the OpenPowerlifting project, https://www.openpowerlifting.org.
+You may download a copy of the data at https://data.openpowerlifting.org.
