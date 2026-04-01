@@ -37,7 +37,9 @@ In powerlifting competitions, athletes compete in three compound events to lift 
 This module analyzes results from powerlifting competitions. Results are found at [OpenPowerlifting](https://www.openpowerlifting.org){target="_blank"}, a project aimed at collecting powerlifting data over time. Performances are ranked by how much weight is lifted and athletes are sorted into age classes. You will compare the rankings achieved by athletes across age classes and distinguish any differences between classes.
 
 ::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
-This activity would likely be suitable for an in-class example that lasts roughly 60 minutes. There are also additional exercises and extensions provided that can be assigned as work outside of class or a second class period.
+This activity would likely be suitable for an in-class example that lasts roughly 60 minutes. 
+
+There are also additional exercises and extensions provided that can be assigned as work outside of class or a second class period.
 :::
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
@@ -138,9 +140,9 @@ $n_i$*: number of observations in i-th group*
 
 Form a hypothesis where the structure is similar to an ANOVA hypotheses.
 
-    -   null hypothesis is population medians are equal
+ - null hypothesis is population medians are equal
 
-    -   alternate hypothesis is that at least one group is different
+ - alternate hypothesis is that at least one group is different
 
 Rank data from smallest to largest from all groups.
 

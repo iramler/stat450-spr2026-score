@@ -12,9 +12,9 @@ library(dunn.test)
 library(FSA)
 library(reshape2)
 
-openpl_male <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keelinjoyce/powerlifting//openpl_male.csv")
+openpl_male <- read_csv("openpl_male.csv")
 
-openpl_female <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keelinjoyce/powerlifting//openpl_female.csv")
+openpl_female <- read_csv("openpl_female.csv")
 ```
 
 ## Female Squat
