@@ -71,6 +71,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="Sample Powerlifting Module_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Sample Powerlifting Module_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -99,8 +128,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="female-squat" class="level2">
-<h2 class="anchored" data-anchor-id="female-squat">Female Squat</h2>
 <section id="load-in-appropriate-packages-and-datasets" class="level4">
 <h4 class="anchored" data-anchor-id="load-in-appropriate-packages-and-datasets">Load in appropriate packages and datasets:</h4>
 <div class="cell">
@@ -116,8 +143,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>openpl_female <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Desktop/SYE/github repos/stat450-spr2026-score/keelinjoyce/powerlifting//openpl_female.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
+<section id="female-squat" class="level2">
+<h2 class="anchored" data-anchor-id="female-squat">Female Squat</h2>
 <section id="arrange-data-appropriately" class="level4">
 <h4 class="anchored" data-anchor-id="arrange-data-appropriately">Arrange data appropriately:</h4>
+<p>To run the Kruskal-Wallis test, the data needs to be arranged in a descending order (from highest weight lifted to lowest) and then ranked accordingly. Make a variable for rank using the mutate function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>female_squat_ranked <span class="ot">&lt;-</span> openpl_female <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Squat)) <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
@@ -126,15 +156,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Age, AgeClass, Squat, rank)<span class="sc">|&gt;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_recode</span>(AgeClass,</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"05-12"</span> <span class="ot">=</span> <span class="st">"5-12"</span>))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>female_squat_ranked <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AgeClass)  <span class="sc">|&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="look-at-distribution-of-the-data" class="level4">
 <h4 class="anchored" data-anchor-id="look-at-distribution-of-the-data">Look at distribution of the data:</h4>
+<p>The boxplots can show us the general trend of the data by age class.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> female_squat_ranked, <span class="fu">aes</span>(<span class="at">x =</span> AgeClass, <span class="at">y =</span> Squat)) <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -148,8 +175,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
+<section id="form-a-hypothesis" class="level4">
+<h4 class="anchored" data-anchor-id="form-a-hypothesis">Form a hypothesis:</h4>
+<p><span class="math inline">\(H_0:\)</span> there is no difference in the median of powerlifting weight between age groups</p>
+<p><span class="math inline">\(H_a:\)</span> at least one group differs from another</p>
+</section>
 <section id="run-the-test-confirm-significant-p-value" class="level4">
 <h4 class="anchored" data-anchor-id="run-the-test-confirm-significant-p-value">Run the test, confirm significant p-value:</h4>
+<p>When running the Kruskal-Wallis test for association we are looking to see if there is a p-value of less than 0.5. This would indicate there is at least one group that is significantly discernible from another.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>female_squat_results <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(female_squat_ranked<span class="sc">$</span>rank <span class="sc">~</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                       female_squat_ranked<span class="sc">$</span>AgeClass)</span>
@@ -162,6 +195,7 @@ data:  female_squat_ranked$rank by female_squat_ranked$AgeClass
 Kruskal-Wallis chi-squared = 143.25, df = 14, p-value &lt; 2.2e-16</code></pre>
 </div>
 </div>
+<p>We can confirm from this p-value that there is discernibility between groups so we want to run the Dunn’s Test for multiple comparisons to see which groups are discernible from each other.</p>
 </section>
 <section id="run-pairwise-test" class="level4">
 <h4 class="anchored" data-anchor-id="run-pairwise-test">Run pairwise test:</h4>
@@ -175,109 +209,15 @@ Kruskal-Wallis chi-squared = 143.25, df = 14, p-value &lt; 2.2e-16</code></pre>
 </section>
 <section id="create-a-visualization-to-show-log-p-values" class="level4">
 <h4 class="anchored" data-anchor-id="create-a-visualization-to-show-log-p-values">Create a visualization to show log p-values:</h4>
+<p>Because the results from the test are difficult to visualize due to how many values there are, the best way to analyze the results is with a heatmap.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>female_squat_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(female_squat_ranked<span class="sc">$</span>rank, female_squat_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Kruskal-Wallis rank sum test
-
-data: x and group
-Kruskal-Wallis chi-squared = 143.2451, df = 14, p-value = 0
-
-                   Dunn's Pairwise Comparison of x by group                   
-                             (Benjamini-Hochberg)                             
-Col Mean-│
-Row Mean │      05-12      13-15      16-17      18-19      20-23      24-34
-─────────┼──────────────────────────────────────────────────────────────────
-   13-15 │   3.215254
-         │     0.0019*
-         │
-   16-17 │   4.915839   1.700585
-         │     0.0000*    0.0708 
-         │
-   18-19 │   5.936555   2.721300   1.020715
-         │     0.0000*    0.0073*    0.1899 
-         │
-   20-23 │   7.110378   3.895123   2.194538   1.173823
-         │     0.0000*    0.0002*    0.0274     0.1559 
-         │
-   24-34 │   6.898944   3.683689   1.983104   0.962389  -0.211433
-         │     0.0000*    0.0004*    0.0429     0.2027     0.4203 
-         │
-   35-39 │   6.680219   3.464965   1.764379   0.743664  -0.430158  -0.218724
-         │     0.0000*    0.0008*    0.0637     0.2666     0.3648     0.4215 
-         │
-   40-44 │   6.213606   2.998352   1.297767   0.277051  -0.896771  -0.685337
-         │     0.0000*    0.0035*    0.1325     0.4146     0.2206     0.2845 
-         │
-   45-49 │   4.254197   1.038942  -0.661642  -1.682358  -2.856181  -2.644747
-         │     0.0001*    0.1890     0.2900     0.0725     0.0050*    0.0089*
-         │
-   50-54 │   4.664306   1.449051  -0.251533  -1.272249  -2.446072  -2.234638
-         │     0.0000*    0.1074     0.4166     0.1368     0.0149*    0.0252 
-         │
-   55-59 │   5.692312   2.477058   0.776472  -0.244242  -1.418065  -1.206631
-         │     0.0000*    0.0139*    0.2581     0.4154     0.1108     0.1512 
-         │
-   60-64 │   3.076728  -0.138525  -1.839110  -2.859826  -4.033649  -3.822215
-         │     0.0027*    0.4449     0.0549     0.0051*    0.0001*    0.0003*
-         │
-   65-69 │   2.723123  -0.492130  -2.192715  -3.213431  -4.387254  -4.175820
-         │     0.0074*    0.3477     0.0270     0.0019*    0.0000*    0.0001*
-         │
-   70-74 │   1.359739  -1.855515  -3.556100  -4.576816  -5.750639  -5.539205
-         │     0.1201     0.0538     0.0006*    0.0000*    0.0000*    0.0000*
-         │
-   75-79 │   1.099092  -2.116162  -3.816747  -4.837463  -6.011286  -5.799852
-         │     0.1740     0.0322     0.0003*    0.0000*    0.0000*    0.0000*
-Col Mean-│
-Row Mean │      35-39      40-44      45-49      50-54      55-59      60-64
-─────────┼──────────────────────────────────────────────────────────────────
-   40-44 │  -0.466612
-         │     0.3541 
-         │
-   45-49 │  -2.426022  -1.959409
-         │     0.0154*    0.0438 
-         │
-   50-54 │  -2.015913  -1.549300   0.410108
-         │     0.0404     0.0910     0.3690 
-         │
-   55-59 │  -0.987906  -0.521294   1.438115   1.028006
-         │     0.1973     0.3399     0.1082     0.1900 
-         │
-   60-64 │  -3.603490  -3.136877  -1.177468  -1.587577  -2.615583
-         │     0.0005*    0.0023*    0.1568     0.0855     0.0095*
-         │
-   65-69 │  -3.957095  -3.490483  -1.531073  -1.941182  -2.969188  -0.353605
-         │     0.0002*    0.0008*    0.0930     0.0450     0.0037*    0.3877 
-         │
-   70-74 │  -5.320480  -4.853867  -2.894457  -3.304566  -4.332573  -1.716989
-         │     0.0000*    0.0000*    0.0046*    0.0014*    0.0000*    0.0694 
-         │
-   75-79 │  -5.581127  -5.114514  -3.155105  -3.565213  -4.593220  -1.977636
-         │     0.0000*    0.0000*    0.0022*    0.0006*    0.0000*    0.0427 
-Col Mean-│
-Row Mean │      65-69      70-74
-─────────┼──────────────────────
-   70-74 │  -1.363384
-         │     0.1209 
-         │
-   75-79 │  -1.624031  -0.260647
-         │     0.0806     0.4170 
-
-FDR = 0.05
-Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(female_squat_dunn<span class="sc">$</span>P.adjusted, female_squat_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">female_squat_dunn$P.adjusted</span><span class="st">`</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>log_p <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(dunn_results_df<span class="sc">$</span>p_value)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> p_value)) <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"grey100"</span>) <span class="sc">+</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dunn_results_log <span class="ot">&lt;-</span> dunn_results_df <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_p =</span> <span class="sc">-</span><span class="fu">log10</span>(p_value))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_log, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> log_p)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -286,16 +226,17 @@ Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre
 </div>
 </div>
 </div>
+<p>The -log10 heatmap shows us how many zeros there are after the decimal point in the p-value. This indicates significance because the more zeros there are, the smaller the p-value is and the more significant the different is.</p>
 </section>
 <section id="create-heatmap-of-significant-p-values" class="level4">
 <h4 class="anchored" data-anchor-id="create-heatmap-of-significant-p-values">Create heatmap of significant p-values:</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> sig)) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">"grey100"</span>, <span class="at">high =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> sig)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">"grey100"</span>, <span class="at">high =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -304,775 +245,40 @@ Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre
 </div>
 </div>
 </div>
+<p>This visualization</p>
 </section>
 </section>
 <section id="female-deadlift" class="level2">
 <h2 class="anchored" data-anchor-id="female-deadlift">Female Deadlift</h2>
-<section id="arrange-data-appropriately-1" class="level4">
-<h4 class="anchored" data-anchor-id="arrange-data-appropriately-1">Arrange data appropriately:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>female_deadlift_ranked <span class="ot">&lt;-</span> openpl_female <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Deadlift)) <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(AgeClass)) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_relevel</span>(AgeClass, <span class="st">"5-12"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Age, AgeClass, Deadlift, rank)<span class="sc">|&gt;</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_recode</span>(AgeClass,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"05-12"</span> <span class="ot">=</span> <span class="st">"5-12"</span>))</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>female_deadlift_ranked <span class="sc">|&gt;</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AgeClass)  <span class="sc">|&gt;</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
+<p>Fill in the neceessary work to run the same analysis for deadlifting. #### Arrange data appropriately. Use <code>mutate</code>, <code>select</code>, and <code>filter</code> functions to set up your data for the test.</p>
 <section id="look-at-distribution-of-the-data-1" class="level4">
 <h4 class="anchored" data-anchor-id="look-at-distribution-of-the-data-1">Look at distribution of the data:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> female_deadlift_ranked, <span class="fu">aes</span>(<span class="at">x =</span> AgeClass, <span class="at">y =</span> Deadlift)) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<p>Create a boxplot by <code>AgeClass</code>.</p>
+</section>
+<section id="form-a-hypothesis-1" class="level4">
+<h4 class="anchored" data-anchor-id="form-a-hypothesis-1">Form a hypothesis:</h4>
 </section>
 <section id="run-the-test-confirm-significant-p-value-1" class="level4">
 <h4 class="anchored" data-anchor-id="run-the-test-confirm-significant-p-value-1">Run the test, confirm significant p-value:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>female_deadlift_results <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(female_deadlift_ranked<span class="sc">$</span>rank <span class="sc">~</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                       female_deadlift_ranked<span class="sc">$</span>AgeClass)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>female_deadlift_results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Kruskal-Wallis rank sum test
-
-data:  female_deadlift_ranked$rank by female_deadlift_ranked$AgeClass
-Kruskal-Wallis chi-squared = 130.91, df = 14, p-value &lt; 2.2e-16</code></pre>
-</div>
-</div>
 </section>
 <section id="run-pairwise-test-1" class="level4">
 <h4 class="anchored" data-anchor-id="run-pairwise-test-1">Run pairwise test:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>female_deadlift_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(female_deadlift_ranked<span class="sc">$</span>rank, female_deadlift_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(female_deadlift_dunn<span class="sc">$</span>P.adjusted, female_deadlift_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">female_deadlift_dunn$P.adjusted</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </section>
 <section id="create-a-visualization-to-show-log-p-values-1" class="level4">
 <h4 class="anchored" data-anchor-id="create-a-visualization-to-show-log-p-values-1">Create a visualization to show log p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>female_deadlift_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(female_deadlift_ranked<span class="sc">$</span>rank, female_deadlift_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Kruskal-Wallis rank sum test
-
-data: x and group
-Kruskal-Wallis chi-squared = 130.9091, df = 14, p-value = 0
-
-                   Dunn's Pairwise Comparison of x by group                   
-                             (Benjamini-Hochberg)                             
-Col Mean-│
-Row Mean │      05-12      13-15      16-17      18-19      20-23      24-34
-─────────┼──────────────────────────────────────────────────────────────────
-   13-15 │   2.932734
-         │     0.0052*
-         │
-   16-17 │   4.482035   1.549300
-         │     0.0000*    0.0937 
-         │
-   18-19 │   5.750639   2.817904   1.268603
-         │     0.0000*    0.0069*    0.1432 
-         │
-   20-23 │   6.862490   3.929755   2.380454   1.111850
-         │     0.0000*    0.0002*    0.0178*    0.1684 
-         │
-   24-34 │   7.217917   4.285183   2.735882   1.467278   0.355427
-         │     0.0000*    0.0000*    0.0082*    0.1052     0.4077 
-         │
-   35-39 │   7.360089   4.427354   2.878053   1.609449   0.497598   0.142171
-         │     0.0000*    0.0000*    0.0058*    0.0855     0.3609     0.4610 
-         │
-   40-44 │   6.866135   3.933400   2.384100   1.115496   0.003645  -0.351782
-         │     0.0000*    0.0002*    0.0180*    0.1694     0.4985     0.4007 
-         │
-   45-49 │   5.039783   2.107048   0.557748  -0.710855  -1.822706  -2.178134
-         │     0.0000*    0.0329     0.3404     0.2947     0.0579     0.0286 
-         │
-   50-54 │   5.672262   2.739527   1.190227  -0.078376  -1.190227  -1.545655
-         │     0.0000*    0.0083*    0.1555     0.4826     0.1535     0.0930 
-         │
-   55-59 │   6.939043   4.006308   2.457008   1.188404   0.076553  -0.278874
-         │     0.0000*    0.0001*    0.0150*    0.1521     0.4786     0.4223 
-         │
-   60-64 │   4.339864   1.407129  -0.142171  -1.410774  -2.522625  -2.878053
-         │     0.0000*    0.1146     0.4656     0.1154     0.0130*    0.0060*
-         │
-   65-69 │   4.192225   1.259490  -0.289810  -1.558414  -2.670265  -3.025692
-         │     0.0001*    0.1417     0.4222     0.0934     0.0093*    0.0041*
-         │
-   70-74 │   2.325773  -0.606961  -2.156261  -3.424865  -4.536716  -4.892144
-         │     0.0202*    0.3245     0.0297     0.0012*    0.0000*    0.0000*
-         │
-   75-79 │   2.580952  -0.351782  -1.901082  -3.169686  -4.281537  -4.636965
-         │     0.0115*    0.4049     0.0519     0.0028*    0.0000*    0.0000*
-Col Mean-│
-Row Mean │      35-39      40-44      45-49      50-54      55-59      60-64
-─────────┼──────────────────────────────────────────────────────────────────
-   40-44 │  -0.493953
-         │     0.3585 
-         │
-   45-49 │  -2.320305  -1.826351
-         │     0.0201*    0.0584 
-         │
-   50-54 │  -1.687826  -1.193872   0.632479
-         │     0.0750     0.1565     0.3181 
-         │
-   55-59 │  -0.421045   0.072908   1.899260   1.266781
-         │     0.3845     0.4755     0.0512     0.1418 
-         │
-   60-64 │  -3.020224  -2.526271  -0.699919  -1.332398  -2.599179
-         │     0.0040*    0.0132*    0.2955     0.1296     0.0111*
-         │
-   65-69 │  -3.167863  -2.673910  -0.847558  -1.480037  -2.746818  -0.147639
-         │     0.0027*    0.0094*    0.2479     0.1041     0.0083*    0.4681 
-         │
-   70-74 │  -5.034315  -4.540361  -2.714010  -3.346489  -4.613270  -2.014090
-         │     0.0000*    0.0000*    0.0085*    0.0015*    0.0000*    0.0405 
-         │
-   75-79 │  -4.779136  -4.285183  -2.458831  -3.091310  -4.358091  -1.758911
-         │     0.0000*    0.0000*    0.0152*    0.0034*    0.0000*    0.0655 
-Col Mean-│
-Row Mean │      65-69      70-74
-─────────┼──────────────────────
-   70-74 │  -1.866451
-         │     0.0542 
-         │
-   75-79 │  -1.611272   0.255178
-         │     0.0865     0.4278 
-
-FDR = 0.05
-Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(female_deadlift_dunn<span class="sc">$</span>P.adjusted, female_deadlift_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">female_deadlift_dunn$P.adjusted</span><span class="st">`</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>log_p <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(dunn_results_df<span class="sc">$</span>p_value)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> p_value)) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"grey100"</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 <section id="create-heatmap-of-significant-p-values-1" class="level4">
 <h4 class="anchored" data-anchor-id="create-heatmap-of-significant-p-values-1">Create heatmap of significant p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> sig)) <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">"grey100"</span>, <span class="at">high =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 </section>
-<section id="male-squat" class="level2">
-<h2 class="anchored" data-anchor-id="male-squat">Male Squat</h2>
-<section id="arrange-data-appropriately-2" class="level4">
-<h4 class="anchored" data-anchor-id="arrange-data-appropriately-2">Arrange data appropriately:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>male_squat_ranked <span class="ot">&lt;-</span> openpl_male <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Squat)) <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(AgeClass)) <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_relevel</span>(AgeClass, <span class="st">"5-12"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Age, AgeClass, Squat, rank)<span class="sc">|&gt;</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_recode</span>(AgeClass,</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"05-12"</span> <span class="ot">=</span> <span class="st">"5-12"</span>))</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>male_squat_ranked <span class="sc">|&gt;</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AgeClass)  <span class="sc">|&gt;</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="look-at-distribution-of-the-data-2" class="level4">
-<h4 class="anchored" data-anchor-id="look-at-distribution-of-the-data-2">Look at distribution of the data:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> male_squat_ranked, <span class="fu">aes</span>(<span class="at">x =</span> AgeClass, <span class="at">y =</span> Squat)) <span class="sc">+</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="run-the-test-confirm-significant-p-value-2" class="level4">
-<h4 class="anchored" data-anchor-id="run-the-test-confirm-significant-p-value-2">Run the test, confirm significant p-value:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>male_squat_results <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(male_squat_ranked<span class="sc">$</span>rank <span class="sc">~</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                       male_squat_ranked<span class="sc">$</span>AgeClass)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>male_squat_results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Kruskal-Wallis rank sum test
-
-data:  male_squat_ranked$rank by male_squat_ranked$AgeClass
-Kruskal-Wallis chi-squared = 164.44, df = 14, p-value &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="run-pairwise-test-2" class="level4">
-<h4 class="anchored" data-anchor-id="run-pairwise-test-2">Run pairwise test:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>male_squat_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(male_squat_ranked<span class="sc">$</span>rank, male_squat_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(male_squat_dunn<span class="sc">$</span>P.adjusted, male_squat_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">male_squat_dunn$P.adjusted</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="create-a-visualization-to-show-log-p-values-2" class="level4">
-<h4 class="anchored" data-anchor-id="create-a-visualization-to-show-log-p-values-2">Create a visualization to show log p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>male_squat_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(male_squat_ranked<span class="sc">$</span>rank, male_squat_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Kruskal-Wallis rank sum test
-
-data: x and group
-Kruskal-Wallis chi-squared = 164.4439, df = 14, p-value = 0
-
-                   Dunn's Pairwise Comparison of x by group                   
-                             (Benjamini-Hochberg)                             
-Col Mean-│
-Row Mean │      05-12      13-15      16-17      18-19      20-23      24-34
-─────────┼──────────────────────────────────────────────────────────────────
-   13-15 │   3.151459
-         │     0.0020*
-         │
-   16-17 │   4.226856   1.075396
-         │     0.0001*    0.1703 
-         │
-   18-19 │   5.541027   2.389568   1.314171
-         │     0.0000*    0.0158*    0.1287 
-         │
-   20-23 │   8.395386   5.243926   4.168529   2.854358
-         │     0.0000*    0.0000*    0.0001*    0.0048*
-         │
-   24-34 │   7.123137   3.971677   2.896280   1.582109  -1.272249
-         │     0.0000*    0.0001*    0.0044*    0.0829     0.1351 
-         │
-   35-39 │   7.083037   3.931578   2.856181   1.542009  -1.312348  -0.040099
-         │     0.0000*    0.0002*    0.0049*    0.0873     0.1275     0.4887 
-         │
-   40-44 │   7.524132   4.372672   3.297276   1.983104  -0.871253   0.400995
-         │     0.0000*    0.0000*    0.0012*    0.0395     0.2238     0.3688 
-         │
-   45-49 │   5.878228   2.726768   1.651372   0.337200  -2.517157  -1.244908
-         │     0.0000*    0.0066*    0.0751     0.3903     0.0117*    0.1365 
-         │
-   50-54 │   6.802340   3.650881   2.575484   1.261312  -1.593045  -0.320796
-         │     0.0000*    0.0004*    0.0101*    0.1343     0.0822     0.3929 
-         │
-   55-59 │   4.715341   1.563882   0.488485  -0.825686  -3.680044  -2.407795
-         │     0.0000*    0.0848     0.3419     0.2360     0.0004*    0.0153*
-         │
-   60-64 │   3.444915   0.293455  -0.781941  -2.096112  -4.950470  -3.678221
-         │     0.0008*    0.3998     0.2478     0.0310     0.0000*    0.0004*
-         │
-   65-69 │   3.721966   0.570507  -0.504889  -1.819061  -4.673419  -3.401170
-         │     0.0003*    0.3174     0.3391     0.0548     0.0000*    0.0009*
-         │
-   70-74 │   1.924778  -1.226681  -2.302078  -3.616249  -6.470608  -5.198359
-         │     0.0438     0.1391     0.0193*    0.0004*    0.0000*    0.0000*
-         │
-   75-79 │   1.935714  -1.215745  -2.291142  -3.605313  -6.459671  -5.187422
-         │     0.0434     0.1401     0.0195*    0.0004*    0.0000*    0.0000*
-Col Mean-│
-Row Mean │      35-39      40-44      45-49      50-54      55-59      60-64
-─────────┼──────────────────────────────────────────────────────────────────
-   40-44 │   0.441094
-         │     0.3568 
-         │
-   45-49 │  -1.204809  -1.645904
-         │     0.1410     0.0748 
-         │
-   50-54 │  -0.280696  -0.721791   0.924112
-         │     0.4009     0.2656     0.2097 
-         │
-   55-59 │  -2.367695  -2.808790  -1.162886  -2.086998
-         │     0.0165*    0.0054*    0.1495     0.0312 
-         │
-   60-64 │  -3.638122  -4.079217  -2.433313  -3.357425  -1.270426
-         │     0.0004*    0.0001*    0.0145*    0.0010*    0.1338 
-         │
-   65-69 │  -3.361070  -3.802165  -2.156261  -3.080374  -0.993375   0.277051
-         │     0.0010*    0.0003*    0.0272     0.0025*    0.1912     0.3985 
-         │
-   70-74 │  -5.158259  -5.599354  -3.953450  -4.877562  -2.790563  -1.520137
-         │     0.0000*    0.0000*    0.0001*    0.0000*    0.0056*    0.0899 
-         │
-   75-79 │  -5.147323  -5.588418  -3.942514  -4.866626  -2.779627  -1.509201
-         │     0.0000*    0.0000*    0.0002*    0.0000*    0.0057*    0.0907 
-Col Mean-│
-Row Mean │      65-69      70-74
-─────────┼──────────────────────
-   70-74 │  -1.797188
-         │     0.0567 
-         │
-   75-79 │  -1.786252   0.010936
-         │     0.0572     0.4956 
-
-FDR = 0.05
-Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(male_squat_dunn<span class="sc">$</span>P.adjusted, male_squat_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">male_squat_dunn$P.adjusted</span><span class="st">`</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>log_p <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(dunn_results_df<span class="sc">$</span>p_value)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> p_value)) <span class="sc">+</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"grey100"</span>) <span class="sc">+</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="create-heatmap-of-significant-p-values-2" class="level4">
-<h4 class="anchored" data-anchor-id="create-heatmap-of-significant-p-values-2">Create heatmap of significant p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> sig)) <span class="sc">+</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">"grey100"</span>, <span class="at">high =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="male-deadlift" class="level2">
-<h2 class="anchored" data-anchor-id="male-deadlift">Male Deadlift</h2>
-<section id="arrange-data-appropriately-3" class="level4">
-<h4 class="anchored" data-anchor-id="arrange-data-appropriately-3">Arrange data appropriately:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>male_deadlift_ranked <span class="ot">&lt;-</span> openpl_male <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Deadlift)) <span class="sc">|&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(AgeClass)) <span class="sc">|&gt;</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_relevel</span>(AgeClass, <span class="st">"5-12"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Age, AgeClass, Deadlift, rank)<span class="sc">|&gt;</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_recode</span>(AgeClass,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"05-12"</span> <span class="ot">=</span> <span class="st">"5-12"</span>))</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>male_deadlift_ranked <span class="sc">|&gt;</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AgeClass)  <span class="sc">|&gt;</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="look-at-distribution-of-the-data-3" class="level4">
-<h4 class="anchored" data-anchor-id="look-at-distribution-of-the-data-3">Look at distribution of the data:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> male_deadlift_ranked, <span class="fu">aes</span>(<span class="at">x =</span> AgeClass, <span class="at">y =</span> Deadlift)) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="run-the-test-confirm-significant-p-value-3" class="level4">
-<h4 class="anchored" data-anchor-id="run-the-test-confirm-significant-p-value-3">Run the test, confirm significant p-value:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>male_deadlift_results <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(male_deadlift_ranked<span class="sc">$</span>rank <span class="sc">~</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                                       male_deadlift_ranked<span class="sc">$</span>AgeClass)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>male_deadlift_results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Kruskal-Wallis rank sum test
-
-data:  male_deadlift_ranked$rank by male_deadlift_ranked$AgeClass
-Kruskal-Wallis chi-squared = 166.62, df = 14, p-value &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="run-pairwise-test-3" class="level4">
-<h4 class="anchored" data-anchor-id="run-pairwise-test-3">Run pairwise test:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>male_deadlift_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(male_deadlift_ranked<span class="sc">$</span>rank, male_deadlift_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(male_deadlift_dunn<span class="sc">$</span>P.adjusted, male_deadlift_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">male_deadlift_dunn$P.adjusted</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="create-a-visualization-to-show-log-p-values-3" class="level4">
-<h4 class="anchored" data-anchor-id="create-a-visualization-to-show-log-p-values-3">Create a visualization to show log p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>male_deadlift_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(male_deadlift_ranked<span class="sc">$</span>rank, male_deadlift_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Kruskal-Wallis rank sum test
-
-data: x and group
-Kruskal-Wallis chi-squared = 166.6208, df = 14, p-value = 0
-
-                   Dunn's Pairwise Comparison of x by group                   
-                             (Benjamini-Hochberg)                             
-Col Mean-│
-Row Mean │      05-12      13-15      16-17      18-19      20-23      24-34
-─────────┼──────────────────────────────────────────────────────────────────
-   13-15 │   2.518980
-         │     0.0114*
-         │
-   16-17 │   4.544007   2.025026
-         │     0.0000*    0.0357 
-         │
-   18-19 │   5.415261   2.896280   0.871253
-         │     0.0000*    0.0043*    0.2189 
-         │
-   20-23 │   8.475585   5.956604   3.931578   3.060324
-         │     0.0000*    0.0000*    0.0001*    0.0026*
-         │
-   24-34 │   7.309053   4.790072   2.765045   1.893792  -1.166532
-         │     0.0000*    0.0000*    0.0061*    0.0456     0.1578 
-         │
-   35-39 │   7.227031   4.708050   2.683024   1.811770  -1.248553  -0.082021
-         │     0.0000*    0.0000*    0.0075*    0.0525     0.1408     0.4811 
-         │
-   40-44 │   7.536891   5.017911   2.992884   2.121630  -0.938693   0.227838
-         │     0.0000*    0.0000*    0.0032*    0.0287     0.2052     0.4304 
-         │
-   45-49 │   6.244592   3.725612   1.700585   0.829331  -2.230992  -1.064460
-         │     0.0000*    0.0003*    0.0649     0.2273     0.0232*    0.1795 
-         │
-   50-54 │   6.180797   3.661817   1.636790   0.765536  -2.294787  -1.128255
-         │     0.0000*    0.0004*    0.0731     0.2428     0.0200*    0.1660 
-         │
-   55-59 │   5.344175   2.825195   0.800168  -0.071085  -3.131409  -1.964877
-         │     0.0000*    0.0053*    0.2341     0.4808     0.0021*    0.0399 
-         │
-   60-64 │   3.423042   0.904062  -1.120964  -1.992218  -5.052542  -3.886010
-         │     0.0009*    0.2135     0.1659     0.0380     0.0000*    0.0002*
-         │
-   65-69 │   3.577972   1.058992  -0.966034  -1.837288  -4.897612  -3.731080
-         │     0.0005*    0.1789     0.1993     0.0503     0.0000*    0.0003*
-         │
-   70-74 │   2.205474  -0.313505  -2.338532  -3.209786  -6.270110  -5.103578
-         │     0.0244*    0.4039     0.0181*    0.0017*    0.0000*    0.0000*
-         │
-   75-79 │   2.148971  -0.370009  -2.395036  -3.266290  -6.326614  -5.160082
-         │     0.0272     0.3850     0.0159*    0.0015*    0.0000*    0.0000*
-Col Mean-│
-Row Mean │      35-39      40-44      45-49      50-54      55-59      60-64
-─────────┼──────────────────────────────────────────────────────────────────
-   40-44 │   0.309860
-         │     0.4013 
-         │
-   45-49 │  -0.982438  -1.292298
-         │     0.1967     0.1338 
-         │
-   50-54 │  -1.046233  -1.356093  -0.063794
-         │     0.1804     0.1209     0.4791 
-         │
-   55-59 │  -1.882855  -2.192715  -0.900417  -0.836622
-         │     0.0461     0.0248*    0.2122     0.2274 
-         │
-   60-64 │  -3.803988  -4.113848  -2.821549  -2.757754  -1.921132
-         │     0.0002*    0.0001*    0.0052*    0.0061*    0.0435 
-         │
-   65-69 │  -3.649058  -3.958918  -2.666619  -2.602824  -1.766202   0.154930
-         │     0.0004*    0.0001*    0.0077*    0.0092*    0.0572     0.4558 
-         │
-   70-74 │  -5.021556  -5.331416  -4.039117  -3.975322  -3.138700  -1.217567
-         │     0.0000*    0.0000*    0.0001*    0.0001*    0.0021*    0.1466 
-         │
-   75-79 │  -5.078060  -5.387920  -4.095621  -4.031826  -3.195204  -1.274071
-         │     0.0000*    0.0000*    0.0001*    0.0001*    0.0018*    0.1364 
-Col Mean-│
-Row Mean │      65-69      70-74
-─────────┼──────────────────────
-   70-74 │  -1.372498
-         │     0.1189 
-         │
-   75-79 │  -1.429001  -0.056503
-         │     0.1085     0.4775 
-
-FDR = 0.05
-Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(male_deadlift_dunn<span class="sc">$</span>P.adjusted, male_deadlift_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">male_deadlift_dunn$P.adjusted</span><span class="st">`</span>)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>log_p <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(dunn_results_df<span class="sc">$</span>p_value)</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> p_value)) <span class="sc">+</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"grey100"</span>) <span class="sc">+</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="create-heatmap-of-significant-p-values-3" class="level4">
-<h4 class="anchored" data-anchor-id="create-heatmap-of-significant-p-values-3">Create heatmap of significant p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> sig)) <span class="sc">+</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">"grey100"</span>, <span class="at">high =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="male-bench" class="level2">
-<h2 class="anchored" data-anchor-id="male-bench">Male Bench</h2>
-<section id="arrange-data-appropriately-4" class="level4">
-<h4 class="anchored" data-anchor-id="arrange-data-appropriately-4">Arrange data appropriately:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>male_bench_ranked <span class="ot">&lt;-</span> openpl_male <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Bench)) <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(AgeClass)) <span class="sc">|&gt;</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_relevel</span>(AgeClass, <span class="st">"5-12"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Age, AgeClass, Bench, rank)<span class="sc">|&gt;</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_recode</span>(AgeClass,</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"05-12"</span> <span class="ot">=</span> <span class="st">"5-12"</span>))</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>male_bench_ranked <span class="sc">|&gt;</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AgeClass)  <span class="sc">|&gt;</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="look-at-distribution-of-the-data-4" class="level4">
-<h4 class="anchored" data-anchor-id="look-at-distribution-of-the-data-4">Look at distribution of the data:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> male_bench_ranked, <span class="fu">aes</span>(<span class="at">x =</span> AgeClass, <span class="at">y =</span> Bench)) <span class="sc">+</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="run-the-test-confirm-significant-p-value-4" class="level4">
-<h4 class="anchored" data-anchor-id="run-the-test-confirm-significant-p-value-4">Run the test, confirm significant p-value:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>male_bench_results <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(male_bench_ranked<span class="sc">$</span>rank <span class="sc">~</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                                       male_bench_ranked<span class="sc">$</span>AgeClass)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>male_bench_results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Kruskal-Wallis rank sum test
-
-data:  male_bench_ranked$rank by male_bench_ranked$AgeClass
-Kruskal-Wallis chi-squared = 157.78, df = 14, p-value &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="run-pairwise-test-4" class="level4">
-<h4 class="anchored" data-anchor-id="run-pairwise-test-4">Run pairwise test:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>male_bench_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(male_bench_ranked<span class="sc">$</span>rank, male_bench_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(male_bench_dunn<span class="sc">$</span>P.adjusted, male_bench_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">male_bench_dunn$P.adjusted</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="create-a-visualization-to-show-log-p-values-4" class="level4">
-<h4 class="anchored" data-anchor-id="create-a-visualization-to-show-log-p-values-4">Create a visualization to show log p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>male_bench_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(male_bench_ranked<span class="sc">$</span>rank, male_bench_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Kruskal-Wallis rank sum test
-
-data: x and group
-Kruskal-Wallis chi-squared = 157.7835, df = 14, p-value = 0
-
-                   Dunn's Pairwise Comparison of x by group                   
-                             (Benjamini-Hochberg)                             
-Col Mean-│
-Row Mean │      05-12      13-15      16-17      18-19      20-23      24-34
-─────────┼──────────────────────────────────────────────────────────────────
-   13-15 │   2.670265
-         │     0.0081*
-         │
-   16-17 │   4.589575   1.919309
-         │     0.0000*    0.0451 
-         │
-   18-19 │   4.821058   2.150793   0.231483
-         │     0.0000*    0.0276     0.4164 
-         │
-   20-23 │   7.704580   5.034315   3.115005   2.883521
-         │     0.0000*    0.0000*    0.0024*    0.0046*
-         │
-   24-34 │   7.939709   5.269444   3.350134   3.118650   0.235129
-         │     0.0000*    0.0000*    0.0011*    0.0024*    0.4190 
-         │
-   35-39 │   7.002838   4.332573   2.413263   2.181779  -0.701742  -0.936871
-         │     0.0000*    0.0000*    0.0148*    0.0259     0.2726     0.2129 
-         │
-   40-44 │   7.540536   4.870271   2.950961   2.719478  -0.164043  -0.399172
-         │     0.0000*    0.0000*    0.0039*    0.0072*    0.4390     0.3658 
-         │
-   45-49 │   6.069612   3.399347   1.480037   1.248553  -1.634967  -1.870096
-         │     0.0000*    0.0010*    0.0985     0.1373     0.0755     0.0496 
-         │
-   50-54 │   6.445090   3.774825   1.855515   1.624031  -1.259490  -1.494619
-         │     0.0000*    0.0003*    0.0505     0.0761     0.1364     0.0971 
-         │
-   55-59 │   5.216586   2.546321   0.627011   0.395527  -2.487994  -2.723123
-         │     0.0000*    0.0110*    0.2933     0.3635     0.0123*    0.0072*
-         │
-   60-64 │   3.539696   0.869431  -1.049878  -1.281362  -4.164884  -4.400013
-         │     0.0006*    0.2269     0.1836     0.1364     0.0001*    0.0000*
-         │
-   65-69 │   3.942514   1.272249  -0.647060  -0.878544  -3.762066  -3.997195
-         │     0.0002*    0.1351     0.2891     0.2265     0.0003*    0.0001*
-         │
-   70-74 │   2.559079  -0.111185  -2.030495  -2.261978  -5.145500  -5.380629
-         │     0.0108*    0.4557     0.0353     0.0215*    0.0000*    0.0000*
-         │
-   75-79 │   1.837288  -0.832976  -2.752286  -2.983770  -5.867292  -6.102421
-         │     0.0518     0.2336     0.0068*    0.0036*    0.0000*    0.0000*
-Col Mean-│
-Row Mean │      35-39      40-44      45-49      50-54      55-59      60-64
-─────────┼──────────────────────────────────────────────────────────────────
-   40-44 │   0.537698
-         │     0.3198 
-         │
-   45-49 │  -0.933225  -1.470924
-         │     0.2116     0.0989 
-         │
-   50-54 │  -0.557748  -1.095446   0.375477
-         │     0.3156     0.1729     0.3677 
-         │
-   55-59 │  -1.786252  -2.323950  -0.853026  -1.228504
-         │     0.0572     0.0185*    0.2296     0.1404 
-         │
-   60-64 │  -3.463142  -4.000840  -2.529916  -2.905394  -1.676890
-         │     0.0008*    0.0001*    0.0113*    0.0044*    0.0702 
-         │
-   65-69 │  -3.060324  -3.598022  -2.127098  -2.502576  -1.274071   0.402818
-         │     0.0028*    0.0005*    0.0288     0.0120*    0.1364     0.3681 
-         │
-   70-74 │  -4.443758  -4.981456  -3.510532  -3.886010  -2.657506  -0.980616
-         │     0.0000*    0.0000*    0.0007*    0.0002*    0.0083*    0.2018 
-         │
-   75-79 │  -5.165550  -5.703248  -4.232324  -4.607802  -3.379297  -1.702407
-         │     0.0000*    0.0000*    0.0001*    0.0000*    0.0010*    0.0675 
-Col Mean-│
-Row Mean │      65-69      70-74
-─────────┼──────────────────────
-   70-74 │  -1.383434
-         │     0.1150 
-         │
-   75-79 │  -2.105226  -0.721791
-         │     0.0299     0.2684 
-
-FDR = 0.05
-Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(male_bench_dunn<span class="sc">$</span>P.adjusted, male_bench_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">male_bench_dunn$P.adjusted</span><span class="st">`</span>)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>log_p <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(dunn_results_df<span class="sc">$</span>p_value)</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> p_value)) <span class="sc">+</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"grey100"</span>) <span class="sc">+</span></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="create-heatmap-of-significant-p-values-4" class="level4">
-<h4 class="anchored" data-anchor-id="create-heatmap-of-significant-p-values-4">Create heatmap of significant p-values:</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> sig)) <span class="sc">+</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">"grey100"</span>, <span class="at">high =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Sample-Powerlifting-Module_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
+<section id="male-powerlifting-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="male-powerlifting-analysis">Male Powerlifting Analysis</h2>
+<p>Complete the following exercises using the male data set for <code>Bench</code>, <code>Squat</code>, and <code>Deadlift</code></p>
+<p>Exercise 1. Arrange the data appropriately to run the Kruskal-Wallis Test.</p>
+<p>Exercise 2. Run the test and confirm whether is it appropriate to move forward.</p>
+<p>Exercise 3, If appropriate, run the Dunn’s Test to determine which classes are discernible.</p>
+<p>Exercise 4. Create a visualization to show which classes are significantly discernible.</p>
+<p>Exercise 5. Write an analysis of these results in your own words describing what your visualization tells us.</p>
 </section>
 
 </main>
