@@ -1,0 +1,349 @@
+---
+title: "Sample Powerlifting Module"
+format: html
+editor: visual
+---
+## Female Squat
+#### Load in appropriate packages and datasets:
+```{r warning=FALSE, output=FALSE}
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(dunn.test)
+library(FSA)
+library(reshape2)
+
+openpl_male <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keelinjoyce/powerlifting//openpl_male.csv")
+
+openpl_female <- read_csv("~/Desktop/SYE/github repos/stat450-spr2026-score/keelinjoyce/powerlifting//openpl_female.csv")
+```
+
+#### Arrange data appropriately:
+```{r echo=TRUE, output = FALSE}
+female_squat_ranked <- openpl_female |> arrange(desc(Squat)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Squat, rank)|>
+  mutate(AgeClass = fct_recode(AgeClass,
+                              "05-12" = "5-12"))
+## recoding "5-12" as "05-12" so it appears in the correct order
+
+female_squat_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+```
+
+#### Look at distribution of the data:
+```{r echo=TRUE, eval=TRUE}
+ggplot(data = female_squat_ranked, aes(x = AgeClass, y = Squat)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+
+#### Run the test, confirm significant p-value:
+```{r}
+female_squat_results <- kruskal.test(female_squat_ranked$rank ~ 
+                                       female_squat_ranked$AgeClass)
+female_squat_results
+```
+
+#### Run pairwise test:
+```{r output=FALSE}
+female_squat_dunn <- dunn.test(female_squat_ranked$rank, female_squat_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(female_squat_dunn$P.adjusted, female_squat_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `female_squat_dunn$P.adjusted`)
+```
+
+#### Create a visualization to show log p-values:
+```{r}
+female_squat_dunn <- dunn.test(female_squat_ranked$rank, female_squat_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(female_squat_dunn$P.adjusted, female_squat_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `female_squat_dunn$P.adjusted`)
+
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = p_value)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_gradient(low = "forestgreen", high = "grey100") +
+  theme_minimal()
+```
+
+#### Create heatmap of significant p-values:
+```{r}
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_continuous(low = "grey100", high = "forestgreen") +
+  theme_minimal()
+```
+
+## Female Deadlift
+#### Arrange data appropriately:
+```{r echo=TRUE, output = FALSE}
+female_deadlift_ranked <- openpl_female |> arrange(desc(Deadlift)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Deadlift, rank)|>
+  mutate(AgeClass = fct_recode(AgeClass,
+                              "05-12" = "5-12"))
+## recoding "5-12" as "05-12" so it appears in the correct order
+
+female_deadlift_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+```
+
+#### Look at distribution of the data:
+```{r echo=TRUE, eval=TRUE}
+ggplot(data = female_deadlift_ranked, aes(x = AgeClass, y = Deadlift)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+
+#### Run the test, confirm significant p-value:
+```{r}
+female_deadlift_results <- kruskal.test(female_deadlift_ranked$rank ~ 
+                                       female_deadlift_ranked$AgeClass)
+female_deadlift_results
+```
+
+#### Run pairwise test:
+```{r output=FALSE}
+female_deadlift_dunn <- dunn.test(female_deadlift_ranked$rank, female_deadlift_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(female_deadlift_dunn$P.adjusted, female_deadlift_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `female_deadlift_dunn$P.adjusted`)
+```
+
+#### Create a visualization to show log p-values:
+```{r}
+female_deadlift_dunn <- dunn.test(female_deadlift_ranked$rank, female_deadlift_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(female_deadlift_dunn$P.adjusted, female_deadlift_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `female_deadlift_dunn$P.adjusted`)
+
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = p_value)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_gradient(low = "forestgreen", high = "grey100") +
+  theme_minimal()
+```
+
+#### Create heatmap of significant p-values:
+```{r}
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_continuous(low = "grey100", high = "forestgreen") +
+  theme_minimal()
+```
+
+## Male Squat
+#### Arrange data appropriately:
+```{r echo=TRUE, output = FALSE}
+male_squat_ranked <- openpl_male |> arrange(desc(Squat)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Squat, rank)|>
+  mutate(AgeClass = fct_recode(AgeClass,
+                              "05-12" = "5-12"))
+## recoding "5-12" as "05-12" so it appears in the correct order
+
+male_squat_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+```
+
+#### Look at distribution of the data:
+```{r echo=TRUE, eval=TRUE}
+ggplot(data = male_squat_ranked, aes(x = AgeClass, y = Squat)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+
+#### Run the test, confirm significant p-value:
+```{r}
+male_squat_results <- kruskal.test(male_squat_ranked$rank ~ 
+                                       male_squat_ranked$AgeClass)
+male_squat_results
+```
+
+#### Run pairwise test:
+```{r output=FALSE}
+male_squat_dunn <- dunn.test(male_squat_ranked$rank, male_squat_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(male_squat_dunn$P.adjusted, male_squat_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `male_squat_dunn$P.adjusted`)
+```
+
+#### Create a visualization to show log p-values:
+```{r}
+male_squat_dunn <- dunn.test(male_squat_ranked$rank, male_squat_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(male_squat_dunn$P.adjusted, male_squat_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `male_squat_dunn$P.adjusted`)
+
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = p_value)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_gradient(low = "forestgreen", high = "grey100") +
+  theme_minimal()
+```
+
+#### Create heatmap of significant p-values:
+```{r}
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_continuous(low = "grey100", high = "forestgreen") +
+  theme_minimal()
+```
+
+## Male Deadlift
+#### Arrange data appropriately:
+```{r echo=TRUE, output = FALSE}
+male_deadlift_ranked <- openpl_male |> arrange(desc(Deadlift)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Deadlift, rank)|>
+  mutate(AgeClass = fct_recode(AgeClass,
+                              "05-12" = "5-12"))
+## recoding "5-12" as "05-12" so it appears in the correct order
+
+male_deadlift_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+```
+
+#### Look at distribution of the data:
+```{r echo=TRUE, eval=TRUE}
+ggplot(data = male_deadlift_ranked, aes(x = AgeClass, y = Deadlift)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+
+#### Run the test, confirm significant p-value:
+```{r}
+male_deadlift_results <- kruskal.test(male_deadlift_ranked$rank ~ 
+                                       male_deadlift_ranked$AgeClass)
+male_deadlift_results
+```
+
+#### Run pairwise test:
+```{r output=FALSE}
+male_deadlift_dunn <- dunn.test(male_deadlift_ranked$rank, male_deadlift_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(male_deadlift_dunn$P.adjusted, male_deadlift_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `male_deadlift_dunn$P.adjusted`)
+```
+
+#### Create a visualization to show log p-values:
+```{r}
+male_deadlift_dunn <- dunn.test(male_deadlift_ranked$rank, male_deadlift_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(male_deadlift_dunn$P.adjusted, male_deadlift_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `male_deadlift_dunn$P.adjusted`)
+
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = p_value)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_gradient(low = "forestgreen", high = "grey100") +
+  theme_minimal()
+```
+
+#### Create heatmap of significant p-values:
+```{r}
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_continuous(low = "grey100", high = "forestgreen") +
+  theme_minimal()
+```
+
+## Male Bench
+#### Arrange data appropriately:
+```{r echo=TRUE, output = FALSE}
+male_bench_ranked <- openpl_male |> arrange(desc(Bench)) |>
+  mutate(rank = row_number()) |>
+  filter(!is.na(AgeClass)) |>
+  mutate(AgeClass = fct_relevel(AgeClass, "5-12")) |>
+  select(Name, Age, AgeClass, Bench, rank)|>
+  mutate(AgeClass = fct_recode(AgeClass,
+                              "05-12" = "5-12"))
+## recoding "5-12" as "05-12" so it appears in the correct order
+
+male_bench_ranked |>
+  group_by(AgeClass)  |>
+  summarise(n())
+```
+
+#### Look at distribution of the data:
+```{r echo=TRUE, eval=TRUE}
+ggplot(data = male_bench_ranked, aes(x = AgeClass, y = Bench)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+
+#### Run the test, confirm significant p-value:
+```{r}
+male_bench_results <- kruskal.test(male_bench_ranked$rank ~ 
+                                       male_bench_ranked$AgeClass)
+male_bench_results
+```
+
+#### Run pairwise test:
+```{r output=FALSE}
+male_bench_dunn <- dunn.test(male_bench_ranked$rank, male_bench_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(male_bench_dunn$P.adjusted, male_bench_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `male_bench_dunn$P.adjusted`)
+```
+
+#### Create a visualization to show log p-values:
+```{r}
+male_bench_dunn <- dunn.test(male_bench_ranked$rank, male_bench_ranked$AgeClass, method = "bh")
+dunn_results_df <- as.data.frame(male_bench_dunn$P.adjusted, male_bench_dunn$comparisons) |>
+  tibble::rownames_to_column("comparison") |>
+  separate(comparison, into = c("group1", "group2"), sep = " - ") |>
+  rename("p_value" = `male_bench_dunn$P.adjusted`)
+
+dunn_results_df$log_p <- -log10(dunn_results_df$p_value)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = p_value)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_gradient(low = "forestgreen", high = "grey100") +
+  theme_minimal()
+```
+
+#### Create heatmap of significant p-values:
+```{r}
+dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
+
+ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
+  geom_tile(color = "black", linewidth = 0.5) +
+  scale_fill_continuous(low = "grey100", high = "forestgreen") +
+  theme_minimal()
+```
+

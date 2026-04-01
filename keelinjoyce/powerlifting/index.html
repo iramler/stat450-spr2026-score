@@ -177,7 +177,7 @@ window.Quarto = {
 </div>
 <section id="welcome-video" class="level2">
 <h2 class="anchored" data-anchor-id="welcome-video">Welcome Video</h2>
-<p>For those interested in how some events in powerlifting competitions look, please check out this video from Day 1 of Powerlifting America Open Nationals from <span class="citation" data-cites="A7Intl">@A7Intl</span>.</p>
+<p>For those interested in how some events in powerlifting competitions look, please check out this video from Powerlifting America Open Nationals from <span class="citation" data-cites="A7Intl">@A7Intl</span>.</p>
 <iframe width="360" height="640" src="https://www.youtube.com/embed/x3wKUPmtSEs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 </section>
@@ -197,7 +197,7 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This activity would likely be suitable for an in-class example that lasts roughly 60 minutes as well as extensions that can be assigned as work outside of class or a second class period.</p>
+<p>This activity would likely be suitable for an in-class example that lasts roughly 60 minutes. There are also additional exercises and extensions provided that can be assigned as work outside of class or a second class period.</p>
 </div>
 </div>
 </div>
@@ -254,7 +254,7 @@ window.Quarto = {
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The testing is designed to be completed using RStudio and is not designed to be done by hand.</p>
+<p>The testing is designed to be completed using RStudio and is not intended to be done by hand.</p>
 <p>This module assumes basic familiarity with the use of RStudio, but sample code is provided so proficiency is not required.</p>
 <p>Analyses can be done on paper following the testing completed in RStudio.</p>
 </div>
@@ -263,8 +263,9 @@ window.Quarto = {
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>The initial data set from <a href="https://www.openpowerlifting.org" target="_blank">OpenPowerlifting Dataset</a> contains over 3,000,000 rows and 42 columns. We will be using a separate female and male data set taken from the larger set, each containing 15 variables and 300 individual observations. These have been condensed for this module from a female data set and male data set from <a href="https://data.scorenetwork.org/powerlifting/openpowerlifting.html" target="_blank">SCORE Sports Data Repository</a>. Each row represents a powerlifting athlete and variables including their demographics and how much weight they lifted (in kilograms).</p>
-<p>For the convenience of this module, the data has been further cleaned and can be downloaded here. Download wrangled and cleaned data:</p>
+<p>The initial data set from <a href="https://www.openpowerlifting.org" target="_blank">OpenPowerlifting Dataset</a> contains over 3,000,000 rows of individuals and 42 columns of variables. We will be using a separate female and male data set taken from the larger set, each containing 300 individual observations and 15 variables. These have been condensed for this module from a female data set and male data set from <a href="https://data.scorenetwork.org/powerlifting/openpowerlifting.html" target="_blank">SCORE Sports Data Repository</a>. Each row represents a powerlifting athlete and variables including their demographics and how much weight they lifted (in kilograms).</p>
+<p>For the convenience of this module, the data has been further cleaned and can be downloaded here.</p>
+<p>Download wrangled and cleaned data:</p>
 <p><strong>Male athletes</strong>: <a href="openpl_male.csv">openpl_male.csv</a></p>
 <p><strong>Female athletes</strong>: <a href="openpl_female.csv">openpl_female.csv</a></p>
 <section id="data-source" class="level4">
@@ -350,26 +351,34 @@ window.Quarto = {
 <p><em>k: number of groups</em></p>
 <p><span class="math inline">\(R_i\)</span><em>: sum of ranks in i-th group</em></p>
 <p><span class="math inline">\(n_i\)</span><em>: number of observations in i-th group</em></p>
-<section id="general-steps-to-run-kruskal-wallis-test" class="level4">
-<h4 class="anchored" data-anchor-id="general-steps-to-run-kruskal-wallis-test">General steps to run Kruskal-Wallis test</h4>
+<section id="general-steps-to-run-kruskal-wallis-test" class="level3">
+<h3 class="anchored" data-anchor-id="general-steps-to-run-kruskal-wallis-test">General steps to run Kruskal-Wallis test</h3>
 <p>Form a hypothesis where the structure is similar to an ANOVA hypotheses.</p>
 <pre><code>-   null hypothesis is population medians are equal
 
 -   alternate hypothesis is that at least one group is different</code></pre>
 <p>Rank data from smallest to largest from all groups.</p>
+<p>Sort by intended grouping.</p>
 <p>Find the sum of the ranks for each group.</p>
 <p>Use test in R to calculate the Kruskal-Wallis H statistic.</p>
 <p>If the p-value is less than 0.05, reject the null indicating as least one group differs slightly.</p>
 <p>If the null is rejected, use Dunn’s test (multiple comparison test) to find which groups specifically differ.</p>
 </section>
-<section id="forming-a-hypothesis" class="level4">
-<h4 class="anchored" data-anchor-id="forming-a-hypothesis">Forming a Hypothesis</h4>
-<p>For a Kruskal-Wallis test,similar to an ANOVA test, the null hypothesis is always that there is no difference in medians between groups and the alternative hypothesis claims that there is a difference between at least two groups.</p>
+<section id="forming-a-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="forming-a-hypothesis">Forming a Hypothesis</h3>
+<p>For a Kruskal-Wallis test, similar to an ANOVA test, the null hypothesis is always that there is no difference in medians between groups and the alternative hypothesis claims that there is a difference between at least two groups.</p>
 <p><span class="math inline">\(H_0:\)</span> there is no difference in the median of powerlifting weight between age groups</p>
 <p><span class="math inline">\(H_a:\)</span> at least one group differs from another</p>
+</section>
+<section id="organizing-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="organizing-the-data">Organizing the Data</h3>
 <p>To run the Kruskal-Wallis test, the data gets ranked from 1-n before being grouped by level, in this case <code>AgeClass</code>.</p>
 <p>We want to rank the data before it is grouped so the overall rankings and where they land can be compared between groups.</p>
-<p>Arrange the data appropriately and rank it before grouping by <code>AgeClass</code>:</p>
+<p>Using dplyr functions <code>mutate</code>, <code>filter</code>, and <code>select</code>, arrange the data appropriately and rank it before grouping by <code>AgeClass</code>:</p>
+<details>
+<summary>
+<b>Click to reveal code</b>
+</summary>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>female_bench_ranked <span class="ot">&lt;-</span> openpl_female <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Bench)) <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
@@ -378,32 +387,47 @@ window.Quarto = {
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Age, AgeClass, Bench, rank)<span class="sc">|&gt;</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeClass =</span> <span class="fu">fct_recode</span>(AgeClass,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"05-12"</span> <span class="ot">=</span> <span class="st">"5-12"</span>))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>female_bench_ranked <span class="sc">|&gt;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AgeClass)  <span class="sc">|&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## recoding "5-12" as "05-12" so it appears in the correct order</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Create a boxplot to look at the distribution of bench weight across age classes:</p>
+</details></section>
+<section id="visualizing-trends" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-trends">Visualizing Trends</h3>
+<p>Create a boxplot with <code>AgeClass</code> on the x-axis and <code>Bench</code> on the y-axis to look at the distribution of bench weight across age classes:</p>
+<details>
+<summary>
+<b>Click to reveal code</b>
+</summary>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> female_bench_ranked, <span class="fu">aes</span>(<span class="at">x =</span> AgeClass, <span class="at">y =</span> Bench)) <span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</details>
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The boxplot shows the general trend of the data increases to a peak between 20-34 and steadily decreases after that.</p>
+<p>The boxplot shows that the general trend of the data increases to a peak and steadily decreases after that.</p>
+</section>
+<section id="running-the-test" class="level3">
+<h3 class="anchored" data-anchor-id="running-the-test">Running the Test</h3>
 <p>Run the test using the <code>kruskal.test()</code> function:</p>
-<p>Using the standard alpha value of 0.05, if the p-value is larger than that there is no reason to reject the null hypothesis but any smaller value would indicate a difference in medians between AgeClass and we would have reason to reject the null.</p>
+<p>Using the standard alpha value of 0.05, if the p-value is larger than that there is no reason to reject the null hypothesis but any smaller value would indicate a difference in medians between each <code>AgeClass</code> and we would have reason to reject the null.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>female_bench_results <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(female_bench_ranked<span class="sc">$</span>rank <span class="sc">~</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                       female_bench_ranked<span class="sc">$</span>AgeClass)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>female_bench_results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<details>
+<summary>
+<b>Click to reveal results</b>
+</summary>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Kruskal-Wallis rank sum test
@@ -412,12 +436,7 @@ data:  female_bench_ranked$rank by female_bench_ranked$AgeClass
 Kruskal-Wallis chi-squared = 142.29, df = 14, p-value &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="~/Desktop/SYE/github%20repos/stat450-spr2026-score/keelinjoyce/powerlifting/testresults.png" class="img-fluid figure-img"></p>
-<figcaption>The test output reveals the p-value &lt; 2.2e-16</figcaption>
-</figure>
-</div>
+</details>
 <p>Using an alpha value of 0.5, the p-value is much smaller indicating that our results are statistically discernible, or significant, and we can claim that there is a statistical difference between at least two groups.</p>
 <p>Because the Kruskal-Wallis test only determines <em>if</em> there is a discernible difference between groups, we need to use a post-hoc test to determine <em>which</em> groups are statistically discernible from each other. The most appropriate post-hoc test following a Kruskal-Wallis test is the Dunn’s Test.</p>
 </section>
@@ -438,12 +457,11 @@ Kruskal-Wallis chi-squared = 142.29, df = 14, p-value &lt; 2.2e-16</code></pre>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">female_bench_dunn$P.adjusted</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-</section>
-<section id="visualizing-results" class="level2">
-<h2 class="anchored" data-anchor-id="visualizing-results">Visualizing Results</h2>
-<p>Getting an idea of which p-values indicate a statistical discernibility is difficult when there are so many. Creating a visualization of the values is the easiest way to see which groups are different and which are not.</p>
-<p>Create a heatmap of the p-values to see where the results are discernible:</p>
+Below is a table created of all the p-values generated by the Dunn’s Test. There are 18 groups being compared with each other resulting in a whopping 153 different p-values.
+<details>
+<summary>
+<b>Click to reveal results</b>
+</summary>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>female_bench_dunn <span class="ot">&lt;-</span> <span class="fu">dunn.test</span>(female_bench_ranked<span class="sc">$</span>rank, female_bench_ranked<span class="sc">$</span>AgeClass, <span class="at">method =</span> <span class="st">"bh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -536,68 +554,89 @@ Row Mean │      65-69      70-74
 FDR = 0.05
 Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre>
 </div>
+</div>
+</details>
+<p>Because there are 18 age classes each being compared with 17 other classes, it is not reasonable to look at each value and determine significance. The best way to assess the discernibility between groups is making a heatmap and shading by p-value.</p>
+</section>
+</section>
+<section id="visualizing-results" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-results">Visualizing Results</h2>
+<p>Getting an idea of which p-values indicate a statistical discernibility is difficult when there are so many. Creating a visualization of the values is the easiest way to see which groups are different and which are not.</p>
+<p>Create a heatmap of the p-values to see where the results are discernible:</p>
+<details>
+<summary>
+<b>Click to reveal code</b>
+</summary>
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(female_bench_dunn<span class="sc">$</span>P.adjusted, female_bench_dunn<span class="sc">$</span>comparisons) <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"comparison"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(comparison, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>), <span class="at">sep =</span> <span class="st">" - "</span>) <span class="sc">|&gt;</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"p_value"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">female_bench_dunn$P.adjusted</span><span class="st">`</span>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>log_p <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(dunn_results_df<span class="sc">$</span>p_value)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> p_value)) <span class="sc">+</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"grey100"</span>) <span class="sc">+</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>dunn_results_df <span class="ot">&lt;-</span> dunn_results_df <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_p =</span> <span class="sc">-</span><span class="fu">log10</span>(p_value))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> p_value)) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"forestgreen"</span>, <span class="at">high =</span> <span class="st">"grey100"</span>) <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</details>
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The -log10 p-value heatmap shows us how many zeros are following the decimal point indicating that the blue values are more statistically different. It is difficult to conceptualize the differences of these p-values with this visual.</p>
+<p>The -log10 p-value heatmap shows us how many zeros are following the decimal point indicating that the darker green values are less statistically discernible as there are less zeros. The lighter values are more statistically discernible as they are smaller p-values with many zeros following the decimal point.</p>
+<p>It is still difficult to conceptualize the differences of these p-values with this visual.</p>
 <p>Using an alpha value of 0.05, construct another heatmap indicating which values are discernible or not.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> sig)) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">"grey100"</span>, <span class="at">high =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> <span class="fu">factor</span>(sig))) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"forestgreen"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"white"</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Not significant"</span>, <span class="st">"Significant"</span>)) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The results in light blue show there is not a statistical discernibility between the two groups. The dark blue groups are recognized as different from each other.</p>
+<p>These results are much easier to conceptualize: either significant or not significant.</p>
+<p>The results in green show there is not a statistical discernibility between the two groups. The white groups are recognized as different from each other.</p>
+<p>As both of these show, there is the same general trend in discernibility that we saw earlier with the boxplots.</p>
 <p>If the pairwise test was completed using a different alpha value, the heatmap would look different. Try using different alpha values (e.g.&nbsp;<span class="math inline">\(\alpha = 0.1\)</span>, <span class="math inline">\(\alpha = 0.01\)</span>) and look at how the results differ.</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Additional Exercises and Extensions">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note callout-titled" title="Additional Exercises and Extensions">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Additional Exercises and Extensions
+<span class="screen-reader-only">Note</span>Additional Exercises and Extensions
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This module can be extended using the datasets provided for further variable testing.</p>
 <ul>
 <li>This module is done using female benching data, but provided is also data on female squatting, female deadlifting, and all three exercises for males</li>
 <li>The module can be extended further to examine differences between exercises and genders in addition to age groups.</li>
-<li>A sample module for female squatting can be found here <strong><em>add sample here</em></strong></li>
+<li>A sample module for female squatting can be found here <a href="Sample%20Powerlifting%20Module.html" target="_blank">Sample Module</a></li>
 </ul>
-</div>
 </div>
 </div>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this module, you have learned about the Kruskal-Wallis test, which is used to determine if there is a statistical discernibility between 3 or more groups that do not meet the normality assumption for ANOVA testing. You have also learned about the Dunn’s test that determines which groups are discernible from each other and how to appropriately visualize these results.</p>
+<p>The Kruskal-Wallis test is a nonparametric test for association that is used when assumptions are violated. The Dunn’s Test is the most appropriate post hoc test to find which groups are significantly discernible following the Kruskal-Wallis testing. A heatmap is the easiest conceptual mapping for visualizing multiple p-values.</p>
 </section>
 
 </main>
