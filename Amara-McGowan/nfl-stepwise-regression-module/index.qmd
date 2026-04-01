@@ -1,5 +1,5 @@
 ---
-title: "Reverse Engineering ESPN's Total Quarterback Rating Formula with Quantile Regression in Julia, R, and Python"
+title: "Approximating ESPN's Total Quarterback Rating with Game-Level Data Using Quantile and Stepwise Regression in Julia, R, and Python"
 author:
   - name: Amara McGowan
     url: https://www.linkedin.com/in/amaramcgowan/
@@ -16,7 +16,9 @@ date: "TBD"
 description: "TBD"
 format: html
 categories:
+  - Stepwise Regression
   - Quantile Regression
+  - Julia, R, and Python
 ---
 
 Please note that these material have not yet completed the required
@@ -51,7 +53,7 @@ or more class periods.
 
 This activity is designed to be completed in `Julia`, `R`, or `Python` using Google Colab, RStudio, or VS Code. 
 
-No previous experience with Quantile Regression is required, but some experience with regression and familiarity with one of the programming languages is recommended.
+No previous experience with regression is required, but some familiarity with one of the programming languages is recommended.
 :::
 
 # Data
@@ -87,36 +89,55 @@ Download Data: [nfl_qbr.csv](nfl_qbr.csv)
 The data was all scraped from [https://www.espn.com/nfl/](https://www.espn.com/nfl/) using the R package `nflreadr`. The uncleaned data included weekly Total QBR, player statistics, and game schedules for the 2025 NFL Regular season. After cleaning, the final dataset includes only quarterbacks and each row represents a game played in the regular season. 
 </details>
 
-# Quantile Regression
+# Pick a Programming Language
 
-Quantile Regression is a statistical method that estimates conditional quantiles of the response variable (qbr, in our case). 
+The module is available in Julia, R, or Python. You can switch between modules using the tabs below based on which programming language you would like to use for this module. 
 
-# Getting Started in Julia, R, or Python
+Here is a little bit about each language to help you make your decision: 
+
+Julia here
+
+R here
+
+Python here
 
 :::{.panel-tabset}
 
 ## Julia
+
+# Getting started in Julia
 
 Package: QuantReg.jl
 
 ```markdown
 Julia code
 ```
+# Using Quantile Regression
+
 ## R
+
+# Getting started in R
 
 ```markdown
 install.packages("quantreg")
 library(quantreg)
 ```
+# Using Quantile Regression
+
 
 ## Python
+
+# Getting started in Python
 
 Package: statsmodels
 
 ```markdown
 Python code
 ```
+# Using Quantile Regression
+
 :::
+
 
 # References
 

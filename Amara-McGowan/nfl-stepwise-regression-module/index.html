@@ -10,7 +10,7 @@
 <meta name="author" content="Ivan Ramler">
 <meta name="description" content="TBD">
 
-<title>Reverse Engineering ESPN’s Total Quarterback Rating Formula with Quantile Regression in Julia, R, and Python</title>
+<title>Approximating ESPN’s Total Quarterback Rating with Game-Level Data Using Quantile and Stepwise Regression in Julia, R, and Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,9 +85,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Reverse Engineering ESPN’s Total Quarterback Rating Formula with Quantile Regression in Julia, R, and Python</h1>
+<h1 class="title">Approximating ESPN’s Total Quarterback Rating with Game-Level Data Using Quantile and Stepwise Regression in Julia, R, and Python</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">Stepwise Regression</div>
     <div class="quarto-category">Quantile Regression</div>
+    <div class="quarto-category">Julia, R, and Python</div>
   </div>
   </div>
 
@@ -194,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p><strong>Technology Requirement:</strong></p>
 <p>This activity is designed to be completed in <code>Julia</code>, <code>R</code>, or <code>Python</code> using Google Colab, RStudio, or VS Code.</p>
-<p>No previous experience with Quantile Regression is required, but some experience with regression and familiarity with one of the programming languages is recommended.</p>
+<p>No previous experience with regression is required, but some familiarity with one of the programming languages is recommended.</p>
 </div>
 </div>
 </div>
@@ -285,26 +287,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 The data was all scraped from <a href="https://www.espn.com/nfl/">https://www.espn.com/nfl/</a> using the R package <code>nflreadr</code>. The uncleaned data included weekly Total QBR, player statistics, and game schedules for the 2025 NFL Regular season. After cleaning, the final dataset includes only quarterbacks and each row represents a game played in the regular season.
 </details>
 </section>
-<section id="quantile-regression" class="level1">
-<h1>Quantile Regression</h1>
-<p>Quantile Regression is a statistical method that estimates conditional quantiles of the response variable (qbr, in our case).</p>
-</section>
-<section id="getting-started-in-julia-r-or-python" class="level1">
-<h1>Getting Started in Julia, R, or Python</h1>
+<section id="pick-a-programming-language" class="level1">
+<h1>Pick a Programming Language</h1>
+<p>The module is available in Julia, R, or Python. You can switch between modules using the tabs below based on which programming language you would like to use for this module.</p>
+<p>Here is a little bit about each language to help you make your decision:</p>
+<p>Julia here</p>
+<p>R here</p>
+<p>Python here</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<section id="getting-started-in-julia" class="level1">
+<h1>Getting started in Julia</h1>
 <p>Package: QuantReg.jl</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Julia code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="using-quantile-regression" class="level1">
+<h1>Using Quantile Regression</h1>
+</section>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<section id="getting-started-in-r" class="level1">
+<h1>Getting started in R</h1>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>install.packages("quantreg")</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>library(quantreg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="using-quantile-regression-1" class="level1">
+<h1>Using Quantile Regression</h1>
+</section>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<section id="getting-started-in-python" class="level1">
+<h1>Getting started in Python</h1>
 <p>Package: statsmodels</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Python code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="using-quantile-regression-2" class="level1">
+<h1>Using Quantile Regression</h1>
+</section>
 </div>
 </div>
 </div>
