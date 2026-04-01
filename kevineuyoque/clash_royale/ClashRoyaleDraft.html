@@ -183,13 +183,10 @@ Activity Length
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This module could be used as a short in-class lab, a longer out-of-class assignment, or part of a larger unit on network analysis and data visualization.</p>
+<p>This module could be used as a short in-class lab that lasts about 60 minutes or part of a larger unit on network analysis and data visualization.</p>
 </div>
 </div>
 </div>
-</section>
-<section id="a-class-period" class="level1">
-<h1>a class period</h1>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Methods">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -216,8 +213,6 @@ Methods
 </div>
 </div>
 </section>
-<section id="add-a-hyperlink-that-sends-the-reader-to-the-page-for-each-package" class="level1">
-<h1>add a hyperlink that sends the reader to the page for each package</h1>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <p>The main dataset used in this module is cr_season3_5000decks.csv, which contains deck-level Clash Royale data from Season 3. Each row corresponds to a card appearing in a specific deck, along with whether that deck won.</p>
@@ -265,9 +260,6 @@ Methods
 </ul>
 </details>
 </section>
-</section>
-<section id="insert-into-module-instead" class="level1">
-<h1>insert into module instead</h1>
 <section id="goal-of-this-module" class="level2">
 <h2 class="anchored" data-anchor-id="goal-of-this-module">Goal of this module</h2>
 <p>In this tutorial, we will treat Clash Royale cards as nodes in a network.</p>
@@ -379,7 +371,6 @@ lgl (2): evolution, hero_upgrade
 </div>
 </div>
 </section>
-</section>
 <section id="network-representation" class="level1">
 <h1>Network Representation</h1>
 <p>To represent Clash Royale synergy as a network, we will model the data as a graph.</p>
@@ -391,9 +382,9 @@ lgl (2): evolution, hero_upgrade
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>network</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 9583a89 UN-- 69 1572 -- 
+<pre><code>IGRAPH a367b1d UN-- 69 1572 -- 
 + attr: name (v/c), decks (e/n), wins (e/n), winrate (e/n)
-+ edges from 9583a89 (vertex names):
++ edges from a367b1d (vertex names):
  [1] Hog Rider     --Zap Valkyrie      --Zap Giant Skeleton--Zap
  [4] Baby Dragon   --Zap Mini P.E.K.K.A--Zap Witch         --Zap
  [7] Musketeer     --Zap Balloon       --Zap Arrows        --Zap
@@ -452,6 +443,27 @@ lgl (2): evolution, hero_upgrade
 </ul>
 <p>There are over 37,235,730,424,788 possible unique deck combinations</p>
 <p>(Pick 16 cards from the dataset for which we will use, go back to adjacency matrix, only 16 nodes and only have edges for nodes with higher than 50% win rate)</p>
+</section>
+<section id="centrality-of-cards" class="level2">
+<h2 class="anchored" data-anchor-id="centrality-of-cards">Centrality of Cards</h2>
+<p>Up to this point, we have visualized relationships between cards. However, we can go further by measuring how <em>important</em> each card is within the network.</p>
+<p>This is done using <strong>centrality</strong>, which measures how connected or influential a node is in a network.</p>
+<section id="degree-centrality" class="level3">
+<h3 class="anchored" data-anchor-id="degree-centrality">Degree Centrality</h3>
+<p>The simplest measure is <strong>degree centrality</strong>, which counts how many connections each card has.</p>
+<ul>
+<li>High degree → card appears with many other cards<br>
+</li>
+<li>Low degree → card appears with fewer pairings</li>
+</ul>
+<p>Cards with high degree centrality are often:</p>
+<ul>
+<li>flexible across many strategies<br>
+</li>
+<li>commonly used in decks<br>
+</li>
+<li>important to the overall meta</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>used_cards <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Hog Rider"</span>, <span class="st">"Zap"</span>, <span class="st">"Valkyrie"</span>, <span class="st">"Giant Skeleton"</span>, <span class="st">"Baby Dragon"</span>,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Mini P.E.K.K.A"</span>, <span class="st">"Witch"</span>, <span class="st">"Musketeer"</span>, <span class="st">"Balloon"</span>, <span class="st">"Arrows"</span>, <span class="st">"Skeleton Army"</span>, <span class="st">"Electro Wizard"</span>, <span class="st">"Mega Knight"</span>, <span class="st">"Fireball"</span>, <span class="st">"Executioner"</span>, <span class="st">"P.E.K.K.A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -459,18 +471,20 @@ lgl (2): evolution, hero_upgrade
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pair_data_16 <span class="ot">&lt;-</span> pair_data <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(card1 <span class="sc">%in%</span> used_cards, card2 <span class="sc">%in%</span> used_cards) <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">synergy =</span> <span class="fu">ifelse</span>(winrate <span class="sc">&gt;</span> <span class="fl">0.50</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(card1, card2, synergy)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">synergy =</span> <span class="fu">ifelse</span>(winrate <span class="sc">&gt;</span> <span class="fl">0.57</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter(synergy == 1) |&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(card1, card2, synergy) </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>network_16 <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_16, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network_16,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout_with_fr,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> .<span class="dv">8</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fu">E</span>(network_16)<span class="sc">$</span>synergy <span class="sc">*</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>network_16 <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_16, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network_16,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout_with_fr,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> .<span class="dv">8</span>,</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fu">E</span>(network_16)<span class="sc">$</span>synergy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -481,52 +495,37 @@ lgl (2): evolution, hero_upgrade
 </div>
 </section>
 </section>
-<section id="below-are-test-runs-using-other-methods" class="level1">
-<h1>below are test runs using other methods</h1>
+<section id="try-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself">Try it yourself</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add edge weights</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(network)<span class="sc">$</span>weight <span class="ot">&lt;-</span> pair_data<span class="sc">$</span>winrate</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a network</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network,</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout_with_fr,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">7</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> .<span class="dv">7</span>,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fu">E</span>(network)<span class="sc">$</span>weight <span class="sc">*</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ClashRoyaleDraft_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find most connected cards</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>card_degree <span class="ot">&lt;-</span> <span class="fu">degree</span>(network)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(card_degree, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>all_cards <span class="ot">&lt;-</span> <span class="fu">unique</span>(cr_season3_5000decks<span class="sc">$</span>card)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>random_16 <span class="ot">&lt;-</span> <span class="fu">sample</span>(all_cards, <span class="dv">16</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>random_16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           Zap         Wizard  Skeleton Army    Baby Dragon       Valkyrie 
-           118            116            114            108            106 
-       The Log       Fireball          Witch      Hog Rider Electro Wizard 
-           106            104            102             98             78 </code></pre>
+<pre><code> [1] "Three Musketeers" "Lightning"        "Royal Giant"      "Dart Goblin"     
+ [5] "Bomb Tower"       "The Log"          "Hunter"           "Skeleton Barrel" 
+ [9] "Clone"            "Royal Recruits"   "Ice Spirit"       "Tombstone"       
+[13] "Freeze"           "Mega Knight"      "Giant"            "Ice Golem"       </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtered more decks since network too dense</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># show only strongest edges</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>pair_data_small <span class="ot">&lt;-</span> pair_data <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(decks <span class="sc">&gt;</span> <span class="dv">290</span>, winrate <span class="sc">&gt;</span> <span class="fl">0.50</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>network_small <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_small, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># gives layout more time to spread out</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>lay <span class="ot">&lt;-</span> <span class="fu">layout_with_fr</span>(network_small, <span class="at">niter =</span> <span class="dv">5000</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network_small,</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> lay,</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.75</span>,</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fu">E</span>(network_small)<span class="sc">$</span>winrate <span class="sc">*</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pair_data_random <span class="ot">&lt;-</span> pair_data <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(card1 <span class="sc">%in%</span> random_16, card2 <span class="sc">%in%</span> random_16)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(pair_data_random) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"No card pairs were found for this random set."</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  network_random <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_random, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(network_random,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">layout =</span> <span class="fu">layout_with_fr</span>(network_random),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">vertex.label.cex =</span> <span class="fl">0.8</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">edge.width =</span> <span class="fu">E</span>(network_random)<span class="sc">$</span>winrate <span class="sc">*</span> <span class="dv">8</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -535,10 +534,23 @@ lgl (2): evolution, hero_upgrade
 </div>
 </div>
 </div>
-<p>Here we can see a 16 node network</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this module, we explored how network analysis can be used to understand relationships between cards in Clash Royale.</p>
+<p>Starting from raw deck data, we transformed the dataset into pairwise matrices that captured how often cards appear together and how successful those pairings are. By converting this information into a network, we were able to visualize and analyze card synergy in a more meaningful way.</p>
+<p>Through this process, we observed that:</p>
 <ul>
-<li>16 cards are used</li>
+<li>some cards are highly connected and appear across many strategies<br>
+</li>
+<li>certain card pairings consistently perform well together<br>
+</li>
+<li>groups of cards form clusters that reflect common deck archetypes</li>
 </ul>
+<p>We also extended this analysis by generating random sets of cards and comparing how their network structure changes, reinforcing how different combinations influence overall performance.</p>
+<p>Finally, by introducing centrality, we identified which cards play a more influential role within the network, helping us better understand the structure of the game’s meta.</p>
+<p>Overall, this module demonstrates how network analysis can reveal patterns and relationships in complex systems where interactions between elements are more important than the elements themselves.</p>
+</section>
 </section>
 
 </main>
