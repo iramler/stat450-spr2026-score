@@ -6,15 +6,24 @@ author:
     affiliations:
       - ref: slu
   - name: Ivan Ramler
-    email: mailto:iramler@stlawu.edu
+    email: iramler@stlawu.edu
     affiliations:
       - ref: slu
 affiliations:
   - id: slu
     name: St. Lawrence University
-date: "TBD"
+date: "April 1, 2026"
 description: "A network analysis tutorial exploring card synergy in Clash Royale using Season 3 deck data."
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: true
+execute:
+  echo: false
+  warning: false
+  message: false
 categories:
   - Network Analysis
   - Data Visualization
@@ -37,7 +46,7 @@ library(netrankr)
 # devtools::install_github("schochastics/networkdata")
 ```
 
-## Welcome Video
+# Welcome Video
 
 If you are unfamiliar with Clash Royale, you can watch this short gameplay video for an introduction to the game:
 
@@ -75,10 +84,10 @@ This activity is designed to be completed in R using RStudio and Quarto.
 
 Packages used in this module:
 
-- [tidyverse](inserturl){target="_blank"}
-- [igraph](inserturl){target="_blank"}
-- [vembedr](inserturl){target="_blank"}
-- [netrankr](inserturl){target="_blank"}
+- [tidyverse](https://tidyverse.org/packages/){target="_blank"}
+- [igraph](https://r.igraph.org/){target="_blank"}
+- [vembedr](https://www.rdocumentation.org/packages/vembedr/versions/0.1.5){target="_blank"}
+- [netrankr](https://schochastics.github.io/netrankr/){target="_blank"}
 
 Some previous experience with data wrangling in R is helpful, but no previous experience with network analysis is required.
 :::
@@ -142,6 +151,7 @@ By the end, we will:
 
 
 ```{r}
+#| echo: true
 library(readr)
 cr_season3_5000decks <- read_csv("cr_season3_5000decks.csv")
 
@@ -163,11 +173,16 @@ clash_deck_wins <- t(as.matrix(clash_wins[, -1])) %*% as.matrix(clash_wins[, -1]
 
 # Clash deck win rate
 clash_deck_rate <- clash_deck_wins / clash_deck_n
+```
+```{r}
+#| label: load-data
+#| echo: true
 
 clash_deck_wins["Zap", "Hog Rider"]
 clash_deck_n["Zap", "Hog Rider"]
 clash_deck_rate["Zap", "Hog Rider"]
 ```
+
 
 ```{r}
 # Now need to remove the self-pairs
@@ -346,19 +361,15 @@ random_16
 ```{r}
 pair_data_random <- pair_data |>
   filter(card1 %in% random_16, card2 %in% random_16)
-
-if (nrow(pair_data_random) == 0) {
-  print("No card pairs were found for this random set.")
-} else {
   
-  network_random <- graph_from_data_frame(pair_data_random, directed = FALSE)
+network_random <- graph_from_data_frame(pair_data_random, directed = FALSE)
   
-  plot(network_random,
+plot(network_random,
        layout = layout_with_fr(network_random),
        vertex.size = 8,
        vertex.label.cex = 0.8,
        edge.width = E(network_random)$winrate * 8)
-}
+
 ```
 
 
