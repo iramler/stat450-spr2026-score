@@ -1,0 +1,27 @@
+learning objectives:
+remove 7.
+1. ... inlcuding the following components (1-5)
+heatmaps after dendrograms
+
+2.: the role of z-scores in clustering
+
+in the r-code, we use the option scale= "row", its not done manually 
+
+
+cluster analysis cna be used to prvide data-driven dendrograms as can be dosntrated witht the kung fu  forms next....
+
+
+say that the humer of clusters is often a hard decesion
+
+there are nethods data-driven that can be used non of which are perfefctc.  you can also use visual methods such as looking at clear breaks in the dendrogam. ocasionally =you might have subject matter knwolegde that guevss you a good guess 
+
+
+often it is useful to find a balance between a samll number of clusters that cna be interepreted but nottoo small uch that observations tat are idsismilar from each other end up in the same cluster.
+
+
+
+just to see: highlight individual forms and wepons
+
+
+find a eason why those forms might be related and being clusered together
+

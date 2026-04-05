@@ -11,6 +11,8 @@ format:
     embed-resources: false
 execute: 
   echo: fenced
+reference-location: margin
+citation-location: margin
 ---
 
 **This is the arranged document that consolidates information from `kungfu.qmd`[^2] and `cleaningmorekfdata.qmd`[^1] to serve as the Reference document for the ["2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering" module](insert link here for the other module)**
@@ -49,7 +51,7 @@ These chunks can be used for reference to complete the activity in the module, b
 #| echo: false
 #| eval: false
 
-# read data which comes from many many iterations of dplyr code
+# read data. data already comes from many many iterations of dplyr code
 matrix_kf10 <- read.csv("mat_10kf.csv") |> select(-A) |> select(-`F`)
 
 # selecting OUT non-numeric columns in the data frame
@@ -85,7 +87,7 @@ heatmap <- pheatmap(
   angle_col = 0,
   number_color = "#303030",
   border_color = "#303030", 
-  # main = "Complete Linkage Clustered Heatmap with Dendrograms",
+  main = "Complete Linkage Clustered Heat Map with Dendrograms",
   cutree_rows = 6, # number of major clusters of forms
   color = col,
   legend = T
