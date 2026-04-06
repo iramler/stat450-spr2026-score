@@ -230,9 +230,6 @@ cards <- read_csv("clash_royale_cards_125.csv")
 
 
 
-
-
-
 # Network Representation
 
 To represent Clash Royale synergy as a network, we will model the data as a graph.
@@ -321,6 +318,11 @@ Cards with high degree centrality are often:
 - commonly used in decks  
 - important to the overall meta  
 
+# speak about the process on creating the network
+
+# make a table for the cards in the network with their centrality
+
+# go into depth with the meta and explain why centrality is important with these certain cards
 
 ```{r}
 used_cards <- c("Hog Rider", "Zap", "Valkyrie", "Giant Skeleton", "Baby Dragon",
@@ -350,15 +352,20 @@ plot(network_16,
 
 ## Try it yourself
 
+# either choose 16 cards yourself or choose to use the randomizer code
+
 ```{r}
+#| echo: True
 all_cards <- unique(cr_season3_5000decks$card)
 
 random_16 <- sample(all_cards, 16)
 
 random_16
 ```
+This bit of code allows for a random sample of any 16 cards within the dataset
 
 ```{r}
+#| echo: True
 pair_data_random <- pair_data |>
   filter(card1 %in% random_16, card2 %in% random_16)
   
@@ -369,8 +376,9 @@ plot(network_random,
        vertex.size = 8,
        vertex.label.cex = 0.8,
        edge.width = E(network_random)$winrate * 8)
-
 ```
+# rather than change code, explain why some networks might not have all 16 cards included, meaning those cards would be excluded since they do not work well together
+
 
 
 ## Conclusion

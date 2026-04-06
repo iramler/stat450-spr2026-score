@@ -360,9 +360,9 @@ Methods
 <p>To represent Clash Royale synergy as a network, we will model the data as a graph.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH d6b6b8b UN-- 69 1572 -- 
+<pre><code>IGRAPH cf2b833 UN-- 69 1572 -- 
 + attr: name (v/c), decks (e/n), wins (e/n), winrate (e/n)
-+ edges from d6b6b8b (vertex names):
++ edges from cf2b833 (vertex names):
  [1] Hog Rider     --Zap Valkyrie      --Zap Giant Skeleton--Zap
  [4] Baby Dragon   --Zap Mini P.E.K.K.A--Zap Witch         --Zap
  [7] Musketeer     --Zap Balloon       --Zap Arrows        --Zap
@@ -456,14 +456,36 @@ Methods
 <section id="try-it-yourself" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="try-it-yourself"><span class="header-section-number">2.6</span> Try it yourself</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>all_cards <span class="ot">&lt;-</span> <span class="fu">unique</span>(cr_season3_5000decks<span class="sc">$</span>card)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>random_16 <span class="ot">&lt;-</span> <span class="fu">sample</span>(all_cards, <span class="dv">16</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>random_16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "Giant Snowball"   "Tornado"          "Elite Barbarians" "Skeletons"       
- [5] "Rascals"          "Fire Spirits"     "Lumberjack"       "Flying Machine"  
- [9] "Mini P.E.K.K.A"   "Spear Goblins"    "Prince"           "Fisherman"       
-[13] "Elixir Collector" "Minion Horde"     "Hog Rider"        "Hunter"          </code></pre>
+<pre><code> [1] "Goblins"          "Flying Machine"   "Rocket"           "Arrows"          
+ [5] "Royal Recruits"   "Ice Golem"        "Royal Hogs"       "Elixir Collector"
+ [9] "Ice Spirit"       "Goblin Giant"     "Royal Giant"      "Giant"           
+[13] "Goblin Cage"      "Skeletons"        "Fisherman"        "Cannon Cart"     </code></pre>
 </div>
 </div>
+<p>This bit of code allows for a random sample of any 16 cards within the dataset</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pair_data_random <span class="ot">&lt;-</span> pair_data <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(card1 <span class="sc">%in%</span> random_16, card2 <span class="sc">%in%</span> random_16)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>network_random <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(pair_data_random, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(network_random,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">layout =</span> <span class="fu">layout_with_fr</span>(network_random),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">vertex.size =</span> <span class="dv">8</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">vertex.label.cex =</span> <span class="fl">0.8</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">edge.width =</span> <span class="fu">E</span>(network_random)<span class="sc">$</span>winrate <span class="sc">*</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
