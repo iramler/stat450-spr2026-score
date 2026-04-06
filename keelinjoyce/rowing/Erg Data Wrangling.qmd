@@ -1,0 +1,37 @@
+---
+title: "Erg Data"
+format: html
+editor: visual
+---
+
+Read in original files
+```{r}
+library(readr)
+library(tidyverse)
+library(forcats)
+crew2k <- read_csv("keelinjoyce/rowing/crew2k.csv")
+crew6k <- read_csv("keelinjoyce/rowing/crew6k.csv")
+```
+
+Wrangle data so both data sets match to easily join
+```{r}
+crew2k_bind <- crew2k |> mutate("Piece" = "2k test") |>
+  rename("Trial" = "# 2k of season") 
+
+crew6k_bind <- crew6k |> mutate("Sex" = 0) |>
+  mutate(Trial = case_when(Date == "30-Jan" ~ 1,
+                          Date == "6-Feb" ~ 2,
+                          Date == "27-Feb" ~ 3))
+``` 
+
+Join both data sets
+```{r}
+erg_df <- bind_rows(crew2k_bind, crew6k_bind)
+```
+
+Save as a .csv file
+```{r}
+write_csv(erg_df, "erg_df.csv")
+```
+
+
