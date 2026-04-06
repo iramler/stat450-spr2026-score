@@ -4,8 +4,11 @@ author: "Keelin Joyce"
 format: html
 editor: visual
 ---
+
 ## Getting Started
-#### Importing Data 
+
+#### Importing Data
+
 ```{r}
 library(readr)
 library(tidyverse)
@@ -20,6 +23,7 @@ View(openpl_female)
 ```
 
 #### Assessing Data
+
 ```{r}
 ggplot(data = openpl_female, aes(x = Bench)) +
   geom_histogram() +
@@ -27,6 +31,7 @@ ggplot(data = openpl_female, aes(x = Bench)) +
 ```
 
 ## Running Kruskall-Wallis Test
+
 ```{r}
 female_bench_ranked <- openpl_female |> arrange(desc(Bench)) |>
   mutate(rank = row_number()) |>
@@ -57,6 +62,7 @@ female_bench_results
 ```
 
 ## Running Dunn's Pairwise Test
+
 ```{r}
 library(dunn.test)
 library(FSA)
@@ -83,4 +89,3 @@ ggplot(dunn_results_df, aes(x = group1, y = group2, fill = sig)) +
 
 range(dunn_results_df$p_value)
 ```
-

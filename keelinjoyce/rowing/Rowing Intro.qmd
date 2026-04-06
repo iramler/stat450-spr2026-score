@@ -1,0 +1,77 @@
+---
+title: "Rowing Intro"
+format: html
+editor: visual
+---
+
+```{r}
+library(readr)
+library(tidyverse)
+library(ggplot2)
+crew2k <- read_csv("keelinjoyce/rowing/crew2k.csv")
+crew6k <- read_csv("keelinjoyce/rowing/crew6k.csv")
+```
+
+## 6k change
+
+```{r}
+ggplot(data = crew6k, aes(x = Goal, y = Split)) +
+  geom_point()
+
+crew6k <- crew6k |> filter(Date == "6-Feb" | Date == "27-Feb") |> 
+  mutate(Piece = factor(Piece)) |>
+  group_by(ID) |>
+  mutate(n = n()) |>
+  filter(n == 2)
+
+crew6k_wide <- crew6k |> pivot_wider(id_cols = 
+                                          ID,
+                            names_from = "Date",
+                            values_from = "Time") |>
+  mutate(diff = `27-Feb` - `6-Feb`)
+
+crew6k_change <- crew6k |> group_by(ID) |>
+  mutate(diff = diff(Split)) |>
+  ungroup() |>
+  mutate(change = if_else(diff > 0,
+                          true = "inc",
+                          false = "dec"))
+
+ggplot(data = crew6k_change, aes(x = Date, y = Split)) +
+         geom_line(aes(group = ID, colour = change), alpha = 0.3) +
+  theme_minimal() +
+  scale_color_manual(values = c("#DC3220", "#005AB5")) +
+  scale_y_reverse()
+
+```
+
+## 2k change
+
+```{r}
+crew2k <- crew2k |> filter(Date == "17-Mar" | Date == "12-Feb" | Date == "16-Feb" | Date == "18-Mar") |> 
+  group_by(ID) |>
+  mutate(n = n()) |>
+  filter(n == 2) |>
+  mutate(test = if_else(Date == "12-Feb" | Date == "16-Feb",
+                          true = "first",
+                          false = "second"))|>
+  mutate(Time = factor(Time))
+
+crew2k_wide <- crew2k |> pivot_wider(id_cols = 
+                                          ID,
+                            names_from = "test",
+                            values_from = "Time") 
+
+crew2k_change <- crew2k_wide |> 
+  mutate(change = if_else(second > first,
+                          true = "inc",
+                          false = "dec"))
+
+ggplot(data = crew2k_change, aes(x = test, y = Split)) +
+         geom_line(aes(group = ID, colour = change), alpha = 0.3) +
+  theme_minimal() +
+  scale_color_manual(values = c("#DC3220", "#005AB5")) +
+  scale_y_reverse()
+
+
+```
