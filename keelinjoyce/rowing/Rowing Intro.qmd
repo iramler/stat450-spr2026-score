@@ -24,31 +24,22 @@ crew6k <- crew6k |> filter(Date == "6-Feb" | Date == "27-Feb") |>
   mutate(n = n()) |>
   filter(n == 2)
 
-crew6k_wide <- crew6k |> pivot_wider(id_cols = 
-                                          ID,
-                            names_from = "Date",
-                            values_from = "Time") |>
-  mutate(diff = `27-Feb` - `6-Feb`)
-
-crew6k_change <- crew6k |> group_by(ID) |>
-  mutate(diff = diff(Split)) |>
+crew6k_goals <- crew6k |> mutate(Diff = as.numeric((Split - Goal)/ 60)) |>
+  mutate(Change = case_when(Diff > 0 ~ "overachieved",
+                            Diff < 0 ~ "underachieved",
+                            Diff == 0 ~ "met goal")) |>
   ungroup() |>
-  mutate(change = if_else(diff > 0,
-                          true = "inc",
-                          false = "dec"))
+  count(Change)
 
-ggplot(data = crew6k_change, aes(x = Date, y = Split)) +
-         geom_line(aes(group = ID, colour = change), alpha = 0.3) +
-  theme_minimal() +
-  scale_color_manual(values = c("#DC3220", "#005AB5")) +
-  scale_y_reverse()
-
+ggplot(data = crew6k_goals, aes(x = Change, y = Split)) +
+  geom_violin()
 ```
 
 ## 2k change
 
 ```{r}
-crew2k <- crew2k |> filter(Date == "17-Mar" | Date == "12-Feb" | Date == "16-Feb" | Date == "18-Mar") |> 
+crew2k_work <- crew2k |> 
+  filter(Date == "17-Mar" | Date == "12-Feb" | Date == "16-Feb" | Date == "18-Mar") |> 
   group_by(ID) |>
   mutate(n = n()) |>
   filter(n == 2) |>
@@ -57,21 +48,20 @@ crew2k <- crew2k |> filter(Date == "17-Mar" | Date == "12-Feb" | Date == "16-Feb
                           false = "second"))|>
   mutate(Time = factor(Time))
 
-crew2k_wide <- crew2k |> pivot_wider(id_cols = 
-                                          ID,
-                            names_from = "test",
-                            values_from = "Time") 
-
-crew2k_change <- crew2k_wide |> 
-  mutate(change = if_else(second > first,
-                          true = "inc",
-                          false = "dec"))
-
-ggplot(data = crew2k_change, aes(x = test, y = Split)) +
-         geom_line(aes(group = ID, colour = change), alpha = 0.3) +
-  theme_minimal() +
-  scale_color_manual(values = c("#DC3220", "#005AB5")) +
-  scale_y_reverse()
+ggplot(data = crew2k_work, aes(x = test, y = Split)) +
+  geom_point(aes(colour = Sex)) 
 
 
+crew2k_goals <- crew2k |> mutate(Diff = as.numeric((Split - Goal)/ 60)) |>
+  mutate(Change = case_when(Diff > 0 ~ "overachieved",
+                            Diff < 0 ~ "underachieved",
+                            Diff == 0 ~ "met goal")) |>
+  group_by(Change) |>
+  summarise(n())
+## 32 overachieved out of 71
+prop.test(x = 32, n = 71, p = 0.5, 
+                 correct = FALSE)
+
+ggplot(data = crew2k_goals, aes(x = Change, y = Split)) +
+  geom_jitter(width = 0.2)
 ```

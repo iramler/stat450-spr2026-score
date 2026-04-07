@@ -26,7 +26,8 @@ crew6k_bind <- crew6k |> mutate("Sex" = 0) |>
 
 Join both data sets
 ```{r}
-erg_df <- bind_rows(crew2k_bind, crew6k_bind)
+erg_df <- bind_rows(crew2k_bind, crew6k_bind) |>
+  select(-Date)
 ```
 
 Save as a .csv file
