@@ -1,6 +1,10 @@
 ---
-title: Collegiate Rowing Team Test Piece Ergometer Data for the Winter Training Period
-author: Keelin Joyce
+title: Collegiate Div-III Rowing Team Test Piece Ergometer Data for the Winter Training Period
+author: 
+  - name: Keelin Joyce
+    affiliation: 
+      - id: slu
+        name: St. Lawrence University
 date: April 6, 2026
 description: The times, splits, goals, and rates from ergometers achieved by athletes as part of a collegiate rowing team during their winter training period.
 categories:
@@ -34,7 +38,7 @@ In the data set, there are 111 completed pieces, each with 9 different variables
 | `ID` | Number indicating individual. |
 | `Piece` | Distance of the piece (2k or 6k) and type of piece (SS for steady state and test for a test piece). |
 
-: [erg_df.csv](erg_df.csv){target="_blank"}
+: [erg_df.csv](erg_df.csv)
 
 
 ## Questions
