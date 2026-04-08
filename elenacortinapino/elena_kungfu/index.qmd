@@ -176,20 +176,23 @@ Let's take a macro glance into how this computation happens specifically for the
 
 For each, let's grab the z-score and then compile everything as a little table
 
-|  Group  |Eagle Style Score Means| Group Mean  | Standard Deviation|Z-score|
-|---------|---------------------|---------------|-------------|-------------|
-| B       |       8.398462      |   8.406159    |  0.03384425 |             |
-| C       |       8.466000      |   8.467958    |  0.04707434 |             |
-| D       |       8.753750      |   8.692158    |  0.1575652  |     0.390   |
-| E       |       8.553684      |   8.558628    |  0.08211117 |             |
+|  Group  |Eagle Style Score Means|Z-score|
+|---------|---------------------|-----------|
+| B       |       8.398      |   -0.942 |
+| C       |       8.466      |   -0.5   |
+| D       |       8.754      |   1.370  |
+| E       |       8.554      |   0.071  |
 
-Group B's Z-score:
+Mean of Eagle Style Score Means: 8.543\
+Standard deviation: 0.154
+\
+Eagle Style for Group B Z-score sample calculation:
 
-$$\frac{8.406159 - 8.398462}{0.03384425} = 0.227424156245152$$
+$$\frac{8.398 - 8.543}{0.154} = -0.942$$
     
-To produce the heat map in this module, the R code, used the option `scale= "row"`. In practice, these computations its not done manually.
+To produce the heat map in this module, the R code, used the option `scale= "row"`. In practice, these computations are not done manually.
 
-Afterwards, we want to understand how far apart those z-scores are from *each other* to understand which forms are closer or further from each other. Closer z-scores will form clusters. Let's move on to find out the behind-the-code computation of the distances between these z-scores.
+Afterwards, we want to understand how far apart those z-scores are from *each other* to understand which forms are closer or further. Closer z-scores will form clusters. Let's move on to find out the behind-the-code computation of the distances between these z-scores.
 
 ### Euclidean distance
 
@@ -211,8 +214,9 @@ Let's take a closer look into how R computes these distances behind the code to 
 Let Form 1 =  42 posture Taijiquan, and Form 2 = Chen Style Taijiquan\
 
 $$d = \sqrt{\left(-1.27+1.33\right)^{2}+\left(-0.17+0.16\right)^{2}+\left(1.08-0.98\right)^{2}+\left(0.38-0.51\right)^{2}} = 0.175$$
-They have a very small distance between each other. Now lets see how this new cluster gets related to other sub-cluster of Kung Fu forms. We have that Nanquan type routines Cailifoquan (Choy Lay Fut) and Nanquan type routines Other routines form a cluster with Flexible/Soft weapon routines Other routines.
-
+They have a very small distance between each other, which explains why they get grouped together. In the same manner as with the z-scores, this computation is not done _by hand_, the code for the heat map instantly applies a sorting algorithm that computes two random distances first, then takes another form and compares their distance, this process goes on continuously until all the forms have been sorted into the smallest to greatest distances.\
+\
+Let's now see the result of all these computations combined!
 
 
 ### Heat Maps
@@ -250,7 +254,7 @@ The same conceptual understanding for dendrograms in this Biology example can be
 
 ## Complete Linkage Hierarchically Clustered Heat Map
 
-We have constructed a heat map with dendrograms to clearly identify the ways forms relate according to their average scores. Those means of scores have been standardized by z-scores . Z-scores $\sigma$-standard deviations from the mean in the positive direction have the bright red color and values $\sigma$-standard deviations from the mean in the negative direction are mapped in blue. On an intuitive level, we gain insight into how unusual a form's mean score is for each age group relative to the mean score for the entire age group across all forms.\
+We have constructed a heat map with dendrograms to clearly identify the ways forms relate according to their average scores. Those means of scores have been standardized by z-scores. Z-scores $\sigma$-standard deviations from the mean in the positive direction have the bright red color and values $\sigma$-standard deviations from the mean in the negative direction are mapped in blue. On an intuitive level, we gain insight into how unusual a form's mean score is for each age group relative to the mean score for the entire age group across all forms.\
 
 By manually deciding to establish 6 major clusters, we can think of this process as "cutting" vertically the outermost branches of the tree 6 times.
 
