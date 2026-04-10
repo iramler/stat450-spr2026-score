@@ -280,14 +280,12 @@ In general these forms require expression over athleticism. They emphasize inten
 \
 |3.  This cluster likely reflects noise and stylistic diversity. We are not able to conclude that there's a clean technical grouping. Z-scores are less extreme in this cluster and reflect more variability. It is very likely that the abundance in "other"-forms creates confounding groupings.
 \
-\
 2.  This cluster makes _technical_ sense. These forms require mainly timing precision and expressive rhythm. Group B's performance likely lacks the refinement to gain the judges' highest rewards although they often represent optimal balance of athleticism and control.\
 \
 These forms expose athletes' instability, lack of intent, poor transitions, etcetera. This reflects quite starkly in harsher scoring for younger groups.\
 \
 |1. This cluster is populated only by Taiji weapon events. The technical clarity and precision required to score high in handling weapons within Taiji makes the scoring rightfully lean more positively for older athletes.\
 \
-
 Where clustering makes strong sense: \
 -   High-skill and control-heavy forms\
 -   Athletic competition forms grouped together\
