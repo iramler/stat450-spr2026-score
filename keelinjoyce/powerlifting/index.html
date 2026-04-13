@@ -583,32 +583,22 @@ Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>The -log10 p-value heatmap shows us how many zeros are following the decimal point indicating that the darker green values are less statistically discernible as there are less zeros. The lighter values are more statistically discernible as they are smaller p-values with many zeros following the decimal point.</p>
 <p>It is still difficult to conceptualize the differences of these p-values with this visual.</p>
 <p>Using an alpha value of 0.05, construct another heatmap indicating which values are discernible or not.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dunn_results_df<span class="sc">$</span>sig <span class="ot">&lt;-</span> <span class="fu">if_else</span>(dunn_results_df<span class="sc">$</span>p_value <span class="sc">&lt;=</span> <span class="fl">0.05</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> <span class="fu">factor</span>(sig))) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dunnplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dunn_results_df, <span class="fu">aes</span>(<span class="at">x =</span> group1, <span class="at">y =</span> group2, <span class="at">fill =</span> <span class="fu">factor</span>(sig))) <span class="sc">+</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"forestgreen"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"white"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#CD3333"</span>, <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"white"</span>),</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Not significant"</span>, <span class="st">"Significant"</span>)) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Significant p-values of Dunn's Test Results by Age Class"</span>, <span class="at">x =</span> <span class="st">"Age Class"</span>, <span class="at">y =</span> <span class="st">"Age Class"</span>, <span class="at">fill =</span> <span class="st">"Significance"</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"dunnplot.png"</span>, dunnplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
 </div>
 </div>
 <p>These results are much easier to conceptualize: either significant or not significant.</p>
@@ -658,6 +648,10 @@ Reject Ho if p ≤ FDR/2 with stopping rule, where p = Pr(Z ≥ |z|)</code></pre
 </div>
 </div>
 </div>
+<p><span class="math inline">\(H = \frac{12}{N(N+1)} \sum_{i=1}^{k} \frac{R_i^2}{n_i} - 3(N+1)\)</span></p>
+<p><span class="math inline">\(H_0:\)</span> there is no difference in the median of</p>
+<p>powerlifting weight between age groups</p>
+<p><span class="math inline">\(H_a:\)</span> at least one group differs from another</p>
 </section>
 
 </main>

@@ -310,10 +310,12 @@ dunn_results_df <- as.data.frame(female_bench_dunn$P.adjusted, female_bench_dunn
 dunn_results_log <- dunn_results_df |>
   mutate(log_p = -log10(p_value))
 
-ggplot(dunn_results_log, aes(x = group1, y = group2, fill = log_p)) +
+logplot <- ggplot(dunn_results_log, aes(x = group1, y = group2, fill = log_p)) +
   geom_tile(colour = "black", linewidth = 0.5) +
-  scale_fill_gradient(low = "forestgreen", high = "white") +
+  scale_fill_gradient(low = "#CD3333", high = "white") +
+  labs(title = "-log10 p-values of Dunn's Test Results by Age Class", x = "Age Class", y = "Age Class", fill = "-log10 p-values") +
   theme_minimal()
+
 ```
 
 The -log10 p-value heatmap shows us how many zeros are following the decimal point indicating that the darker green values are less statistically discernible as there are less zeros. The lighter values are more statistically discernible as they are smaller p-values with many zeros following the decimal point. 
@@ -325,11 +327,14 @@ Using an alpha value of 0.05, construct another heatmap indicating which values 
 ```{r}
 dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
 
-ggplot(dunn_results_df, aes(x = group1, y = group2, fill = factor(sig))) +
+dunnplot <- ggplot(dunn_results_df, aes(x = group1, y = group2, fill = factor(sig))) +
   geom_tile(colour = "black", linewidth = 0.5) +
-  scale_fill_manual(values = c("0" = "forestgreen", "1" = "white"),
+  scale_fill_manual(values = c("1" = "#CD3333", "0" = "white"),
                     labels = c("Not significant", "Significant")) +
+  labs(title = "Significant p-values of Dunn's Test Results by Age Class", x = "Age Class", y = "Age Class", fill = "Significance") +
   theme_minimal()
+
+ggsave("dunnplot.png", dunnplot)
 ```
 
 These results are much easier to conceptualize: either significant or not significant.
@@ -367,4 +372,11 @@ The Kruskal-Wallis test is a nonparametric test for association that is used whe
 
 :::
 
+$H = \frac{12}{N(N+1)} \sum_{i=1}^{k} \frac{R_i^2}{n_i} - 3(N+1)$
 
+
+$H_0:$ there is no difference in the median of 
+
+powerlifting weight between age groups
+
+$H_a:$ at least one group differs from another

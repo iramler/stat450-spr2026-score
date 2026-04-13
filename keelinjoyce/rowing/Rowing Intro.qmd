@@ -10,6 +10,7 @@ library(tidyverse)
 library(ggplot2)
 crew2k <- read_csv("keelinjoyce/rowing/crew2k.csv")
 crew6k <- read_csv("keelinjoyce/rowing/crew6k.csv")
+erg_df <- read_csv("keelinjoyce/rowing/erg_df.csv")
 ```
 
 ## 6k change
@@ -48,16 +49,23 @@ crew2k_work <- crew2k |>
                           false = "second"))|>
   mutate(Time = factor(Time))
 
+crew2k |> filter(Date == "17-Mar" | Date == "18-Mar") |>
+  mutate(Diff = as.numeric((Split - Goal)/ 60)) |>
+  mutate(Change = case_when(Diff > 0 ~ "overachieved",
+                            Diff < 0 ~ "underachieved",
+                            Diff == 0 ~ "met goal")) |>
+  group_by(Change, Sex) |>
+  summarise(n())
+
 ggplot(data = crew2k_work, aes(x = test, y = Split)) +
   geom_point(aes(colour = Sex)) 
 
 
 crew2k_goals <- crew2k |> mutate(Diff = as.numeric((Split - Goal)/ 60)) |>
-  mutate(Change = case_when(Diff > 0 ~ "overachieved",
-                            Diff < 0 ~ "underachieved",
-                            Diff == 0 ~ "met goal")) |>
-  group_by(Change) |>
-  summarise(n())
+  mutate(Change = case_when(
+                            Diff < 0 ~ "did not meet goal",
+                            Diff >= 0 ~ "met goal"))  |>
+  
 ## 32 overachieved out of 71
 prop.test(x = 32, n = 71, p = 0.5, 
                  correct = FALSE)
@@ -65,3 +73,38 @@ prop.test(x = 32, n = 71, p = 0.5,
 ggplot(data = crew2k_goals, aes(x = Change, y = Split)) +
   geom_jitter(width = 0.2)
 ```
+
+
+Confidence Intervals
+```{r}
+erg_conf <- erg_df |>
+  filter((Sex != 1 | Trial != 1))|> 
+  ## getting rid of men's first, goals are not available
+  mutate(Diff = as.numeric((Split - Goal)/ 60)) |>
+  mutate(Change = case_when(
+                            Diff < 0 ~ "did not meet goal",
+                            Diff >= 0 ~ "met goal")) |>
+  group_by(Change) |>
+  summarise(n())
+
+prop.test(x = 22, n = 104, p = 0.5, 
+                 correct = FALSE)
+
+ggplot(data = erg_conf, aes(x = Change, y = Split)) +
+  geom_jitter(width = 0.2, aes(colour = Trial)) +
+  scale_colour_viridis_c()
+
+rowplot <- ggplot(crew2k_goals, aes(x = Goal, y = Split)) +
+  geom_point(size = 3, aes(colour = Change)) +
+  scale_colour_manual(values = c(
+    "did not meet goal" = "#fcbbb1",
+    "met goal" = "#d55353")) +
+  theme_minimal()
+
+ggsave("rowplot.png", rowplot)
+
+$$\bar{x} \pm t_{\alpha/2, n-1} \left( \frac{s}{\sqrt{n}} \right)$$
+  
+  
+```
+
