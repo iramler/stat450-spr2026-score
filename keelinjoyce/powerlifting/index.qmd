@@ -329,7 +329,7 @@ dunn_results_df$sig <- if_else(dunn_results_df$p_value <= 0.05,1,0)
 
 dunnplot <- ggplot(dunn_results_df, aes(x = group1, y = group2, fill = factor(sig))) +
   geom_tile(colour = "black", linewidth = 0.5) +
-  scale_fill_manual(values = c("1" = "#CD3333", "0" = "white"),
+  scale_fill_manual(values = c("1" = "#d55353", "0" = "white"),
                     labels = c("Not significant", "Significant")) +
   labs(title = "Significant p-values of Dunn's Test Results by Age Class", x = "Age Class", y = "Age Class", fill = "Significance") +
   theme_minimal()
