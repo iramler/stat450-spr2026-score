@@ -332,7 +332,7 @@ used_cards <- c("Hog Rider", "Zap", "Valkyrie", "Giant Skeleton", "Baby Dragon",
 ```{r}
 pair_data_16 <- pair_data |>
   filter(card1 %in% used_cards, card2 %in% used_cards) |>
-  mutate(synergy = ifelse(winrate > 0.57, 1, 0)) |>
+  mutate(synergy = ifelse(winrate > 0.58, 1, 0)) |>
   #filter(synergy == 1) |>
   select(card1, card2, synergy) 
   
