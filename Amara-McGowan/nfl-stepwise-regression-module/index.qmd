@@ -12,12 +12,13 @@ author:
 affiliations:
   - id: slu
     name: St. Lawrence University
-date: "TBD"
-description: "TBD"
+date: "April 22, 2026"
+description: "Guide to VS Code and R, Python, and Julia..."
 format: html
 categories:
   - Stepwise Regression
   - Quantile Regression
+  - VS Code
   - R
   - Python
   - Julia
@@ -96,6 +97,8 @@ Download Data: [nfl_qbr.csv](nfl_qbr.csv)
 
 The data was all scraped from [https://www.espn.com/nfl/](https://www.espn.com/nfl/) using the R package `nflreadr`. The uncleaned data included weekly Total QBR, player statistics, and game schedules for the 2025 NFL Regular season. After cleaning, the final dataset includes only quarterbacks and each row represents a game played in the regular season. 
 </details>
+
+# Visual Studio Code (VS Code)
 
 # Pick a Programming Language
 
