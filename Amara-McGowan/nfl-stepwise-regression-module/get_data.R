@@ -11,28 +11,31 @@ clean_stats <- stats |>
   filter(position == "QB", season_type == "REG") |>
   rename(player = player_display_name, sacks = sacks_suffered, fumbles = sack_fumbles,
          sack_yards = sack_yards_lost) |>
+  dplyr::select(-headshot_url)
   select(player, week, team, opponent_team, completions, attempts, passing_yards,
          passing_tds, passing_interceptions, sacks, sack_yards, fumbles) 
 
 clean_qbr <- qbr |>
   filter(season_type == "Regular") |>
-  rename(player = name_display, qbr = qbr_total, week = game_week) |>
-  select(week, player, qbr)
+  rename(player = name_display, qbr = qbr_total, week = game_week) 
+
+clean_qbr <- clean_qbr |>
+  dplyr::select(week, player, qbr, qb_plays)
 
 clean_schedules <- schedules |>
   filter(game_type == "REG") |>
   rename(team = home_team) |>
-  select(week, team, away_team, away_score, home_score, result, total) |>
-  mutate(prop_total = home_score / total)
+  dplyr::select(week, team, away_team, away_score, home_score, result, total) |>
+  mutate(pct_total = (home_score / total) * 100)
 
 home_teams <- clean_schedules |>
-  select(week, team, prop_total, result)
+  dplyr::select(week, team, pct_total, result)
 
 away_teams <- clean_schedules |>
-  select(week, away_team, home_score, away_score, total) |>
-  mutate(prop_total = away_score / total, result = away_score - home_score) |>
+  dplyr::select(week, away_team, home_score, away_score, total) |>
+  mutate(pct_total = (away_score / total) * 100, result = away_score - home_score) |>
   rename(team = away_team) |>
-  select(week, team, prop_total, result)
+  dplyr::select(week, team, pct_total, result)
 
 team_stats <- bind_rows(home_teams, away_teams)
 

@@ -10,7 +10,7 @@
 <meta name="author" content="Ivan Ramler">
 <meta name="description" content="TBD">
 
-<title>Approximating ESPN’s Total Quarterback Rating with Game-Level Data Using Quantile and Stepwise Regression in Julia, R, and Python</title>
+<title>Modeling ESPN’s Total Quarterback Rating with Game-Level Data With Quantile and Stepwise Regression in Julia, R, and Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,11 +85,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Approximating ESPN’s Total Quarterback Rating with Game-Level Data Using Quantile and Stepwise Regression in Julia, R, and Python</h1>
+<h1 class="title">Modeling ESPN’s Total Quarterback Rating with Game-Level Data With Quantile and Stepwise Regression in Julia, R, and Python</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Stepwise Regression</div>
     <div class="quarto-category">Quantile Regression</div>
-    <div class="quarto-category">Julia, R, and Python</div>
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">Julia</div>
   </div>
   </div>
 
@@ -148,8 +150,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>The National Football League (NFL) has 14 official positions: 7 offensive, 5 defensive, and 2 special teams positions. One of the offensive positions is called Quarterback (QB), and their role is to lead their team on the field. ESPN streams NFL games and provides a lot of data on NFL players, including their Total Quarterback Rating (QBR), a 0-100 score measuring a quarterback’s contribution to winning. Higher scores indicate better performance.</p>
-<p>In this module, you will learn how to reverse engineer the Total Quarterback Rating using data from the 2025 NFL Regular season. To reverse enginner QBR, we will use Quantile Regression and you will have the choice of learning it in Julia, R, Python, or multiple languages.</p>
+<p>The National Football League (NFL) has 14 official positions for players: 7 offensive, 5 defensive, and 2 special teams positions. One of the offensive positions is called Quarterback (QB), and their role is to lead their team on the field. ESPN streams NFL games and provides a lot of data on NFL players, including their Total Quarterback Rating (QBR), a 0-100 score measuring a quarterback’s contribution to winning. Higher scores indicate better performance.</p>
+<p>In this module, you will learn how to model Total Quarterback Rating using only game-level data from the 2025 NFL Regular season. To predict QBR, we will use stepwise regression and you will have the choice of learning it in Julia, R, or Python. After using stepwise, we will use quantile regression to see for which quantile of quarterbacks we can most accurately predict QBR given the best model we found with stepwise regression.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -162,7 +164,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>TODO: By the end of this tutorial, you will be able to:</p>
+<p>By the end of this tutorial, you will be able to:</p>
+<ol type="1">
+<li><p>Perform stepwise regression in Julia, R, or Python.</p></li>
+<li><p>Perform quantile regression in Julia, R, or Python.</p></li>
+<li><p>Understand how to interpret the results of stepwise and quantile regression.</p></li>
+</ol>
 </div>
 </div>
 </div>
@@ -178,7 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>TODO: This could be suitable of an out of class activity or one that spans one or more class periods.</p>
+<p>This could be suitable of an out of class activity or one that spans one or more class periods.</p>
 </div>
 </div>
 </div>
@@ -291,37 +298,57 @@ The data was all scraped from <a href="https://www.espn.com/nfl/">https://www.es
 <h1>Pick a Programming Language</h1>
 <p>The module is available in Julia, R, or Python. You can switch between modules using the tabs below based on which programming language you would like to use for this module.</p>
 <p>Here is a little bit about each language to help you make your decision:</p>
-<p>Julia here</p>
-<p>R here</p>
-<p>Python here</p>
+<div class="callout callout-style-simple callout-important no-icon callout-titled" title="WARNING">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>WARNING
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do not install any of the languages yet using the links below if you do not already have them, there are downloading guides provided for each language within its respective tab further in the module.</p>
+</div>
+</div>
+<p>Learn more about R: <a href="https://www.coursera.org/articles/what-is-r-programming">here</a></p>
+<p>Learn more about Python: <a href="https://www.coursera.org/articles/what-is-python-used-for-a-beginners-guide-to-using-python">here</a></p>
+<p>Learn more about Julia: <a href="https://julialang.org/">here</a></p>
+<!-- OR keep consistent... (https://www.coursera.org/articles/julia-programming-language) -->
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Python</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Julia</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<section id="getting-started-in-julia" class="level1">
-<h1>Getting started in Julia</h1>
-<p>Package: QuantReg.jl</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Julia code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="getting-started-in-r" class="level1">
+<h1>Getting started in R</h1>
+<p>To start programming in R, I recommend downloading RStudio. To do so, you can follow this guide here: <a href="https://rstudio-education.github.io/hopr/starting.html">Guide to Installing R and RStudio</a>.</p>
+<p>If you already have another platform downloaded that you would like to use, that will also work, but there will be some language specific to the RStudio platform within this module.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>install.packages("quantreg")</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>library(quantreg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-quantile-regression" class="level1">
 <h1>Using Quantile Regression</h1>
 </section>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<section id="getting-started-in-r" class="level1">
-<h1>Getting started in R</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>install.packages("quantreg")</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>library(quantreg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="getting-started-in-python" class="level1">
+<h1>Getting started in Python</h1>
+<p>To start programming in Python, I recommend downloading Visual Studio Code (VS Code). To do so, you can follow this guide here: <a href="https://code.visualstudio.com/docs/python/python-tutorial#_install-a-python-interpreter">Guide to Installing Python and VS Code</a>.</p>
+<p>If you already have another platform downloaded that you would like to use, that will also work, but there will be some language specific to the VS Code platform within this module.</p>
+<p>Package: statsmodels</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Python code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-quantile-regression-1" class="level1">
 <h1>Using Quantile Regression</h1>
 </section>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<section id="getting-started-in-python" class="level1">
-<h1>Getting started in Python</h1>
-<p>Package: statsmodels</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Python code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="getting-started-in-julia" class="level1">
+<h1>Getting started in Julia</h1>
+<p>To start programming in Julia, I recommend downloading Visual Studio Code (VS Code). To do so, you can follow this guide here: <a href="https://code.visualstudio.com/docs/languages/julia">Guide to Installing Julia and VS Code</a>.</p>
+<p>If you already have another platform downloaded that you would like to use, that will also work, but there will be some language specific to the VS Code platform within this module.</p>
+<p>Package: QuantReg.jl</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Julia code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-quantile-regression-2" class="level1">
 <h1>Using Quantile Regression</h1>
