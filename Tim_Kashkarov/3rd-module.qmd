@@ -1,0 +1,53 @@
+---
+title: "3rd-module"
+format: html
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+library(lubridate)
+```
+```{r}
+nhl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/nhl_20245.csv")
+khl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/khl_20245.csv")
+```
+
+```{r}
+nhl_20245 <- nhl_20245 |> transmute(league = "NHL", team = Team, WinPerc = Wins / GamesPlayed, GF_pg = GF / GamesPlayed, GA_pg = GA / GamesPlayed)
+khl_20245 <- khl_20245 |> transmute(league = "KHL", team = Team, WinPerc = Wins / GamesPlayed, GF_pg = GF / GamesPlayed, GA_pg = GA / GamesPlayed)
+df <- bind_rows(nhl_20245, khl_20245)
+```
+
+```{r}
+ggplot(df, aes(x = GF_pg, y = WinPerc)) +
+  geom_point() +
+  facet_wrap(~league) +
+  labs(
+    title = "Offense vs Winning",
+    x = "Goals Scored per Game",
+    y = "Win Percentage"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(df, aes(x = GA_pg, y = WinPerc)) +
+  geom_point() +
+  facet_wrap(~league) +
+  labs(
+    title = "Defense vs Winning",
+    x = "Goals Allowed per Game",
+    y = "Win Percentage"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+df |>
+  group_by(league) |>
+  summarise(corr_offense = cor(GF_pg, WinPerc),
+            corr_defense = cor(GA_pg, WinPerc))
+```
+
+Offense matters more in KHL, while defense matters more in NHL \# use it for 3 module
