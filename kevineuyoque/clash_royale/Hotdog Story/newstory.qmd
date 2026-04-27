@@ -1,0 +1,141 @@
+---
+title: "Closeread Scrollytelling Handout (R + Quarto)"
+subtitle: "Nathan’s Famous Hot Dog Eating Contest Module"
+author:
+  - name: Kevin Euyoque
+    affiliation:
+      - id: slu
+        name: St. Lawrence University
+date: "March 2, 2026"
+description: "A data visualization module using Nathan’s Hot Dog Eating Contest data through a closeread story."
+editor:
+  canonical: true
+categories:
+  - tidyverse
+  - closeread
+  - data visualization
+  - scrollytelling
+format:
+  closeread-html:
+    code-fold: true
+    cr-style:
+      narrative-background-color-sidebar: "#09753C"
+      narrative-text-color-sidebar: white
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Module
+
+Please note that these materials have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.
+
+---
+
+## What you will need
+
+### Software
+- R
+- RStudio
+- Quarto + the **closeread** extension
+
+### Required packages
+- `tidyverse`
+- `readr`
+
+::: {.callout-note collapse="true" title="Install packages (if needed)" appearance="minimal"}
+```{r}
+#| eval: false
+install.packages(c("tidyverse", "readr"))
+```
+
+:::
+
+## Introduction
+
+The Nathan’s Famous Hot Dog Eating Contest has been held annually since 1972. Over time, changes in contest duration, training methods, and competitive intensity have shaped modern performance levels.
+
+In this module, students explore contest data through a **closeread scrollytelling format** in Quarto. The goal is not only to analyze performance trends, but to understand how data visualization can be structured into a guided narrative.
+
+Rather than simply producing graphs, students will learn how to structure visualizations into a guided analytical narrative.
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this activity, you will be able to:
+
+- Interpret time-series visualizations of competitive performance.
+- Distinguish between totals and standardized rates (e.g., hot dogs per minute).
+- Identify structural shifts in long-term trends.
+- Use closeread in Quarto to create scrollytelling visualizations.
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+
+Technology requirement: This activity is completed in RStudio using Quarto with the closeread format.
+
+- Students should be comfortable reading data and creating basic plots using ggplot2.
+- No previous closeread experience is required.
+:::
+
+## Data
+
+This module uses a cleaned dataset of winners from the Nathan’s Famous Hot Dog Eating Contest from 1972 to 2025.
+
+Download data: [hotdog_clean.csv]("hotdog_clean.csv")
+
+<details>
+
+<summary><b>Variable Descriptions</b></summary>
+
+| Variable | Description                                               |
+|----------|-----------------------------------------------------------|
+| Year     | Year the competition took place                           |
+| Sex      | Sex of the winner for the year the competition took place |
+| Dogs     | Total hot dogs eaten                                      |
+| Winner   | Name of the winner for their sex category                 |
+| Time     | Time in minutes the competition elapsed                   |
+| DPM      | Dogs eaten per minute                                     |
+
+</details>
+
+
+## Installing closeread
+
+In RStudio:
+
+1. Open the project folder where your .qmd lives.
+2. Go to the Terminal tab.
+3. Run:
+
+quarto add qmd-lab/closeread
+
+
+When prompted, type Y to continue.
+
+
+## Background: Closeread essentials
+
+- Closeread adds one key idea to a normal Quarto document:
+- A plot becomes a target when it has an ID like {#cr-plotname}
+- Your narrative becomes a trigger when it references the target using @cr-plotname
+- When the reader scrolls to that trigger, the plot becomes the focus
+- Closeread documents are built with three components:
+
+1) Section
+
+A section enables closeread behavior. Everything inside renders as a scrolling story.
+
+::::{.cr-section}
+Narrative + stickies go here
+:::
+
+2) Sticky (a target)
+
+A sticky is an element that can be focused (often a plot).
+
+:::{#cr-myplot}
+```{r}
+# plot code
+```
+:::
+  

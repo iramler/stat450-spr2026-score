@@ -1,0 +1,50 @@
+---
+title: "Potential Swimming Datasets"
+output: html_document
+date: '2022-09-19'
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+Swim_report <- read_csv("Report.csv")
+```
+
+```{r}
+Swim_report2 <-
+  Swim_report %>%
+  pivot_longer(.,
+               cols = 1:21,
+               names_to = "name",
+               values_to = "values",
+               values_drop_na = FALSE) %>%
+  mutate(name = str_remove_all(name, "="),
+         values = str_remove_all(values, "="),
+         name = str_remove_all(name, "\""),
+         values = str_remove_all(values, "\""))
+```
+
+
+```{r}
+Swim_report2 %>%
+  group_by(name) %>%
+  count() %>%
+  view()
+```
+
+
+
+
+```{r}
+swim_report3 <-
+  Swim_report2 %>% 
+  slice(1:42) %>%
+  pivot_wider(.,
+              names_from = name,
+              values_from = values) 
+```
+
+
+
