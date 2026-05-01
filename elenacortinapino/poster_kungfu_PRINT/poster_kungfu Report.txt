@@ -1,0 +1,64 @@
+Package Report
+
+-----------------------------------------------------------------------------
+Document:
+Name: poster_kungfu.ai
+Color Mode: CMYK color
+Color Profile: U.S. Web Coated (SWOP) v2
+Ruler Units: pixels
+Artboard Dimensions: 3455.4331 px x 2590.8662 px
+Show Images in Outline Mode: OFF
+Highlight Substituted Fonts: OFF
+Highlight Substituted Glyphs: OFF
+Preserve Text Editability
+Simulate Colored Paper: OFF
+
+-----------------------------------------------------------------------------
+Spot Color Objects:
+
+-----------------------------------------------------------------------------
+Missing Fonts:NONE
+
+-----------------------------------------------------------------------------
+Protected Fonts that were not packaged:NONE
+
+-----------------------------------------------------------------------------
+Fonts:
+DIN Pro Medium (OTF)
+
+-----------------------------------------------------------------------------
+Embedded Fonts:
+NONE
+
+-----------------------------------------------------------------------------
+Missing Links:
+NONE
+
+-----------------------------------------------------------------------------
+Linked Images:
+
+C:\Users\elena\Downloads\Untitled design.png
+Type: RGB
+Bits per Pixel: 24
+Channels: 3
+Size: 324K, 333 by 333 pixels
+Dimensions: 185.669 by 185.669 points 
+Resolution: 129.133 by 129.133 pixels per inch
+
+
+C:\Users\elena\Downloads\academics\SYE Seminar\stat450-spr2026-score\elenacortinapino\OfficialSLUBrand\SLU_Academic_Primary_FlushLeft_Bw1c.png
+Type: Transparent RGB
+Bits per Pixel: 32
+Channels: 4
+Size: 5350K, 2403 by 570 pixels
+Dimensions: 564.853 by 133.985 points 
+Resolution: 306.303 by 306.303 pixels per inch
+
+
+C:\Users\elena\Downloads\academics\SYE Seminar\stat450-spr2026-score\score-logo.png
+Type: Transparent RGB
+Bits per Pixel: 32
+Channels: 4
+Size: 934K, 661 by 362 pixels
+Dimensions: 202.919 by 111.13 points 
+Resolution: 234.537 by 234.537 pixels per inch

@@ -16,6 +16,7 @@ citation-location: margin
 categories:
   - Data scraping
   - Data cleaning
+  - Data imputation
   - Regex
   - dplyr
   - Notepad++
@@ -34,15 +35,21 @@ materials if they are so inclined.
 The World Kung Fu Championships (WKFC), hosted by the International Wushu Federation (IWUF), is an international level sporting event established in 2004 to propagate the development of wushu around the world. As there are dozens of Kung Fu (traditional wushu) styles represented in the WKFC, these championships offer a unique platform for thousands of practitioners of all ages and varying skill levels to come together every two years.\
 
 
-
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
-1.  Students will gain experience and insight into processes of scraping complex, raw sports data and cleaning it to construct a data set that is in usable form ready for data analysis and visualization.
-2. Students will learn about using regular expressions within R code 
+-   Learn about the process of scraping data from a pdf file.
+-   Learn a method to parse the data into a format usable for data analysis.
+-   Learn processes for data cleaning.
+-   Learn about dealing with missing data cases through data imputation.
+-   Use web resources efficiently to clean and format data for analysis and exploration.
 :::
 
 
 #### Data by years:
 
+The data for this specific module come from the Result Books of the World Kung Fu Championships (WKFC) as they are readily available online on the [International Wushu Federation's website](https://www.iwuf.org/en/competition-results/index.html). On this website and for this competition in particular, public users have access to the result books from the 7th edition of the championship (2017) until the most recent, 10th edition (2025) championship.\
+\
+The format of the result books is generally similar although not the same. Below we identify their distinguishing features:
+\
 **7th**\
 
 [7th World Kungfu Championships, 2017](https://www.iwuf.org/wp-content/uploads/2018/12/7th-World-Kungfu-Championships-Regulations.pdf)
@@ -63,11 +70,22 @@ For this edition the result book is separated into the International group and t
 **10th**\
 [10th World Kungfu Championships, 2025](https://xhimg.iwuf.org/xhimg/soft/251113/2025-10th-World-Kungfu-Championships-Results-Book.pdf)
 
-## Result Books Download
+## Scraping
 
-We first downloaded the result books from the International Wushu Federation's website. These documents include tables on each page which contain information on the following variables:
+Data scraping is the activity of taking information from a website or computer screen and putting it into an ordered document on a computer.[^1]
+
+The process of _scraping data_ can look very different depending on the format the data is originally being sourced from, the ideal end result or format of the scraping process, and the chosen scraping method. Most understandably, it can be natural to assume that the _source_ and _goal_ will dictate the _method_, however this is a flexible process and preference is welcome.
+
+Since the _source_ in this case is a `pdf` file, and the _goal_ a `csv` file, the scraping _method_ was via Adobe Acrobat Pro. This program has excellent reading functionalities that allow field detection for text export.
+
+Once the desired information fields from the tables in the result book are selected for scraping, the program iteratively goes through each page selecting the chosen fields and exporting the information into columns of a table of a `csv` spreadsheet.
+
+The same general process was repeated for each one of the four result books from 7th to 10th edition.\
+
 
 ##### Variables
+
+The following information is included in the tables of each result book and was identified as variables for each athlete in the competition.\
 
 <details>
 
@@ -92,29 +110,11 @@ In addition to the information concerning the athletes in the competition, the d
 
 Sample preview of the tables that compose the result books for each year of the competition available online and used for this module.
 
-```{css}
-.scroll-container {
-  overflow-x: auto;
-  white-space: nowrap;
-  width: 100%;
-  border: 1px solid #ccc; /* Optional: adds a border */
-}
-
-.scroll-container img {
-  display: inline-block;
-  height: 200px; /* Set height, width scales automatically */
-  margin: 2px;
-}
-
-```
-
-
 ::: {.scroll-container}
 
 ![Sample Result Table (7th WKFC)]("images/result_table_year_7.png")
 
 :::
-
 
 
 ::: {.scroll-container}
@@ -123,12 +123,11 @@ Sample preview of the tables that compose the result books for each year of the 
 :::
 
 
+## Cleaning Data
 
-
-
-
-
-## Cleaning Columns in Excel after scraping the pdf into excel or csv
+The process of cleaning data involves a fundamental understanding of the nature fo the variables and what they are meant to represent, in order to avoid overwriting or editing important information that modifies the integrity of the data.\
+\
+Afterwards, it is imperative to have a goal presentation for the data. This is a very nuanced process that changes drastically depending on the type of data, the method used to clean it and of course the goal.
 
 #### Excel
 
