@@ -1,0 +1,304 @@
+---
+title: "answerkey"
+format: html
+---
+
+Parity analysis of NHL and KHL.
+
+In sports analytics, a common question is parity: how evenly matched are teams in a league.
+
+This worksheet explores:
+*Are teams more evenly matched in the NHL or the KHL (2024–25)?*
+
+You will work with two datasets:
+
+- "nhl_20245.csv":  NHL team summary stats for 2024–25
+
+- "khl_20245.csv": KHL team summary stats for 2024–25
+
+You’ll practice realistic data analyst tasks:
+
+1. creating comparable variables across datasets
+2. visualizing distributions to compare leagues
+3. computing spread (parity) metrics like IQR and P90–P10
+4. using a randomization (permutation) test to evaluate differences
+
+# 0. Load the Following Packages
+
+```{r}
+#| message: false
+library(tidyverse)
+library(lubridate)
+```
+
+# 1. Load in the CSV Files
+
+```{r}
+nhl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/nhl_20245.csv")
+khl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/khl_20245.csv")
+```
+
+# 2. Create Comparable Variables
+
+```{r}
+nhl_20245 <- nhl_20245 |>
+  transmute(
+    league = "NHL",
+    team = Team,
+    WinPerc = Wins / GamesPlayed,
+    GF_pg = GF / GamesPlayed,
+    GA_pg = GA / GamesPlayed
+  )
+
+khl_20245 <- khl_20245 |>
+  transmute(
+    league = "KHL",
+    team = Team,
+    WinPerc = Wins / GamesPlayed,
+    GF_pg = GF / GamesPlayed,
+    GA_pg = GA / GamesPlayed
+  )
+
+df <- bind_rows(nhl_20245, khl_20245)
+```
+
+# 3. Randomization: What Are We Trying to Prove?
+
+When we compare leagues, we will see some difference no matter what. The real question is:
+
+*Is the difference we see big enough that it isn’t random?*
+
+That’s what a randomization test helps us decide.
+
+We will:
+
+1. Measure parity in the real data.
+2. Calculate the real difference: KHL - NHL.
+3. Shuffle the league labels (NHL/KHL) many times.
+4. After each shuffle, recompute the difference.
+5. See how often shuffled differences are as large as the real one.
+
+If the real difference is rare under shuffling -> evidence that the leagues are truly different.
+
+# 4. Visualize Win% Distributions (First Look at Parity)
+
+Parity means win percentages are more “bunched together”.
+
+a) Histogram and density plot
+```{r}
+ggplot(df, aes(x = WinPerc, fill = league)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 12, alpha = 0.4, position = "identity") +
+  geom_density(alpha = 0.2) +
+  facet_wrap(~league, ncol = 1) +
+  labs(
+    title = "Win% Distribution (2024/25)",
+    x = "Win Percentage (W / GP)",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+
+b) Boxplot
+```{r}
+ggplot(df, aes(x = league, y = WinPerc)) +
+  geom_boxplot() +
+  labs(
+    title = "Win% Spread: NHL vs KHL (2024/25)",
+    x = "",
+    y = "Win Percentage (W/GP)"
+  ) +
+  theme_minimal()
+```
+
+# 5. Choose a Parity Metric: Start with IQR
+
+A parity metric is just a number that describes “spread".
+
+We’ll start with:
+
+IQR (interquartile range) = Q75 − Q25
+- spread of the middle 50% of teams
+- smaller IQR = more parity
+
+a) Observed IQR difference
+$$obs = IQR(KHL) - IQR(NHL)$$
+```{r}
+obs_iqr <- with(df, IQR(WinPerc[league=="KHL"]) - IQR(WinPerc[league=="NHL"]))
+obs_iqr
+```
+
+b) Run the randomization test (shuffle labels)
+
+```{r}
+set.seed(1)
+
+B <- 10000
+diffs_iqr <- numeric(B)
+
+for(i in 1:B){
+  shuffled <- df |>
+    mutate(league_shuf = sample(league))
+  
+  diffs_iqr[i] <- with(shuffled,
+    IQR(WinPerc[league_shuf=="KHL"]) - IQR(WinPerc[league_shuf=="NHL"])
+  )
+}
+
+p_val_iqr <- mean(diffs_iqr >= obs_iqr)
+p_val_iqr
+```
+
+How to interpret the p-value:
+
+small p-value (< 0.05) -> real difference is unusual under shuffling
+bigger p-value -> difference could easily happen by chance
+
+# 6. What Could Be “Wrong” With Shuffling?
+
+Shuffling assumes something called exchangeability:
+
+*If there is no real league difference, then it should not matter which teams are labeled NHL vs KHL.*
+
+But in real sports, leagues can differ in ways that make this imperfect, such as:
+
+1. different number of teams
+2. different schedule format
+3. different overall level of competition
+4. real leagues have a balance of W/L, fake leagues have not
+
+So shuffling is a useful “null model,” but it’s still an assumption.
+
+That’s why we’re going to introduce a second idea: Bradley–Terry Concept.
+
+
+
+# 7. Bradley–Terry Concept: Converting Strength into Win Probability
+
+Bradley–Terry is a model for pairwise matchups:
+$$P(i\,beats\,j) = \frac{s_{i}}{s_{i} + s_{j}}$$
+- If two teams have equal strength -> probability = 0.5
+- If one team is stronger -> probability > 0.5
+
+So parity can be described as:
+
+- strengths close together -> probabilities near 0.5 -> high parity
+- strengths spread out -> probabilities extreme -> low parity
+
+*Toy example*
+```{r}
+strength <- c(A = 0.70, B = 0.55, C = 0.40)
+
+c(
+  P_A_beats_B = strength["A"] / (strength["A"] + strength["B"]),
+  P_A_beats_C = strength["A"] / (strength["A"] + strength["C"]),
+  P_B_beats_C = strength["B"] / (strength["B"] + strength["C"])
+)
+```
+
+In real leagues every win is someone else’s loss. When we shuffle labels, we create “fake leagues” that may not preserve that natural win/loss balance structure within each league, so the shuffled groups can be unrealistic.
+
+# 8. A BT-Inspired Strength Score (Using WinPerc)
+
+We do not have head-to-head game results here, so we will not fit a full Bradley–Terry model.
+
+Instead, we build a BT-inspired score using WinPerc:
+$$BT_i = \frac{1}{n-1}\sum_{j \ne i}\frac{w_i}{w_i + w_j}$$
+This gives each team an “average pairwise win probability” against all other teams.
+
+a) Write a function
+```{r}
+BT_scores <- function(w) {
+  n <- length(w)
+  bt <- numeric(n)
+
+  for(i in 1:n){
+    bt[i] <- mean(w[i] / (w[i] + w[-i]))
+  }
+  bt
+}
+```
+
+b) Compute BT scores and measure their spread
+```{r}
+df_bt <- df |>
+  group_by(league) |>
+  mutate(BT = BT_scores(WinPerc)) |>
+  ungroup()
+
+df_bt |>
+  group_by(league) |>
+  summarise(
+    BT_IQR = IQR(BT),
+    BT_P90_P10 = quantile(BT, 0.90) - quantile(BT, 0.10),
+    .groups = "drop"
+  )
+```
+
+# 9. Randomization Test Again (Now Using BT_IQR)
+
+Now we repeat the randomization, but this time our parity metric is BT_IQR.
+
+a) Observed difference
+```{r}
+obs_bt_iqr <- with(df_bt, IQR(BT[league=="KHL"]) - IQR(BT[league=="NHL"]))
+obs_bt_iqr
+```
+
+b) Shuffle labels and recompute
+```{r}
+set.seed(1)
+
+B <- 5000
+diffs_bt <- numeric(B)
+
+for(i in 1:B){
+  shuffled <- df_bt |>
+    mutate(league_shuf = sample(league))
+
+  diffs_bt[i] <- with(shuffled,
+    IQR(BT[league_shuf=="KHL"]) - IQR(BT[league_shuf=="NHL"])
+  )
+}
+
+p_val_bt <- mean(diffs_bt >= obs_bt_iqr)
+p_val_bt
+```
+
+# 10. Final Exercise: Use Multiple Parity Metrics
+
+Now you will measure parity using multiple metrics (not just IQR).
+
+Compute:
+
+1. IQR
+3. P90 − P10
+
+```{r}
+parity_metrics <- df |>
+  group_by(league) |>
+  summarise(
+    IQR = IQR(WinPerc),
+    P90_P10 = quantile(WinPerc, 0.90) - quantile(WinPerc, 0.10),
+    .groups = "drop"
+  )
+
+parity_metrics
+```
+
+# Your Turn 
+
+a) For each metric (IQR, P90–P10), which league looks like it has more parity?
+
+b) Pick P90–P10 and run a permutation test:
+
+- compute the observed difference (KHL − NHL)
+- shuffle labels many times
+- compute the p-value
+
+c) Write 2–3 sentences interpreting your result.
+
+- Why do we shuffle the league labels instead of shuffling WinPerc values?
+- What does the permutation test help you conclude?
+- What is the key idea behind the Bradley–Terry probability formula?
+
+

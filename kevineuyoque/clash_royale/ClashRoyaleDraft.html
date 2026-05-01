@@ -97,8 +97,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#edge-weights" id="toc-edge-weights" class="nav-link" data-scroll-target="#edge-weights"><span class="header-section-number">2.3</span> Edge weights</a></li>
   <li><a href="#why-use-a-network" id="toc-why-use-a-network" class="nav-link" data-scroll-target="#why-use-a-network"><span class="header-section-number">2.4</span> Why use a network?</a></li>
   <li><a href="#centrality-of-cards" id="toc-centrality-of-cards" class="nav-link" data-scroll-target="#centrality-of-cards"><span class="header-section-number">2.5</span> Centrality of Cards</a></li>
-  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself"><span class="header-section-number">2.6</span> Try it yourself</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.7</span> Conclusion</a></li>
+  </ul></li>
+  <li><a href="#speak-about-the-process-on-creating-the-network" id="toc-speak-about-the-process-on-creating-the-network" class="nav-link" data-scroll-target="#speak-about-the-process-on-creating-the-network"><span class="header-section-number">3</span> speak about the process on creating the network</a></li>
+  <li><a href="#make-a-table-for-the-cards-in-the-network-with-their-centrality" id="toc-make-a-table-for-the-cards-in-the-network-with-their-centrality" class="nav-link" data-scroll-target="#make-a-table-for-the-cards-in-the-network-with-their-centrality"><span class="header-section-number">4</span> make a table for the cards in the network with their centrality</a></li>
+  <li><a href="#go-into-depth-with-the-meta-and-explain-why-centrality-is-important-with-these-certain-cards" id="toc-go-into-depth-with-the-meta-and-explain-why-centrality-is-important-with-these-certain-cards" class="nav-link" data-scroll-target="#go-into-depth-with-the-meta-and-explain-why-centrality-is-important-with-these-certain-cards"><span class="header-section-number">5</span> go into depth with the meta and explain why centrality is important with these certain cards</a>
+  <ul class="collapse">
+  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself"><span class="header-section-number">5.1</span> Try it yourself</a></li>
+  </ul></li>
+  <li><a href="#either-choose-16-cards-yourself-or-choose-to-use-the-randomizer-code" id="toc-either-choose-16-cards-yourself-or-choose-to-use-the-randomizer-code" class="nav-link" data-scroll-target="#either-choose-16-cards-yourself-or-choose-to-use-the-randomizer-code"><span class="header-section-number">6</span> either choose 16 cards yourself or choose to use the randomizer code</a></li>
+  <li><a href="#rather-than-change-code-explain-why-some-networks-might-not-have-all-16-cards-included-meaning-those-cards-would-be-excluded-since-they-do-not-work-well-together" id="toc-rather-than-change-code-explain-why-some-networks-might-not-have-all-16-cards-included-meaning-those-cards-would-be-excluded-since-they-do-not-work-well-together" class="nav-link" data-scroll-target="#rather-than-change-code-explain-why-some-networks-might-not-have-all-16-cards-included-meaning-those-cards-would-be-excluded-since-they-do-not-work-well-together"><span class="header-section-number">7</span> rather than change code, explain why some networks might not have all 16 cards included, meaning those cards would be excluded since they do not work well together</a>
+  <ul class="collapse">
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.1</span> Conclusion</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -360,9 +369,9 @@ Methods
 <p>To represent Clash Royale synergy as a network, we will model the data as a graph.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH cf2b833 UN-- 69 1572 -- 
+<pre><code>IGRAPH 04ae9dd UN-- 69 1572 -- 
 + attr: name (v/c), decks (e/n), wins (e/n), winrate (e/n)
-+ edges from cf2b833 (vertex names):
++ edges from 04ae9dd (vertex names):
  [1] Hog Rider     --Zap Valkyrie      --Zap Giant Skeleton--Zap
  [4] Baby Dragon   --Zap Mini P.E.K.K.A--Zap Witch         --Zap
  [7] Musketeer     --Zap Balloon       --Zap Arrows        --Zap
@@ -442,6 +451,17 @@ Methods
 </li>
 <li>important to the overall meta</li>
 </ul>
+</section>
+</section>
+</section>
+<section id="speak-about-the-process-on-creating-the-network" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> speak about the process on creating the network</h1>
+</section>
+<section id="make-a-table-for-the-cards-in-the-network-with-their-centrality" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> make a table for the cards in the network with their centrality</h1>
+</section>
+<section id="go-into-depth-with-the-meta-and-explain-why-centrality-is-important-with-these-certain-cards" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> go into depth with the meta and explain why centrality is important with these certain cards</h1>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -451,10 +471,12 @@ Methods
 </div>
 </div>
 </div>
+<section id="try-it-yourself" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="try-it-yourself"><span class="header-section-number">5.1</span> Try it yourself</h2>
 </section>
 </section>
-<section id="try-it-yourself" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="try-it-yourself"><span class="header-section-number">2.6</span> Try it yourself</h2>
+<section id="either-choose-16-cards-yourself-or-choose-to-use-the-randomizer-code" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> either choose 16 cards yourself or choose to use the randomizer code</h1>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -465,10 +487,10 @@ Methods
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>random_16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "Goblins"          "Flying Machine"   "Rocket"           "Arrows"          
- [5] "Royal Recruits"   "Ice Golem"        "Royal Hogs"       "Elixir Collector"
- [9] "Ice Spirit"       "Goblin Giant"     "Royal Giant"      "Giant"           
-[13] "Goblin Cage"      "Skeletons"        "Fisherman"        "Cannon Cart"     </code></pre>
+<pre><code> [1] "Inferno Tower"  "Freeze"         "Battle Ram"     "Mega Minion"   
+ [5] "Minions"        "Electro Wizard" "Goblin Cage"    "Earthquake"    
+ [9] "Furnace"        "Dart Goblin"    "Royal Ghost"    "Arrows"        
+[13] "Goblin Giant"   "Valkyrie"       "Skeletons"      "Minion Horde"  </code></pre>
 </div>
 </div>
 <p>This bit of code allows for a random sample of any 16 cards within the dataset</p>
@@ -495,8 +517,10 @@ Methods
 </div>
 </div>
 </section>
-<section id="conclusion" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.7</span> Conclusion</h2>
+<section id="rather-than-change-code-explain-why-some-networks-might-not-have-all-16-cards-included-meaning-those-cards-would-be-excluded-since-they-do-not-work-well-together" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> rather than change code, explain why some networks might not have all 16 cards included, meaning those cards would be excluded since they do not work well together</h1>
+<section id="conclusion" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.1</span> Conclusion</h2>
 <p>In this module, we explored how network analysis can be used to understand relationships between cards in Clash Royale.</p>
 <p>Starting from raw deck data, we transformed the dataset into pairwise matrices that captured how often cards appear together and how successful those pairings are. By converting this information into a network, we were able to visualize and analyze card synergy in a more meaningful way.</p>
 <p>Through this process, we observed that:</p>

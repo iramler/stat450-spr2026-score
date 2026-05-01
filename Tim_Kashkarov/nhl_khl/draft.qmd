@@ -8,7 +8,6 @@ format: html
 library(tidyverse)
 library(lubridate)
 ```
-
 ```{r}
 nhl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/nhl_20245.csv")
 khl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/khl_20245.csv")
@@ -47,7 +46,8 @@ spread <- df |>
     .groups = "drop")
 spread
 ```
-Smaller range / IQR(Q75 − Q25) / P90–P10(spread of most teams) -> tighter distribution -> more parity
+
+Smaller range / IQR(Q75 − Q25) / P90–P10(spread of most teams) -\> tighter distribution -\> more parity
 
 ```{r}
 cutoff_df <- df_top |>
@@ -75,22 +75,13 @@ ggplot(df_top, aes(x = WinPerc, y = reorder(team, WinPerc), color = top3)) +
   theme_minimal()
 ```
 
-*Fligner–Killeen Hypothesis Test*
-
-H0: NHL and KHL have the same spread of Win% (same parity)
-H1: NHL spread is smaller than KHL (NHL has more parity)
-```{r}
-fligner.test(WinPerc ~ league, data = df)
-```
-p ≥ 0.05 -> not enough evidence that spreads differ
-
-
 *Permutation test on IQR*
 
 ```{r}
 obs <- with(df, IQR(WinPerc[league=="KHL"]) - IQR(WinPerc[league=="NHL"]))
 obs
 ```
+
 
 ```{r}
 set.seed(1)
@@ -109,7 +100,47 @@ for(i in 1:B){
 # one-sided p-value for "NHL has smaller spread" = "KHL - NHL is big/positive"
 p_val <- mean(diffs >= obs)
 p_val
+
+# adjust to make it reasonable given that each win percentage is between 0 and 1
+# start building the module using shuffle stuff
+
 ```
+
+
+```{r}
+# write the for loop all teams within the dataset
+i = 2
+sum(df$WinPerc[i] / (df$WinPerc[i] + df$WinPerc[-i])) / length(df$WinPerc)
+
+BT_adj <- function(x) {
+  n = length(x)
+  bt = rep(NA, n)
+  for (i in 1:n) {
+    bt[i] = sum(x[i] / (x[i] + x[-i])) / (n-1)
+  }
+  
+  iqr = IQR(bt)
+}
+
+
+set.seed(1)
+
+B <- 1000
+diffs <- numeric(B)
+
+for(i in 1:B){
+  shuffled <- df |>
+    mutate(league_shuf = sample(league))
+  
+  diffs[i] <- with(shuffled,
+                   BT_adj(WinPerc[league_shuf=="KHL"]) - BT_adj(WinPerc[league_shuf=="NHL"]))
+}
+
+p_val <- mean(diffs >= obs)
+p_val
+```
+
+make an example and start making the module with bradley-terry and randimisation 
 
 ```{r}
 df_test<- df |>
@@ -124,36 +155,3 @@ df_test
 ```
 
 In all three measures, the KHL spread is larger than the NHL spread
-
-```{r}
-ggplot(df, aes(x = GF_pg, y = WinPerc)) +
-  geom_point() +
-  facet_wrap(~league) +
-  labs(
-    title = "Offense vs Winning",
-    x = "Goals Scored per Game",
-    y = "Win Percentage"
-  ) +
-  theme_minimal()
-```
-
-```{r}
-ggplot(df, aes(x = GA_pg, y = WinPerc)) +
-  geom_point() +
-  facet_wrap(~league) +
-  labs(
-    title = "Defense vs Winning",
-    x = "Goals Allowed per Game",
-    y = "Win Percentage"
-  ) +
-  theme_minimal()
-```
-
-```{r}
-df |>
-  group_by(league) |>
-  summarise(corr_offense = cor(GF_pg, WinPerc),
-            corr_defense = cor(GA_pg, WinPerc))
-```
-
-Offense matters more in KHL, while defense matters more in NHL

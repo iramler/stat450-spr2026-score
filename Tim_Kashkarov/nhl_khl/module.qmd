@@ -1,0 +1,174 @@
+---
+title: "Parity analysis of NHL and KHL."
+author:
+  - name: Tim Kashkarov
+    affiliation:
+      - id: slu
+        name: St. Lawrence University
+  - name: Ivan Ramler
+    email: iramler@stlawu.edu
+    affiliation:
+      - ref: slu
+date: "Apr 25, 2026"
+description: "Exploring league parity by cleaning, comparing, and analyzing NHL and KHL team performance data."
+editor: 
+  canonical: true
+categories:
+  - Data Visualization
+  - Data Wrangling
+  - Sports Analytics
+  - Randomization
+---
+
+## Module
+
+Please note that these materials have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.
+
+### Introduction
+
+Sports leagues are often compared by how balanced they are. In a highly balanced league, teams tend to be more evenly matched, and win percentages are more closely grouped together. In a less balanced league, stronger teams separate more clearly from weaker teams, creating a wider spread in team performance.
+
+In this worksheet, students analyze team performance data from the NHL and KHL during the 2024-25 season. The main question is whether one league appears to have more parity than the other. Students compare win percentage distributions, calculate spread-based parity metrics, and use randomization tests to evaluate whether observed differences are large enough to be meaningful.
+
+Throughout the activity, students will practice core data analysis skills including creating comparable variables across datasets, combining league data into one tidy dataset, visualizing distributions, calculating summary statistics such as IQR and P90–P10, and using permutation tests to compare groups.
+
+This activity is especially useful for introducing students to sports analytics and randomization-based inference. It also gives students a practical example of how statistical thinking can be used to move beyond visual impressions and test whether differences between groups may be meaningful.
+
+::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+This activity is suitable for a single class period or as a short out-of-class lab.
+:::
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this activity, you will be able to:
+
+1. Create comparable performance variables across two sports datasets.
+2. Visualize and compare distributions across groups.
+3. Use spread metrics such as IQR and P90–P10 to measure league parity.
+4. Run and interpret a randomization test for comparing leagues.
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+**Technology Requirement:**
+
+This activity requires `R` with familiarity in `Quarto` documents and `tidyverse` tools, especially `dplyr`, `readr`, and `ggplot2`. Students will also use simulation-based thinking to run permutation tests.
+:::
+
+### Data
+
+You will work with two datasets:
+
+- [nhl_20245.csv](nhl_20245.csv): NHL team summary stats for the 2024-25 season
+- [khl_20245.csv](khl_20245.csv): KHL team summary stats for the 2024-25 season
+
+The nhl_20245.csv dataset contains team-level season performance statistics for NHL teams. Each row represents one team. Students will create comparable variables such as WinPerc, GF_pg, and GA_pg during the analysis process.
+
+<details> <summary><b>Variable Descriptions: <code>nhl_20245.csv</code> (NHL Team Stats)</b></summary>
+
+| Variable  | Description                   |
+|-----------|-------------------------------|
+| Team      | Team name                     |
+| Season    | Season                        |
+| GP        | Games played                  |
+| W         | Wins                          |
+| L         | Losses                        |
+| T         | Ties                          |
+| OT        | Overtime losses               |
+| P         | Points                        |
+| P%        | Point percentage              |
+| RW        | Regulation wins               |
+| ROW       | Regulation plus overtime wins |
+| S/O Win   | Shootout games won            |
+| GF        | Goals for                     |
+| GA        | Goals against                 |
+| GF/GP     | Goals for per game played     |
+| GA/GP     | Goals against per game played |
+| SO        | Team shutouts                 |
+| PP%       | Power play percentage         |
+| PK%       | Penalty kill percentage       |
+| Net PP%   | Power play net percentage     |
+| Net PK%   | Penalty kill net percentage   |
+| Shots/GP  | Shots for per game            | 
+| SA/GP     | Shots against per game        |
+| FOW%      | Face-off win percentage       |
+
+</details>
+
+The khl_20245.csv dataset contains team-level season performance statistics for KHL teams. Students will create the same comparable variables so that NHL and KHL teams can be analyzed together.
+
+<details> <summary><b>Variable Descriptions: <code>khl_20245.csv</code> (KHL Team Stats)</b></summary>
+
+| Variable | Description                                     |
+|----------|-------------------------------------------------|
+| Team     | Team name                                       |
+| №        | Team ranking number                             |
+| GP       | Games played                                    |
+| W        | Wins                                            | 
+| OTW      | Overtime wins                                   |
+| SOW      | Shootout wins                                   |
+| SOL      | Shootout losses                                 |
+| OTL      | Overtime losses                                 |
+| L        | Losses                                          |
+| PTS      | Points                                          |
+| SOA      | Shutouts against                                |
+| SO       | Shutouts                                        |
+| GF       | Goals for                                       |
+| GA       | Goals allowed                                   |
+| PIM      | Penalty minutes                                 |
+| PIMA     | Penalty minutes against                         |
+| TkA      | Takeaways                                       |
+| P.Intc   | Pass interceptions                              |
+| GvA      | Giveaways                                       |
+| TIE      | Even strength team time on ice                  |
+| TIE/G    | Average even strength team time on ice per game |
+| TIEN     | Empty net team time on ice                      |
+| TIEN/G   | Average empty net team time on ice per game     |
+
+</details>
+
+Students will create the following derived variables during the worksheet:
+
+<details> <summary><b>Derived Variables</b></summary>
+
+| Variable | Description                                                   |
+|----------|---------------------------------------------------------------|
+| league   | League label: NHL or KHL                                      |
+| team     | Team name                                                     |
+| WinPerc  | Win percentage, calculated as Wins / GamesPlayed              |
+| GF_pg    | Goals for per game, calculated as GF / GamesPlayed            |
+| GA_pg    | Goals against per game, calculated as GA / GamesPlayed        |
+| BT       | Bradley–Terry-inspired average pairwise win probability score |
+
+</details>
+
+#### Data Sources
+
+[https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50](https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50){target="_blank"}
+
+[https://en.khl.ru/stat/teams/1288/](https://en.khl.ru/stat/teams/1288/){target="_blank"}
+
+### Materials
+
+- [Class handout](worksheet.qmd)
+
+- Solutions:
+  + [Quarto with visible R code](answerkey.qmd)
+  + [HTML with hideable R code](answerkey.html)
+
+::: {.callout-note collapse="true" title="Conclusion" appearance="minimal"}
+Through this module, students work with two real-world sports datasets and build a complete analysis workflow from raw team statistics to interpretation. They begin by creating comparable variables for NHL and KHL teams, then combine the datasets into one tidy structure for league-level comparison.
+
+The activity highlights an important idea in applied data science: comparisons are only meaningful when variables are constructed consistently across groups. By calculating win percentage, goals for per game, and goals against per game in the same way for both leagues, students create a fair basis for analysis.
+
+The final visualizations, parity metrics, randomization tests, and Bradley–Terry-inspired score encourage students to think carefully about what “parity” means. Rather than relying only on which league has the best or worst teams, students learn to measure how spread out team performance is and evaluate whether the observed differences could reasonably occur by chance.
+:::
+
+### Additional Reading
+
+- Introduction to Data Wrangling with dplyr [https://dplyr.tidyverse.org/](https://dplyr.tidyverse.org/){target="_blank"}
+
+- Data Visualization with ggplot2 
+[https://ggplot2.tidyverse.org/](https://ggplot2.tidyverse.org/){target="_blank"}
+
+- Randomization in Statistics and Experimental Design [https://www.statisticshowto.com/randomization-experimental-design/](https://www.statisticshowto.com/randomization-experimental-design/){target="_blank"}
+
+- Creating a Ratings Model with Bradley-Terry [https://www.dratings.com/creating-a-ratings-model-with-bradley-terry/](https://www.dratings.com/creating-a-ratings-model-with-bradley-terry/){target="_blank"}
