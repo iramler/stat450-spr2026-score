@@ -76,35 +76,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="index_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -213,10 +184,10 @@ The format of the result books is generally similar although not the same. Below
 <a href="https://xhimg.iwuf.org/xhimg/soft/251113/2025-10th-World-Kungfu-Championships-Results-Book.pdf">10th World Kungfu Championships, 2025</a></p>
 </section>
 </section>
-<section id="scraping" class="level2">
+<section id="scraping" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="scraping">Scraping</h2>
-<p>Data scraping is the activity of taking information from a website or computer screen and putting it into an ordered document on a computer.[^1]</p>
-<p>The process of <em>scraping data</em> can look very different depending on the format the data is originally being sourced from, the ideal end result or format of the scraping process, and the chosen scraping method. Most understandably, it can be natural to assume that the <em>source</em> and <em>goal</em> will dictate the <em>method</em>, however this is a flexible process and preference is welcome.</p>
+<p>Data scraping is the activity of taking information from a website or computer screen and putting it into an ordered document on a computer<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Cambridge Dictionary. “Data Scraping.” <span class="citation" data-cites="CambridgeWords">@CambridgeWords</span>, 12 Feb.&nbsp;2025, dictionary.cambridge.org/us/dictionary/english/data-scraping.</p></div></div><p>The process of <em>scraping data</em> can look very different depending on the format the data is originally being sourced from, the ideal end result or format of the scraping process, and the chosen scraping method. Most understandably, it can be natural to assume that the <em>source</em> and <em>goal</em> will dictate the <em>method</em>, however this is a flexible process and preference is welcome.</p>
 <p>Since the <em>source</em> in this case is a <code>pdf</code> file, and the <em>goal</em> a <code>csv</code> file, the scraping <em>method</em> was via Adobe Acrobat Pro. This program has excellent reading functionalities that allow field detection for text export.</p>
 <p>Once the desired information fields from the tables in the result book are selected for scraping, the program iteratively goes through each page selecting the chosen fields and exporting the information into columns of a table of a <code>csv</code> spreadsheet.</p>
 <p>The same general process was repeated for each one of the four result books from 7th to 10th edition.<br>
@@ -282,13 +253,13 @@ The format of the result books is generally similar although not the same. Below
 <p>Sample preview of the tables that compose the result books for each year of the competition available online and used for this module.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="%22images/result_table_year_7.png%22" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Sample Result Table (7th WKFC)"><img src="%22images/result_table_year_7.png%22" class="img-fluid figure-img" alt="Sample Result Table (7th WKFC)"></a></p>
+<p><a href="result_table_year_7.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Sample Result Table (7th WKFC)"><img src="result_table_year_7.png" class="img-fluid figure-img" style="width:50.0%" alt="Sample Result Table (7th WKFC)"></a></p>
 <figcaption>Sample Result Table (7th WKFC)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="%22result_table_year_10-.png%22" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Sample Result Table (10th WKFC)"><img src="%22result_table_year_10-.png%22" class="img-fluid figure-img" alt="Sample Result Table (10th WKFC)"></a></p>
+<p><a href="result_table_year_10-.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Sample Result Table (10th WKFC)"><img src="result_table_year_10-.png" class="img-fluid figure-img" style="width:50.0%" alt="Sample Result Table (10th WKFC)"></a></p>
 <figcaption>Sample Result Table (10th WKFC)</figcaption>
 </figure>
 </div>
@@ -304,13 +275,15 @@ Afterwards, it is imperative to have a goal presentation for the data. This is a
 <p>Notepad++ was used as a supplementary tool for intermediate text preprocessing, particularly in stages where bulk string manipulation was more efficiently handled outside of R or Excel. The goal was not to replace these environments, but to streamline operations that are cumbersome when working within cell-based or syntax-constrained systems.</p>
 <p>The workflow involved temporarily exporting individual columns from Excel into Notepad++, performing targeted text transformations, and reinserting the cleaned output back into Excel while preserving the original row order. This approach ensured that no observations were lost or misaligned during the process.</p>
 <p>Notepad++ proved especially useful for operations that require direct manipulation of raw text, including:</p>
-<p>Line operations (e.g., removing or duplicating specific rows) Blank/whitespace management (e.g., deleting empty lines or trimming irregular spacing) Global find-and-replace with extended search modes (including regex support)</p>
+<ul>
+<li>Line operations (e.g., removing or duplicating specific rows)</li>
+<li>Blank/whitespace management (e.g., deleting empty lines or trimming irregular spacing)</li>
+<li>Global find-and-replace with extended search modes (including regex support)</li>
+</ul>
 <p>A key advantage of Notepad++ is its support for column-mode (multi-cursor) editing, which allows simultaneous modification across multiple lines at the same character position. This functionality enables efficient correction of systematic formatting issues that would be difficult to address in Excel, where edits are typically confined to individual cells.</p>
 <p>It is important to note that many of these transformations are technically achievable in R or Excel. However, Excel lacks native support for regular expressions and multi-line text editing, and while R provides powerful string-processing capabilities, it may be less efficient for rapid, exploratory cleanup of visibly inconsistent text. In this context, Notepad++ serves as a practical intermediary for quick, low-overhead preprocessing.</p>
-<p>Within Excel, its strengths were leveraged for complementary tasks such as filtering, sorting, and basic data validation. For instance, filtering was used to identify missing values (NAs), while sorting facilitated the detection of duplicate or inconsistently labeled entries. Redundant columns (e.g., bib number, group events, rank) were also removed at this stage.</p>
-<div class="callout--note" data-collapse="true" title="Methodological note" data-appearance="minimal">
-<p>The use of multiple tools reflects a pragmatic approach to data cleaning, where each environment is applied according to its strengths. Notepad++ is particularly effective for rapid, large-scale text editing, while Excel and R provide stronger support for structured data manipulation and reproducible analysis. This division of labor improves both efficiency and transparency in the overall workflow.</p>
-</div>
+<p>Within Excel, its strengths were leveraged for complementary tasks such as filtering, sorting, and basic data validation. For instance, filtering was used to identify missing values (NAs), while sorting facilitated the detection of duplicate or inconsistently labeled entries.</p>
+<p>The work on Notepad++ was then completed using RStudio.</p>
 </section>
 <section id="rstudio" class="level4">
 <h4 class="anchored" data-anchor-id="rstudio">RStudio</h4>
@@ -362,13 +335,16 @@ Afterwards, it is imperative to have a goal presentation for the data. This is a
 </ul>
 <p>Following extraction, minor post-processing steps (e.g., trimming whitespace or standardizing labels) can be applied to finalize the dataset.</p>
 <div class="callout--note" data-collapse="true" title="Methodological note" data-appearance="minimal">
-<p>While alternative approaches—such as iterative substring removal or delimiter-based splitting—may yield correct results in specific cases, they are generally less robust and harder to justify in a formal data processing pipeline. Regex-based extraction provides a more principled and reproducible solution, particularly when working with semi-structured textual data.</p>
+<p>While alternative approaches such as iterative substring removal or delimiter-based splitting may yield correct results in specific cases, they are generally less robust and harder to justify in a formal data processing pipeline.</p>
+<p>Regex-based extraction provides a more principled and reproducible solution, particularly when working with semi-structured textual data.</p>
 </div>
 </section>
 <section id="regular-expressions" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="regular-expressions">Regular expressions</h4>
-<p>A regular expression (<em>regex</em> for short) is a special text string for describing a search pattern.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> These expressions are very useful to identify a specific pattern in text. An example of regular expression used to clean up some of the strings in the WKFC data is:</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Regular-Expressions.info - Regex Tutorial, Examples and Reference - Regexp Patterns. Www.regular-Expressions.info, www.regular-expressions.info.</p></div></div><p><span class="math display">\[^.*(?=.$)\]</span></p>
+<p>A regular expression (<em>regex</em> for short) is a special text string for describing a search pattern.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> These expressions are very useful to identify a specific pattern in text. An example of regular expression used to clean up some of the strings in the WKFC data is:</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Regular-Expressions.info - Regex Tutorial, Examples and Reference - Regexp Patterns. Www.regular-Expressions.info, www.regular-expressions.info.</p></div></div><div class="fullwidth">
+<p>^.*(?=.$)</p>
+</div>
 <p>This expression reads as <strong>“everything from the start of the string up to (but not including) the final character”</strong>, and it appears in the following code to remove all the information before the group-identifying letter A through D (exclusive to the 7th championship).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -417,13 +393,19 @@ Afterwards, it is imperative to have a goal presentation for the data. This is a
 <div class="no-row-height column-margin column-container"><div class="">
 <p>The argument <code>too_few = "align_start"</code> ensures that if a string doesn’t match enough parts to fill both outputs, the available text is aligned from the beginning rather than causing an error.</p>
 </div><div class="">
-<p>The regular expression in the code to produce this module was generated using the online tool <a href="subiregex.com">SubiRegex</a>, an free English to Regex converter created by <a href="https://github.com/legendkong">Jonathan Kong Boon Lieng</a> in 2023.</p>
+<p>The regular expression in the code to produce this module was generated using the online tool <a href="https://www.subiregex.com">SubiRegex</a>, an free English to Regex converter created by <a href="https://github.com/legendkong">Jonathan Kong Boon Lieng</a> in 2023.</p>
 </div></div>
 </section>
 </section>
 <section id="materials" class="level2">
 <h2 class="anchored" data-anchor-id="materials">Materials</h2>
-<p>This module does not include specific materials of handouts to support the content. The result books are available for reference in the <a href="#data">Data section</a>:</p>
+<p>This module does not include specific materials of handouts to support the content. The result books are available for reference in the <a href="#data">Data section</a>. The usable <code>csv</code> files from each data-cleaning process are listed below in chronological order:</p>
+<ul>
+<li><p><strong>7th</strong>: <a href="kungfu_7.csv">7th World Kungfu Championships, 2017 Clean Data set</a></p></li>
+<li><p><strong>8th</strong>: <a href="kungfu_8.csv">8th World Kungfu Championships, 2019 Clean Data set</a></p></li>
+<li><p><strong>9th</strong>: <a href="kungfu_9.csv">9th World Kungfu Championships, 2023 Clean Data set</a></p></li>
+<li><p><strong>10th</strong>: <a href="kungfu_10.csv">10th World Kungfu Championships, 2025 Clean Data set</a></p></li>
+</ul>
 </section>
 
 

@@ -72,7 +72,12 @@ For this edition the result book is separated into the International group and t
 
 ## Scraping
 
-Data scraping is the activity of taking information from a website or computer screen and putting it into an ordered document on a computer.[^1]
+Data scraping is the activity of taking information from a website or computer screen and putting it into an ordered document on a computer[^1].
+
+[^1]: Cambridge Dictionary. “Data Scraping.” 
+@CambridgeWords, 12 Feb. 2025, 
+dictionary.cambridge.org/us/
+dictionary/english/data-scraping.
 
 The process of _scraping data_ can look very different depending on the format the data is originally being sourced from, the ideal end result or format of the scraping process, and the chosen scraping method. Most understandably, it can be natural to assume that the _source_ and _goal_ will dictate the _method_, however this is a flexible process and preference is welcome.
 
@@ -110,9 +115,9 @@ In addition to the information concerning the athletes in the competition, the d
 
 Sample preview of the tables that compose the result books for each year of the competition available online and used for this module.
 
-![Sample Result Table (7th WKFC)]("images/result_table_year_7.png")
+![Sample Result Table (7th WKFC)](result_table_year_7.png){width=50%}
 
-![Sample Result Table (10th WKFC)]("result_table_year_10-.png")
+![Sample Result Table (10th WKFC)](result_table_year_10-.png){width=50%}
 
 
 ## Cleaning Data
@@ -130,20 +135,17 @@ The workflow involved temporarily exporting individual columns from Excel into N
 
 Notepad++ proved especially useful for operations that require direct manipulation of raw text, including:
 
-Line operations (e.g., removing or duplicating specific rows)
-Blank/whitespace management (e.g., deleting empty lines or trimming irregular spacing)
-Global find-and-replace with extended search modes (including regex support)
+*   Line operations (e.g., removing or duplicating specific rows)
+*   Blank/whitespace management (e.g., deleting empty lines or trimming irregular spacing)
+*   Global find-and-replace with extended search modes (including regex support)
 
 A key advantage of Notepad++ is its support for column-mode (multi-cursor) editing, which allows simultaneous modification across multiple lines at the same character position. This functionality enables efficient correction of systematic formatting issues that would be difficult to address in Excel, where edits are typically confined to individual cells.
 
 It is important to note that many of these transformations are technically achievable in R or Excel. However, Excel lacks native support for regular expressions and multi-line text editing, and while R provides powerful string-processing capabilities, it may be less efficient for rapid, exploratory cleanup of visibly inconsistent text. In this context, Notepad++ serves as a practical intermediary for quick, low-overhead preprocessing.
 
-Within Excel, its strengths were leveraged for complementary tasks such as filtering, sorting, and basic data validation. For instance, filtering was used to identify missing values (NAs), while sorting facilitated the detection of duplicate or inconsistently labeled entries. Redundant columns (e.g., bib number, group events, rank) were also removed at this stage.
+Within Excel, its strengths were leveraged for complementary tasks such as filtering, sorting, and basic data validation. For instance, filtering was used to identify missing values (NAs), while sorting facilitated the detection of duplicate or inconsistently labeled entries.
 
-::: {.callout--note collapse="true" title="Methodological note" appearance="minimal"}
-
-The use of multiple tools reflects a pragmatic approach to data cleaning, where each environment is applied according to its strengths. Notepad++ is particularly effective for rapid, large-scale text editing, while Excel and R provide stronger support for structured data manipulation and reproducible analysis. This division of labor improves both efficiency and transparency in the overall workflow.
-:::
+The work on Notepad++ was then completed using RStudio.
 
 #### RStudio
 
@@ -192,17 +194,20 @@ Following extraction, minor post-processing steps (e.g., trimming whitespace or 
 
 ::: {.callout--note collapse="true" title="Methodological note" appearance="minimal"}
 
-While alternative approaches—such as iterative substring removal or delimiter-based splitting—may yield correct results in specific cases, they are generally less robust and harder to justify in a formal data processing pipeline. Regex-based extraction provides a more principled and reproducible solution, particularly when working with semi-structured textual data.
+While alternative approaches such as iterative substring removal or delimiter-based splitting may yield correct results in specific cases, they are generally less robust and harder to justify in a formal data processing pipeline. 
+
+Regex-based extraction provides a more principled and reproducible solution, particularly when working with semi-structured textual data.
 :::
 
 #### Regular expressions
 
 A regular expression (_regex_ for short) is a special text string for describing a search pattern.[^2] These expressions are very useful to identify a specific pattern in text. An example of regular expression used to clean up some of the strings in the WKFC data is:
 
-$$^.*(?=.$)$$
+::: {.fullwidth}
+^.*(?=.$)
+:::
 
 This expression reads as **"everything from the start of the string up to (but not including) the final character"**, and it appears in the following code to remove all the information before the group-identifying letter A through D (exclusive to the 7th championship).
-
 
 [^2]: Regular-Expressions.info - Regex Tutorial, Examples and Reference - Regexp Patterns. Www.regular-Expressions.info, www.regular-expressions.info.
 
@@ -256,7 +261,7 @@ The argument `too_few = "align_start"` ensures that if a string doesn’t match 
 ::: 
 
 ::: column-margin
-The regular expression in the code to produce this module was generated using the online tool [SubiRegex](subiregex.com), an free English to Regex converter created by [Jonathan Kong Boon Lieng](https://github.com/legendkong) in 2023.
+The regular expression in the code to produce this module was generated using the online tool [SubiRegex](https://www.subiregex.com), an free English to Regex converter created by [Jonathan Kong Boon Lieng](https://github.com/legendkong) in 2023.
 :::
 
 
