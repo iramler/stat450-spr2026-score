@@ -1,0 +1,213 @@
+---
+title: "How Much Does 0.1 Seconds Matter? Time and Ranking in NCAA Men's 50 Freestyle"
+author:
+  - name: Kevin Euyoque
+    email: kevin.euyoque04@gmail.com
+    affiliations:
+      - ref: slu
+  - name: Ivan Ramler
+    email: iramler@stlawu.edu
+    affiliations:
+      - ref: slu
+affiliations:
+  - id: slu
+    name: St. Lawrence University
+date: "May 5, 2026"
+description: "A data visualization tutorial exploring how small differences in race time relate to rankings in NCAA men's 50 freestyle swimming."
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: true
+execute:
+  echo: false
+  warning: false
+  message: false
+categories:
+  - Sports Analytics
+  - Data Visualization
+  - NCAA Swimming
+  - R
+---
+
+## How Much Does a Fraction of a Second Matter?
+### Exploring Performance in NCAA Swimming
+
+In competitive swimming, races are often decided by fractions of a second. At the NCAA level, the difference between first place and fifth place can be extremely small sometimes less than half a second. Despite these tiny margins, the outcomes can be dramatically different.
+
+So how much does a small difference in time actually matter?
+
+In this module, we explore real NCAA swimming data to understand how race time relates to ranking in one event: the men’s 50 freestyle.
+
+
+## Learning Objectives
+
+- Understand how performance is measured in competitive swimming  
+- Explore how small differences in swim time impact rank  
+- Analyze the relationship between swim time and rank for one NCAA swimming event  
+- Interpret a linear regression model using a realistic 0.1-second change  
+
+
+## Focus Event: Men’s 50 Freestyle
+
+For this analysis, we focus on one event: the **men’s 50 freestyle**.
+
+This event is one of the shortest races in competitive swimming, which makes it ideal for studying how small time differences affect outcomes.
+
+The main variables we will use are:
+
+- **Swim time** (seconds)  
+- **Rank** (finishing position)
+
+Lower times are better, and lower ranks are also better.  
+So we expect that as swim time increases, rank will also increase.
+
+
+
+## Load and Prepare the Data
+
+```{r}
+library(tidyverse)
+library(readr)
+```
+
+```{r}
+swim_df <- read_csv("kevineuyoque/usa_swimming/SwimData.csv")
+
+swim_50_free_men <- swim_df |>
+  filter(Event == "50 Freestyle SCY Male", Sex == "M") |>
+  mutate(Swim_Time = as.numeric(Swim_Time)) |>
+  select(Event, Swimmer, Sex, Swim_Time, Rank) |>
+  drop_na(Swim_Time, Rank)
+
+swim_50_free_men
+```
+
+## Visualizing the Relationship
+
+We begin with a scatterplot to explore the relationship between swim time and rank.
+
+```{r}
+ggplot(swim_50_free_men, aes(x = Swim_Time, y = Rank)) +
+  geom_point(alpha = 0.6) +
+  scale_x_continuous(n.breaks = 8) +
+  labs(title = "Men's 50 Freestyle: Swim Time vs. Rank",
+    subtitle = "Slower times tend to correspond to worse rankings",
+    x = "Swim Time (seconds)",
+    y = "Rank") +
+  theme_minimal()
+```
+
+### What This First Graph Shows
+
+This scatterplot shows a clear pattern: as swim time increases, rank also tends to increase.
+
+In swimming, this means that slower times are connected to worse rankings. Since **rank 1 is the best**, moving upward in rank number means finishing lower in the standings.
+
+This is important because the x-axis only changes by small amounts. Even a few tenths of a second can separate many swimmers.
+
+
+## Adding a Regression Line
+
+The scatterplot shows the relationship visually, but we can also add a regression line to summarize the trend.
+
+```{r}
+ggplot(swim_50_free_men, aes(x = Swim_Time, y = Rank)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_x_continuous(n.breaks = 8) +
+  labs(title = "Men's 50 Freestyle: Regression Line",
+    subtitle = "The line summarizes how rank changes as swim time increases",
+    x = "Swim Time (seconds)",
+    y = "Rank") +
+  theme_minimal()
+```
+The upward trend means that swimmers with slower times usually have worse rankings.
+
+This fits what we would expect in a race. However, the important part is not just that slower swimmers rank lower. The important part is how quickly rank changes when time changes.
+
+In a short race like the 50 freestyle, even a small time difference can matter.
+
+
+## Building a Linear Model
+
+Next, we create a linear regression model using swim time to predict rank
+
+```{r}
+rank_model <- lm(Rank ~ Swim_Time, data = swim_50_free_men)
+
+summary(rank_model)
+```
+## Interpreting the Model Output
+
+From the regression results, the most important value is the **slope for Swim_Time**, which is:
+
+- **89.33**
+
+This tells us how rank changes as swim time increases
+
+
+### What Does the Slope Mean?
+
+A standard interpretation would say:
+
+- A **1-second increase** in swim time is associated with about a **89.33 increase in rank**
+
+However, this is not very realistic in this context.
+
+In a 50 freestyle race, a full second is an extremely large difference. NCAA swimmers are already competing at a very high level, so changes are much smaller
+
+
+## A More Realistic Interpretation: 0.1 Seconds
+
+Instead, we interpret a **0.1-second change**, which is much more realistic in swimming.
+
+```{r}
+0.1 * 89.326
+```
+
+Because lower rank is better, this means a swimmer who is **0.1 seconds slower** is predicted to finish about **9 places worse** in the rankings.
+
+This is a much more meaningful interpretation than using a full second. In elite sprint swimming, one second is a huge difference, but one tenth of a second is a realistic margin.
+
+
+## Model Strength
+
+The model also has an R-squared value of about **0.82**.
+
+This means that about **82% of the variation in rank** is explained by swim time.
+
+That is a strong relationship, which makes sense because rankings in swimming are directly connected to finishing times.
+
+## Why This Matters
+
+The main takeaway from this analysis is that small differences in time can have a large impact on competitive results.
+
+In the men’s 50 freestyle:
+
+- a 1-second change is too large to be a useful interpretation
+- a 0.1-second change is more realistic
+- a 0.1-second slower time is associated with about 9 places worse in ranking
+
+This shows why starts, turns, reaction time, and finishing technique matter so much in sprint events. Even a tiny improvement can shift a swimmer several places.
+
+
+## Student Check-In
+
+Answer the following questions based on the regression model:
+
+1. Why is a 1-second increase not the best interpretation for this event?
+2. What does a 0.1-second increase in swim time mean in terms of rank?
+3. Since lower rank is better, what does a positive slope tell us?
+4. Why might small time improvements matter more in the 50 freestyle than in longer events?
+
+
+## Conclusion
+
+In NCAA swimming, fractions of a second are not just small details. They can be the difference between finishing near the top or falling several places behind.
+
+For the men’s 50 freestyle, our model suggests that even a **0.1-second difference** is associated with a meaningful change in rank.
+
+This makes the 50 freestyle a strong example of how data can help explain competitive performance in sports.
+
