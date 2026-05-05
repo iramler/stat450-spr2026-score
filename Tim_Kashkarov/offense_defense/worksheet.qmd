@@ -1,0 +1,105 @@
+---
+title: "NHL vs KHL: Offense, Defense, and Winning"
+format: html
+---
+
+This worksheet compares NHL and KHL teams using one season of data.
+
+The main question is:
+
+**Are offense and defense related to winning differently in the NHL and KHL?**
+
+We will compare:
+
+- goals scored per game
+- goals allowed per game
+- win percentage
+
+# 0. Load Packages
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+# 1. Load the Data
+
+```{r}
+nhl_2024_25 <- read_csv("Tim_Kashkarov/offense_defense/nhl_20245.csv")
+khl_2024_25 <- read_csv("Tim_Kashkarov/offense_defense/khl_20245.csv")
+```
+
+# 2. Create Comparable Variables
+
+Create win percentage, goals scored per game, and goals allowed per game for each league.
+
+```{r}
+nhl_2024_25 <- nhl_2024_25 |>
+  transmute(
+    league = "NHL",
+    team = Team,
+    WinPerc = Wins / GamesPlayed,
+    GF_pg = GF / GamesPlayed,
+    GA_pg = GA / GamesPlayed)
+
+khl_2024_25 <- khl_2024_25 |>
+  transmute(
+    league = "KHL",
+    team = Team,
+    WinPerc = Wins / GamesPlayed,
+    GF_pg = GF / GamesPlayed,
+    GA_pg = GA / GamesPlayed)
+
+df <- bind_rows(nhl_2024_25, khl_2024_25)
+```
+
+# 3. Offense vs Winning
+
+Plot 2 graphs showing Win Percentage and Goals Scored per Game for both leagues. You may use facet_wrap() to have them look nicer. What does this graph tell us?
+
+```{r}
+ggplot(df, aes()) +
+  geom_point() +
+  geom_smooth() 
+```
+
+
+
+# 4. Defense vs Winning
+
+Plot 2 graphs showing Win Percentage and Goals Allowed per Game for both leagues. You may use facet_wrap() to have them look nicer. What does this graph tell us?
+
+```{r}
+ggplot(df, aes()) +
+  geom_point() +
+  geom_smooth() 
+```
+
+
+
+# 5. Correlation Summary
+
+Make offense and defense correlation summary for both leagues. What does this table tell us?  
+```{r}
+
+```
+
+
+
+# 6. Reflection Questions. Provide answer in 1-2 sentenses.
+
+1. Does offense seem related to winning?
+
+
+
+2. Does defense seem related to winning?
+
+
+
+3. Which relationship appears stronger in each league?
+
+
+
+4. Why should we be careful with this conclusion?
+
+

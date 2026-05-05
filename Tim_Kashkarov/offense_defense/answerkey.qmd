@@ -1,0 +1,122 @@
+---
+title: "NHL vs KHL: Offense, Defense, and Winning"
+format: html
+---
+
+This worksheet compares NHL and KHL teams using one season of data.
+
+The main question is:
+
+**Are offense and defense related to winning differently in the NHL and KHL?**
+
+We will compare:
+
+- goals scored per game
+- goals allowed per game
+- win percentage
+
+# 0. Load Packages
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+# 1. Load the Data
+
+```{r}
+nhl_2024_25 <- read_csv("Tim_Kashkarov/offense_defense/nhl_20245.csv")
+khl_2024_25 <- read_csv("Tim_Kashkarov/offense_defense/khl_20245.csv")
+```
+
+# 2. Create Comparable Variables
+
+Create win percentage, goals scored per game, and goals allowed per game for each league.
+
+```{r}
+nhl_2024_25 <- nhl_2024_25 |>
+  transmute(
+    league = "NHL",
+    team = Team,
+    WinPerc = Wins / GamesPlayed,
+    GF_pg = GF / GamesPlayed,
+    GA_pg = GA / GamesPlayed)
+
+khl_2024_25 <- khl_2024_25 |>
+  transmute(
+    league = "KHL",
+    team = Team,
+    WinPerc = Wins / GamesPlayed,
+    GF_pg = GF / GamesPlayed,
+    GA_pg = GA / GamesPlayed)
+
+df <- bind_rows(nhl_2024_25, khl_2024_25)
+```
+
+# 3. Offense vs Winning
+
+Plot 2 graphs showing Win Percentage and Goals Scored per Game for both leagues. You may use facet_wrap() to have them look nicer. What does this graph tell us?
+
+```{r}
+ggplot(df, aes(x = GF_pg, y = WinPerc)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~league) +
+  labs(
+    title = "Offense vs Winning",
+    x = "Goals Scored per Game",
+    y = "Win Percentage") +
+  theme_minimal()
+```
+
+The graph shows a positive relationship in both leagues. Teams that score more goals per game usually have higher win percentages. The KHL pattern appears especially noticeable because lower-scoring teams tend to have much lower win percentages.
+
+# 4. Defense vs Winning
+
+Plot 2 graphs showing Win Percentage and Goals Allowed per Game for both leagues. You may use facet_wrap() to have them look nicer. What does this graph tell us?
+
+```{r}
+ggplot(df, aes(x = GA_pg, y = WinPerc)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~league) +
+  labs(
+    title = "Defense vs Winning",
+    x = "Goals Allowed per Game",
+    y = "Win Percentage") +
+  theme_minimal()
+```
+
+The graph shows a negative relationship in both leagues. Teams that allow more goals per game usually have lower win percentages. This relationship looks especially clear in the NHL.
+
+# 5. Correlation Summary
+
+Make offense and defense correlation summary for both leagues. What does this table tell us? 
+```{r}
+df |>
+  group_by(league) |>
+  summarise(
+    corr_offense = cor(GF_pg, WinPerc, use = "complete.obs"),
+    corr_defense = cor(GA_pg, WinPerc, use = "complete.obs"),)
+```
+
+The offense correlation should be positive because more scoring is usually connected with more winning. The defense correlation should be negative because allowing more goals is usually connected with less winning.
+
+# 6. Reflection Questions. Provide answer in 1-2 sentenses.
+
+1. Does offense seem related to winning?
+
+Yes. In both leagues, teams that score more goals per game tend to have higher win percentages.
+
+2. Does defense seem related to winning?
+
+Yes. In both leagues, teams that allow fewer goals per game tend to win more often.
+
+3. Which relationship appears stronger in each league?
+
+Based on the plots, offense appears more strongly connected to winning in the KHL, while defense appears more strongly connected to winning in the NHL.
+
+4. Why should we be careful with this conclusion?
+
+This analysis only uses one season and only shows correlation. It does not prove that offense or defense directly causes a team to win more.
+
