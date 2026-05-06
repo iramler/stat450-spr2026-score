@@ -265,6 +265,35 @@ The regular expression in the code to produce this module was generated using th
 :::
 
 
+### Iteratively Separating a String into data Columns:
+
+1. 
+
+
+
+2. 
+
+
+
+3. 
+
+
+
+4. 
+
+
+5. 
+
+
+6. 
+
+
+7. 
+
+
+
+
+
 ## Materials
 
 This module does not include specific materials of handouts to support the content.
@@ -281,7 +310,9 @@ The usable `csv` files from each data-cleaning process are listed below in chron
 
 ## Activity
 
-It is your turn to come up with a solution to this cleaning challenge.
+It is your turn to come up with a solution to this cleaning challenge!
 
-1.  Download this [csv file](8TH-WORLD-KUNGFU.csv). This is the result form parsing the 8th World Kung Fu Championship's Result Book.
-2.  Using the [8th World Kungfu Championships,  2019 Clean Data set](kungfu_8.csv) as guiding north star, the techniques listed in this module and Subi Regex as a tool, challenge yourself to clean up the data set.
+For this module's activity, the focus is on the 7th edition of the championship.
+
+1.  Download this [csv file](7kf.csv). This is the result form parsing the 7th World Kung Fu Championship's Result Book.
+2.  Using the [7th World Kungfu Championships,  2017 Clean Data set](kungfu_7.csv) as guiding north star, the techniques listed in this module and Subi Regex as a tool, challenge yourself to clean up the data set.
