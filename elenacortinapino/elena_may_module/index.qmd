@@ -279,4 +279,9 @@ The usable `csv` files from each data-cleaning process are listed below in chron
 
 *   **10th**: [10th World Kungfu Championships, 2025 Clean Data set](kungfu_10.csv)
 
+## Activity
 
+It is your turn to come up with a solution to this cleaning challenge.
+
+1.  Download this [csv file](8TH-WORLD-KUNGFU.csv). This is the result form parsing the 8th World Kung Fu Championship's Result Book.
+2.  Using the [8th World Kungfu Championships,  2019 Clean Data set](kungfu_8.csv) as guiding north star, the techniques listed in this module and Subi Regex as a tool, challenge yourself to clean up the data set.
