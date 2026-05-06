@@ -194,9 +194,12 @@ Create a boxplot with `AgeClass` on the x-axis and `Bench` on the y-axis to look
 
 <summary><b>Click to reveal code</b></summary>
 ```{r echo=TRUE, eval=FALSE}
-ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
-  geom_boxplot() +
+boxplot <- ggplot(data = female_bench_ranked, aes(x = AgeClass, y = Bench)) +
+  geom_boxplot(fill = "#d55353") +
+  labs(x = "Age Class", y = "Bench Weight", 
+       title = "Boxplot of Bench Weight by Age Class") +
   theme_minimal()
+ggsave("boxplot.png", boxplot)
 ```
 </details>
 

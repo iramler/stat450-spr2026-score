@@ -64,7 +64,7 @@ ggplot(data = crew2k_work, aes(x = test, y = Split)) +
 crew2k_goals <- crew2k |> mutate(Diff = as.numeric((Split - Goal)/ 60)) |>
   mutate(Change = case_when(
                             Diff < 0 ~ "did not meet goal",
-                            Diff >= 0 ~ "met goal"))  |>
+                            Diff >= 0 ~ "met goal"))
   
 ## 32 overachieved out of 71
 prop.test(x = 32, n = 71, p = 0.5, 
@@ -74,8 +74,8 @@ ggplot(data = crew2k_goals, aes(x = Change, y = Split)) +
   geom_jitter(width = 0.2)
 ```
 
-
 Confidence Intervals
+
 ```{r}
 erg_conf <- erg_df |>
   filter((Sex != 1 | Trial != 1))|> 
@@ -103,8 +103,12 @@ rowplot <- ggplot(crew2k_goals, aes(x = Goal, y = Split)) +
 
 ggsave("rowplot.png", rowplot)
 
-$$\bar{x} \pm t_{\alpha/2, n-1} \left( \frac{s}{\sqrt{n}} \right)$$
-  
-  
+rowplot <- ggplot(crew2k_goals, aes(x = Goal, y = Diff)) +
+  geom_point(size = 3, aes(colour = Change)) +
+    scale_colour_manual(values = c(
+    "did not meet goal" = "#fcbbb1",
+    "met goal" = "#d55353")) +
+  geom_line(y = 0, colour = "#d55353") +
+  labs(title = "Difference between Achieved Split and Goal", x = "Goal Split per 500 meters", y = "Difference (in seconds)", colour = "Athletes who:") +
+  theme_minimal()
 ```
-
