@@ -21,9 +21,10 @@ library(ggplot2)
 
 
 ```{r}
+# Reading the data for the 8th
 kf_8 <- read.csv("8kf.csv")
 
-head(kf_8, 25)
+head(kf_8, 5)
 ```
 
 
