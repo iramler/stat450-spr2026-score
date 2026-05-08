@@ -218,6 +218,7 @@ This expression reads as **"everything from the start of the string up to (but n
 
 ```{r}
 library(tidyverse)
+library(dplyr)
 
 sevenyear <- read.csv("7kf.csv") # reading the scraped data
 
@@ -303,16 +304,11 @@ The first step of the cleaning process was therefore focused on systematically s
 from the `Form` column into usable variables.
 
 ```{r}
+# Library loading and reading data
 library(tidyverse)
 kungfu<- read.csv("kungfu_data_dirty.csv")
-head(kungfu, 25)
-print(head(kungfu, 25))
+
 ```
-
-
-::: {.text-center}
-Men's First-type bare-hand routines_Bajiquan Group D
-:::
 
 
 #### Step 1 — Removing Group Event Categories
@@ -328,14 +324,8 @@ kungfu_strings <- kungfu |> select(-Page) |>
          Form != "Other Duilian") |>
   # Removing "duilian" events because that's a group event
   separate_wider_regex(Form, c(sex = "^.", Form = ".*"))
-  # The Sex column with the first letter of the words "Men's" and "Women's"
+  # The "Sex" column with the first letter of the words "Men's" and "Women's"
 ```
-
-
-
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
 
 
 #### Step 2 — Removing Prefix Text from Form Labels
@@ -344,20 +334,19 @@ After extracting the initial sex identifier, the remaining strings still contain
 Regular expression separation was therefore used to isolate the meaningful portion of the form description while discarding the leading text artifacts introduced during parsing.
 
 ```{r}
-# this code gets rid of the end of "en's and "omen's"
+# This code gets rid of the end of "en's and "omen's"
 getting_rid_of_up_to_form <- kungfu_strings |>
+  # Placing characters up to the first space in column "Delete" for elimination
   separate_wider_regex(Form,
   patterns = c(
     delete = "^[^\\s]+",
     "\\s+",
+    # Column "rest" stores the rest of the string for further edition
     rest = ".*"))
 
 ```
 
 
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
 
 #### Step 3 — Separating Form and Group Information
 The remaining string still contained both the kung fu form name and the competition group designation.
@@ -369,46 +358,28 @@ To separate these variables, the cleaning process identified the first occurrenc
 This transformation converted the previously unstructured text field into analytically usable categorical variables.
 
 ```{r}
-# this code creates the form column by selecting everything up to the capital G for "Group" and by doing that creates the column for Group
-
 selecting_the_form <- getting_rid_of_up_to_form |>
-  select(-delete) |>  separate_wider_regex(rest,
+  select(-delete) |>  
+  # Every character in the string before "G" gets placed in column "Form"
+  separate_wider_regex(rest,
   patterns = c(
     Form = ".*?(?=G)", 
+    # Everything else in the string goes in column "Group"
     Group = ".*"))
 ```
 
 
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
-
-
-#### Step 4 — Final Corrected Dataset
-At this stage, the remaining work consisted primarily of repairing missing or malformed group labels that were lost during the original parsing process of the result book.
-
-The fully corrected and manually verified dataset was then re-imported as the finalized clean dataset kf.
-
-```{r}
-kf <- read.csv("kungfu.csv")
-```
-
-
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
-
-
-#### Step 5 — Removing Defaulted Athletes
+#### Step 4 — Removing Defaulted Athletes
 Before conducting statistical analysis, athletes who defaulted from competition were removed. Observations with missing scores were also excluded.
 
 Additionally, non-analytical columns such as ranking remarks and indexing variables were dropped.
 
 ```{r}
-# the number of total athletes before removing defaulted athletes is 2129
-sample_kungfu <- kf|> filter(Rank != "Default") |> drop_na(Score) |> select(-X, -Rank, -Remark)
-# the number of athletes after removing defaulting athletes is 1989
-# difference is 140 athletes.
+library(tidyr)
+kf <- read.csv("kungfu.csv")
+# Removing defaulted athletes
+sample_kungfu <- kf|> filter(Rank != "Default") |>
+  drop_na(Score) |> select(-X, -Rank, -Remark)
 ```
 
 ::: column-margin
@@ -416,12 +387,7 @@ The filtering process reduced the dataset from 2129 athletes to 1989 valid athle
 :::
 
 
-
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
-
-#### Step 6 — Standardizing Form Names
+#### Step 5 — Standardizing Form Names
 One major issue in the parsed dataset involved inconsistent naming conventions for the same kung fu forms. Variations in capitalization, spelling, spacing, and terminology created duplicate categories that referred to identical events.
 
 To resolve this, the `fct_recode()` function was used to standardize form labels into unified categories.
@@ -461,17 +427,16 @@ usable_sample_kungfu <- read.csv("sample_kungfu.csv") |>
   # Taiji weapon variations
   "Single weapon routines Other Taiji weapon" = "Single weapon routines Other taiji weapon",
   "Single weapon routines Other Taiji weapon" = "Single weapon routines Other Taiji weapon"
-)) |> group_by(Group, recoded_forms) |> summarise(mean_score = mean(Score), .groups = "drop")|> pivot_wider(names_from = Group, values_from = mean_score)
+)) |> 
+  group_by(Group, recoded_forms) |> 
+  summarise(mean_score = mean(Score), .groups = "drop") |> 
+  pivot_wider(names_from = Group, values_from = mean_score)
 
 ```
 
 
 
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
-
-#### Step 8 — Missing Data Imputation Using KNN
+#### Step 7 — Missing Data Imputation Using KNN
 
 After cleaning and standardization, the dataset still contained missing values. 
 
@@ -484,15 +449,11 @@ library(VIM)
 
 kf10_imp_knn <- kNN(usable_sample_kungfu, k = 5) |>
   # Columns selected for removal 
-  select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp, -recoded_forms_imp) 
+  select(-`Group A_imp`,-`Group B_imp`,-`Group C_imp`,-`Group D_imp`,-`Group E_imp`,-`Group F_imp`, -recoded_forms_imp) 
 # 'k' can be adjusted as needed
 ```
 
 
-
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
 
 
 ::: column-margin
@@ -509,7 +470,8 @@ The function `vis_miss()` comes from the `visdat` package. More information abou
 :::
  
 ```{r}
-mssing <- vis_miss(usable_sample_kungfu)
+library(visdat)
+vis_miss(usable_sample_kungfu|> select(-recoded_forms))
 ```
 
 ::: column-margin
@@ -523,28 +485,12 @@ Multiple Imputation by Chained Equations (MICE) ‘fills in’ (imputes) missing
 Predictive Mean Matching (`pmm()`) is the procedure within MICE imputation that selects a data point from the original, nonmissing data which has a predicted value close to the predicted value of the missing sample. The closest N values are chosen as candidates, from which a value is chosen at random. More information about this useful algorithm is available online on the ["The MICE Algorithm" by Sam Wilson](https://cran.r-project.org/web/packages/miceRanger/vignettes/miceAlgorithm.html).
 :::
 
-#### Step 9 — Final KNN Imputation for Clustering Analysis
-For the final clustering-oriented dataset, KNN imputation was again applied using k = 5.
 
-The rationale for this approach is that clustering methods depend heavily on local similarity structures, making neighborhood-based imputation especially appropriate for preserving relational patterns within the data.
-
-
-```{r}
-library(VIM)
-
-kf10_imputed <- kNN(kungfu_10, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp, -recoded_forms_imp)  # You can adjust 'k' as needed
-```
-
-
-::: {.text-center}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
-:::
-
-#### Step 10 — Final Matrix
+#### Step 8 — Final Matrix
 The [fully cleaned and imputed matrix](mat_10kf.csv) was exported for use in clustering, visualization, and downstream statistical analysis.
 
 ```{r}
-write.csv(kf10_imputed, "matrix_kf10.csv")
+write.csv(kf10_imp_knn, "matrix_kf_10.csv")
 ```
 
 
