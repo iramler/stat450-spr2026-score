@@ -12,7 +12,7 @@ format:
     embed-resources: false
 execute: 
   echo: fenced
-  eval: false
+  eval: true
   warning: false
   message: false
 reference-location: margin
@@ -207,7 +207,7 @@ Regex-based extraction provides a more principled and reproducible solution, par
 
 A regular expression (_regex_ for short) is a special text string for describing a search pattern.[^2] These expressions are very useful to identify a specific pattern in text. An example of regular expression used to clean up some of the strings in the WKFC data is:
 
-::: {.fullwidth}
+::: {.text-center}
 ^.*(?=.$)
 :::
 
@@ -217,6 +217,8 @@ This expression reads as **"everything from the start of the string up to (but n
 
 
 ```{r}
+library(tidyverse)
+
 sevenyear <- read.csv("7kf.csv") # reading the scraped data
 
 sevenyearworking <- sevenyear |> 
@@ -254,13 +256,34 @@ sevenyearworking <- sevenyear |>
 ```
 
 
+The output of this code gives us a more usable dataframe with the right information in the corresponding columns:
+
+
+::: {#tbl-panel layout-ncol=1}
+
+|Team |	Athlete	| Score |	Remark	| Sex	| Group	| Form |
+|------|------|-------|-------|--------|-------|------|
+|RUS	|Tatiana SHURMISTROVA	|9.05	|1st Category Prize	|W	|Group C	|Traditional Chen Style Taijiquan|
+|GEO	|NINO CHIKHLADZE		|9.04	|2nd Category Prize	|W	|Group C	|Traditional Chen Style Taijiquan|
+|FRA	|NGUYEN Diana			|9.03	|2nd Category Prize	|W	|Group C	|Traditional Chen Style Taijiquan|
+|JPN	|YOKO NAKATA			|8.89	|3rd Category Prize	|W	|Group C	|Traditional Chen Style Taijiquan|
+|ITA	|Stefania GAVIANO		|8.88	|3rd Category Prize	|W	|Group C	|Traditional Chen Style Taijiquan|
+|AUS	|Krista Brennan			|8.87	|3rd Category Prize	|W	|Group C	|Traditional Chen Style Taijiquan|
+|GER	|Anke Zhang				|8.86	|	|W	|Group C	|Traditional Chen Style Taijiquan                |
+|POL	|Anna Kubiak			|8.85	|	|W	|Group C	|Traditional Chen Style Taijiquan                |
+|CZE	|Jana Neradova			|8.81	|	|W	|Group C	|Traditional Chen Style Taijiquan                |
+
+: Sample Output
+:::
+
+
 ::: column-margin
+This code shows a glimpse of the general workflow for the cleanup process of the 7th WKFC data.\
+\
+\
+\
 The argument `too_few = "align_start"` ensures that if a string doesn’t match enough parts to fill both outputs, the available text is aligned from the beginning rather than causing an error.
 ::: 
-
-\
-\
-\
 \
 
 ::: column-margin
@@ -268,85 +291,29 @@ The regular expression in the code to produce this module was generated using th
 :::
 
 
-### Iteratively Separating a String into data Columns:
-
-**1. Reading the data into RStudio**
-```{r}
-# Reading the data for the 8th WKFC parsed results
-kf_8 <- read.csv("8kf.csv")
-
-# View 5 lines
-head(kf_8, 5)
-```
-
-::: column-margin
-Our focus at this stage is the column `Form`
-:::
-
-**2. Step 1: Separate the Form column**
-Goal: Separate strings in the Form column into 3 columns for Sex, Group and Form.
-
-```{r}
-first_step <- kf_8 |> 
-  # The first character of the string in Form goes to column Sex
-  # The rest of the string goes to Form for further edit
-  separate_wider_regex(Form, c(Sex = "^.", Form = ".*")) |>
-  
-  # From the remainder of the string now in Form, we delete everything up to
-  # the first capital G, everything else goes to column Group for further edit
-  separate_wider_regex(Form, c(delete = "^[^G]*", Group = ".*")) |> 
-  
-  # Iterative deletion of unneeded parts of the string
-  select (-delete)
-```
-
-::: column-margin
-Iterative deletion helps students see clearly which elements of the string are being removed.
-\
-\
-\
-Other, more efficient methods are also perfectly acceptable and recommended for processes like this. In practice, the method generally adapts to the type of data we are tasked with cleaning. Further, for cleaning strings, it is recommended to err on the clearer side, breaking down steps in case something has to be corrected or adjusted.
-:::
-
-
-**3. Separate the Form column**
-
-```{r}
-eightyearkungfu <- read.csv("working8thkungfu.csv")
-
-kungfu_8 <- eightyearkungfu |>
-  
-  separate_wider_regex(Group, c(Group = "^[^ ]+ [^ ]+", Form = ".*")) |
-  
-  separate_wider_regex(Form, c(Delete = "^[^a-zA-Z]*", Form = ".*")) |>
-  
-  select (-Delete)
-
-```
-
-**4. Writing the new clean data as a convenient `csv` file**
-
-```{r}
-write.csv(kungfu_8, "kungfu_8.csv")
-```
-
-
 ## 10th WKFC Data Cleaning
 
 This section focuses on the iterative cleanup process of the data used for the SCORE module [2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering](https://iramler.github.io/slu_score_preprints/early_drafts/martial_arts/kungfu_clustering/).
 
 
-The first step of the cleaning process was therefore focused on systematically separating
+The first step of the cleaning process was therefore focused on systematically separating\
 *   Athlete sex\
 *   Kung fu form category\
 *   Competition group \
-
-fro the `Form` column into usable variables.
+from the `Form` column into usable variables.
 
 ```{r}
+library(tidyverse)
 kungfu<- read.csv("kungfu_data_dirty.csv")
 head(kungfu, 25)
+print(head(kungfu, 25))
 ```
+
+
+::: {.text-center}
+Men's First-type bare-hand routines_Bajiquan Group D
+:::
+
 
 #### Step 1 — Removing Group Event Categories
 
@@ -364,6 +331,13 @@ kungfu_strings <- kungfu |> select(-Page) |>
   # The Sex column with the first letter of the words "Men's" and "Women's"
 ```
 
+
+
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
+
+
 #### Step 2 — Removing Prefix Text from Form Labels
 After extracting the initial sex identifier, the remaining strings still contained unnecessary prefix text such as fragments from "Men's" and "Women's".
 
@@ -380,6 +354,10 @@ getting_rid_of_up_to_form <- kungfu_strings |>
 
 ```
 
+
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
 
 #### Step 3 — Separating Form and Group Information
 The remaining string still contained both the kung fu form name and the competition group designation.
@@ -400,6 +378,12 @@ selecting_the_form <- getting_rid_of_up_to_form |>
     Group = ".*"))
 ```
 
+
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
+
+
 #### Step 4 — Final Corrected Dataset
 At this stage, the remaining work consisted primarily of repairing missing or malformed group labels that were lost during the original parsing process of the result book.
 
@@ -408,6 +392,12 @@ The fully corrected and manually verified dataset was then re-imported as the fi
 ```{r}
 kf <- read.csv("kungfu.csv")
 ```
+
+
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
+
 
 #### Step 5 — Removing Defaulted Athletes
 Before conducting statistical analysis, athletes who defaulted from competition were removed. Observations with missing scores were also excluded.
@@ -425,6 +415,11 @@ sample_kungfu <- kf|> filter(Rank != "Default") |> drop_na(Score) |> select(-X, 
 The filtering process reduced the dataset from 2129 athletes to 1989 valid athlete observations.
 :::
 
+
+
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
 
 #### Step 6 — Standardizing Form Names
 One major issue in the parsed dataset involved inconsistent naming conventions for the same kung fu forms. Variations in capitalization, spelling, spacing, and terminology created duplicate categories that referred to identical events.
@@ -471,6 +466,11 @@ usable_sample_kungfu <- read.csv("sample_kungfu.csv") |>
 ```
 
 
+
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
+
 #### Step 8 — Missing Data Imputation Using KNN
 
 After cleaning and standardization, the dataset still contained missing values. 
@@ -480,9 +480,20 @@ K-Nearest Neighbors (KNN) imputation was selected as the primary imputation meth
 KNN imputes missing values by using observations with similar feature patterns, preserving local data structure more effectively than simple mean substitution.
 
 ```{r}
-kf10_imp_knn <- kNN(usable_sample_kungfu, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp, -recoded_forms_imp) 
-# You can adjust 'k' as needed
+library(VIM)
+
+kf10_imp_knn <- kNN(usable_sample_kungfu, k = 5) |>
+  # Columns selected for removal 
+  select(-A_imp,-B_imp,-C_imp,-D_imp,-E_imp,-F_imp, -recoded_forms_imp) 
+# 'k' can be adjusted as needed
 ```
+
+
+
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
+
 
 ::: column-margin
 The function `kNN` comes from the `VIM` package, VIM stands for "Visualization and Imputation of Missing Values."
@@ -525,6 +536,9 @@ kf10_imputed <- kNN(kungfu_10, k = 5) |> select(-A_imp,-B_imp,-C_imp,-D_imp,-E_i
 ```
 
 
+::: {.text-center}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.
+:::
 
 #### Step 10 — Final Matrix
 The [fully cleaned and imputed matrix](mat_10kf.csv) was exported for use in clustering, visualization, and downstream statistical analysis.
@@ -533,6 +547,11 @@ The [fully cleaned and imputed matrix](mat_10kf.csv) was exported for use in clu
 write.csv(kf10_imputed, "matrix_kf10.csv")
 ```
 
+
+The cleaning process of the 10th WKFC dataset demonstrates that data preparation is not merely a technical preliminary step, but a critical analytical phase that directly shapes the reliability of downstream statistical interpretation. \
+\
+
+Much of the work involved reconciling inconsistencies introduced by semi-structured result book formatting, including embedded categorical information, irregular naming conventions, and missing values that could distort clustering behavior if left untreated. By combining regular expression parsing, categorical standardization, manual verification, and neighborhood-based imputation, the final dataset was transformed from a difficult-to-use archival export into a structured analytical matrix suitable for hierarchical clustering and comparative score analysis. At the same time, this process highlights an important limitation of real-world sports data: even officially published competition records often require substantial human-guided reconstruction before they can support reproducible computational research.
 
 ## Materials
 

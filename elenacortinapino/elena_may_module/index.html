@@ -344,144 +344,218 @@ Afterwards, it is imperative to have a goal presentation for the data. This is a
 <section id="regular-expressions" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="regular-expressions">Regular expressions</h4>
 <p>A regular expression (<em>regex</em> for short) is a special text string for describing a search pattern.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> These expressions are very useful to identify a specific pattern in text. An example of regular expression used to clean up some of the strings in the WKFC data is:</p>
-<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Regular-Expressions.info - Regex Tutorial, Examples and Reference - Regexp Patterns. Www.regular-Expressions.info, www.regular-expressions.info.</p></div></div><div class="fullwidth">
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Regular-Expressions.info - Regex Tutorial, Examples and Reference - Regexp Patterns. Www.regular-Expressions.info, www.regular-expressions.info.</p></div></div><div class="text-center">
 <p>^.*(?=.$)</p>
 </div>
 <p>This expression reads as <strong>“everything from the start of the string up to (but not including) the final character”</strong>, and it appears in the following code to remove all the information before the group-identifying letter A through D (exclusive to the 7th championship).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sevenyear <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"7kf.csv"</span>) <span class="co"># reading the scraped data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sevenyearworking <span class="ot">&lt;-</span> sevenyear <span class="sc">|&gt;</span> </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Delete =</span> <span class="st">"^[^MW]*"</span>, <span class="at">Form =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything up to but not including the first "M" or "W" in the string</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gets grouped for deletion in a "Delete" column.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The rest of the string gets sent to column "Form" for more edits.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>Delete) <span class="sc">|&gt;</span> <span class="co"># Eliminating "Delete" column</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sevenyear <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"7kf.csv"</span>) <span class="co"># reading the scraped data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sevenyearworking <span class="ot">&lt;-</span> sevenyear <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Delete =</span> <span class="st">"^[^MW]*"</span>, <span class="at">Form =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything up to but not including the first "M" or "W" in the string</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gets grouped for deletion in a "Delete" column.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The rest of the string gets sent to column "Form" for more edits.</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Sex =</span> <span class="st">"^[^G]*"</span>, <span class="at">Form =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything up to but not including the first "G" (Men or Women),</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gets placed in column "Sex"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything else in the string stays in column "Form" for more edits.</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Group =</span> <span class="st">"^[^A-Z]*[A-Z][^A-Z]*[A-Z]"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Form =</span> <span class="st">".*"</span>), <span class="at">too_few =</span> <span class="st">"align_start"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything up to but not including the second uppercase letter </span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (including any characters before, between, and around them) </span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># goes to column "Group". This column includes more information to be erased.</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The remainder of the string goes to column "Form" for more editing.</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>(Form) <span class="sc">|&gt;</span> <span class="co"># Remove missing cases in the "Form" column.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>Delete) <span class="sc">|&gt;</span> <span class="co"># Eliminating "Delete" column</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Sex =</span> <span class="st">"^[^G]*"</span>, <span class="at">Form =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything up to but not including the first "G" (Men or Women),</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gets placed in column "Sex"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything else in the string stays in column "Form" for more edits.</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Group =</span> <span class="st">"^[^A-Z]*[A-Z][^A-Z]*[A-Z]"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Form =</span> <span class="st">".*"</span>), <span class="at">too_few =</span> <span class="st">"align_start"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything up to but not including the second uppercase letter </span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (including any characters before, between, and around them) </span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># goes to column "Group". This column includes more information to be erased.</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The remainder of the string goes to column "Form" for more editing.</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Sex, <span class="fu">c</span>(<span class="at">Sex =</span> <span class="st">"^."</span>, <span class="at">Delete =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># From the "Sex" column made before,"we keep only the first character.</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything else in the "Sex" column goes to "Delete" for elimination.</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>Delete) <span class="sc">|&gt;</span> <span class="co"># Removing "-ens" and "omen's" from the "Sex" column.</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Group, <span class="fu">c</span>(<span class="at">Delete =</span> <span class="st">"^.*(?=.$)"</span>, <span class="at">Group =</span> <span class="st">".$"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything except the last character gets sent to "Delete" for elimination.</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Column "Group" will include only the last character of the string.</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>Delete)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>(Form) <span class="sc">|&gt;</span> <span class="co"># Remove missing cases in the "Form" column.</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Sex, <span class="fu">c</span>(<span class="at">Sex =</span> <span class="st">"^."</span>, <span class="at">Delete =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># From the "Sex" column made before,"we keep only the first character.</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything else in the "Sex" column goes to "Delete" for elimination.</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>Delete) <span class="sc">|&gt;</span> <span class="co"># Removing "-ens" and "omen's" from the "Sex" column.</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Group, <span class="fu">c</span>(<span class="at">Delete =</span> <span class="st">"^.*(?=.$)"</span>, <span class="at">Group =</span> <span class="st">".$"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Everything except the last character gets sent to "Delete" for elimination.</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Column "Group" will include only the last character of the string.</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>Delete)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The output of this code gives us a more usable dataframe with the right information in the corresponding columns:</p>
+<div id="tbl-panel" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Sample Output
+</figcaption>
+<div aria-describedby="tbl-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 17%">
+<col style="width: 14%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Team</th>
+<th style="text-align: left;">Athlete</th>
+<th style="text-align: left;">Score</th>
+<th style="text-align: left;">Remark</th>
+<th style="text-align: left;">Sex</th>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Form</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RUS</td>
+<td style="text-align: left;">Tatiana SHURMISTROVA</td>
+<td style="text-align: left;">9.05</td>
+<td style="text-align: left;">1st Category Prize</td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GEO</td>
+<td style="text-align: left;">NINO CHIKHLADZE</td>
+<td style="text-align: left;">9.04</td>
+<td style="text-align: left;">2nd Category Prize</td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FRA</td>
+<td style="text-align: left;">NGUYEN Diana</td>
+<td style="text-align: left;">9.03</td>
+<td style="text-align: left;">2nd Category Prize</td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">JPN</td>
+<td style="text-align: left;">YOKO NAKATA</td>
+<td style="text-align: left;">8.89</td>
+<td style="text-align: left;">3rd Category Prize</td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ITA</td>
+<td style="text-align: left;">Stefania GAVIANO</td>
+<td style="text-align: left;">8.88</td>
+<td style="text-align: left;">3rd Category Prize</td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AUS</td>
+<td style="text-align: left;">Krista Brennan</td>
+<td style="text-align: left;">8.87</td>
+<td style="text-align: left;">3rd Category Prize</td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GER</td>
+<td style="text-align: left;">Anke Zhang</td>
+<td style="text-align: left;">8.86</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POL</td>
+<td style="text-align: left;">Anna Kubiak</td>
+<td style="text-align: left;">8.85</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CZE</td>
+<td style="text-align: left;">Jana Neradova</td>
+<td style="text-align: left;">8.81</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">Group C</td>
+<td style="text-align: left;">Traditional Chen Style Taijiquan</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
 </div>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p>The argument <code>too_few = "align_start"</code> ensures that if a string doesn’t match enough parts to fill both outputs, the available text is aligned from the beginning rather than causing an error.</p>
+<p>This code shows a glimpse of the general workflow for the cleanup process of the 7th WKFC data.<br>
+<br>
+<br>
+<br>
+The argument <code>too_few = "align_start"</code> ensures that if a string doesn’t match enough parts to fill both outputs, the available text is aligned from the beginning rather than causing an error.</p>
 </div></div><p><br>
-<br>
-<br>
-<br>
-::: column-margin The regular expression in the code to produce this module was generated using the online tool <a href="https://www.subiregex.com">SubiRegex</a>, an free English to Regex converter created by <a href="https://github.com/legendkong">Jonathan Kong Boon Lieng</a> in 2023. :::</p>
-</section>
-<section id="iteratively-separating-a-string-into-data-columns" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="iteratively-separating-a-string-into-data-columns">Iteratively Separating a String into data Columns:</h3>
-<p><strong>1. Reading the data into RStudio</strong></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading the data for the 8th WKFC parsed results</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>kf_8 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"8kf.csv"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># View 5 lines</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(kf_8, <span class="dv">5</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p>Our focus at this stage is the column <code>Form</code></p>
-</div></div><p><strong>2. Step 1: Separate the Form column</strong> Goal: Separate strings in the Form column into 3 columns for Sex, Group and Form.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>first_step <span class="ot">&lt;-</span> kf_8 <span class="sc">|&gt;</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The first character of the string in Form goes to column Sex</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The rest of the string goes to Form for further edit</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Sex =</span> <span class="st">"^."</span>, <span class="at">Form =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># From the remainder of the string now in Form, we delete everything up to</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the first capital G, everything else goes to column Group for further edit</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">delete =</span> <span class="st">"^[^G]*"</span>, <span class="at">Group =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Iterative deletion of unneeded parts of the string</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>delete)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="">
-<p>Iterative deletion helps students see clearly which elements of the string are being removed.<br>
-<br>
-<br>
-Other, more efficient methods are also perfectly acceptable and recommended for processes like this. In practice, the method generally adapts to the type of data we are tasked with cleaning. Further, for cleaning strings, it is recommended to err on the clearer side, breaking down steps in case something has to be corrected or adjusted.</p>
-</div></div><p><strong>3. Separate the Form column</strong></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>eightyearkungfu <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"working8thkungfu.csv"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>kungfu_8 <span class="ot">&lt;-</span> eightyearkungfu <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Group, <span class="fu">c</span>(<span class="at">Group =</span> <span class="st">"^[^ ]+ [^ ]+"</span>, <span class="at">Form =</span> <span class="st">".*"</span>)) <span class="sc">|</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">Delete =</span> <span class="st">"^[^a-zA-Z]*"</span>, <span class="at">Form =</span> <span class="st">".*"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span> (<span class="sc">-</span>Delete)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><strong>4. Writing the new clean data as a convenient <code>csv</code> file</strong></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(kungfu_8, <span class="st">"kungfu_8.csv"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
+<p>The regular expression in the code to produce this module was generated using the online tool <a href="https://www.subiregex.com">SubiRegex</a>, an free English to Regex converter created by <a href="https://github.com/legendkong">Jonathan Kong Boon Lieng</a> in 2023.</p>
+</div></div></section>
 </section>
 <section id="th-wkfc-data-cleaning" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="th-wkfc-data-cleaning">10th WKFC Data Cleaning</h2>
 <p>This section focuses on the iterative cleanup process of the data used for the SCORE module <a href="https://iramler.github.io/slu_score_preprints/early_drafts/martial_arts/kungfu_clustering/">2025 10th World Kung Fu Championship - Complete Linkage Hierarchical Clustering</a>.</p>
-<p>The first step of the cleaning process was therefore focused on systematically separating * Athlete sex<br>
+<p>The first step of the cleaning process was therefore focused on systematically separating<br>
+* Athlete sex<br>
 * Kung fu form category<br>
 * Competition group<br>
-</p>
-<p>fro the <code>Form</code> column into usable variables.</p>
+from the <code>Form</code> column into usable variables.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>kungfu<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"kungfu_data_dirty.csv"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(kungfu, <span class="dv">25</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>kungfu<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"kungfu_data_dirty.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(kungfu, <span class="dv">25</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(kungfu, <span class="dv">25</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Men’s First-type bare-hand routines_Bajiquan Group D</p>
 </div>
 <section id="step-1-removing-group-event-categories" class="level4">
 <h4 class="anchored" data-anchor-id="step-1-removing-group-event-categories">Step 1 — Removing Group Event Categories</h4>
 <p>Certain observations corresponded to group performance events (Duilian) rather than individual athlete performances. Since these events are structurally different from standard individual routines, they were removed prior to further cleaning and analysis.</p>
 <p>At the same time, the first character of each string in the Form column was extracted in order to create a preliminary sex variable representing “Men’s” and “Women’s” categories.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>kungfu_strings <span class="ot">&lt;-</span> kungfu <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>Page) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Form <span class="sc">!=</span> <span class="st">"Bare-hand Duilian(2 Persons)"</span>, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         Form <span class="sc">!=</span> <span class="st">"Weapon Duilian(2 Persons)"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         Form <span class="sc">!=</span> <span class="st">"Other Duilian"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Removing "duilian" events because that's a group event</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">sex =</span> <span class="st">"^."</span>, <span class="at">Form =</span> <span class="st">".*"</span>))</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The Sex column with the first letter of the words "Men's" and "Women's"</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>kungfu_strings <span class="ot">&lt;-</span> kungfu <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>Page) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Form <span class="sc">!=</span> <span class="st">"Bare-hand Duilian(2 Persons)"</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         Form <span class="sc">!=</span> <span class="st">"Weapon Duilian(2 Persons)"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         Form <span class="sc">!=</span> <span class="st">"Other Duilian"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Removing "duilian" events because that's a group event</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form, <span class="fu">c</span>(<span class="at">sex =</span> <span class="st">"^."</span>, <span class="at">Form =</span> <span class="st">".*"</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The Sex column with the first letter of the words "Men's" and "Women's"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
 </div>
 </section>
 <section id="step-2-removing-prefix-text-from-form-labels" class="level4">
@@ -489,15 +563,18 @@ Other, more efficient methods are also perfectly acceptable and recommended for 
 <p>After extracting the initial sex identifier, the remaining strings still contained unnecessary prefix text such as fragments from “Men’s” and “Women’s”.</p>
 <p>Regular expression separation was therefore used to isolate the meaningful portion of the form description while discarding the leading text artifacts introduced during parsing.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this code gets rid of the end of "en's and "omen's"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>getting_rid_of_up_to_form <span class="ot">&lt;-</span> kungfu_strings <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">patterns =</span> <span class="fu">c</span>(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">delete =</span> <span class="st">"^[^</span><span class="sc">\\</span><span class="st">s]+"</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">rest =</span> <span class="st">".*"</span>))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this code gets rid of the end of "en's and "omen's"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>getting_rid_of_up_to_form <span class="ot">&lt;-</span> kungfu_strings <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Form,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">patterns =</span> <span class="fu">c</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">delete =</span> <span class="st">"^[^</span><span class="sc">\\</span><span class="st">s]+"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">rest =</span> <span class="st">".*"</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
 </div>
 </section>
 <section id="step-3-separating-form-and-group-information" class="level4">
@@ -506,15 +583,18 @@ Other, more efficient methods are also perfectly acceptable and recommended for 
 <p>To separate these variables, the cleaning process identified the first occurrence of the capital “G” in “Group” and split the string accordingly. This produced two independent variables: - Form - Group</p>
 <p>This transformation converted the previously unstructured text field into analytically usable categorical variables.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this code creates the form column by selecting everything up to the capital G for "Group" and by doing that creates the column for Group</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>selecting_the_form <span class="ot">&lt;-</span> getting_rid_of_up_to_form <span class="sc">|&gt;</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>delete) <span class="sc">|&gt;</span>  <span class="fu">separate_wider_regex</span>(rest,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">patterns =</span> <span class="fu">c</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Form =</span> <span class="st">".*?(?=G)"</span>, </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Group =</span> <span class="st">".*"</span>))</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this code creates the form column by selecting everything up to the capital G for "Group" and by doing that creates the column for Group</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>selecting_the_form <span class="ot">&lt;-</span> getting_rid_of_up_to_form <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>delete) <span class="sc">|&gt;</span>  <span class="fu">separate_wider_regex</span>(rest,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">patterns =</span> <span class="fu">c</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Form =</span> <span class="st">".*?(?=G)"</span>, </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Group =</span> <span class="st">".*"</span>))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
 </div>
 </section>
 <section id="step-4-final-corrected-dataset" class="level4">
@@ -522,9 +602,12 @@ Other, more efficient methods are also perfectly acceptable and recommended for 
 <p>At this stage, the remaining work consisted primarily of repairing missing or malformed group labels that were lost during the original parsing process of the result book.</p>
 <p>The fully corrected and manually verified dataset was then re-imported as the finalized clean dataset kf.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>kf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"kungfu.csv"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>kf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"kungfu.csv"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
 </div>
 </section>
 <section id="step-5-removing-defaulted-athletes" class="level4 page-columns page-full">
@@ -532,17 +615,20 @@ Other, more efficient methods are also perfectly acceptable and recommended for 
 <p>Before conducting statistical analysis, athletes who defaulted from competition were removed. Observations with missing scores were also excluded.</p>
 <p>Additionally, non-analytical columns such as ranking remarks and indexing variables were dropped.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of total athletes before removing defaulted athletes is 2129</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sample_kungfu <span class="ot">&lt;-</span> kf<span class="sc">|&gt;</span> <span class="fu">filter</span>(Rank <span class="sc">!=</span> <span class="st">"Default"</span>) <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(Score) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>X, <span class="sc">-</span>Rank, <span class="sc">-</span>Remark)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of athletes after removing defaulting athletes is 1989</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># difference is 140 athletes.</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of total athletes before removing defaulted athletes is 2129</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sample_kungfu <span class="ot">&lt;-</span> kf<span class="sc">|&gt;</span> <span class="fu">filter</span>(Rank <span class="sc">!=</span> <span class="st">"Default"</span>) <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(Score) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>X, <span class="sc">-</span>Rank, <span class="sc">-</span>Remark)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of athletes after removing defaulting athletes is 1989</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># difference is 140 athletes.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>The filtering process reduced the dataset from 2129 athletes to 1989 valid athlete observations.</p>
-</div></div></section>
+</div></div><div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
+</div>
+</section>
 <section id="step-6-standardizing-form-names" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="step-6-standardizing-form-names">Step 6 — Standardizing Form Names</h4>
 <p>One major issue in the parsed dataset involved inconsistent naming conventions for the same kung fu forms. Variations in capitalization, spelling, spacing, and terminology created duplicate categories that referred to identical events.</p>
@@ -556,34 +642,37 @@ Other, more efficient methods are also perfectly acceptable and recommended for 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>Mean scores were then calculated for each combination and reshaped into wide format for later analysis.</p>
 </div></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>usable_sample_kungfu <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_kungfu.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">recoded_forms =</span> <span class="fu">fct_recode</span>(Form,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Shanzi variations</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Shanzi (Fan)"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Shanzi (Fan)"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Shanzi (Fan)"</span> <span class="ot">=</span> <span class="st">"Single weapon routines shanzi"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pudao variations</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Pudao"</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Pudao/Dadao"</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Pudao/Guandao (Kwan Dao)"</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Guandao /Pudao"</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Guandao (Kwan Dao)"</span>,</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Weapon other variations</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other weapon routines"</span> <span class="ot">=</span> <span class="st">"weapon Other routines"</span>,</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other weapon routines"</span> <span class="ot">=</span> <span class="st">"weapon routines Other routines"</span>,</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bare hand other variations</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other bare hand routines"</span> <span class="ot">=</span> <span class="st">"bare hand routines Other routines"</span>,</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other bare hand routines"</span> <span class="ot">=</span> <span class="st">"Other bare hand routines "</span>,</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other bare hand routines"</span> <span class="ot">=</span> <span class="st">"bare hand routines Other routines"</span>,</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Taiji weapon variations</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Other Taiji weapon"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Other taiji weapon"</span>,</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Other Taiji weapon"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Other Taiji weapon"</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Group, recoded_forms) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">mean_score =</span> <span class="fu">mean</span>(Score), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Group, <span class="at">values_from =</span> mean_score)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>usable_sample_kungfu <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_kungfu.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">recoded_forms =</span> <span class="fu">fct_recode</span>(Form,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Shanzi variations</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Shanzi (Fan)"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Shanzi (Fan)"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Shanzi (Fan)"</span> <span class="ot">=</span> <span class="st">"Single weapon routines shanzi"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pudao variations</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Pudao"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Pudao/Dadao"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Pudao/Guandao (Kwan Dao)"</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Guandao /Pudao"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Pudao"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Guandao (Kwan Dao)"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Weapon other variations</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other weapon routines"</span> <span class="ot">=</span> <span class="st">"weapon Other routines"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other weapon routines"</span> <span class="ot">=</span> <span class="st">"weapon routines Other routines"</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bare hand other variations</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other bare hand routines"</span> <span class="ot">=</span> <span class="st">"bare hand routines Other routines"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other bare hand routines"</span> <span class="ot">=</span> <span class="st">"Other bare hand routines "</span>,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Other bare hand routines"</span> <span class="ot">=</span> <span class="st">"bare hand routines Other routines"</span>,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Taiji weapon variations</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Other Taiji weapon"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Other taiji weapon"</span>,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Single weapon routines Other Taiji weapon"</span> <span class="ot">=</span> <span class="st">"Single weapon routines Other Taiji weapon"</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Group, recoded_forms) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">mean_score =</span> <span class="fu">mean</span>(Score), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Group, <span class="at">values_from =</span> mean_score)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
 </div>
 </section>
 <section id="step-8-missing-data-imputation-using-knn" class="level4 page-columns page-full">
@@ -592,10 +681,13 @@ Other, more efficient methods are also perfectly acceptable and recommended for 
 <p>K-Nearest Neighbors (KNN) imputation was selected as the primary imputation method because the later analytical workflow involved clustering and similarity-based comparisons.</p>
 <p>KNN imputes missing values by using observations with similar feature patterns, preserving local data structure more effectively than simple mean substitution.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>kf10_imp_knn <span class="ot">&lt;-</span> <span class="fu">kNN</span>(usable_sample_kungfu, <span class="at">k =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>A_imp,<span class="sc">-</span>B_imp,<span class="sc">-</span>C_imp,<span class="sc">-</span>D_imp,<span class="sc">-</span>E_imp,<span class="sc">-</span>F_imp, <span class="sc">-</span>recoded_forms_imp) </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You can adjust 'k' as needed</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>kf10_imp_knn <span class="ot">&lt;-</span> <span class="fu">kNN</span>(usable_sample_kungfu, <span class="at">k =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>A_imp,<span class="sc">-</span>B_imp,<span class="sc">-</span>C_imp,<span class="sc">-</span>D_imp,<span class="sc">-</span>E_imp,<span class="sc">-</span>F_imp, <span class="sc">-</span>recoded_forms_imp) </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># You can adjust 'k' as needed</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
 </div>
 
 <div class="no-row-height column-margin column-container"><div class="">
@@ -604,10 +696,13 @@ Other, more efficient methods are also perfectly acceptable and recommended for 
 </div></div><section id="visualization-of-the-missingness" class="level5 page-columns page-full">
 <h5 class="anchored" data-anchor-id="visualization-of-the-missingness">Visualization of the Missingness</h5>
 <p>The <code>viss_miss()</code> function is a useful way to visualize the scale of missingness of the data. Prior to imputation, missing data patterns were visualized with this plot to assess the distribution and concentration of missing values across variables.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mssing <span class="ot">&lt;-</span> <span class="fu">vis_miss</span>(usable_sample_kungfu)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>The function <code>vis_miss()</code> comes from the <code>visdat</code> package. More information about this useful tool is available at <a href="https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html">“Using visdat” by Nicholas Tierney</a>.</p>
+</div></div><div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mssing <span class="ot">&lt;-</span> <span class="fu">vis_miss</span>(usable_sample_kungfu)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <div class="no-row-height column-margin column-container"><div class="">
@@ -624,21 +719,28 @@ Predictive Mean Matching (<code>pmm()</code>) is the procedure within MICE imput
 <p>For the final clustering-oriented dataset, KNN imputation was again applied using k = 5.</p>
 <p>The rationale for this approach is that clustering methods depend heavily on local similarity structures, making neighborhood-based imputation especially appropriate for preserving relational patterns within the data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>kf10_imputed <span class="ot">&lt;-</span> <span class="fu">kNN</span>(kungfu_10, <span class="at">k =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>A_imp,<span class="sc">-</span>B_imp,<span class="sc">-</span>C_imp,<span class="sc">-</span>D_imp,<span class="sc">-</span>E_imp,<span class="sc">-</span>F_imp, <span class="sc">-</span>recoded_forms_imp)  <span class="co"># You can adjust 'k' as needed</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>kf10_imputed <span class="ot">&lt;-</span> <span class="fu">kNN</span>(kungfu_10, <span class="at">k =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>A_imp,<span class="sc">-</span>B_imp,<span class="sc">-</span>C_imp,<span class="sc">-</span>D_imp,<span class="sc">-</span>E_imp,<span class="sc">-</span>F_imp, <span class="sc">-</span>recoded_forms_imp)  <span class="co"># You can adjust 'k' as needed</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="text-center">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia pulvinar ante, ac accumsan tellus sollicitudin a. Donec pharetra dictum turpis, vel euismod leo.</p>
 </div>
 </section>
 <section id="step-10-final-matrix" class="level4">
 <h4 class="anchored" data-anchor-id="step-10-final-matrix">Step 10 — Final Matrix</h4>
 <p>The <a href="mat_10kf.csv">fully cleaned and imputed matrix</a> was exported for use in clustering, visualization, and downstream statistical analysis.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(kf10_imputed, <span class="st">"matrix_kf10.csv"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(kf10_imputed, <span class="st">"matrix_kf10.csv"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>The cleaning process of the 10th WKFC dataset demonstrates that data preparation is not merely a technical preliminary step, but a critical analytical phase that directly shapes the reliability of downstream statistical interpretation.<br>
+<br>
+</p>
+<p>Much of the work involved reconciling inconsistencies introduced by semi-structured result book formatting, including embedded categorical information, irregular naming conventions, and missing values that could distort clustering behavior if left untreated. By combining regular expression parsing, categorical standardization, manual verification, and neighborhood-based imputation, the final dataset was transformed from a difficult-to-use archival export into a structured analytical matrix suitable for hierarchical clustering and comparative score analysis. At the same time, this process highlights an important limitation of real-world sports data: even officially published competition records often require substantial human-guided reconstruction before they can support reproducible computational research.</p>
 </section>
 </section>
 <section id="materials" class="level2">
