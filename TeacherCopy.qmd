@@ -1,0 +1,168 @@
+---
+title: "Teacher Copy"
+format: html
+---
+
+Module: Tour de France — Data, Distance, and Dynamics
+Course: Introduction to Data Science
+Format: Follow-Along / Homework
+Author: [Max Finley]
+
+🎯 Introduction & Learning Objectives
+The Tour de France is a grueling, multi-day, multi-stage bike race around France and surrounding countries. Athletes are pushed to their absolute physical and psychological limits for ego, earnings, teammates, and national pride. (Fun fact: The famous White Jersey is awarded to the best rider under 26!).
+
+In this module, you will learn how to:
+
+Import data directly from the web into R.
+
+Wrangle and clean data using dplyr (filtering, mutating).
+
+Create and manipulate different types of graphs using ggplot2.
+
+Build and interpret an introductory linear regression model.
+
+🛠️ Part 1: Getting the Data
+First, we need to load our libraries and import our dataset. Instead of downloading files to our computers, we can pull data directly from the internet using the TidyTuesday project, which hosts fantastic datasets for learning.
+
+Code snippet
+# Load our core packages
+```{r}
+library(tidyverse)
+
+# Fetch the data directly from the TidyTuesday GitHub repository
+tdf_winners <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-04-07/tdf_winners.csv')
+```
+```{r}
+# Let's take a quick look at what we are working with
+head(tdf_winners)
+```
+🚲 Part 2: Visualizing the Race Over Time
+Let's start by looking at how the total distance of the Tour de France has changed across all its editions (years).
+
+1. Distance over Time
+Code snippet
+```{r}
+ggplot(data = tdf_winners, aes(x = edition, y = distance)) +
+  geom_point(color = "darkblue") +
+  labs(title = "Tour de France Total Distance by Edition",
+       x = "Edition (Year)",
+       y = "Distance (km)") +
+  theme_minimal()
+```
+Student Prompt 1: Look at the graph above. Is there a trend? What is it? Based on this graph, what might we expect to see if we look at the total time riders spend racing, or their average speeds?
+
+2. Calculating and Plotting Speed
+The dataset gives us distance and time_overall, but it doesn't give us the speed. We can calculate this ourselves using the mutate() function. Speed is simply Distance divided by Time.
+
+Code snippet
+# Clean the data and calculate speed
+```{r}
+tdf_speed <- tdf_winners |>
+  group_by(edition) |>
+  select(edition, distance, time_overall) |>
+  filter(!is.na(distance), !is.na(time_overall)) |>
+  mutate(speed = distance / time_overall)
+```
+# Plot the new speed variable
+```{r}
+ggplot(data = tdf_speed, aes(x = edition, y = speed)) +
+  geom_point(color = "red") +
+  labs(title = "Average Winning Speed over TDF Editions",
+       x = "Edition",
+       y = "Speed (km/h)") +
+  theme_minimal()
+```
+⏱️ Part 3: Identifying Historical "Eras"
+If we plot the overall time it took to win the race, we can start to see distinct groupings or "eras" in the data.
+
+Code snippet
+```{r}
+ggplot(data = tdf_winners, aes(x = edition, y = time_overall)) +
+  geom_point(aes(colour = time_overall)) + # Coloring by time to show intensity
+  labs(title = "Overall Winning Time by Edition",
+       x = "Edition",
+       y = "Total Time (Hours)") +
+  theme_minimal()
+```
+Student Prompt 2: Why do these graphs look the way they do? What historical world events might have caused gaps or massive shifts in the data during the early-to-mid 1900s?
+
+Let's explicitly parse the data into time periods to see if our theory holds up. We will use case_when() to create a new column called era.
+
+Code snippet
+```{r}
+tdfed <- tdf_speed |> 
+  mutate(era = case_when(
+    edition <= 21 ~ "1903 - 1924",
+    edition <= 36 ~ "1925 - 1939",
+    edition <= 60 ~ "1947 - 1971 (Post WWII)",
+    edition <= 80 ~ "1972 - 1992",
+    edition <= 106 ~ "1993 - 2019",
+    TRUE ~ "2020 - Present"
+  ))
+```
+# Plotting with our new 'era' variable
+```{r}
+ggplot(data = tdfed, aes(x = edition, y = speed)) +
+  geom_point(aes(colour = era), size = 2) +
+  labs(title = "TDF Speeds Grouped by Era",
+       x = "Edition",
+       y = "Speed (km/h)") +
+  theme_minimal()
+```
+Student Prompt 3: Looking at the color groupings, why are there distinct periods where the speed dramatically jumps or plateaus? Consider advancements in technology, training, or race rules.
+
+📈 Part 4: Intro to Regression Modeling
+Now we are going to plot Distance and Speed on the same graph using a dual-axis, and try to fit a linear regression model to predict speed based on distance.
+
+The First Model
+Code snippet
+```{r}
+ggplot(tdf_speed, aes(x = edition)) +
+  geom_line(aes(y = speed, color = "Speed")) +
+  geom_point(aes(y = speed, color = "Speed")) +
+  
+  # We divide distance by 100 to scale it to fit nicely on the same graph as speed
+  geom_line(aes(y = distance/100, color = "Distance")) +
+  geom_point(aes(y = distance/100, color = "Distance")) +
+  
+  scale_y_continuous(
+    name = "Speed (km/h)",
+    sec.axis = sec_axis(~.*100, name = "Distance (km)")
+  ) +
+  labs(x = "Edition", color = "Metric", title = "TDF: Speed vs. Distance") +
+  theme_minimal()
+```
+# Build a linear model: Does distance predict speed?
+```{r}
+mod_tdf1 = lm(speed ~ distance, data = tdf_speed)
+summary(mod_tdf1)
+```
+Student Prompt 4: Look at the R-squared and the p-values in the summary above. What is wrong with this model? Think about the early years of the Tour vs. the modern years.
+
+Fixing the Data (Model 2)
+The early years of the Tour were incredibly long and heavily skew our data. Let's filter the data to only look at years where the distance was reasonably modernized (e.g., shorter than the massive early routes).
+
+Code snippet
+# Filter for editions where the distance was 3000km or more (ignoring extreme modern short routes or anomalies)
+```{r}
+tdfer <- tdf_speed |>
+  filter(distance >= 3000)
+
+ggplot(tdfer, aes(x = edition)) +
+  geom_line(aes(y = speed, color = "Speed")) +
+  geom_point(aes(y = speed, color = "Speed")) +
+  geom_line(aes(y = distance/100, color = "Distance")) +
+  geom_point(aes(y = distance/100, color = "Distance")) +
+  scale_y_continuous(
+    name = "Speed (km/h)",
+    sec.axis = sec_axis(~.*100, name = "Distance (km)")
+  ) +
+  labs(x = "Edition", color = "Metric", title = "TDF: Speed vs. Distance (Filtered)") +
+  theme_minimal()
+```
+# Run the model again on the filtered data
+```{r}
+mod_tdf2 = lm(speed ~ distance, data = tdfer)
+summary(mod_tdf2)
+```
+Student Prompt 5 (Homework): Compare the summary of mod_tdf2 to mod_tdf1. Did the model improve? Will this model always be correct for predicting the speed of future races based on recent years? Why or why not? (Hint: Can bikes get infinitely faster? Is there a human biological limit?)
