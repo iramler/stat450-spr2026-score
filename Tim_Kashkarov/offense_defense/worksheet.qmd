@@ -3,7 +3,14 @@ title: "NHL vs KHL: Offense, Defense, and Winning"
 format: html
 ---
 
-This worksheet compares NHL and KHL teams using one season of data.
+# Background
+
+Ice hockey is a team sport where teams try to score goals by shooting a puck into the opponent's net. In this worksheet, each row of the data represents one professional hockey team during the 2024-25 regular season.
+
+We will compare teams from two leagues:
+
+- NHL: National Hockey League, the major professional hockey league in North America.
+- KHL: Kontinental Hockey League, a major professional hockey league based mainly in Eurasia.
 
 The main question is:
 
@@ -11,9 +18,9 @@ The main question is:
 
 We will compare:
 
-- goals scored per game
-- goals allowed per game
-- win percentage
+- Win percentage: wins divided by games played.
+- Goals for per game: goals scored divided by games played. This measures offense.
+- Goals against per game: goals allowed divided by games played. This measures defense. Lower is better.
 
 # 0. Load Packages
 
@@ -25,81 +32,111 @@ library(tidyverse)
 # 1. Load the Data
 
 ```{r}
-nhl_2024_25 <- read_csv("Tim_Kashkarov/offense_defense/nhl_20245.csv")
-khl_2024_25 <- read_csv("Tim_Kashkarov/offense_defense/khl_20245.csv")
+nhl_2024_25 <- read_csv("nhl_20245.csv")
+khl_2024_25 <- read_csv("khl_20245.csv")
 ```
+
+Question: Which columns do we need in order to calculate win percentage, goals for per game, and goals against per game?
 
 # 2. Create Comparable Variables
 
-Create win percentage, goals scored per game, and goals allowed per game for each league.
+Create the same five variables for both leagues:
+
+- league
+- team
+- WinPerc
+- GF_pg
+- GA_pg
+
+The first dataset is started for you. Complete the KHL code in the same style.
 
 ```{r}
-nhl_2024_25 <- nhl_2024_25 |>
-  transmute(
+nhl_clean <- nhl_2024_25 |>
+  mutate(
     league = "NHL",
     team = Team,
     WinPerc = Wins / GamesPlayed,
     GF_pg = GF / GamesPlayed,
-    GA_pg = GA / GamesPlayed)
+    GA_pg = GA / GamesPlayed
+  ) |>
+  select(league, team, WinPerc, GF_pg, GA_pg)
 
-khl_2024_25 <- khl_2024_25 |>
-  transmute(
+khl_clean <- khl_2024_25 |>
+  mutate(
     league = "KHL",
     team = Team,
-    WinPerc = Wins / GamesPlayed,
-    GF_pg = GF / GamesPlayed,
-    GA_pg = GA / GamesPlayed)
+    WinPerc = ,
+    GF_pg = ,
+    GA_pg = 
+  ) |>
+  select()
 
-df <- bind_rows(nhl_2024_25, khl_2024_25)
+hockey <- bind_rows(nhl_clean, khl_clean)
 ```
+
+Question: Why do we divide by games played instead of just comparing total goals?
 
 # 3. Offense vs Winning
 
-Plot 2 graphs showing Win Percentage and Goals Scored per Game for both leagues. You may use facet_wrap() to have them look nicer. What does this graph tell us?
+Make a scatterplot showing WinPerc and GF_pg for both leagues. Use facet_wrap() so that each league has its own panel.
 
 ```{r}
-ggplot(df, aes()) +
+ggplot(data = hockey, aes(x = , y = )) +
   geom_point() +
-  geom_smooth() 
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~league) +
+  labs(
+    title = "Offense vs. Winning",
+    x = "Goals For per Game",
+    y = "Win Percentage")
 ```
 
-
+Question: What does this graph suggest about the relationship between offense and winning?
 
 # 4. Defense vs Winning
 
-Plot 2 graphs showing Win Percentage and Goals Allowed per Game for both leagues. You may use facet_wrap() to have them look nicer. What does this graph tell us?
+Make a scatterplot showing WinPerc and GA_pg for both leagues. Use facet_wrap() so that each league has its own panel.
 
 ```{r}
-ggplot(df, aes()) +
+ggplot(data = hockey, aes(x = , y = )) +
   geom_point() +
-  geom_smooth() 
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~league) +
+  labs(
+    title = "Defense vs. Winning",
+    x = "Goals Against per Game",
+    y = "Win Percentage")
 ```
 
-
+Question: What does this graph suggest about the relationship between defense and winning?
 
 # 5. Correlation Summary
 
-Make offense and defense correlation summary for both leagues. What does this table tell us?  
-```{r}
+Create a table with the offense correlation and defense correlation for each league.
 
+```{r}
+hockey |>
+  group_by(league) |>
+  summarise(
+    corr_offense = cor(, , use = "complete.obs"),
+    corr_defense = cor(, , use = "complete.obs"))
 ```
 
+Question: Which correlation is positive? Which correlation is negative? Why does that make sense in hockey terms?
 
 
-# 6. Reflection Questions. Provide answer in 1-2 sentenses.
+# 6. Reflection Questions
 
-1. Does offense seem related to winning?
+Answer each question in 1-2 sentences.
 
+- Does offense seem related to winning? Use evidence from the graph or correlation table.
 
+- Does defense seem related to winning? Use evidence from the graph or correlation table.
 
-2. Does defense seem related to winning?
+- Which relationship appears stronger in each league: offense with winning, or defense with winning?
 
+- Pretend you are an analyst for a hockey team. Based on this analysis, would you recommend that the team focus more on improving offense, improving defense, or balancing both? Explain your recommendation using the results. 
 
-
-3. Which relationship appears stronger in each league?
-
-
-
-4. Why should we be careful with this conclusion?
+- Why should we be careful about making a strong conclusion from this analysis?
 
 

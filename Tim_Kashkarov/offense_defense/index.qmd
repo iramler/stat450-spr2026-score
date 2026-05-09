@@ -11,7 +11,8 @@ author:
       - ref: slu
 date: "May 4, 2026"
 description: "Comparing how offense and defense are related to winning in NHL and KHL team performance data."
-editor: 
+image: "https://www.wbspenguins.com/wp-content/uploads/2025/02/Guide-to-Hockey-Slang-Blog-WBS-Penguins.jpg"
+editor:
   canonical: true
 categories:
   - Data Visualization
@@ -26,13 +27,19 @@ Please note that these materials have not yet completed the required pedagogical
 
 ### Introduction
 
-Hockey teams can win games in different ways. Some teams rely on strong offense by scoring many goals, while others rely on strong defense by limiting how many goals they allow. A useful sports analytics question is whether offense and defense are related to winning in the same way across different leagues.
+Ice hockey is a team sport played on ice. Each team tries to score by shooting a puck into the opponent's goal. In this activity, we use team-level season data to ask a sports analytics question: are teams that score more goals or allow fewer goals usually more successful?
 
-In this worksheet, students analyze team performance data from the NHL and KHL during the 2024-25 season. The main question is whether goals scored per game and goals allowed per game are related to win percentage differently in the two leagues. Students compare offensive production, defensive performance, and win percentage using scatterplots and correlation summaries.
+The NHL, or National Hockey League, is the major professional hockey league in North America. The KHL, or Kontinental Hockey League, is a major professional hockey league based mainly in Eurasia. These leagues are not identical in schedule, geography, roster structure, or playing style, so comparing them gives students a useful example of how data analysts make variables comparable before drawing conclusions.
 
-Throughout the activity, students will practice core data analysis skills including creating comparable variables across datasets, combining league data into one tidy dataset, visualizing relationships between two quantitative variables, calculating correlations, and interpreting the direction and strength of statistical relationships.
+This module compares NHL and KHL team performance during the 2024-25 season. The main response variable is win percentage, the proportion of games a team won. The two main explanatory variables are goals for per game and goals against per game. Goals for measures offensive production. Goals against measures defensive performance.
 
-This activity is especially useful for introducing students to sports analytics and correlation-based analysis. It also gives students a practical example of how statistical thinking can be used to compare patterns across groups and move beyond general sports opinions.
+Students will create comparable variables, combine the two league datasets, make scatterplots, calculate correlations, and interpret the results in context. The activity is written so it can work well in an introductory statistics or data science course, including a STAT 113-level course.
+
+## Intro Video
+
+Before starting the analysis, students who are less familiar with hockey may watch this short introduction to the basic rules and vocabulary of ice hockey.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nv2FUnHceqU" title="The Rules of Ice Hockey - EXPLAINED!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
 This activity is suitable for a single class period or as a short out-of-class lab.
@@ -142,13 +149,14 @@ Students will create the following derived variables during the worksheet:
 
 #### Data Sources
 
-[https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50](https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50){target="_blank"}
+[NHL Data 2024-25 Season](https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50){target="_blank"}
 
-[https://en.khl.ru/stat/teams/1288/](https://en.khl.ru/stat/teams/1288/){target="_blank"}
+[KHL Data 2024-25 Season](https://en.khl.ru/stat/teams/1288/){target="_blank"}
 
 ### Materials
 
-- [Class handout](worksheet.qmd)
+- [Class handout](index.qmd)
+- [Class handout Minitab version](minitab_worksheet.qmd)
 
 - Solutions:
   + [Quarto with visible R code](answerkey.qmd)
@@ -164,7 +172,10 @@ The final scatterplots and correlation summaries encourage students to think car
 Students also practice interpreting correlation responsibly. The analysis can show whether variables are associated, but it cannot prove that offense or defense directly causes a team to win more games.
 :::
 
-### Additional Reading
+### Sources
+
+- Thumbnail Image
+[https://www.wbspenguins.com/wp-content/uploads/2025/02/Guide-to-Hockey-Slang-Blog-WBS-Penguins.jpg](https://www.wbspenguins.com/wp-content/uploads/2025/02/Guide-to-Hockey-Slang-Blog-WBS-Penguins.jpg)
 
 - Introduction to Data Wrangling with dplyr [https://dplyr.tidyverse.org/](https://dplyr.tidyverse.org/){target="_blank"}
 

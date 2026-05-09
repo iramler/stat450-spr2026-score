@@ -11,6 +11,7 @@ author:
       - ref: slu
 date: "Apr 25, 2026"
 description: "Exploring league parity by cleaning, comparing, and analyzing NHL and KHL team performance data."
+image: "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2025-02/250219-4-Nations-aa-241-54d8c9.jpg"
 editor: 
   canonical: true
 categories:
@@ -33,6 +34,12 @@ In this worksheet, students analyze team performance data from the NHL and KHL d
 Throughout the activity, students will practice core data analysis skills including creating comparable variables across datasets, combining league data into one tidy dataset, visualizing distributions, calculating summary statistics such as IQR and P90–P10, and using permutation tests to compare groups.
 
 This activity is especially useful for introducing students to sports analytics and randomization-based inference. It also gives students a practical example of how statistical thinking can be used to move beyond visual impressions and test whether differences between groups may be meaningful.
+
+## Intro Video
+
+Before starting the analysis, students who are less familiar with hockey may watch this short introduction to the basic rules and vocabulary of ice hockey.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nv2FUnHceqU" title="The Rules of Ice Hockey - EXPLAINED!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
 This activity is suitable for a single class period or as a short out-of-class lab.
@@ -142,13 +149,13 @@ Students will create the following derived variables during the worksheet:
 
 #### Data Sources
 
-[https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50](https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50){target="_blank"}
+[NHL Data 2024-25 Season](https://www.nhl.com/stats/teams?reportType=season&seasonFrom=20242025&seasonTo=20242025&gameType=2&sort=points,wins&page=0&pageSize=50){target="_blank"}
 
-[https://en.khl.ru/stat/teams/1288/](https://en.khl.ru/stat/teams/1288/){target="_blank"}
+[KHL Data 2024-25 Season](https://en.khl.ru/stat/teams/1288/){target="_blank"}
 
 ### Materials
 
-- [Class handout](worksheet.qmd)
+- [Class handout](index.qmd)
 
 - Solutions:
   + [Quarto with visible R code](answerkey.qmd)
@@ -162,7 +169,10 @@ The activity highlights an important idea in applied data science: comparisons a
 The final visualizations, parity metrics, randomization tests, and Bradley–Terry-inspired score encourage students to think carefully about what “parity” means. Rather than relying only on which league has the best or worst teams, students learn to measure how spread out team performance is and evaluate whether the observed differences could reasonably occur by chance.
 :::
 
-### Additional Reading
+### Sources
+
+- Thumbnail Image
+[https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2025-02/250219-4-Nations-aa-241-54d8c9.jpg](https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2025-02/250219-4-Nations-aa-241-54d8c9.jpg)
 
 - Introduction to Data Wrangling with dplyr [https://dplyr.tidyverse.org/](https://dplyr.tidyverse.org/){target="_blank"}
 

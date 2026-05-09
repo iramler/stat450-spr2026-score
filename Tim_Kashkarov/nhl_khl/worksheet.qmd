@@ -34,8 +34,8 @@ library(lubridate)
 # 1. Load in the CSV Files
 
 ```{r}
-nhl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/nhl_20245.csv")
-khl_20245 <- read_csv("Tim_Kashkarov/nhl_khl/khl_20245.csv")
+nhl_20245 <- read_csv("nhl_20245.csv")
+khl_20245 <- read_csv("khl_20245.csv")
 ```
 
 # 2. Create Comparable Variables

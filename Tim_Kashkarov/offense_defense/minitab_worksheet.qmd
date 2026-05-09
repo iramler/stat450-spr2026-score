@@ -1,0 +1,116 @@
+---
+title: "minitab_worksheet"
+format: html
+---
+
+# Background
+
+Ice hockey is a team sport where teams try to score goals by shooting a puck into the opponent's net. In this worksheet, each row of the data represents one professional hockey team during the 2024-25 regular season.
+
+We compare teams from two leagues:
+
+- NHL: National Hockey League, the major professional hockey league in North America.
+- KHL: Kontinental Hockey League, a major professional hockey league based mainly in Eurasia.
+
+The main question is:
+
+**Are offense and defense related to winning differently in the NHL and KHL?**
+
+We use a cleaned dataset called `hockey_clean_20245.csv`. It should have these columns:
+
+| Column    | Meaning                                 |
+|-----------|-----------------------------------------|
+| `league`  | NHL or KHL                              |
+| `team`    | Team name                               |
+| `WinPerc` | Wins divided by games played            |
+| `GF_pg`   | Goals for per game; offense measure     |
+| `GA_pg`   | Goals against per game; defense measure |
+
+# 1. Open the Data in Minitab
+
+1. Open Minitab.
+2. Go to **File > Open Worksheet**.
+3. Select `data/hockey_clean_20245.csv`.
+4. Make sure the columns appear as `league`, `team`, `WinPerc`, `GF_pg`, and `GA_pg`.
+
+# 2. Offense vs. Winning
+
+Create a scatterplot for goals for per game and win percentage.
+
+1. Go to **Graph > Scatterplot**.
+2. Choose **Simple** and click **OK**.
+3. For **Y variables**, enter `WinPerc`.
+4. For **X variables**, enter `GF_pg`.
+5. Click **Multiple Graphs**.
+6. Under **By variables**, enter `league` so that NHL and KHL are shown separately.
+7. Click **OK**.
+
+**Question:** What does this graph suggest about the relationship between offense and winning?
+
+# 3. Defense vs. Winning
+
+Create a scatterplot for goals against per game and win percentage.
+
+1. Go to **Graph > Scatterplot**.
+2. Choose **Simple** and click **OK**.
+3. For **Y variables**, enter `WinPerc`.
+4. For **X variables**, enter `GA_pg`.
+5. Click **Multiple Graphs**.
+6. Under **By variables**, enter `league`.
+7. Click **OK**.
+
+**Question:** What does this graph suggest about the relationship between defense and winning?
+
+# 4. Correlation: NHL Only
+
+First, analyze the NHL teams.
+
+1. Go to **Data > Subset Worksheet**.
+2. Create a subset where `league = "NHL"`.
+3. Go to **Stat > Basic Statistics > Correlation**.
+4. Select `WinPerc` and `GF_pg` to calculate the offense correlation.
+5. Repeat with `WinPerc` and `GA_pg` to calculate the defense correlation.
+
+Record your results:
+
+| League | Offense correlation: `GF_pg` and `WinPerc` | Defense correlation: `GA_pg` and `WinPerc` |
+|--------|--------------------------------------------|--------------------------------------------|
+| NHL    |                                            |                                            |
+
+# 5. Correlation: KHL Only
+
+Now, repeat the same process for KHL teams.
+
+1. Go to **Data > Subset Worksheet**.
+2. Create a subset where `league = "KHL"`.
+3. Go to **Stat > Basic Statistics > Correlation**.
+4. Select `WinPerc` and `GF_pg` to calculate the offense correlation.
+5. Repeat with `WinPerc` and `GA_pg` to calculate the defense correlation.
+
+Record your results:
+
+| League | Offense correlation: `GF_pg` and `WinPerc` | Defense correlation: `GA_pg` and `WinPerc` |
+|--------|--------------------------------------------|--------------------------------------------|
+| KHl    |                                            |                                            |
+
+# 6. Reflection Questions
+
+Answer each question in 1-2 sentences.
+
+1. Does offense seem related to winning? Use evidence from the graph or correlation table.
+
+
+
+2. Does defense seem related to winning? Use evidence from the graph or correlation table.
+
+
+
+3. Which relationship appears stronger in each league: offense with winning, or defense with winning?
+
+
+
+4. Pretend you are an analyst for a hockey team. Based on this analysis, would you recommend that the team focus more on improving offense, improving defense, or balancing both? Explain your recommendation using the results.
+
+
+
+5. Why should we be careful about making a strong conclusion from this analysis?

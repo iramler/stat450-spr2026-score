@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tim Kashkarov">
+<meta name="author" content="Ivan Ramler">
+<meta name="dcterms.date" content="2026-04-25">
+<meta name="description" content="Exploring league parity by cleaning, comparing, and analyzing NHL and KHL team performance data.">
+
+<title>Parity analysis of NHL and KHL.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="module_files/libs/clipboard/clipboard.min.js"></script>
+<script src="module_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="module_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="module_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="module_files/libs/quarto-html/popper.min.js"></script>
+<script src="module_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="module_files/libs/quarto-html/anchor.min.js"></script>
+<link href="module_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="module_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="module_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="module_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="module_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Parity analysis of NHL and KHL.</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Data Visualization</div>
+    <div class="quarto-category">Data Wrangling</div>
+    <div class="quarto-category">Sports Analytics</div>
+    <div class="quarto-category">Randomization</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Exploring league parity by cleaning, comparing, and analyzing NHL and KHL team performance data.
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Tim Kashkarov </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            St.&nbsp;Lawrence University
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Ivan Ramler <a href="mailto:iramler@stlawu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            St.&nbsp;Lawrence University
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 25, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="module" class="level2">
+<h2 class="anchored" data-anchor-id="module">Module</h2>
+<p>Please note that these materials have not yet completed the required pedagogical and industry peer-reviews to become a published module on the SCORE Network. However, instructors are still welcome to use these materials if they are so inclined.</p>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>Sports leagues are often compared by how balanced they are. In a highly balanced league, teams tend to be more evenly matched, and win percentages are more closely grouped together. In a less balanced league, stronger teams separate more clearly from weaker teams, creating a wider spread in team performance.</p>
+<p>In this worksheet, students analyze team performance data from the NHL and KHL during the 2024-25 season. The main question is whether one league appears to have more parity than the other. Students compare win percentage distributions, calculate spread-based parity metrics, and use randomization tests to evaluate whether observed differences are large enough to be meaningful.</p>
+<p>Throughout the activity, students will practice core data analysis skills including creating comparable variables across datasets, combining league data into one tidy dataset, visualizing distributions, calculating summary statistics such as IQR and P90–P10, and using permutation tests to compare groups.</p>
+<p>This activity is especially useful for introducing students to sports analytics and randomization-based inference. It also gives students a practical example of how statistical thinking can be used to move beyond visual impressions and test whether differences between groups may be meaningful.</p>
+</section>
+</section>
+<section id="intro-video" class="level2">
+<h2 class="anchored" data-anchor-id="intro-video">Intro Video</h2>
+<p>Before starting the analysis, students who are less familiar with hockey may watch this short introduction to the basic rules and vocabulary of ice hockey.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nv2FUnHceqU" title="The Rules of Ice Hockey - EXPLAINED!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+</iframe>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Activity Length">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Activity Length
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This activity is suitable for a single class period or as a short out-of-class lab.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning Objectives
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>By the end of this activity, you will be able to:</p>
+<ol type="1">
+<li>Create comparable performance variables across two sports datasets.</li>
+<li>Visualize and compare distributions across groups.</li>
+<li>Use spread metrics such as IQR and P90–P10 to measure league parity.</li>
+<li>Run and interpret a randomization test for comparing leagues.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Methods">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Methods
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Technology Requirement:</strong></p>
+<p>This activity requires <code>R</code> with familiarity in <code>Quarto</code> documents and <code>tidyverse</code> tools, especially <code>dplyr</code>, <code>readr</code>, and <code>ggplot2</code>. Students will also use simulation-based thinking to run permutation tests.</p>
+</div>
+</div>
+</div>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>You will work with two datasets:</p>
+<ul>
+<li><a href="nhl_20245.csv">nhl_20245.csv</a>: NHL team summary stats for the 2024-25 season</li>
+<li><a href="khl_20245.csv">khl_20245.csv</a>: KHL team summary stats for the 2024-25 season</li>
+</ul>
+<p>The nhl_20245.csv dataset contains team-level season performance statistics for NHL teams. Each row represents one team. Students will create comparable variables such as WinPerc, GF_pg, and GA_pg during the analysis process.</p>
+<details>
+<summary>
+<b>Variable Descriptions: <code>nhl_20245.csv</code> (NHL Team Stats)</b>
+</summary>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Team</td>
+<td>Team name</td>
+</tr>
+<tr class="even">
+<td>Season</td>
+<td>Season</td>
+</tr>
+<tr class="odd">
+<td>GP</td>
+<td>Games played</td>
+</tr>
+<tr class="even">
+<td>W</td>
+<td>Wins</td>
+</tr>
+<tr class="odd">
+<td>L</td>
+<td>Losses</td>
+</tr>
+<tr class="even">
+<td>T</td>
+<td>Ties</td>
+</tr>
+<tr class="odd">
+<td>OT</td>
+<td>Overtime losses</td>
+</tr>
+<tr class="even">
+<td>P</td>
+<td>Points</td>
+</tr>
+<tr class="odd">
+<td>P%</td>
+<td>Point percentage</td>
+</tr>
+<tr class="even">
+<td>RW</td>
+<td>Regulation wins</td>
+</tr>
+<tr class="odd">
+<td>ROW</td>
+<td>Regulation plus overtime wins</td>
+</tr>
+<tr class="even">
+<td>S/O Win</td>
+<td>Shootout games won</td>
+</tr>
+<tr class="odd">
+<td>GF</td>
+<td>Goals for</td>
+</tr>
+<tr class="even">
+<td>GA</td>
+<td>Goals against</td>
+</tr>
+<tr class="odd">
+<td>GF/GP</td>
+<td>Goals for per game played</td>
+</tr>
+<tr class="even">
+<td>GA/GP</td>
+<td>Goals against per game played</td>
+</tr>
+<tr class="odd">
+<td>SO</td>
+<td>Team shutouts</td>
+</tr>
+<tr class="even">
+<td>PP%</td>
+<td>Power play percentage</td>
+</tr>
+<tr class="odd">
+<td>PK%</td>
+<td>Penalty kill percentage</td>
+</tr>
+<tr class="even">
+<td>Net PP%</td>
+<td>Power play net percentage</td>
+</tr>
+<tr class="odd">
+<td>Net PK%</td>
+<td>Penalty kill net percentage</td>
+</tr>
+<tr class="even">
+<td>Shots/GP</td>
+<td>Shots for per game</td>
+</tr>
+<tr class="odd">
+<td>SA/GP</td>
+<td>Shots against per game</td>
+</tr>
+<tr class="even">
+<td>FOW%</td>
+<td>Face-off win percentage</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p>The khl_20245.csv dataset contains team-level season performance statistics for KHL teams. Students will create the same comparable variables so that NHL and KHL teams can be analyzed together.</p>
+<details>
+<summary>
+<b>Variable Descriptions: <code>khl_20245.csv</code> (KHL Team Stats)</b>
+</summary>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Team</td>
+<td>Team name</td>
+</tr>
+<tr class="even">
+<td>№</td>
+<td>Team ranking number</td>
+</tr>
+<tr class="odd">
+<td>GP</td>
+<td>Games played</td>
+</tr>
+<tr class="even">
+<td>W</td>
+<td>Wins</td>
+</tr>
+<tr class="odd">
+<td>OTW</td>
+<td>Overtime wins</td>
+</tr>
+<tr class="even">
+<td>SOW</td>
+<td>Shootout wins</td>
+</tr>
+<tr class="odd">
+<td>SOL</td>
+<td>Shootout losses</td>
+</tr>
+<tr class="even">
+<td>OTL</td>
+<td>Overtime losses</td>
+</tr>
+<tr class="odd">
+<td>L</td>
+<td>Losses</td>
+</tr>
+<tr class="even">
+<td>PTS</td>
+<td>Points</td>
+</tr>
+<tr class="odd">
+<td>SOA</td>
+<td>Shutouts against</td>
+</tr>
+<tr class="even">
+<td>SO</td>
+<td>Shutouts</td>
+</tr>
+<tr class="odd">
+<td>GF</td>
+<td>Goals for</td>
+</tr>
+<tr class="even">
+<td>GA</td>
+<td>Goals allowed</td>
+</tr>
+<tr class="odd">
+<td>PIM</td>
+<td>Penalty minutes</td>
+</tr>
+<tr class="even">
+<td>PIMA</td>
+<td>Penalty minutes against</td>
+</tr>
+<tr class="odd">
+<td>TkA</td>
+<td>Takeaways</td>
+</tr>
+<tr class="even">
+<td>P.Intc</td>
+<td>Pass interceptions</td>
+</tr>
+<tr class="odd">
+<td>GvA</td>
+<td>Giveaways</td>
+</tr>
+<tr class="even">
+<td>TIE</td>
+<td>Even strength team time on ice</td>
+</tr>
+<tr class="odd">
+<td>TIE/G</td>
+<td>Average even strength team time on ice per game</td>
+</tr>
+<tr class="even">
+<td>TIEN</td>
+<td>Empty net team time on ice</td>
+</tr>
+<tr class="odd">
+<td>TIEN/G</td>
+<td>Average empty net team time on ice per game</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p>Students will create the following derived variables during the worksheet:</p>
+<details>
+<summary>
+<b>Derived Variables</b>
+</summary>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 86%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>league</td>
+<td>League label: NHL or KHL</td>
+</tr>
+<tr class="even">
+<td>team</td>
+<td>Team name</td>
+</tr>
+<tr class="odd">
+<td>WinPerc</td>
+<td>Win percentage, calculated as Wins / GamesPlayed</td>
+</tr>
+<tr class="even">
+<td>GF_pg</td>
+<td>Goals for per game, calculated as GF / GamesPlayed</td>
+</tr>
+<tr class="odd">
+<td>GA_pg</td>
+<td>Goals against per game, calculated as GA / GamesPlayed</td>
+</tr>
+<tr class="even">
+<td>BT</td>
+<td>Bradley–Terry-inspired average pairwise win probability score</td>
+</tr>
+</tbody>
+</table>
+</details>
+<section id="data-sources" class="level4">
+<h4 class="anchored" data-anchor-id="data-sources">Data Sources</h4>
+<p><a href="https://www.nhl.com/stats/teams?reportType=season&amp;seasonFrom=20242025&amp;seasonTo=20242025&amp;gameType=2&amp;sort=points,wins&amp;page=0&amp;pageSize=50" target="_blank">NHL Data 2024-25 Season</a></p>
+<p><a href="https://en.khl.ru/stat/teams/1288/" target="_blank">KHL Data 2024-25 Season</a></p>
+</section>
+</section>
+<section id="materials" class="level3">
+<h3 class="anchored" data-anchor-id="materials">Materials</h3>
+<ul>
+<li><p><a href="worksheet.qmd">Class handout</a></p></li>
+<li><p>Solutions:</p>
+<ul>
+<li><a href="answerkey.qmd">Quarto with visible R code</a></li>
+<li><a href="answerkey.html">HTML with hideable R code</a></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Conclusion">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Conclusion
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Through this module, students work with two real-world sports datasets and build a complete analysis workflow from raw team statistics to interpretation. They begin by creating comparable variables for NHL and KHL teams, then combine the datasets into one tidy structure for league-level comparison.</p>
+<p>The activity highlights an important idea in applied data science: comparisons are only meaningful when variables are constructed consistently across groups. By calculating win percentage, goals for per game, and goals against per game in the same way for both leagues, students create a fair basis for analysis.</p>
+<p>The final visualizations, parity metrics, randomization tests, and Bradley–Terry-inspired score encourage students to think carefully about what “parity” means. Rather than relying only on which league has the best or worst teams, students learn to measure how spread out team performance is and evaluate whether the observed differences could reasonably occur by chance.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sources" class="level3">
+<h3 class="anchored" data-anchor-id="sources">Sources</h3>
+<ul>
+<li><p>Thumbnail Image <a href="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2025-02/250219-4-Nations-aa-241-54d8c9.jpg">https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2025-02/250219-4-Nations-aa-241-54d8c9.jpg</a></p></li>
+<li><p>Introduction to Data Wrangling with dplyr <a href="https://dplyr.tidyverse.org/" target="_blank">https://dplyr.tidyverse.org/</a></p></li>
+<li><p>Data Visualization with ggplot2 <a href="https://ggplot2.tidyverse.org/" target="_blank">https://ggplot2.tidyverse.org/</a></p></li>
+<li><p>Randomization in Statistics and Experimental Design <a href="https://www.statisticshowto.com/randomization-experimental-design/" target="_blank">https://www.statisticshowto.com/randomization-experimental-design/</a></p></li>
+<li><p>Creating a Ratings Model with Bradley-Terry <a href="https://www.dratings.com/creating-a-ratings-model-with-bradley-terry/" target="_blank">https://www.dratings.com/creating-a-ratings-model-with-bradley-terry/</a></p></li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
