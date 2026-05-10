@@ -8,10 +8,10 @@
 
 <meta name="author" content="Keelin Joyce">
 <meta name="author" content="Ivan Ramler">
-<meta name="dcterms.date" content="2026-04-10">
-<meta name="description" content="Estimate the proportion of collegiate rowers who meet their goal time set before an erg piece.">
+<meta name="dcterms.date" content="2026-05-08">
+<meta name="description" content="Estimating the proportion of collegiate rowers who meet their goal time set before an erg piece and using software to create a bootstrap distribution for confidence intervals of single proportions">
 
-<title>Rowing: Estimating the proportion of athletes meeting their goal</title>
+<title>Rowing: Estimating the proportion of Div-111 collegiate athletes meeting their goal</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,8 +51,9 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Rowing: Estimating the proportion of athletes meeting their goal</h1>
+<h1 class="title">Rowing: Estimating the proportion of Div-111 collegiate athletes meeting their goal</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">Bootstrap Distribution</div>
     <div class="quarto-category">Confidence Intervals</div>
     <div class="quarto-category">Proportions</div>
   </div>
@@ -60,7 +61,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Estimate the proportion of collegiate rowers who meet their goal time set before an erg piece.
+    Estimating the proportion of collegiate rowers who meet their goal time set before an erg piece and using software to create a bootstrap distribution for confidence intervals of single proportions
   </div>
 </div>
 
@@ -92,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 10, 2026</p>
+      <p class="date">May 8, 2026</p>
     </div>
   </div>
   
@@ -114,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>While collegiate rowing is a two season sport having both a fall (August-November) and spring (March-May) season, practicing during the winter is proven to be difficult as most climates force rowers indoors for the season. The most common practice during the winter training period in rowing is the ergometer, commonly called an erg. The erg mimics the stroke that rowers take in the boat and instantly displays performance metrics to the rower. These metrics can be assessed to show a rower where their fitness is at during a time where they cannot practice on the water. Ergs are used for both fitness training and assessment purposes.</p>
 <p>During the period of winter training, athletes focus on strength training, building speed, and improving their stroke before they can get back on the water in early spring. The main measure of their progress is shown in their performance during test pieces</p>
-<p>There are 111 observations of completed pieces. We will focus on the <code>Goal</code> and <code>Split</code> variables to assess the proportion of athletes that are surpassing their goal. There are other variables in this dataset that are not necessary for this module. Erg data was collected from a Div-III collegiate rowing team and their test piece results were compiled into a dataset. These data were approved by the Institutional Research Board from the author’s institution to be publicly released.</p>
+<p>There are 104 observations of completed pieces. We will focus on the <code>Goal</code> and <code>Split</code> variables to assess the proportion of athletes that are surpassing their goal. The <code>Difference</code> and <code>Achievement</code> variables were created to create a confidence interval using software. There are other variables in this dataset that are not necessary for this module. Erg data was collected from a Div-III collegiate rowing team and their test piece results were compiled into a dataset. These data were approved by the Institutional Research Board from the author’s institution to be publicly released.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Activity Length">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -127,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This could serve as an in class activity and should take roughly an hour to complete.</p>
+<p>This module includes two handouts intended for separate use that could each serve as an in class activity and should take roughly an hour to complete.</p>
 </div>
 </div>
 </div>
@@ -144,6 +145,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Students will gain experience performing single proportion confidence intervals.</p>
+<p>Students will use previous knowledge of confidence intervals to build and interpret intervals using software.</p>
 </div>
 </div>
 </div>
@@ -159,7 +161,25 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Students are expected to have been exposed to the concept confidence intervals for a single proportion, although this is intended to be used as an earlier example for the topic.</p>
+<p>For the <code>by hand</code> worksheet, students are expected to have been exposed to the concept confidence intervals for a single proportion, although this is intended to be used as an earlier example for the topic and does not require much previous instruction or practice.The worksheet includes enough instruction for students to complete independently.</p>
+<p>For the worksheet <code>using software</code>, students should have a foundational understanding of confidence interval and experience working with StatKey. The worksheet includes enough instruction for students to complete independently.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Materials">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Materials
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For the <code>by hand</code> worksheet, students only need access to the worksheet.</p>
+<p>For the worksheet <code>using software</code>, students should have access to software (such as StatKey) but do not need access to the data as all relevant information is provided.</p>
 </div>
 </div>
 </div>
@@ -167,17 +187,25 @@ ul.task-list li input[type="checkbox"] {
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <p>This module used the <code>rowing</code> data from the <a href="https://data.scorenetwork.org/water_sports/rowing_wintertraining_div3.html" target="_blank">SCORE Data Repository</a></p>
+<dl>
+<dt>The data can be found here</dt>
+<dd>
+<a href="erg_df.csv">erg_df.csv</a>
+</dd>
+</dl>
 <p>However, the data is summarized in the provided worksheet and students do not need direct access to the data.</p>
 </section>
 <section id="materials" class="level2">
 <h2 class="anchored" data-anchor-id="materials">Materials</h2>
 <ul>
 <li><p>There are no technology requirements for this module</p></li>
-<li><p><a href="Erging_ConfidenceIntervals.docx">Class handout</a></p></li>
-<li><p><a href="Erging_ConfidenceIntervals_Solutions.docx">Class handout - with solutions</a></p></li>
+<li><p><a href="Erging_ConfidenceIntervals.docx">Class handout for Confidence Intervals (by hand)</a></p></li>
+<li><p><a href="Erging_ConfidenceIntervals_Solutions.docx">Class handout for Confidence Intervals (by hand) - with solutions</a></p></li>
+<li><p><a href="Erging_Bootstrap_Solutions.docx">Class handout for Confidence Intervals (with StatKey)</a></p></li>
+<li><p><a href="Erging_Bootstrap_Solutions.docx">Class handout for Confidence Intervals (with StatKey) - with solutions</a></p></li>
 </ul>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Conclusion">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -186,9 +214,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>Students should gain an increased understanding of constructing and interpreting single-proportion confidence intervals.</p>
+<p>Students should gain an increased understanding of constructing and interpreting single-proportion confidence intervals by hand and using software.</p>
 </div>
 </div>
 </div>

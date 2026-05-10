@@ -1,5 +1,5 @@
 ---
-title: "Rowing: Estimating the proportion of athletes meeting their goal"
+title: "Rowing: Estimating the proportion of Div-111 collegiate athletes meeting their goal"
 author:
   - name: Keelin Joyce
     affiliation:
@@ -10,14 +10,15 @@ author:
       - ref: slu
     email: iramler@stlawu.edu
     
-date: "April 10, 2026"
-description: "Estimate the proportion of collegiate rowers who meet their goal time set before an erg piece."
+date: "May 8, 2026"
+description: "Estimating the proportion of collegiate rowers who meet their goal time set before an erg piece and using software to create a bootstrap distribution for confidence intervals of single proportions"
 editor: 
   canonical: true
 format: 
   html:
     embed-resources: false
 categories:
+  - Bootstrap Distribution
   - Confidence Intervals
   - Proportions
 image: crop.webp
@@ -35,23 +36,36 @@ While collegiate rowing is a two season sport having both a fall (August-Novembe
 
 During the period of winter training, athletes focus on strength training, building speed, and improving their stroke before they can get back on the water in early spring. The main measure of their progress is shown in their performance during test pieces
 
-There are 111 observations of completed pieces. We will focus on the `Goal` and `Split` variables to assess the proportion of athletes that are surpassing their goal. There are other variables in this dataset that are not necessary for this module. Erg data was collected from a Div-III collegiate rowing team and their test piece results were compiled into a dataset. These data were approved by the Institutional Research Board from the author's institution to be publicly released.
+There are 104 observations of completed pieces. We will focus on the `Goal` and `Split` variables to assess the proportion of athletes that are surpassing their goal. The `Difference` and `Achievement` variables were created to create a confidence interval using software. There are other variables in this dataset that are not necessary for this module. Erg data was collected from a Div-III collegiate rowing team and their test piece results were compiled into a dataset. These data were approved by the Institutional Research Board from the author's institution to be publicly released.
 
 ::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
-This could serve as an in class activity and should take roughly an hour to complete.
+This module includes two handouts intended for separate use that could each serve as an in class activity and should take roughly an hour to complete.
 :::
 
 ::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
 Students will gain experience performing single proportion confidence intervals.
+
+Students will use previous knowledge of confidence intervals to build and interpret intervals using software.
 :::
 
 ::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
-Students are expected to have been exposed to the concept confidence intervals for a single proportion, although this is intended to be used as an earlier example for the topic.
+For the `by hand` worksheet, students are expected to have been exposed to the concept confidence intervals for a single proportion, although this is intended to be used as an earlier example for the topic and does not require much previous instruction or practice.The worksheet includes enough instruction for students to complete independently.
+
+For the worksheet `using software`, students should have a foundational understanding of confidence interval and experience working with StatKey. The worksheet includes enough instruction for students to complete independently.
+:::
+
+::: {.callout-note collapse="true" title="Materials" appearance="minimal"}
+For the `by hand` worksheet, students only need access to the worksheet.
+
+For the worksheet `using software`, students should have access to software (such as StatKey) but do not need access to the data as all relevant information is provided.
 :::
 
 ## Data
 
 This module used the `rowing` data from the [SCORE Data Repository](https://data.scorenetwork.org/water_sports/rowing_wintertraining_div3.html){target="_blank"}
+
+The data can be found here
+: [erg_df.csv](erg_df.csv)
 
 However, the data is summarized in the provided worksheet and students do not need direct access to the data. 
 
@@ -60,12 +74,18 @@ However, the data is summarized in the provided worksheet and students do not ne
 
 - There are no technology requirements for this module
 
-- [Class handout](Erging_ConfidenceIntervals.docx)
+- [Class handout for Confidence Intervals (by hand)](Erging_ConfidenceIntervals.docx)
 
-- [Class handout - with solutions](Erging_ConfidenceIntervals_Solutions.docx)
+- [Class handout for Confidence Intervals (by hand) - with solutions](Erging_ConfidenceIntervals_Solutions.docx)
+
+- [Class handout for Confidence Intervals (with StatKey)](Erging_Bootstrap_Solutions.docx)
+
+- [Class handout for Confidence Intervals (with StatKey) - with solutions](Erging_Bootstrap_Solutions.docx)
 
 ::: {.callout-note collapse="false" title="Conclusion" appearance="minimal"}
 
-Students should gain an increased understanding of constructing and interpreting single-proportion confidence intervals.
+Students should gain an increased understanding of constructing and interpreting single-proportion confidence intervals by hand and using software.
 :::
+
+
 
