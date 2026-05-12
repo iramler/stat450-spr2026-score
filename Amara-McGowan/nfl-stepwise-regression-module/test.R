@@ -22,7 +22,26 @@ qr_models <- map(quantiles, ~ rq(qbr ~ passing_yards + passing_tds + passing_int
                                    rushing_first_downs + rushing_epa + surface + pct_total + 
                                    sack_fumbles, tau = .x, data = nfl_qbr))
 
+# Looking at different ways to do pseudo R-squared to better understand how to teach it and what
+# the right way to calculate it is.
+
 map(qr_models, summary)
+
+pseudo_r2 <- map_dfr(qr_models, function(m) {
+  
+  y <- m$model$qbr
+  tau <- m$tau
+  
+  rho <- function(u) u * (tau - (u < 0))
+  
+  ss_res <- sum(rho(y - fitted(m)))
+  ss_tot <- sum(rho(y - quantile(y, tau)))
+  
+  data.frame(
+    tau = tau,
+    r2 = 1 - ss_res / ss_tot )})
+
+print.data.frame(pseudo_r2)
 
 qr_rsq <- function(model) {
   rho <- function(u, tau) tau * u * (u >= 0) + (tau - 1) * u * (u < 0)

@@ -390,7 +390,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="stepwise-regression" class="level1">
 <h1>Stepwise Regression</h1>
-<p>A little bit of information about stepwise regression.</p>
+<p>Stepwise regression helps find a useful combination of predictors for explaining a response variable by testing different combinations of predictors. For example, if we want to predict someone’s height, we might start with a dataset that includes height, age, sex, number of apples eaten a year, and full name. Stepwise regression looks at different combinations of the other variables and keeps the ones that help predict height the most.</p>
+<p>The first step is to identify the variables that could reasonably help predict the response. For our dataset, the player statistics variables describe the quarterback’s performance in each game, and the game details variables describe the conditions surrounding the game that can affect performance. If you are not sure what a variable means, check the descriptions in the data section. If a variable seems like it might help, you can include it as a candidate predictor and let stepwise regression decide whether to keep it. A candidate predictor is a variable that is being considered as a candidate for being a predictor in our final model due to its potential to predict QBR.</p>
+<p>It can be helpful to store the predictors in a vector so that you can easily add or remove variables while cleaning your data. For example, if a dataset included height, age, sex, apples_eaten_yearly, and name, you could store the variables you think might help predict height like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>predictors &lt;- c("age", "sex", "apples_eaten_yearly")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Notice that full name was left out because it is only an identifier and does not help explain height. We also leave out height itself because that is the response variable we are trying to predict.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 1: Prepare Predictors">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -401,23 +405,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a vector named predictors that contains the variables you want to use as explanatory variables in your stepwise regression model. Which variables should you include from nfl_qbr?</p>
-<p>Remember, stepwise regression works best when it starts with a broad set of possible predictors, since it will select the best combination for the final model.</p>
+<p>Create a vector named predictors that contains the variables you want to use as explanatory variables in your stepwise regression model. Which variables from nfl_qbr should you include?</p>
+<p>Remember, stepwise regression works best when it starts with a broad set of candidate predictors, since it will select the best combination for the final model. All variables are listed in the variable description tab under the data section above.</p>
 <details>
 <summary>
 <b>Click for Solution</b>
 </summary>
-<p>All of the variables could help predict a quarterback’s performance, except for <code>player</code>, <code>qbr</code>, and <code>week</code>. We do not include <code>player</code> because it is only an identifier and would make the model depend too much on specific quarterbacks rather than patterns that generalize to new players. We do not include <code>week</code> because it is just a time label, and we do not include <code>qbr</code> because it is the response variable we are trying to predict.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>predictors &lt;- c(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  "completions", "attempts", "passing_yards", "passing_tds", "passing_interceptions",</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  "sacks_suffered", "sack_yards_lost", "sack_fumbles", "sack_fumbles_lost", </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  "passing_air_yards", "passing_first_downs", "passing_epa", "passing_cpoe",</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  "pacr", "carries", "rushing_yards", "rushing_tds", </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  "rushing_fumbles", "rushing_fumbles_lost", "rushing_first_downs", "rushing_epa",</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  "rest", "roof", "surface", "pct_total")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Most of the variables could help predict a quarterback’s performance, except for <code>player</code>, <code>qbr</code>, and <code>week</code>. We do not include <code>player</code> because it is only an identifier and would make the model depend too much on specific quarterbacks rather than patterns that generalize to new players. We do not include <code>week</code> because it is just a time label, and we do not include <code>qbr</code> because it is the response variable we are trying to predict.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>predictors &lt;- c(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  "completions", "attempts", "passing_yards", "passing_tds", "passing_interceptions",</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  "sacks_suffered", "sack_yards_lost", "sack_fumbles", "sack_fumbles_lost", </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  "passing_air_yards", "passing_first_downs", "passing_epa", "passing_cpoe",</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  "pacr", "carries", "rushing_yards", "rushing_tds", </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  "rushing_fumbles", "rushing_fumbles_lost", "rushing_first_downs", "rushing_epa",</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  "rest", "roof", "surface", "pct_total")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
+<p>Before we can use stepwise regression, we first fit a full linear model. A full linear model includes all of the candidate predictors we want to consider, so it gives us a starting point before stepwise regression begins removing or keeping variables.</p>
+<p>If we made a full linear regression model to predict height using the imaginary data mentioned earlier, it would look something like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>full_mod &lt;- lm(height ~ ., data = height_dataset<span class="co">[</span><span class="ot">, c("height", predictors)</span><span class="co">]</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We use height ~ . to tell the model to use all of the other variables from the data as predictors of height. Then we give the model only the variables we want it to use, including height and the predictors we selected.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 2: Create a Full Model">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -433,10 +441,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>
 <b>Click for Solution</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>full_mod &lt;- lm(qbr ~ ., data = nfl_qbr<span class="co">[</span><span class="ot">, c("qbr", predictors)</span><span class="co">]</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>full_mod &lt;- lm(qbr ~ ., data = nfl_qbr<span class="co">[</span><span class="ot">, c("qbr", predictors)</span><span class="co">]</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
+<p>Now that we have fit a full linear regression model, we are ready to start stepwise regression. Stepwise regression is a way to find the best combination of predictors by adding or removing predictors one at a time. In forward selection, the model starts with no predictors and adds variables that improve the model. In backward elimination, the model starts with all predictors and removes variables that do not help much. In both directions, the model can add or remove predictors until it finds a better combination.</p>
+<p>In this module, we use both forward and backward stepwise regression. That means the model starts with the full model, but it is also allowed to remove weak predictors and add back useful ones if needed.</p>
+<p>For example, if we were predicting height from age, sex, and number of apples eaten a year, stepwise regression might start with all three variables, remove the number of apples eaten a year if it does not help, and keep age and sex if they improve the model. Using the <code>stepAIC()</code> function from the <code>MASS</code> package that we loaded in, that would look something like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>step_mod &lt;- stepAIC(full_mod, direction = "both")</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>summary(step_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>stepAIC()</code> function searches for a smaller model with a lower AIC value. AIC is a number that helps compare models by balancing how well they fit the data with how simple they are, so a lower AIC usually means a better model. In this case, <code>direction = "both"</code>, means the function can try adding predictors, removing predictors, or doing both as it searches for the best model.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 3: Perform Stepwise Regression">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -452,53 +466,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>
 <b>Click for Solution</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>step_mod &lt;- stepAIC(full_mod, direction = "both")</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>summary(step_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>step_mod &lt;- stepAIC(full_mod, direction = "both")</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>summary(step_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The variables that were kept in the best model picked by stepwise regression are: passing_yards, passing_tds, passing_interceptions, sack_yards_lost, passing_air_yards, passing_epa, passing_cpoe, rushing_first_downs, rushing_epa, surface, pct_total, and sack_fumbles.</p>
 </details>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 4: Interpret the Results">
+<p>An important part of building a model is checking how well it performs. This helps us understand whether the model is doing a good job predicting the response variable. For stepwise regression, we can use the adjusted R-squared value in the model summary to measure how much of the variation in QBR is explained by the model. In general, values closer to 1 indicate a better fit to the data.</p>
+<p>We can also use the model summary to identify which predictors are especially useful for explaining QBR. The <code>Pr(&gt;|t|)</code> column contains p-values that measure whether each predictor is significantly related to the response variable. In the output, significant predictors are marked with asterisks (<code>*</code>). More asterisks indicate stronger statistical significance. The smaller the predictor’s p-value is, the stronger it is associated with QBR in the model.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 4: Describe Model Fit">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Exercise 4: Interpret the Results
+<span class="screen-reader-only">Note</span>Exercise 4: Describe Model Fit
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Interpret the results of the stepwise regression model. Which predictors seem most important for explaining QBR, and use the R-squared value to describe how well the model works.</p>
+<p>Using the adjusted R-squared value, describe how well the model fits the data.</p>
 <details>
 <summary>
 <b>Click for Example Answer</b>
 </summary>
-<p>According to the summary from the stepwise model, blah blah with blank accuracy.</p>
+<p>According to the model summary, the adjusted R-squared value was 0.7515. This means the model explains about 75.15% of the variation in QBR, which suggests that the model fits the data fairly well. Overall, the predictors selected by the stepwise regression procedure appear to capture many of the factors associated with quarterback performance.</p>
 </details>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 5: Think Critically">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 5: Identify Strongly Associated Predictors">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Exercise 5: Think Critically
+<span class="screen-reader-only">Note</span>Exercise 5: Identify Strongly Associated Predictors
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Why might this model predict QBR better for some quarterbacks than others? Think about possible reasons.</p>
+<p>Using the model summary for the stepwise regression model, identify which predictors in the stepwise model seem most strongly associated with QBR?</p>
 <details>
 <summary>
-<b>Click for Example Reasons </b>
+<b>Click for Example Answer</b>
 </summary>
-<p>TBD</p>
+<p>The predictors in the stepwise model that seem the most strongly associated to QBR are <code>passing_tds</code>, <code>sack_yards_lost</code>, <code>passing_air_yards</code>, <code>passing_epa</code>, <code>passing_cpoe</code>, <code>rushing_first_downs</code>, and <code>rushing_epa</code> because they were all highly statistically significant, meaning they had very small p-values and strong relationships with QBR, denoted by three asterisks in the model summary.</p>
 </details>
 </div>
 </div>
 </section>
 <section id="quantile-regression" class="level1">
 <h1>Quantile Regression</h1>
-<p>A little bit of information on quantile regression.</p>
+<p>Quantile regression helps us study different parts of the response variable instead of only the average. A quantile is a point that splits the data into groups, like the 10th percentile, 25th percentile, or 50th percentile.</p>
+<p>Similar to how we made a vector of predictors, we can make a vector of quantile values. For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>quantiles &lt;- c(0.2, 0.4, 0.6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This would represent the 20th, 40th, and 60th percentiles. A weekly QBR at the 20th percentile would be a higher QBR than 20% of all weekly QBR values and lower than 80% of them.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 6: Set Quantiles">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -514,10 +534,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>
 <b>Click for Solution</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>quantiles &lt;- c(0.1, 0.25, 0.50, 0.75, 0.90)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>quantiles &lt;- c(0.1, 0.25, 0.50, 0.75, 0.90)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
+<p>Now that we have a vector with all the quantiles we are interested in, we need to fit a quantile regression model for each value in the vector. We do this using the <code>rq()</code> function in the <code>quantreg</code> package for linear quantile regression and the <code>map()</code> function from <code>purrr</code> package in <code>tidyverse</code> to fit a model for each quantile. Using our imaginary height dataset, it would look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>qr_models &lt;- map(quantiles, ~ rq(height ~ age + sex, tau = .x, data = height_dataset))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We use <code>tau = .x</code> to set tau to every value in the list of quantiles we give it and we use the equation given to use by stepwise regression, so for this example age + sex, leaving out apples_eaten_yearly.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 7: Perform Quantile Regression">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -533,41 +556,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>
 <b>Click for Solution</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>qr_models &lt;- map(quantiles, ~ rq(qbr ~ passing_yards + passing_tds + passing_interceptions + </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                   sack_yards_lost + passing_air_yards + passing_epa + passing_cpoe +</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                   rushing_first_downs + rushing_epa + surface + pct_total + </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                   sack_fumbles, tau = .x, data = nfl_qbr))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>qr_models &lt;- map(quantiles, ~ rq(qbr ~ passing_yards + passing_tds + passing_interceptions + </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                   sack_yards_lost + passing_air_yards + passing_epa + passing_cpoe +</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                   rushing_first_downs + rushing_epa + surface + pct_total + </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                   sack_fumbles, tau = .x, data = nfl_qbr))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 8: Evaluate Accuracy">
+<p>Quantile regression doesn’t use the usual “squared error” from linear regression, so we can’t use regular R-squared to measure how well the model fits. Instead, we use something called pinball loss (also known as quantile loss) to see how close our predicted quantiles are to the real data. Pinball loss penalizes predicting QBR too high or too low differently depending on what quantile you are predicting for. For example, for the 10th percentile, being too high would be penalized more than being too low.</p>
+<p>Here’s an example of how to calculate it, copy and paste the following code into your R document to evaluate our selected model to see how accurately it predicts QBR for different quantiles:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Compute pinball loss for a quantile regression model</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>qr_pinball &lt;- function(model, data, response, tau) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  y &lt;- data[<span class="co">[</span><span class="ot">response</span><span class="co">]</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  y_hat &lt;- predict(model, newdata = data)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  loss &lt;- ifelse(y &gt;= y_hat,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                 tau * (y - y_hat),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                 (1 - tau) * (y_hat - y))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  mean(loss)}</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># Table of pinball loss for each quantile model</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>qr_pinball_table &lt;- map_dfr(seq_along(qr_models), ~ {</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  tibble(</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    quantile = quantiles<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    pinball_loss = qr_pinball(qr_models[<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>], nfl_qbr, "qbr", quantiles<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>))})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 8: Interpret Pinball Loss">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Exercise 8: Evaluate Accuracy
+<span class="screen-reader-only">Note</span>Exercise 8: Interpret Pinball Loss
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Write a function called qr_rsq() that calculates pseudo R-squared for a quantile regression model. Then use map_dfr() to create a table of pseudo R-squared values for each model in qr_models.</p>
+<p>Interpret the table. TODO: explain.</p>
 <details>
 <summary>
-<b>Click for Solution</b>
+<b>Click for Example Answer</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>qr_rsq &lt;- function(model) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  rho &lt;- function(u, tau) tau * u * (u &gt;= 0) + (tau - 1) * u * (u &lt; 0)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  y &lt;- model$model$qbr</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  ss_res &lt;- sum(rho(y - fitted(model), model$tau))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  ss_tot &lt;- sum(rho(y - median(y), model$tau))</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  1 - ss_res/ss_tot}</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>pseudo_r2 &lt;- map_dfr(qr_models, ~ data.frame(tau = .x$tau, r2 = qr_rsq(.x)), </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                     .id = "model")</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>print(pseudo_r2) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>TODO: write.</p>
 </details>
 </div>
 </div>
+<p>Sometimes putting things into a visual can help make patterns more obvious than looking at numbers in a table. Let’s make a bar plot to get a better idea of how accurate our model is for different quantiles.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 9: Create a Visual">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -583,19 +616,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>
 <b>Click for Solution</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ggplot(pseudo_r2, aes(x = factor(tau), y = r2)) +</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  geom_col(width = 0.5, fill = "darkgreen") +</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  labs(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    x = "Tau",</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    y = "Pseudo R^2",</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    title = "Pseudo R^2 by Quantile") +</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  theme_minimal(base_family = "Garamond") +</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  theme(</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    plot.title = element_text(hjust = 0.5, size = 12, family = "Garamond"),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    axis.text.x = element_text(size = 10, family = "Garamond"),</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    axis.text.y = element_text(size = 10, family = "Garamond"),</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    axis.title.x = element_text(size = 12, family = "Garamond"),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    axis.title.y = element_text(size = 12, family = "Garamond"))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ggplot(pseudo_r2, aes(x = factor(tau), y = r2)) +</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  geom_col(width = 0.5, fill = "darkgreen") +</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  labs(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    x = "Tau",</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    y = "Pseudo R^2",</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    title = "Pseudo R^2 by Quantile") +</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  theme_minimal(base_family = "Garamond") +</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  theme(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    plot.title = element_text(hjust = 0.5, size = 12, family = "Garamond"),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    axis.text.x = element_text(size = 10, family = "Garamond"),</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    axis.text.y = element_text(size = 10, family = "Garamond"),</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    axis.title.x = element_text(size = 12, family = "Garamond"),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    axis.title.y = element_text(size = 12, family = "Garamond"))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -609,7 +642,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Look at the pseudo R-squared values from your quantile regression models. Which quantiles are explained best by the model, and what does that suggest about quarterbacks with lower versus higher QBR values?</p>
+<p>Look at the pinball loss values from your quantile regression models. Which quantiles are explained best by the model, and what does that suggest about quarterbacks with lower versus higher QBR values?</p>
 <details>
 <summary>
 <b>Click for Solution</b>
@@ -624,12 +657,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="getting-started-in-python" class="level1">
 <h1>Getting started in Python</h1>
 <p>To start programming in Python, I recommend downloading Visual Studio Code (VS Code). To do so, you can follow this guide here: <a href="https://code.visualstudio.com/docs/python/python-tutorial#_install-a-python-interpreter">Guide to Installing Python and VS Code</a>.</p>
-<p>If you already have another platform downloaded that you would like to use, that will also work, but there will be some language specific to the VS Code platform within this module.</p>
-<p>Package: statsmodels</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Python code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="using-quantile-regression" class="level1">
-<h1>Using Quantile Regression</h1>
+<p>After you’ve installed everything needed to set up python in VS Code, we can create a project folder and get started.</p>
+<p>Open VS Code and select File then select Open Folder. From there, you can either choose “New Folder” to create and name a new folder for this module, or, if that option is not available, navigate to the location on your computer where you would like the folder to be stored and create it there manually. Once the folder is created or selected, click “Select Folder” or “Open” on macOS to open it in VS Code.</p>
+<p>After the folder opens, it will become your workspace. You may be prompted with a pop-up asking whether you trust the authors of the files in this location. If so, select “Yes, I trust the authors.” Next, create a new file by selecting “New File” and choosing “Python File.”</p>
+<p>At this point, if you have not already done so, download the dataset we will be using <a href="nfl_qbr.csv">(nfl_qbr.csv)</a> and move it into your VS Code folder.</p>
+<p>Reopen your python file. We are now ready for the final setup steps before running our regression analysis. Copy and paste the following code into your document to install the packages we will need and load in our dataset:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>install.packages("MASS")</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>install.packages("tidyverse")</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>install.packages("quantreg")</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>library(MASS)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>library(quantreg)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>nfl_qbr &lt;- read_csv("nfl_qbr.csv") </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
@@ -638,9 +679,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To start programming in Julia, I recommend downloading Visual Studio Code (VS Code). To do so, you can follow this guide here: <a href="https://code.visualstudio.com/docs/languages/julia">Guide to Installing Julia and VS Code</a>.</p>
 <p>If you already have another platform downloaded that you would like to use, that will also work, but there will be some language specific to the VS Code platform within this module.</p>
 <p>Package: QuantReg.jl</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Julia code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Julia code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="using-quantile-regression-1" class="level1">
+<section id="using-quantile-regression" class="level1">
 <h1>Using Quantile Regression</h1>
 </section>
 </div>

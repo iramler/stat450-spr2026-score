@@ -158,14 +158,6 @@ At this point, if you have not already done so, download the dataset we will be 
 
 Reopen your R document. We are now ready for the final setup steps before running our regression analysis. Copy and paste the following code into your document to install the packages we will need and load in our dataset:
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(MASS)
-library(quantreg)
-
-nfl_qbr <- read_csv("nfl_qbr.csv") 
-```
-
 ```markdown
 install.packages("MASS")
 install.packages("tidyverse")
@@ -180,18 +172,28 @@ nfl_qbr <- read_csv("nfl_qbr.csv")
 
 # Stepwise Regression
 
-A little bit of information about stepwise regression.
+Stepwise regression helps find a useful combination of predictors for explaining a response variable by testing different combinations of predictors. For example, if we want to predict someone’s height, we might start with a dataset that includes height, age, sex, number of apples eaten a year, and full name. Stepwise regression looks at different combinations of the other variables and keeps the ones that help predict height the most.
+
+The first step is to identify the variables that could reasonably help predict the response. For our dataset, the player statistics variables describe the quarterback’s performance in each game, and the game details variables describe the conditions surrounding the game that can affect performance. If you are not sure what a variable means, check the descriptions in the data section. If a variable seems like it might help, you can include it as a candidate predictor and let stepwise regression decide whether to keep it. A candidate predictor is a variable that is being considered as a candidate for being a predictor in our final model due to its potential to predict QBR.
+
+It can be helpful to store the predictors in a vector so that you can easily add or remove variables while cleaning your data. For example, if a dataset included height, age, sex, apples_eaten_yearly, and name, you could store the variables you think might help predict height like this:
+
+```markdown
+predictors <- c("age", "sex", "apples_eaten_yearly")
+```
+
+Notice that full name was left out because it is only an identifier and does not help explain height. We also leave out height itself because that is the response variable we are trying to predict.
 
 :::{.callout-note title="Exercise 1: Prepare Predictors" icon = false}
 
-Create a vector named predictors that contains the variables you want to use as explanatory variables in your stepwise regression model. Which variables should you include from nfl_qbr?
+Create a vector named predictors that contains the variables you want to use as explanatory variables in your stepwise regression model. Which variables from nfl_qbr should you include?
 
-Remember, stepwise regression works best when it starts with a broad set of possible predictors, since it will select the best combination for the final model.
+Remember, stepwise regression works best when it starts with a broad set of candidate predictors, since it will select the best combination for the final model. All variables are listed in the variable description tab under the data section above.
 
 <details>
 <summary><b>Click for Solution</b></summary>
 
-All of the variables could help predict a quarterback’s performance, except for `player`, `qbr`, and `week`. We do not include `player` because it is only an identifier and would make the model depend too much on specific quarterbacks rather than patterns that generalize to new players. We do not include `week` because it is just a time label, and we do not include `qbr` because it is the response variable we are trying to predict.
+Most of the variables could help predict a quarterback’s performance, except for `player`, `qbr`, and `week`. We do not include `player` because it is only an identifier and would make the model depend too much on specific quarterbacks rather than patterns that generalize to new players. We do not include `week` because it is just a time label, and we do not include `qbr` because it is the response variable we are trying to predict.
 
 ```markdown
 predictors <- c(
@@ -204,6 +206,16 @@ predictors <- c(
 ```
 </details>
 :::
+
+Before we can use stepwise regression, we first fit a full linear model. A full linear model includes all of the candidate predictors we want to consider, so it gives us a starting point before stepwise regression begins removing or keeping variables.
+
+If we made a full linear regression model to predict height using the imaginary data mentioned earlier, it would look something like this:
+
+```markdown
+full_mod <- lm(height ~ ., data = height_dataset[, c("height", predictors)])
+```
+
+We use height ~ . to tell the model to use all of the other variables from the data as predictors of height. Then we give the model only the variables we want it to use, including height and the predictors we selected.
 
 :::{.callout-note title="Exercise 2: Create a Full Model" icon = false}
 
@@ -218,6 +230,18 @@ full_mod <- lm(qbr ~ ., data = nfl_qbr[, c("qbr", predictors)])
 </details>
 :::
 
+Now that we have fit a full linear regression model, we are ready to start stepwise regression. Stepwise regression is a way to find the best combination of predictors by adding or removing predictors one at a time. In forward selection, the model starts with no predictors and adds variables that improve the model. In backward elimination, the model starts with all predictors and removes variables that do not help much. In both directions, the model can add or remove predictors until it finds a better combination.
+
+In this module, we use both forward and backward stepwise regression. That means the model starts with the full model, but it is also allowed to remove weak predictors and add back useful ones if needed.
+
+For example, if we were predicting height from age, sex, and number of apples eaten a year, stepwise regression might start with all three variables, remove the number of apples eaten a year if it does not help, and keep age and sex if they improve the model. Using the `stepAIC()` function from the `MASS` package that we loaded in, that would look something like this:
+
+```markdown
+step_mod <- stepAIC(full_mod, direction = "both")
+summary(step_mod)
+```
+The `stepAIC()` function searches for a smaller model with a lower AIC value. AIC is a number that helps compare models by balancing how well they fit the data with how simple they are, so a lower AIC usually means a better model. In this case, `direction = "both"`, means the function can try adding predictors, removing predictors, or doing both as it searches for the best model. 
+
 :::{.callout-note title="Exercise 3: Perform Stepwise Regression" icon = false}
 
 Use stepwise regression with both forward and backward selection to choose the best combination of predictors from the full model. Then display the summary of the selected model. Which variables were kept?
@@ -229,36 +253,49 @@ Use stepwise regression with both forward and backward selection to choose the b
 step_mod <- stepAIC(full_mod, direction = "both")
 summary(step_mod)
 ```
+The variables that were kept in the best model picked by stepwise regression are: passing_yards, passing_tds, passing_interceptions, sack_yards_lost, passing_air_yards, passing_epa, passing_cpoe, rushing_first_downs, rushing_epa, surface, pct_total, and sack_fumbles.
+
 </details>
 :::
 
-:::{.callout-note title="Exercise 4: Interpret the Results" icon = false}
+An important part of building a model is checking how well it performs. This helps us understand whether the model is doing a good job predicting the response variable. For stepwise regression, we can use the adjusted R-squared value in the model summary to measure how much of the variation in QBR is explained by the model. In general, values closer to 1 indicate a better fit to the data.
 
-Interpret the results of the stepwise regression model. Which predictors seem most important for explaining QBR, and use the R-squared value to describe how well the model works.
+We can also use the model summary to identify which predictors are especially useful for explaining QBR. The `Pr(>|t|)` column contains p-values that measure whether each predictor is significantly related to the response variable. In the output, significant predictors are marked with asterisks (`*`). More asterisks indicate stronger statistical significance. The smaller the predictor's p-value is, the stronger it is associated with QBR in the model.
+
+:::{.callout-note title="Exercise 4: Describe Model Fit" icon = false}
+
+Using the adjusted R-squared value, describe how well the model fits the data.
 
 <details>
 <summary><b>Click for Example Answer</b></summary>
 
-According to the summary from the stepwise model, blah blah with blank accuracy.
+According to the model summary, the adjusted R-squared value was 0.7515. This means the model explains about 75.15% of the variation in QBR, which suggests that the model fits the data fairly well. Overall, the predictors selected by the stepwise regression procedure appear to capture many of the factors associated with quarterback performance.
 
 </details>
 :::
 
-:::{.callout-note title="Exercise 5: Think Critically" icon = false}
+:::{.callout-note title="Exercise 5: Identify Strongly Associated Predictors" icon = false}
 
-Why might this model predict QBR better for some quarterbacks than others? Think about possible reasons.
+Using the model summary for the stepwise regression model, identify which predictors in the stepwise model seem most strongly associated with QBR?
 
 <details>
-<summary><b>Click for Example Reasons </b></summary>
+<summary><b>Click for Example Answer</b></summary>
 
-TBD
+The predictors in the stepwise model that seem the most strongly associated to QBR are `passing_tds`, `sack_yards_lost`, `passing_air_yards`, `passing_epa`, `passing_cpoe`, `rushing_first_downs`, and `rushing_epa` because they were all highly statistically significant, meaning they had very small p-values and strong relationships with QBR, denoted by three asterisks in the model summary.
 
 </details>
 :::
 
 # Quantile Regression 
 
-A little bit of information on quantile regression. 
+Quantile regression helps us study different parts of the response variable instead of only the average. A quantile is a point that splits the data into groups, like the 10th percentile, 25th percentile, or 50th percentile.
+
+Similar to how we made a vector of predictors, we can make a vector of quantile values. For example:
+
+```markdown
+quantiles <- c(0.2, 0.4, 0.6)
+```
+This would represent the 20th, 40th, and 60th percentiles. A weekly QBR at the 20th percentile would be a higher QBR than 20% of all weekly QBR values and lower than 80% of them.
 
 :::{.callout-note title="Exercise 6: Set Quantiles" icon = false}
 
@@ -272,6 +309,13 @@ quantiles <- c(0.1, 0.25, 0.50, 0.75, 0.90)
 ```
 </details>
 :::
+
+Now that we have a vector with all the quantiles we are interested in, we need to fit a quantile regression model for each value in the vector. We do this using the `rq()` function in the `quantreg` package for linear quantile regression and the `map()` function from `purrr` package in `tidyverse` to fit a model for each quantile. Using our imaginary height dataset, it would look like this:
+
+```markdown
+qr_models <- map(quantiles, ~ rq(height ~ age + sex, tau = .x, data = height_dataset))
+```
+We use `tau = .x` to set tau to every value in the list of quantiles we give it and we use the equation given to use by stepwise regression, so for this example age + sex, leaving out apples_eaten_yearly. 
 
 :::{.callout-note title="Exercise 7: Perform Quantile Regression" icon = false}
 
@@ -289,27 +333,41 @@ qr_models <- map(quantiles, ~ rq(qbr ~ passing_yards + passing_tds + passing_int
 </details>
 :::
 
-:::{.callout-note title="Exercise 8: Evaluate Accuracy" icon = false}
+Quantile regression doesn’t use the usual “squared error” from linear regression, so we can’t use regular R-squared to measure how well the model fits. Instead, we use something called pinball loss (also known as quantile loss) to see how close our predicted quantiles are to the real data. Pinball loss penalizes predicting QBR too high or too low differently depending on what quantile you are predicting for. For example, for the 10th percentile, being too high would be penalized more than being too low.
 
-Write a function called qr_rsq() that calculates pseudo R-squared for a quantile regression model. Then use map_dfr() to create a table of pseudo R-squared values for each model in qr_models.
-
-<details>
-<summary><b>Click for Solution</b></summary>
+Here's an example of how to calculate it, copy and paste the following code into your R document to evaluate our selected model to see how accurately it predicts QBR for different quantiles:
 
 ```markdown
-qr_rsq <- function(model) {
-  rho <- function(u, tau) tau * u * (u >= 0) + (tau - 1) * u * (u < 0)
-  y <- model$model$qbr
-  ss_res <- sum(rho(y - fitted(model), model$tau))
-  ss_tot <- sum(rho(y - median(y), model$tau))
-  1 - ss_res/ss_tot}
-pseudo_r2 <- map_dfr(qr_models, ~ data.frame(tau = .x$tau, r2 = qr_rsq(.x)), 
-                     .id = "model")
+# Compute pinball loss for a quantile regression model
+qr_pinball <- function(model, data, response, tau) {
+  y <- data[[response]]
+  y_hat <- predict(model, newdata = data)
+  
+  loss <- ifelse(y >= y_hat,
+                 tau * (y - y_hat),
+                 (1 - tau) * (y_hat - y))
+  
+  mean(loss)}
 
-print(pseudo_r2) 
+# Table of pinball loss for each quantile model
+qr_pinball_table <- map_dfr(seq_along(qr_models), ~ {
+  tibble(
+    quantile = quantiles[.x],
+    pinball_loss = qr_pinball(qr_models[[.x]], nfl_qbr, "qbr", quantiles[.x]))})
 ```
+:::{.callout-note title="Exercise 8: Interpret Pinball Loss" icon = false}
+
+Interpret the table. TODO: explain.
+
+<details>
+<summary><b>Click for Example Answer</b></summary>
+
+TODO: write.
+
 </details>
 :::
+
+Sometimes putting things into a visual can help make patterns more obvious than looking at numbers in a table. Let's make a bar plot to get a better idea of how accurate our model is for different quantiles.
 
 :::{.callout-note title="Exercise 9: Create a Visual" icon = false}
 
@@ -338,7 +396,7 @@ ggplot(pseudo_r2, aes(x = factor(tau), y = r2)) +
 
 :::{.callout-note title="Exercise 10: Think Critically" icon = false}
 
-Look at the pseudo R-squared values from your quantile regression models. Which quantiles are explained best by the model, and what does that suggest about quarterbacks with lower versus higher QBR values?
+Look at the pinball loss values from your quantile regression models. Which quantiles are explained best by the model, and what does that suggest about quarterbacks with lower versus higher QBR values?
 
 <details>
 <summary><b>Click for Solution</b></summary>
@@ -354,14 +412,35 @@ TBD
 
 To start programming in Python, I recommend downloading Visual Studio Code (VS Code). To do so, you can follow this guide here: [Guide to Installing Python and VS Code](https://code.visualstudio.com/docs/python/python-tutorial#_install-a-python-interpreter).
 
-If you already have another platform downloaded that you would like to use, that will also work, but there will be some language specific to the VS Code platform within this module.  
+After you've installed everything needed to set up python in VS Code, we can create a project folder and get started.
 
-Package: statsmodels
+Open VS Code and select File then select Open Folder. From there, you can either choose “New Folder” to create and name a new folder for this module, or, if that option is not available, navigate to the location on your computer where you would like the folder to be stored and create it there manually. Once the folder is created or selected, click “Select Folder” or “Open” on macOS to open it in VS Code. 
+
+After the folder opens, it will become your workspace. You may be prompted with a pop-up asking whether you trust the authors of the files in this location. If so, select “Yes, I trust the authors.” Next, create a new file by selecting “New File” and choosing “Python File.” 
+
+At this point, if you have not already done so, download the dataset we will be using [(nfl_qbr.csv)](nfl_qbr.csv) and move it into your VS Code folder.
+
+Reopen your python file. We are now ready for the final setup steps before running our regression analysis. Copy and paste the following code into your document to install the packages we will need and load in our dataset:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(MASS)
+library(quantreg)
+
+nfl_qbr <- read_csv("nfl_qbr.csv") 
+```
 
 ```markdown
-Python code
+install.packages("MASS")
+install.packages("tidyverse")
+install.packages("quantreg")
+
+library(tidyverse)
+library(MASS)
+library(quantreg)
+
+nfl_qbr <- read_csv("nfl_qbr.csv") 
 ```
-# Using Quantile Regression
 
 ## Julia
 
