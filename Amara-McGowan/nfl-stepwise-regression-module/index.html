@@ -9,9 +9,9 @@
 <meta name="author" content="Amara McGowan">
 <meta name="author" content="Ivan Ramler">
 <meta name="dcterms.date" content="2026-05-10">
-<meta name="description" content="A beginner’s guide to using VS Code and regression analysis in R, Python, or Julia to predict ESPN’s Total Quarterback Rating.">
+<meta name="description" content="A beginner’s guide to using VS Code and quantile regression in R, Python, or Julia to predict ESPN’s Total Quarterback Rating.">
 
-<title>Predicting ESPN’s Weekly Total Quarterback Rating With Quantile and Stepwise Regression in R, Python, and Julia</title>
+<title>Predicting ESPN’s Weekly Total Quarterback Rating With Model Selection and Quantile Regression in R, Python, and Julia</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,7 +86,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Predicting ESPN’s Weekly Total Quarterback Rating With Quantile and Stepwise Regression in R, Python, and Julia</h1>
+<h1 class="title">Predicting ESPN’s Weekly Total Quarterback Rating With Model Selection and Quantile Regression in R, Python, and Julia</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Stepwise Regression</div>
     <div class="quarto-category">Quantile Regression</div>
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    A beginner’s guide to using VS Code and regression analysis in R, Python, or Julia to predict ESPN’s Total Quarterback Rating.
+    A beginner’s guide to using VS Code and quantile regression in R, Python, or Julia to predict ESPN’s Total Quarterback Rating.
   </div>
 </div>
 
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>The National Football League (NFL) has 14 official positions for players: 7 offensive, 5 defensive, and 2 special teams positions. One of the offensive positions is the quarterback (QB), whose primary role is to lead the offense on the field. ESPN provides a lot of data on NFL games and players, including the Total Quarterback Rating (QBR), a metric on a scale from 0 to 100 that estimates a quarterback’s overall contribution to winning. Higher QBR values indicate better performance.</p>
-<p>In this module, you will learn how to predict Total Quarterback Rating using game-level data from the 2025 NFL Regular season. To predict QBR, we will use stepwise regression, and you will have the option to complete the analysis in R, Python, or Julia. After selecting the best model with stepwise regression, we will use quantile analysis to see which quantile of quarterbacks (e.g.&nbsp;the top 10%, bottom 10%, etc.) are best explained by the selected model.</p>
+<p>In this module, you will learn how to predict Total Quarterback Rating using game-level data from the 2025 NFL Regular season. To predict QBR, we will use stepwise regression, and you will have the option to complete the analysis in R, Python, or Julia. After selecting a good model with stepwise regression, we will use quantile analysis to see which quantile of quarterbacks (e.g.&nbsp;the top 10%, etc.) are best explained by the selected model.</p>
 <p>To complete the regression analysis, we will use the programming environment <a href="https://code.visualstudio.com/">Visual Studio Code (VS Code)</a>. VS Code is very popular both in academic and industry settings, making it a valuable tool to become familiar with. One of the biggest advantages of using VS Code is that it supports multiple programming languages within a single interface, allowing you to work in R, Python, or Julia without switching environments.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Learning Objectives">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -358,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Pick a Programming Language</h1>
 <p>Below, the module is available in R, Python, and Julia.</p>
 <p>Select the tab corresponding to the programming language you would like to use for learning regression analysis.</p>
-<p>All versions of the module include setup instructions for VS Code, guidance on performing stepwise and quantile regression, and explanations for interpreting the results of the analysis.</p>
+<p>All versions of the module include setup instructions for VS Code, guidance on what predictor combination would be recommended by stepwise regression, a guide to quantile regression, and explanations for interpreting the results of the analysis.</p>
 <p>If you are unsure which programming language to choose, you can learn more about each option below:</p>
 <p>Learn more about R: <a href="https://www.coursera.org/articles/what-is-r-programming">https://www.coursera.org/articles/what-is-r-programming</a></p>
 <p>Learn more about Python: <a href="https://www.coursera.org/articles/what-is-python-used-for-a-beginners-guide-to-using-python">https://www.coursera.org/articles/what-is-python-used-for…</a></p>
@@ -381,12 +381,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>install.packages("MASS")</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>install.packages("tidyverse")</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>install.packages("quantreg")</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>library(MASS)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>library(quantreg)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>nfl_qbr &lt;- read_csv("nfl_qbr.csv") </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>install.packages("qgam")</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>library(qgam)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>library(MASS)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>library(quantreg)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>nfl_qbr &lt;- read_csv("nfl_qbr.csv") </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="stepwise-regression" class="level1">
 <h1>Stepwise Regression</h1>
@@ -450,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For example, if we were predicting height from age, sex, and number of apples eaten a year, stepwise regression might start with all three variables, remove the number of apples eaten a year if it does not help, and keep age and sex if they improve the model. Using the <code>stepAIC()</code> function from the <code>MASS</code> package that we loaded in, that would look something like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>step_mod &lt;- stepAIC(full_mod, direction = "both")</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>summary(step_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>stepAIC()</code> function searches for a smaller model with a lower AIC value. AIC is a number that helps compare models by balancing how well they fit the data with how simple they are, so a lower AIC usually means a better model. In this case, <code>direction = "both"</code>, means the function can try adding predictors, removing predictors, or doing both as it searches for the best model.</p>
+<p>The <code>stepAIC()</code> function searches for a smaller model with a lower AIC value. AIC is a number that helps compare models by balancing how well they fit the data with how simple they are, so a lower AIC usually means a better model. In this case, <code>direction = "both"</code>, means the function can try adding predictors, removing predictors, or doing both as it searches for a good model.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 3: Perform Stepwise Regression">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -515,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="quantile-regression" class="level1">
 <h1>Quantile Regression</h1>
-<p>Quantile regression helps us study different parts of the response variable instead of only the average. A quantile is a point that splits the data into groups, like the 10th percentile, 25th percentile, or 50th percentile.</p>
+<p>Quantile regression helps us study different parts of the response variable distribution instead of only modeling the average outcome. A quantile is a value that describes a specific point in the distribution, where a given proportion of the data falls below it, such as the 10th percentile, 25th percentile, or 90th percentile.</p>
 <p>Similar to how we made a vector of predictors, we can make a vector of quantile values. For example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>quantiles &lt;- c(0.2, 0.4, 0.6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This would represent the 20th, 40th, and 60th percentiles. A weekly QBR at the 20th percentile would be a higher QBR than 20% of all weekly QBR values and lower than 80% of them.</p>
@@ -565,22 +567,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Quantile regression doesn’t use the usual “squared error” from linear regression, so we can’t use regular R-squared to measure how well the model fits. Instead, we use something called pinball loss (also known as quantile loss) to see how close our predicted quantiles are to the real data. Pinball loss penalizes predicting QBR too high or too low differently depending on what quantile you are predicting for. For example, for the 10th percentile, being too high would be penalized more than being too low.</p>
 <p>Here’s an example of how to calculate it, copy and paste the following code into your R document to evaluate our selected model to see how accurately it predicts QBR for different quantiles:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Compute pinball loss for a quantile regression model</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>qr_pinball &lt;- function(model, data, response, tau) {</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  y &lt;- data[<span class="co">[</span><span class="ot">response</span><span class="co">]</span>]</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  y_hat &lt;- predict(model, newdata = data)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  loss &lt;- ifelse(y &gt;= y_hat,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                 tau * (y - y_hat),</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                 (1 - tau) * (y_hat - y))</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  mean(loss)}</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># Table of pinball loss for each quantile model</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>qr_pinball_table &lt;- map_dfr(seq_along(qr_models), ~ {</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  tibble(</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    quantile = quantiles<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>,</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    pinball_loss = qr_pinball(qr_models[<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>], nfl_qbr, "qbr", quantiles<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>))})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>qr_pinball &lt;- function(model, data, response, tau) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  y &lt;- data[<span class="co">[</span><span class="ot">response</span><span class="co">]</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  y_hat &lt;- predict(model, newdata = data)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  idx &lt;- !is.na(y) &amp; !is.na(y_hat)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  y &lt;- y<span class="co">[</span><span class="ot">idx</span><span class="co">]</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  y_hat &lt;- y_hat<span class="co">[</span><span class="ot">idx</span><span class="co">]</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  mean(pinLoss(y, y_hat, qu = tau, add = TRUE))}</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>qr_pinball_table &lt;- map_dfr(seq_along(qr_models), ~ {</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  tibble(</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    quantile = quantiles<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    pinball_loss = qr_pinball(qr_models[<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>], nfl_qbr, "qbr", quantiles<span class="co">[</span><span class="ot">.x</span><span class="co">]</span>))})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 8: Interpret Pinball Loss">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -591,12 +591,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Interpret the table. TODO: explain.</p>
+<p>Compare pinball loss values across quantiles. Smaller pinball loss indicates better fit for that quantile and higher values indicate worse fit. Looking at the table, what percentiles are predicted best and which percentile is predicted the worst?</p>
 <details>
 <summary>
 <b>Click for Example Answer</b>
 </summary>
-<p>TODO: write.</p>
+<p>The 10th and 90th percentiles are predicted the best, shown by their lowest pinball loss values, and the 50th percentile is predicted the worst.</p>
 </details>
 </div>
 </div>
@@ -611,24 +611,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Using ggplot(), create a bar chart of pseudo R-squared by quantile. Put tau on the x-axis and r2 on the y-axis.</p>
+<p>Using <code>ggplot()</code>, create a bar chart of pinball loss across quantiles, with the quantile level on the x-axis and the corresponding pinball loss on the y-axis.</p>
 <details>
 <summary>
 <b>Click for Solution</b>
 </summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ggplot(pseudo_r2, aes(x = factor(tau), y = r2)) +</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  geom_col(width = 0.5, fill = "darkgreen") +</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ggplot(qr_pinball_table, aes(x = factor(quantile), y = pinball_loss)) +</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  geom_col(fill = "steelblue") +</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  labs(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    x = "Tau",</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    y = "Pseudo R^2",</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    title = "Pseudo R^2 by Quantile") +</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  theme_minimal(base_family = "Garamond") +</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  theme(</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    plot.title = element_text(hjust = 0.5, size = 12, family = "Garamond"),</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    axis.text.x = element_text(size = 10, family = "Garamond"),</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    axis.text.y = element_text(size = 10, family = "Garamond"),</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    axis.title.x = element_text(size = 12, family = "Garamond"),</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    axis.title.y = element_text(size = 12, family = "Garamond"))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    title = "Quantile Regression Pinball Loss",</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    x = "Quantile",</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    y = "Pinball Loss") +</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  theme_minimal()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -642,12 +636,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Look at the pinball loss values from your quantile regression models. Which quantiles are explained best by the model, and what does that suggest about quarterbacks with lower versus higher QBR values?</p>
+<p>Examine the pinball loss values from your quantile regression models. What pattern do they follow across quantiles, and what does this pattern suggest about how well the model predicts low-QBR versus high-QBR quarterbacks?</p>
 <details>
 <summary>
 <b>Click for Solution</b>
 </summary>
-<p>TBD</p>
+<p>The bar graph shows an inverted U-shape, with the highest pinball loss in the middle quantiles and lower loss at the 0.10 and 0.90 quantiles. This suggests that the model predicts very low and very high QBR values more accurately than mid-range QBR values.</p>
+<p>Overall, the model appears better at distinguishing quarterbacks with clearly poor or amazing performance, while it struggles more with quarterbacks in the average range. This may indicate that mid-tier QBR outcomes are more variable or less strongly explained by the available predictors, whereas extreme performances are more closely associated with measurable features included in the model.</p>
 </details>
 </div>
 </div>
@@ -659,18 +654,266 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To start programming in Python, I recommend downloading Visual Studio Code (VS Code). To do so, you can follow this guide here: <a href="https://code.visualstudio.com/docs/python/python-tutorial#_install-a-python-interpreter">Guide to Installing Python and VS Code</a>.</p>
 <p>After you’ve installed everything needed to set up python in VS Code, we can create a project folder and get started.</p>
 <p>Open VS Code and select File then select Open Folder. From there, you can either choose “New Folder” to create and name a new folder for this module, or, if that option is not available, navigate to the location on your computer where you would like the folder to be stored and create it there manually. Once the folder is created or selected, click “Select Folder” or “Open” on macOS to open it in VS Code.</p>
-<p>After the folder opens, it will become your workspace. You may be prompted with a pop-up asking whether you trust the authors of the files in this location. If so, select “Yes, I trust the authors.” Next, create a new file by selecting “New File” and choosing “Python File.”</p>
+<p>After the folder opens, it will become your workspace. You may be prompted with a pop-up asking whether you trust the authors of the files in this location. If so, select “Yes, I trust the authors.” Next, create a new file by selecting “New File” and choosing “Jupyter Notebook.”</p>
 <p>At this point, if you have not already done so, download the dataset we will be using <a href="nfl_qbr.csv">(nfl_qbr.csv)</a> and move it into your VS Code folder.</p>
-<p>Reopen your python file. We are now ready for the final setup steps before running our regression analysis. Copy and paste the following code into your document to install the packages we will need and load in our dataset:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>install.packages("MASS")</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>install.packages("tidyverse")</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>install.packages("quantreg")</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>library(MASS)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>library(quantreg)</span>
+<p>Reopen your jupyter notebook. We are now ready for the final setup steps before running our regression analysis. Copy and paste the following code into your document to install the packages we will need and load in our dataset:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>!pip install pandas statsmodels scikit-learn matplotlib</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>import pandas as pd</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>import statsmodels.api as sm</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>import matplotlib.pyplot as plt</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>from sklearn.metrics import mean_pinball_loss</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>nfl_qbr &lt;- read_csv("nfl_qbr.csv") </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>nfl_qbr = pd.read_csv("nfl_qbr.csv")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="stepwise-regression-1" class="level1">
+<h1>Stepwise Regression</h1>
+<p>Stepwise regression helps find a useful combination of predictors for explaining a response variable by testing different combinations of predictors. For example, if we want to predict someone’s height, we might start with a dataset that includes height, age, sex, number of apples eaten a year, and full name. Stepwise regression looks at different combinations of the other variables and keeps the ones that help predict height the most.</p>
+<p>Unlike R, Python does not have a single built-in function equivalent to R’s <code>stepAIC()</code> for automatic stepwise selection. However, similar feature selection methods are available in libraries such as <code>statsmodels</code> and <code>scikit-learn</code>, including recursive feature elimination.</p>
+<p>It is a valuable skill to understand how to break a modeling task into components and determine which tools or programming languages are best suited for each part. In this case, if you would like to follow along with the model selection process, you can continue in the R section up to the end of Exercise 5 and then return to this Python section.</p>
+<p>The predictors selected by stepwise regression are: passing_yards, passing_tds, passing_interceptions, sack_yards_lost, passing_air_yards, passing_epa, passing_cpoe, rushing_first_downs, rushing_epa, surface, pct_total, and sack_fumbles.</p>
+</section>
+<section id="quantile-regression-1" class="level1">
+<h1>Quantile Regression</h1>
+<p>Quantile regression helps us study different parts of the response variable distribution instead of only modeling the average outcome. A quantile is a value that describes a specific point in the distribution, where a given proportion of the data falls below it, such as the 10th percentile, 25th percentile, or 90th percentile.</p>
+<p>When we are preparing to perform quantile regression, we can make a vector of the quantiles of our response variable, in our case weekly QBR, that we are interested in:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>quantiles = <span class="co">[</span><span class="ot">0.20, 0.40, 0.60</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This would represent the 20th, 40th, and 60th percentiles. A weekly QBR at the 20th percentile would be a higher QBR than 20% of all weekly QBR values and lower than 80% of them.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 1: Set Quantiles">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 1: Set Quantiles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a vector named quantiles that includes the 10th, 25th, 50th, 75th, and 90th percentiles.</p>
+<details>
+<summary>
+<b>Click for Solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>quantiles = <span class="co">[</span><span class="ot">0.10, 0.25, 0.50, 0.75, 0.90</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<p>Now that we have a vector with all the quantiles we are interested in, we need to to prepare our dataset by selecting the response variable and predictors.</p>
+<p>For the imaginary height dataset I mentioned earlier, if the model selected the predictors age and sex, you might make a vector of predictors that look something like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>predictors = <span class="co">[</span><span class="ot">"sex", "age"</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 2: Make Predictors Vector">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 2: Make Predictors Vector
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make a vector with all of the predictors that were chosen by the stepwise regression model.</p>
+<details>
+<summary>
+<b>Click for Solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>predictors = <span class="co">[</span><span class="ot">"passing_yards", "passing_tds", "passing_interceptions", "sack_yards_lost", "passing_air_yards", "passing_epa", "passing_cpoe", "rushing_first_downs", "rushing_epa", "surface", "pct_total", "sack_fumbles"</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<p>To continue preparing the data, we need to make a dataframe of just the response variable and the predictors we have chosen to use. For the height data, that might look something like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df = height_dataset[<span class="co">[</span><span class="ot">"height"</span><span class="co">]</span> + predictors].copy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Next, categorical variables have to be converted into dummy variables. That might look something like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df = pd.get_dummies(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    columns=<span class="co">[</span><span class="ot">"sex"</span><span class="co">]</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    drop_first=True)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 3: Make a dataframe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 3: Make a dataframe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make a dataframe of qbr and the predictors chosen by the stepwise regression. Then, convert any categorical variables into dummy variables. If you are unsure what a variable is, you can refer back to variable descriptions in the data section.</p>
+<details>
+<summary>
+<b>Click for Solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df = nfl_qbr[<span class="co">[</span><span class="ot">"qbr"</span><span class="co">]</span> + predictors].copy()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df = pd.get_dummies(</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    columns=<span class="co">[</span><span class="ot">"surface"</span><span class="co">]</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    drop_first=True)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<p>The last steps we need to take before we can start fitting a quantile model, is that we have to define out predictors and response, add an intercept term, and ensure our response and predictors are numeric.</p>
+<p>That could look like this for the imaginary height data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>X = df.drop(columns="height")</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>y = df<span class="co">[</span><span class="ot">"height"</span><span class="co">]</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>X = sm.add_constant(X)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>X = X.astype(float)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>y = y.astype(float)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 4: Define Response and Predictors">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 4: Define Response and Predictors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Define our response variable and our predictors. Afterward, add an intercept term and make sure our X and y are numeric.</p>
+<details>
+<summary>
+<b>Click for Solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>X = df.drop(columns="qbr")</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>y = df<span class="co">[</span><span class="ot">"qbr"</span><span class="co">]</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>X = sm.add_constant(X)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>X = X.astype(float)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>y = y.astype(float)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<p>Now everything is ready to fit for us to fit quantile regression models! Fitting a quantile regression model for each quantile will look something like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>qr_models = {}</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pinball_losses = {}</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>for q in quantiles:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="in">    model = sm.QuantReg(y, X)</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="in">    res = model.fit(q=q)</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="in">    qr_models[q] = res</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 5: Fitting a Quantile Regression Model">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 5: Fitting a Quantile Regression Model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit a quantile regression model for every quantile in our quantiles vector.</p>
+<details>
+<summary>
+<b>Click for Solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>qr_models = {}</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pinball_losses = {}</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>for q in quantiles:</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="in">    model = sm.QuantReg(y, X)</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="in">    res = model.fit(q=q)</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="in">    qr_models[q] = res</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<p>Now that we’ve fit quantile regression models, we should evaluate how well different quantiles of QBR are being predicted by our model.</p>
+<p>Quantile regression doesn’t use the usual “squared error” from linear regression, so we can’t use regular R-squared to measure how well the model fits each quantile. Instead, we use something called pinball loss (also known as quantile loss) to see how close our predicted quantiles are to the real data. Pinball loss penalizes predicting QBR too high or too low differently depending on what quantile you are predicting for. For example, for the 10th percentile, being too high would be penalized more than being too low.</p>
+<p>Here’s an example of how to calculate it, copy and paste the following code into your R document to evaluate our selected model to see how accurately it predicts QBR for different quantiles:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="an">for q in quantiles:</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    preds = qr_models<span class="co">[</span><span class="ot">q</span><span class="co">]</span>.predict(X)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="in">    loss = mean_pinball_loss(</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="in">        y,</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="in">        preds,</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="in">        alpha=q)</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="in">    pinball_losses[q] = loss</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can display this in a dataframe and print it to take a closer look at pinball loss between quantiles, like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>loss_df = pd.DataFrame({</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    "quantile": list(pinball_losses.keys()),</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    "pinball_loss": list(pinball_losses.values())})</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>print(loss_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 7: Interpret Pinball Loss">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 7: Interpret Pinball Loss
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare pinball loss values across quantiles. Smaller pinball loss indicates better fit for that quantile and higher values indicate worse fit. Looking at the table, what percentiles are predicted best and which percentile is predicted the worst?</p>
+<details>
+<summary>
+<b>Click for Example Answer</b>
+</summary>
+<p>The 10th and 90th percentiles are predicted the best, shown by their lowest pinball loss values, and the 50th percentile is predicted the worst.</p>
+</details>
+</div>
+</div>
+<p>Sometimes putting things into a visual can help make patterns more obvious than looking at numbers in a table. Let’s make a bar plot to get a better idea of how accurate our model is for different quantiles.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 9: Create a Visual">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 9: Create a Visual
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using <code>plt.bar()</code>, create a bar chart of pinball loss across quantiles, with the quantile level on the x-axis and the corresponding pinball loss on the y-axis.</p>
+<details>
+<summary>
+<b>Click for Solution</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>loss_df = loss_df.sort_values("quantile")</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>plt.bar(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    loss_df<span class="co">[</span><span class="ot">"quantile"</span><span class="co">]</span>.astype(str),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    loss_df<span class="co">[</span><span class="ot">"pinball_loss"</span><span class="co">]</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel("Quantile")</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel("Pinball Loss")</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>plt.title("Pinball Loss Across Quantiles")</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise 10: Think Critically">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise 10: Think Critically
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Examine the pinball loss values from your quantile regression models. What pattern do they follow across quantiles, and what does this pattern suggest about how well the model predicts low-QBR versus high-QBR quarterbacks?</p>
+<details>
+<summary>
+<b>Click for Solution</b>
+</summary>
+<p>The bar graph shows an inverted U-shape, with the highest pinball loss in the middle quantiles and lower loss at the 0.10 and 0.90 quantiles. This suggests that the model predicts very low and very high QBR values more accurately than mid-range QBR values.</p>
+<p>Overall, the model appears better at distinguishing quarterbacks with clearly poor or amazing performance, while it struggles more with quarterbacks in the average range. This may indicate that mid-tier QBR outcomes are more variable or less strongly explained by the available predictors, whereas extreme performances are more closely associated with measurable features included in the model.</p>
+</details>
+</div>
+</div>
 </section>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
@@ -679,7 +922,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To start programming in Julia, I recommend downloading Visual Studio Code (VS Code). To do so, you can follow this guide here: <a href="https://code.visualstudio.com/docs/languages/julia">Guide to Installing Julia and VS Code</a>.</p>
 <p>If you already have another platform downloaded that you would like to use, that will also work, but there will be some language specific to the VS Code platform within this module.</p>
 <p>Package: QuantReg.jl</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Julia code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Julia code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-quantile-regression" class="level1">
 <h1>Using Quantile Regression</h1>

@@ -1,5 +1,5 @@
 ---
-title: "Predicting ESPN's Weekly Total Quarterback Rating With Quantile and Stepwise Regression in R, Python, and Julia"
+title: "Predicting ESPN's Weekly Total Quarterback Rating With Model Selection and Quantile Regression in R, Python, and Julia"
 author:
   - name: Amara McGowan
     url: https://www.linkedin.com/in/amaramcgowan/
@@ -13,7 +13,7 @@ affiliations:
   - id: slu
     name: St. Lawrence University
 date: "May 10, 2026"
-description: "A beginner’s guide to using VS Code and regression analysis in R, Python, or Julia to predict ESPN’s Total Quarterback Rating."
+description: "A beginner’s guide to using VS Code and quantile regression in R, Python, or Julia to predict ESPN’s Total Quarterback Rating."
 format: html
 categories:
   - Stepwise Regression
@@ -39,7 +39,7 @@ If you are unfamiliar with ESPN's Total Quarterback Rating (QBR), you can watch 
 
 The National Football League (NFL) has 14 official positions for players: 7 offensive, 5 defensive, and 2 special teams positions. One of the offensive positions is the quarterback (QB), whose primary role is to lead the offense on the field. ESPN provides a lot of data on NFL games and players, including the Total Quarterback Rating (QBR), a metric on a scale from 0 to 100 that estimates a quarterback's overall contribution to winning. Higher QBR values indicate better performance.
 
-In this module, you will learn how to predict Total Quarterback Rating using game-level data from the 2025 NFL Regular season. To predict QBR, we will use stepwise regression, and you will have the option to complete the analysis in R, Python, or Julia. After selecting the best model with stepwise regression, we will use quantile analysis to see which quantile of quarterbacks (e.g. the top 10%, bottom 10%, etc.) are best explained by the selected model.
+In this module, you will learn how to predict Total Quarterback Rating using game-level data from the 2025 NFL Regular season. To predict QBR, we will use stepwise regression, and you will have the option to complete the analysis in R, Python, or Julia. After selecting a good model with stepwise regression, we will use quantile analysis to see which quantile of quarterbacks (e.g. the top 10%, etc.) are best explained by the selected model.
 
 To complete the regression analysis, we will use the programming environment [Visual Studio Code (VS Code)](https://code.visualstudio.com/). VS Code is very popular both in academic and industry settings, making it a valuable tool to become familiar with. One of the biggest advantages of using VS Code is that it supports multiple programming languages within a single interface, allowing you to work in R, Python, or Julia without switching environments.  
 
@@ -123,7 +123,7 @@ Below, the module is available in R, Python, and Julia.
 
 Select the tab corresponding to the programming language you would like to use for learning regression analysis.
 
-All versions of the module include setup instructions for VS Code, guidance on performing stepwise and quantile regression, and explanations for interpreting the results of the analysis.
+All versions of the module include setup instructions for VS Code, guidance on what predictor combination would be recommended by stepwise regression, a guide to quantile regression, and explanations for interpreting the results of the analysis.
 
 If you are unsure which programming language to choose, you can learn more about each option below:
 
@@ -162,8 +162,10 @@ Reopen your R document. We are now ready for the final setup steps before runnin
 install.packages("MASS")
 install.packages("tidyverse")
 install.packages("quantreg")
+install.packages("qgam")
 
 library(tidyverse)
+library(qgam)
 library(MASS)
 library(quantreg)
 
@@ -240,7 +242,7 @@ For example, if we were predicting height from age, sex, and number of apples ea
 step_mod <- stepAIC(full_mod, direction = "both")
 summary(step_mod)
 ```
-The `stepAIC()` function searches for a smaller model with a lower AIC value. AIC is a number that helps compare models by balancing how well they fit the data with how simple they are, so a lower AIC usually means a better model. In this case, `direction = "both"`, means the function can try adding predictors, removing predictors, or doing both as it searches for the best model. 
+The `stepAIC()` function searches for a smaller model with a lower AIC value. AIC is a number that helps compare models by balancing how well they fit the data with how simple they are, so a lower AIC usually means a better model. In this case, `direction = "both"`, means the function can try adding predictors, removing predictors, or doing both as it searches for a good model. 
 
 :::{.callout-note title="Exercise 3: Perform Stepwise Regression" icon = false}
 
@@ -288,7 +290,7 @@ The predictors in the stepwise model that seem the most strongly associated to Q
 
 # Quantile Regression 
 
-Quantile regression helps us study different parts of the response variable instead of only the average. A quantile is a point that splits the data into groups, like the 10th percentile, 25th percentile, or 50th percentile.
+Quantile regression helps us study different parts of the response variable distribution instead of only modeling the average outcome. A quantile is a value that describes a specific point in the distribution, where a given proportion of the data falls below it, such as the 10th percentile, 25th percentile, or 90th percentile.
 
 Similar to how we made a vector of predictors, we can make a vector of quantile values. For example:
 
@@ -338,18 +340,16 @@ Quantile regression doesn’t use the usual “squared error” from linear regr
 Here's an example of how to calculate it, copy and paste the following code into your R document to evaluate our selected model to see how accurately it predicts QBR for different quantiles:
 
 ```markdown
-# Compute pinball loss for a quantile regression model
 qr_pinball <- function(model, data, response, tau) {
   y <- data[[response]]
   y_hat <- predict(model, newdata = data)
   
-  loss <- ifelse(y >= y_hat,
-                 tau * (y - y_hat),
-                 (1 - tau) * (y_hat - y))
+  idx <- !is.na(y) & !is.na(y_hat)
+  y <- y[idx]
+  y_hat <- y_hat[idx]
   
-  mean(loss)}
+  mean(pinLoss(y, y_hat, qu = tau, add = TRUE))}
 
-# Table of pinball loss for each quantile model
 qr_pinball_table <- map_dfr(seq_along(qr_models), ~ {
   tibble(
     quantile = quantiles[.x],
@@ -357,12 +357,12 @@ qr_pinball_table <- map_dfr(seq_along(qr_models), ~ {
 ```
 :::{.callout-note title="Exercise 8: Interpret Pinball Loss" icon = false}
 
-Interpret the table. TODO: explain.
+Compare pinball loss values across quantiles. Smaller pinball loss indicates better fit for that quantile and higher values indicate worse fit. Looking at the table, what percentiles are predicted best and which percentile is predicted the worst?
 
 <details>
 <summary><b>Click for Example Answer</b></summary>
 
-TODO: write.
+The 10th and 90th percentiles are predicted the best, shown by their lowest pinball loss values, and the 50th percentile is predicted the worst.
 
 </details>
 :::
@@ -371,37 +371,33 @@ Sometimes putting things into a visual can help make patterns more obvious than 
 
 :::{.callout-note title="Exercise 9: Create a Visual" icon = false}
 
-Using ggplot(), create a bar chart of pseudo R-squared by quantile. Put tau on the x-axis and r2 on the y-axis.
+Using `ggplot()`, create a bar chart of pinball loss across quantiles, with the quantile level on the x-axis and the corresponding pinball loss on the y-axis.
 
 <details>
 <summary><b>Click for Solution</b></summary>
 
 ```markdown
-ggplot(pseudo_r2, aes(x = factor(tau), y = r2)) +
-  geom_col(width = 0.5, fill = "darkgreen") +
+ggplot(qr_pinball_table, aes(x = factor(quantile), y = pinball_loss)) +
+  geom_col(fill = "steelblue") +
   labs(
-    x = "Tau",
-    y = "Pseudo R^2",
-    title = "Pseudo R^2 by Quantile") +
-  theme_minimal(base_family = "Garamond") +
-  theme(
-    plot.title = element_text(hjust = 0.5, size = 12, family = "Garamond"),
-    axis.text.x = element_text(size = 10, family = "Garamond"),
-    axis.text.y = element_text(size = 10, family = "Garamond"),
-    axis.title.x = element_text(size = 12, family = "Garamond"),
-    axis.title.y = element_text(size = 12, family = "Garamond"))
+    title = "Quantile Regression Pinball Loss",
+    x = "Quantile",
+    y = "Pinball Loss") +
+  theme_minimal()
 ```
 </details>
 :::
 
 :::{.callout-note title="Exercise 10: Think Critically" icon = false}
 
-Look at the pinball loss values from your quantile regression models. Which quantiles are explained best by the model, and what does that suggest about quarterbacks with lower versus higher QBR values?
+Examine the pinball loss values from your quantile regression models. What pattern do they follow across quantiles, and what does this pattern suggest about how well the model predicts low-QBR versus high-QBR quarterbacks?
 
 <details>
 <summary><b>Click for Solution</b></summary>
 
-TBD
+The bar graph shows an inverted U-shape, with the highest pinball loss in the middle quantiles and lower loss at the 0.10 and 0.90 quantiles. This suggests that the model predicts very low and very high QBR values more accurately than mid-range QBR values.
+
+Overall, the model appears better at distinguishing quarterbacks with clearly poor or amazing performance, while it struggles more with quarterbacks in the average range. This may indicate that mid-tier QBR outcomes are more variable or less strongly explained by the available predictors, whereas extreme performances are more closely associated with measurable features included in the model.
 
 </details>
 :::
@@ -416,31 +412,258 @@ After you've installed everything needed to set up python in VS Code, we can cre
 
 Open VS Code and select File then select Open Folder. From there, you can either choose “New Folder” to create and name a new folder for this module, or, if that option is not available, navigate to the location on your computer where you would like the folder to be stored and create it there manually. Once the folder is created or selected, click “Select Folder” or “Open” on macOS to open it in VS Code. 
 
-After the folder opens, it will become your workspace. You may be prompted with a pop-up asking whether you trust the authors of the files in this location. If so, select “Yes, I trust the authors.” Next, create a new file by selecting “New File” and choosing “Python File.” 
+After the folder opens, it will become your workspace. You may be prompted with a pop-up asking whether you trust the authors of the files in this location. If so, select “Yes, I trust the authors.” Next, create a new file by selecting “New File” and choosing “Jupyter Notebook.” 
 
 At this point, if you have not already done so, download the dataset we will be using [(nfl_qbr.csv)](nfl_qbr.csv) and move it into your VS Code folder.
 
-Reopen your python file. We are now ready for the final setup steps before running our regression analysis. Copy and paste the following code into your document to install the packages we will need and load in our dataset:
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(MASS)
-library(quantreg)
-
-nfl_qbr <- read_csv("nfl_qbr.csv") 
-```
+Reopen your jupyter notebook. We are now ready for the final setup steps before running our regression analysis. Copy and paste the following code into your document to install the packages we will need and load in our dataset:
 
 ```markdown
-install.packages("MASS")
-install.packages("tidyverse")
-install.packages("quantreg")
+!pip install pandas statsmodels scikit-learn matplotlib
 
-library(tidyverse)
-library(MASS)
-library(quantreg)
+import pandas as pd
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
 
-nfl_qbr <- read_csv("nfl_qbr.csv") 
+from sklearn.metrics import mean_pinball_loss
+
+nfl_qbr = pd.read_csv("nfl_qbr.csv")
 ```
+# Stepwise Regression
+
+Stepwise regression helps find a useful combination of predictors for explaining a response variable by testing different combinations of predictors. For example, if we want to predict someone’s height, we might start with a dataset that includes height, age, sex, number of apples eaten a year, and full name. Stepwise regression looks at different combinations of the other variables and keeps the ones that help predict height the most.
+
+Unlike R, Python does not have a single built-in function equivalent to R’s `stepAIC()` for automatic stepwise selection. However, similar feature selection methods are available in libraries such as `statsmodels` and `scikit-learn`, including recursive feature elimination. 
+
+It is a valuable skill to understand how to break a modeling task into components and determine which tools or programming languages are best suited for each part. In this case, if you would like to follow along with the model selection process, you can continue in the R section up to the end of Exercise 5 and then return to this Python section.
+
+The predictors selected by stepwise regression are: passing_yards, passing_tds, passing_interceptions, sack_yards_lost, passing_air_yards, passing_epa, passing_cpoe, rushing_first_downs, rushing_epa, surface, pct_total, and sack_fumbles.
+
+# Quantile Regression 
+
+Quantile regression helps us study different parts of the response variable distribution instead of only modeling the average outcome. A quantile is a value that describes a specific point in the distribution, where a given proportion of the data falls below it, such as the 10th percentile, 25th percentile, or 90th percentile.
+
+When we are preparing to perform quantile regression, we can make a vector of the quantiles of our response variable, in our case weekly QBR, that we are interested in:
+
+```markdown
+quantiles = [0.20, 0.40, 0.60]
+```
+This would represent the 20th, 40th, and 60th percentiles. A weekly QBR at the 20th percentile would be a higher QBR than 20% of all weekly QBR values and lower than 80% of them.
+
+:::{.callout-note title="Exercise 1: Set Quantiles" icon = false}
+
+Create a vector named quantiles that includes the 10th, 25th, 50th, 75th, and 90th percentiles.
+
+<details>
+<summary><b>Click for Solution</b></summary>
+
+```markdown
+quantiles = [0.10, 0.25, 0.50, 0.75, 0.90]
+```
+</details>
+:::
+
+Now that we have a vector with all the quantiles we are interested in, we need to to prepare our dataset by selecting the response variable and predictors.
+
+For the imaginary height dataset I mentioned earlier, if the model selected the predictors age and sex, you might make a vector of predictors that look something like this:
+
+```markdown
+predictors = ["sex", "age"]
+```
+:::{.callout-note title="Exercise 2: Make Predictors Vector" icon = false}
+
+Make a vector with all of the predictors that were chosen by the stepwise regression model.
+
+<details>
+<summary><b>Click for Solution</b></summary>
+
+```markdown
+predictors = ["passing_yards", "passing_tds", "passing_interceptions", "sack_yards_lost", "passing_air_yards", "passing_epa", "passing_cpoe", "rushing_first_downs", "rushing_epa", "surface", "pct_total", "sack_fumbles"]
+```
+
+</details>
+:::
+
+To continue preparing the data, we need to make a dataframe of just the response variable and the predictors we have chosen to use. For the height data, that might look something like this:
+
+```markdown
+df = height_dataset[["height"] + predictors].copy()
+```
+
+Next, categorical variables have to be converted into dummy variables. That might look something like this: 
+
+```markdown
+df = pd.get_dummies(
+    df,
+    columns=["sex"],
+    drop_first=True)
+```
+:::{.callout-note title="Exercise 3: Make a dataframe" icon = false}
+
+Make a dataframe of qbr and the predictors chosen by the stepwise regression. Then, convert any categorical variables into dummy variables. If you are unsure what a variable is, you can refer back to variable descriptions in the data section. 
+
+<details>
+<summary><b>Click for Solution</b></summary>
+
+```markdown
+df = nfl_qbr[["qbr"] + predictors].copy()
+
+df = pd.get_dummies(
+    df,
+    columns=["surface"],
+    drop_first=True)
+```
+</details>
+:::
+
+The last steps we need to take before we can start fitting a quantile model, is that we have to define out predictors and response, add an intercept term, and ensure our response and predictors are numeric.
+
+That could look like this for the imaginary height data:
+
+```markdown
+X = df.drop(columns="height")
+y = df["height"]
+
+X = sm.add_constant(X)
+
+X = X.astype(float)
+y = y.astype(float)
+```
+:::{.callout-note title="Exercise 4: Define Response and Predictors" icon = false}
+
+Define our response variable and our predictors. Afterward, add an intercept term and make sure our X and y are numeric. 
+
+<details>
+<summary><b>Click for Solution</b></summary>
+
+```markdown
+X = df.drop(columns="qbr")
+y = df["qbr"]
+
+X = sm.add_constant(X)
+
+
+X = X.astype(float)
+y = y.astype(float)
+```
+</details>
+:::
+
+Now everything is ready to fit for us to fit quantile regression models! Fitting a quantile regression model for each quantile will look something like this:
+
+```markdown
+qr_models = {}
+pinball_losses = {}
+
+for q in quantiles:
+
+    model = sm.QuantReg(y, X)
+    res = model.fit(q=q)
+
+    qr_models[q] = res
+```
+
+:::{.callout-note title="Exercise 5: Fitting a Quantile Regression Model" icon = false}
+
+Fit a quantile regression model for every quantile in our quantiles vector. 
+
+<details>
+<summary><b>Click for Solution</b></summary>
+
+```markdown
+qr_models = {}
+pinball_losses = {}
+
+for q in quantiles:
+
+    model = sm.QuantReg(y, X)
+    res = model.fit(q=q)
+
+    qr_models[q] = res
+```
+</details>
+:::
+
+Now that we've fit quantile regression models, we should evaluate how well different quantiles of QBR are being predicted by our model. 
+
+Quantile regression doesn’t use the usual “squared error” from linear regression, so we can’t use regular R-squared to measure how well the model fits each quantile. Instead, we use something called pinball loss (also known as quantile loss) to see how close our predicted quantiles are to the real data. Pinball loss penalizes predicting QBR too high or too low differently depending on what quantile you are predicting for. For example, for the 10th percentile, being too high would be penalized more than being too low.
+
+Here's an example of how to calculate it, copy and paste the following code into your R document to evaluate our selected model to see how accurately it predicts QBR for different quantiles:
+
+```markdown
+for q in quantiles:
+
+    preds = qr_models[q].predict(X)
+
+    loss = mean_pinball_loss(
+        y,
+        preds,
+        alpha=q)
+
+    pinball_losses[q] = loss
+```
+
+We can display this in a dataframe and print it to take a closer look at pinball loss between quantiles, like this:
+```markdown
+loss_df = pd.DataFrame({
+    "quantile": list(pinball_losses.keys()),
+    "pinball_loss": list(pinball_losses.values())})
+
+print(loss_df)
+```
+
+:::{.callout-note title="Exercise 7: Interpret Pinball Loss" icon = false}
+
+Compare pinball loss values across quantiles. Smaller pinball loss indicates better fit for that quantile and higher values indicate worse fit. Looking at the table, what percentiles are predicted best and which percentile is predicted the worst?
+
+<details>
+<summary><b>Click for Example Answer</b></summary>
+
+The 10th and 90th percentiles are predicted the best, shown by their lowest pinball loss values, and the 50th percentile is predicted the worst.
+
+</details>
+:::
+
+Sometimes putting things into a visual can help make patterns more obvious than looking at numbers in a table. Let's make a bar plot to get a better idea of how accurate our model is for different quantiles.
+
+:::{.callout-note title="Exercise 9: Create a Visual" icon = false}
+
+Using `plt.bar()`, create a bar chart of pinball loss across quantiles, with the quantile level on the x-axis and the corresponding pinball loss on the y-axis.
+
+<details>
+<summary><b>Click for Solution</b></summary>
+
+```markdown
+loss_df = loss_df.sort_values("quantile")
+
+plt.figure()
+
+plt.bar(
+    loss_df["quantile"].astype(str),
+    loss_df["pinball_loss"])
+
+plt.xlabel("Quantile")
+plt.ylabel("Pinball Loss")
+plt.title("Pinball Loss Across Quantiles")
+
+plt.show()
+```
+</details>
+:::
+
+:::{.callout-note title="Exercise 10: Think Critically" icon = false}
+
+Examine the pinball loss values from your quantile regression models. What pattern do they follow across quantiles, and what does this pattern suggest about how well the model predicts low-QBR versus high-QBR quarterbacks?
+
+<details>
+<summary><b>Click for Solution</b></summary>
+
+The bar graph shows an inverted U-shape, with the highest pinball loss in the middle quantiles and lower loss at the 0.10 and 0.90 quantiles. This suggests that the model predicts very low and very high QBR values more accurately than mid-range QBR values.
+
+Overall, the model appears better at distinguishing quarterbacks with clearly poor or amazing performance, while it struggles more with quarterbacks in the average range. This may indicate that mid-tier QBR outcomes are more variable or less strongly explained by the available predictors, whereas extreme performances are more closely associated with measurable features included in the model.
+
+</details>
+:::
 
 ## Julia
 

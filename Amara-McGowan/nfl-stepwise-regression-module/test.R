@@ -22,49 +22,25 @@ qr_models <- map(quantiles, ~ rq(qbr ~ passing_yards + passing_tds + passing_int
                                    rushing_first_downs + rushing_epa + surface + pct_total + 
                                    sack_fumbles, tau = .x, data = nfl_qbr))
 
-# Looking at different ways to do pseudo R-squared to better understand how to teach it and what
-# the right way to calculate it is.
-
-map(qr_models, summary)
-
-pseudo_r2 <- map_dfr(qr_models, function(m) {
+qr_pinball <- function(model, data, response, tau) {
+  y <- data[[response]]
+  y_hat <- predict(model, newdata = data)
   
-  y <- m$model$qbr
-  tau <- m$tau
+  idx <- !is.na(y) & !is.na(y_hat)
+  y <- y[idx]
+  y_hat <- y_hat[idx]
   
-  rho <- function(u) u * (tau - (u < 0))
-  
-  ss_res <- sum(rho(y - fitted(m)))
-  ss_tot <- sum(rho(y - quantile(y, tau)))
-  
-  data.frame(
-    tau = tau,
-    r2 = 1 - ss_res / ss_tot )})
+  mean(pinLoss(y, y_hat, qu = tau, add = TRUE))}
 
-print.data.frame(pseudo_r2)
+qr_pinball_table <- map_dfr(seq_along(qr_models), ~ {
+  tibble(
+    quantile = quantiles[.x],
+    pinball_loss = qr_pinball(qr_models[[.x]], nfl_qbr, "qbr", quantiles[.x]))})
 
-qr_rsq <- function(model) {
-  rho <- function(u, tau) tau * u * (u >= 0) + (tau - 1) * u * (u < 0)
-  y <- model$model$qbr
-  ss_res <- sum(rho(y - fitted(model), model$tau))
-  ss_tot <- sum(rho(y - median(y), model$tau))
-  1 - ss_res/ss_tot}
-pseudo_r2 <- map_dfr(qr_models, ~ data.frame(tau = .x$tau, r2 = qr_rsq(.x)), 
-                     .id = "model")
-
-print(pseudo_r2) 
-
-# Plot for poster:
-ggplot(pseudo_r2, aes(x = factor(tau), y = r2)) +
-  geom_col(width = 0.5, fill = "darkgreen") +
+ggplot(qr_pinball_table, aes(x = factor(quantile), y = pinball_loss)) +
+  geom_col(fill = "steelblue") +
   labs(
-    x = "Tau",
-    y = "Pseudo R^2",
-    title = "Pseudo R^2 by Quantile") +
-  theme_minimal(base_family = "Garamond") +
-  theme(
-    plot.title = element_text(hjust = 0.5, size = 12, family = "Garamond"),
-    axis.text.x = element_text(size = 10, family = "Garamond"),
-    axis.text.y = element_text(size = 10, family = "Garamond"),
-    axis.title.x = element_text(size = 12, family = "Garamond"),
-    axis.title.y = element_text(size = 12, family = "Garamond"))
+    title = "Quantile Regression Pinball Loss",
+    x = "Quantile",
+    y = "Pinball Loss") +
+  theme_minimal()
