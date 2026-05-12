@@ -612,7 +612,7 @@ loss_df = pd.DataFrame({
 print(loss_df)
 ```
 
-:::{.callout-note title="Exercise 7: Interpret Pinball Loss" icon = false}
+:::{.callout-note title="Exercise 6: Interpret Pinball Loss" icon = false}
 
 Compare pinball loss values across quantiles. Smaller pinball loss indicates better fit for that quantile and higher values indicate worse fit. Looking at the table, what percentiles are predicted best and which percentile is predicted the worst?
 
@@ -626,7 +626,7 @@ The 10th and 90th percentiles are predicted the best, shown by their lowest pinb
 
 Sometimes putting things into a visual can help make patterns more obvious than looking at numbers in a table. Let's make a bar plot to get a better idea of how accurate our model is for different quantiles.
 
-:::{.callout-note title="Exercise 9: Create a Visual" icon = false}
+:::{.callout-note title="Exercise 7: Create a Visual" icon = false}
 
 Using `plt.bar()`, create a bar chart of pinball loss across quantiles, with the quantile level on the x-axis and the corresponding pinball loss on the y-axis.
 
@@ -651,7 +651,7 @@ plt.show()
 </details>
 :::
 
-:::{.callout-note title="Exercise 10: Think Critically" icon = false}
+:::{.callout-note title="Exercise 8: Think Critically" icon = false}
 
 Examine the pinball loss values from your quantile regression models. What pattern do they follow across quantiles, and what does this pattern suggest about how well the model predicts low-QBR versus high-QBR quarterbacks?
 
